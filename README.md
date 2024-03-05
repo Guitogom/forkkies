@@ -1,1 +1,3 @@
-# forkkies
+# FORKKIES
+
+Literalmente GOD
