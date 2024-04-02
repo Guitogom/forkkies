@@ -16,7 +16,7 @@ function App() {
       <section className="screen">
         <h1>PG</h1>
         <Routes>
-          <Route path="/" exact component={Home} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </section>
       <Nav />
