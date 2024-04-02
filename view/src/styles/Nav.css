@@ -1,0 +1,26 @@
+.business-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    background-color: var(--primary-color);
+    height: 110px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px 20px 0px 0px;
+}
+
+.business-nav ul {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    list-style: none;
+}
+
+.business-nav ul li {
+    font-size: 20px;
+    font-weight: bold;
+    list-style: none;
+}
