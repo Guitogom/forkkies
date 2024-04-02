@@ -14,7 +14,7 @@ function App() {
     <main>
       <Header />
       <section className="screen">
-        <h1>aaa</h1>
+        <h1>PG</h1>
         <Routes>
           <Route path="/" exact component={Home} />
         </Routes>
