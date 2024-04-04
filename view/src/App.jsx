@@ -11,16 +11,16 @@ function App() {
 
   return (
     <Router>
-    <main>
-      <Header />
-      <section className="screen">
-        <h1>PG</h1>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </section>
-      <Nav />
-    </main>
+      <main>
+        <Header />
+        <section className="screen">
+          <h1>PG</h1>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </section>
+        <Nav />
+      </main>
     </Router>
   )
 }
