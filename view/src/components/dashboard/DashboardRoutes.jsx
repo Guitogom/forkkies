@@ -1,4 +1,4 @@
-import { Dashboard } from './components/dashboard/Dashboard.jsx'
+import { Dashboard } from './Dashboard.jsx'
 
 export function DashboardRoutes() {
     return (
