@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
+import React from 'react'
 
 export function Landing({ setCurrentPage }) {
     return (
         <header>
             <h1>Landing Page</h1>
-            <Link to="/login" onClick={() => setCurrentPage('login')}>Login</Link>
-            <Link to="/register" onClick={() => setCurrentPage('register')}>Register</Link>
+            <span onClick={() => setCurrentPage('login')}>Login</span>
+            <span onClick={() => setCurrentPage('register')}>Register</span>
         </header>
-    );
+    )
 }

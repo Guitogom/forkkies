@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 export function Register({ setCurrentPage }) {
     const handleRegister = () => {
@@ -12,7 +11,7 @@ export function Register({ setCurrentPage }) {
             <form onSubmit={handleRegister}>
                 <button type="submit">Register</button>
             </form>
-            <p>Already have an account? <Link to="/login" onClick={() => setCurrentPage('login')}>Login</Link></p>
+            <p>Already have an account? <span onClick={() => setCurrentPage('login')}>Login</span></p>
         </div>
     )
 }
