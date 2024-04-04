@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import "./../styles/Header.css";
-import { getFetch } from '../utils/fetch.js'
+import "./../../styles/Header.css";
+import { getFetch } from '../../utils/fetch.js'
 
 export function Header() {
     const [businessName, setBusinessName] = useState('Not feched yet');

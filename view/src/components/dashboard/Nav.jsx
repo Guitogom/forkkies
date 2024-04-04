@@ -1,15 +1,15 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import '../styles/Nav.css'
+import './../../styles/Nav.css'
 
 /* SVGs */
-import { ManagementSVG } from '../assets/svg/ManagementSVG.jsx'
-import { ProductsSVG } from '../assets/svg/ProductsSVG.jsx'
-import { HomeSVG } from '../assets/svg/HomeSVG.jsx'
-import { OrdersSVG } from '../assets/svg/OrdersSVG.jsx'
-import { AnalyticsSVG } from '../assets/svg/AnalyticsSVG.jsx'
+import { ManagementSVG } from '../../assets/svg/ManagementSVG.jsx'
+import { ProductsSVG } from '../../assets/svg/ProductsSVG.jsx'
+import { HomeSVG } from '../../assets/svg/HomeSVG.jsx'
+import { OrdersSVG } from '../../assets/svg/OrdersSVG.jsx'
+import { AnalyticsSVG } from '../../assets/svg/AnalyticsSVG.jsx'
 
-export function Nav () {
+export function Nav() {
     const location = useLocation();
 
     return (

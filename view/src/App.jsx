@@ -1,28 +1,24 @@
 import './styles/App.css'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Header } from './components/Header.jsx'
-import { Nav } from './components/Nav.jsx'
-
-/* Pages */
-import { Home } from './components/pages/Home.jsx'
+import { useState } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Landing } from './components/landing/Landing.jsx'
+import { DashboardRoutes } from './components/dashboard/DashboardRoutes.jsx'
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
 
 
   return (
     <Router>
       <main>
-        <Header />
-        <section className="screen">
-          <h1>PG</h1>
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </section>
-        <Nav />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/dashboard/*" element={<DashboardRoutes />} />
+        </Routes>
       </main>
     </Router>
-  )
+  );
 }
 
 export default App

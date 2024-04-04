@@ -1,9 +1,11 @@
 
 
-export function Landing() {
+export function Landing({ handleLogin }) {
+
+
     return (
         <header>
-            <button onClick={handleGetStarted}>Get started</button>
+            <button onClick={handleLogin}>Get started</button>
         </header>
     )
 }
