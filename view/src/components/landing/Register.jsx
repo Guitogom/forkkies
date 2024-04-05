@@ -1,17 +1,30 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import '../../styles/Register.css'
+
+import { RegisterStep1 } from './RegisterStep1.jsx'
+import { RegisterStep2 } from './RegisterStep2.jsx'
 
 export function Register({ setCurrentPage }) {
-    const handleRegister = () => {
-        setCurrentPage('dashboard')
-    }
+    const [currentStep, setCurrentStep] = useState(1)
+
+    const [divHeight, setDivHeight] = useState("full")
 
     return (
-        <div>
-            <h1>Register Page</h1>
-            <form onSubmit={handleRegister}>
-                <button type="submit">Register</button>
-            </form>
-            <p>Already have an account? <span onClick={() => setCurrentPage('login')}>Login</span></p>
+        <div className='register-div'>
+            <h1 className='register-title'>Register your business</h1>
+            {
+                (() => {
+                    switch (currentStep) {
+                        case 1:
+                            return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} />
+                        case 2:
+                            return <RegisterStep2 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} />
+                        default:
+                            return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} />
+                    }
+                })()
+            }
+            <p className='register-login-link'>Already have an account? <span onClick={() => setCurrentPage('login')} >Login</span></p>
         </div>
     )
 }

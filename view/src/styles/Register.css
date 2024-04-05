@@ -1,0 +1,112 @@
+.register-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: var(--tertiary-background-color);
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 360px;
+    width: 80%;
+    max-width: 500px;
+    transition: all 0.6s;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.register-title {
+    font-size: 2.4rem;
+    color: var(--secondary-color);
+    font-family: var(--secondary-font);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.register-input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    filter: drop-shadow(7px 7px 3.9px rgba(0, 0, 0, 0.25));
+    border: 0;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    background-color: var(--white);
+    color: var(--black);
+    font-family: var(--secondary-font);
+}
+
+.register-input:focus {
+    outline: none;
+}
+
+.register-tag-text {
+    font-size: 1rem;
+    color: #868686;
+    font-family: var(--secondary-font);
+    margin: 10px 0;
+}
+
+.available {
+    color: #56da7c;
+}
+
+.not-available {
+    color: #fc3636;
+}
+
+.register-button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    border: 0;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    background-color: #ff9900;
+    color: var(--white);
+    font-family: var(--secondary-font);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.register-button:hover {
+    transform: translateY(-2px);
+    background-color: var(--primary-color);
+}
+
+.register-button:active {
+    transform: translateY(0);
+}
+
+.register-login-link {
+    margin-top: 15px;
+}
+
+.register-login-link span {
+    transition: color 0.3s;
+    font-size: 1rem;
+    color: var(--primary-color);
+    text-decoration: underline;
+    font-family: var(--secondary-font);
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.register-login-link span:hover {
+    color: var(--secondary-color);
+}
+
+.full {
+    height: fit-content;
+}
+
+.zero {
+    height: 0;
+    padding: 0 !important;
+}
