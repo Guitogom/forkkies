@@ -7,7 +7,6 @@ export function DashboardRoutes() {
             <Routes>
                 <Route index element={<Dashboard />} />
                 <Route path="home" element={<Home />} />
-                <Route path="profile" element={<Profile />} />
             </Routes>
         </Router>
     )

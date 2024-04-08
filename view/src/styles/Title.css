@@ -1,0 +1,21 @@
+.title-parent {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 20px;
+    width: 100%;
+    height: 100px;
+}
+
+.title {
+    font-size: 2.2rem;
+    color: var(--secondary-color);
+    font-family: var(--primary-font);
+    transform: translateY(0.5px);
+}
+
+.title-parent svg {
+    scale: 2.2;
+    fill: var(--secondary-color);
+}

@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import './../../styles/Dashboard.css'
 import { Header } from './Header.jsx'
 import { Nav } from './Nav.jsx'
 
@@ -10,7 +11,6 @@ import { Orders } from './pages/Orders.jsx'
 import { Analytics } from './pages/Analytics.jsx'
 
 export function Dashboard() {
-
 
     return (
         <Router>

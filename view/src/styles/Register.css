@@ -15,9 +15,18 @@
     min-width: 360px;
     width: 80%;
     max-width: 500px;
+    min-height: 400px;
     transition: all 0.6s;
     padding: 20px;
     overflow: hidden;
+}
+
+.register-form h2 {
+    font-size: 2.4rem;
+    color: var(--secondary-color);
+    font-family: var(--secondary-font);
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .register-title {
@@ -84,6 +93,22 @@
     transform: translateY(0);
 }
 
+.register-back {
+    border: 0;
+    background-color: transparent;
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+    opacity: 0.4;
+    cursor: pointer;
+    transition: all 0.3s;
+    align-self: start;
+    margin: 10px 0px;
+}
+
+.register-back:hover {
+    opacity: 1;
+}
+
 .register-login-link {
     margin-top: 15px;
 }
@@ -102,11 +127,11 @@
     color: var(--secondary-color);
 }
 
-.full {
+/* .full {
     height: fit-content;
 }
 
 .zero {
     height: 0;
     padding: 0 !important;
-}
+} */
