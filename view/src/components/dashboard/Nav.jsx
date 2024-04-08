@@ -16,7 +16,7 @@ export function Nav() {
         <nav className="business-nav">
             <ul>
                 <li title='Management' className={location.pathname === '/management' ? 'selected' : ''}><Link to="/management"><ManagementSVG /></Link></li>
-                <li title='Products' className={location.pathname === '/products' ? 'selected' : ''}><Link to="/products"><ProductsSVG /></Link></li>
+                <li title='Templates' className={location.pathname === '/templates' ? 'selected' : ''}><Link to="/templates"><ProductsSVG /></Link></li>
                 <li title='Home' className={location.pathname !== '/' ? '' : 'selected'}><Link to="/"><HomeSVG /></Link></li>
                 <li title='Orders' className={location.pathname === '/orders' ? 'selected' : ''}><Link to="/orders"><OrdersSVG /></Link></li>
                 <li title='Analytics' className={location.pathname === '/analytics' ? 'selected' : ''}><Link to="/analytics"><AnalyticsSVG /></Link></li>

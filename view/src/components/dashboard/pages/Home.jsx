@@ -15,7 +15,7 @@ export function Home() {
             <div className="body">
                 <aside className="left">
                     <Link to="/management" className="box"><ManagementSVG /><h2>Management</h2></Link>
-                    <Link to="/products" className="box"><ProductsSVG /><h2>Products</h2></Link>
+                    <Link to="/templates" className="box"><ProductsSVG /><h2>Templates</h2></Link>
                     <Link to="/orders" className="box"><OrdersSVG /><h2>Orders</h2></Link>
                     <Link to="/analytics" className="box"><AnalyticsSVG /><h2>Analytics</h2></Link>
                 </aside>

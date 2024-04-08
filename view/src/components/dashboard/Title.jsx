@@ -17,11 +17,11 @@ export function Title({ title }) {
                     <h2 className="title">Management</h2>
                 </div>
             )
-        case 'products':
+        case 'templates':
             return (
                 <div className="title-parent">
                     <ProductsSVG />
-                    <h2 className="title">Products</h2>
+                    <h2 className="title">Templates</h2>
                 </div>
             )
         case 'home':

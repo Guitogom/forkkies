@@ -5,7 +5,7 @@ import { Nav } from './Nav.jsx'
 
 /* Pages */
 import { Management } from './pages/Management.jsx'
-import { Products } from './pages/Products.jsx'
+import { Templates } from './pages/Templates.jsx'
 import { Home } from './pages/Home.jsx'
 import { Orders } from './pages/Orders.jsx'
 import { Analytics } from './pages/Analytics.jsx'
@@ -19,7 +19,7 @@ export function Dashboard() {
                 <section className="screen">
                     <Routes>
                         <Route path="/management" element={<Management />} />
-                        <Route path="/products" element={<Products />} />
+                        <Route path="/templates" element={<Templates />} />
                         <Route path="/" element={<Home />} />
                         <Route path="/orders" element={<Orders />} />
                         <Route path="/analytics" element={<Analytics />} />

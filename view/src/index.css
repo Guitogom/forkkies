@@ -22,3 +22,8 @@
   box-sizing: border-box;
   font-family: var(--primary-font);
 }
+
+*::selection {
+  background-color: var(--secondary-color);
+  color: var(--tertiary-color);
+}
