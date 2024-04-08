@@ -1,8 +1,9 @@
+import { Title } from "../Title"
 
 export function Products() {
     return (
         <section>
-            <h1>Products</h1>
+            <Title title="Products" />
         </section>
     )
 }

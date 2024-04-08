@@ -1,8 +1,9 @@
+import { Title } from "../Title"
 
 export function Management() {
     return (
         <section>
-            <h1>Management</h1>
+            <Title title="Management" />
         </section>
     )
 }
