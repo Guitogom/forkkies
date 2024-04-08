@@ -20,7 +20,7 @@ export function Dashboard() {
                     <Routes>
                         <Route path="/management" element={<Management />} />
                         <Route path="/products" element={<Products />} />
-                        <Route path="/home" element={<Home />} />
+                        <Route path="/" element={<Home />} />
                         <Route path="/orders" element={<Orders />} />
                         <Route path="/analytics" element={<Analytics />} />
                     </Routes>

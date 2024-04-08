@@ -7,6 +7,8 @@ import { Dashboard } from './components/dashboard/Dashboard.jsx'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('landing')
+  if (window.location.pathname !== '/') window.location = '/'
+
 
   let content = null
 
@@ -25,6 +27,7 @@ function App() {
       break
     default:
       content = <Landing setCurrentPage={setCurrentPage} />
+      break
   }
 
   return (

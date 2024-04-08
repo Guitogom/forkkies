@@ -1,0 +1,129 @@
+.login-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: var(--tertiary-background-color);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 360px;
+    width: 80%;
+    max-width: 500px;
+    min-height: 200px;
+    transition: all 0.6s;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.login-form h2 {
+    font-size: 2.4rem;
+    color: var(--secondary-color);
+    font-family: var(--secondary-font);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-title {
+    font-size: 2.4rem;
+    color: var(--secondary-color);
+    font-family: var(--primary-font);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.login-input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    filter: drop-shadow(7px 7px 3.9px rgba(0, 0, 0, 0.25));
+    border: 0;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    background-color: var(--white);
+    color: var(--black);
+    font-family: var(--secondary-font);
+}
+
+.login-input:focus {
+    outline: none;
+}
+
+.login-tag-text {
+    font-size: 1rem;
+    color: #868686;
+    font-family: var(--secondary-font);
+    margin: 10px 0;
+}
+
+.login-button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    border: 0;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    background-color: #ff9900;
+    color: var(--white);
+    font-family: var(--secondary-font);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    background-color: var(--primary-color);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+.login-back {
+    border: 0;
+    background-color: transparent;
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+    opacity: 0.4;
+    cursor: pointer;
+    transition: all 0.3s;
+    align-self: start;
+    margin: 10px 0px;
+}
+
+.login-back:hover {
+    opacity: 1;
+}
+
+.login-register-link {
+    margin-top: 15px;
+}
+
+.login-register-link span {
+    transition: color 0.3s;
+    font-size: 1rem;
+    color: var(--primary-color);
+    text-decoration: underline;
+    font-family: var(--secondary-font);
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.login-register-link span:hover {
+    color: var(--secondary-color);
+}
+
+/* .full {
+    height: fit-content;
+}
+
+.zero {
+    height: 0;
+    padding: 0 !important;
+} */

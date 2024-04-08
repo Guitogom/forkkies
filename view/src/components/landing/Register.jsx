@@ -12,7 +12,7 @@ export function Register({ setCurrentPage }) {
 
     return (
         <div className='register-div'>
-            <h1 className='register-title'>Register your business</h1>
+            <h2 className='register-title'>Register your business</h2>
             {
                 (() => {
                     switch (currentStep) {
