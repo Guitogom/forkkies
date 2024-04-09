@@ -6,7 +6,7 @@ import { Register } from './components/landing/Register.jsx'
 import { Dashboard } from './components/dashboard/Dashboard.jsx'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('landing')
+  const [currentPage, setCurrentPage] = useState('dashboard')
   if (window.location.pathname !== '/') window.location = '/'
 
 
