@@ -26,7 +26,7 @@
     text-decoration: none;
     border-radius: 20px;
     font-size: 2rem;
-    transition: all 0.3s linear;
+    transition: all 0.2s linear;
 }
 
 .box:hover {

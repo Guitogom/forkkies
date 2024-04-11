@@ -1,5 +1,5 @@
 async function getFetch(endpoint) {
-    const url = `http://api.com/${endpoint}`;
+    const url = `http://147.182.207.78:3000/${endpoint}`;
 
     try {
         const response = await fetch(url);
