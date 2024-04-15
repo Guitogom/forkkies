@@ -23,6 +23,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: var(--primary-font);
+  scrollbar-width: none;
 }
 
 *::selection {

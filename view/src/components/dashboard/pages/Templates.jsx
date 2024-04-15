@@ -4,6 +4,7 @@ import { Properties } from "./Properties.jsx"
 import '../../../styles/Templates.css'
 import { TemplateDisplay } from "./TemplateDisplay.jsx"
 import { Categories } from "./Categories.jsx"
+import { CreateCategory } from "./CreateCategory.jsx"
 import { PlusSVG } from "../../../assets/svg/PlusSVG.jsx"
 
 export function Templates() {

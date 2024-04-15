@@ -16,6 +16,10 @@ export function Categories({ template, setDisplay }) {
         setStatus(!status)
     }
 
+    const handleCreateCategory = () => {
+        setDisplay('create-category')
+    }
+
     useEffect(() => {
         template.status = status
         button_text === status ? "Set Offline" : "Set Online"
@@ -31,7 +35,7 @@ export function Categories({ template, setDisplay }) {
                     <button className={status ? "set-offline" : "set-online"} onClick={handleStatus}>{button_text}</button>
                     <button className="delete-button">Delete Template</button></div>
             </div>
-            <div className="categories-add"><PlusSVG /></div>
+            <div className="categories-add" onClick={handleCreateCategory}><PlusSVG /></div>
             <div className="categories">
                 {
                     template.categories.map((category, index) => {
