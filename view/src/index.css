@@ -6,6 +6,7 @@
   --secondary-color: #3C3C3C;
   --tertiary-color: #A0A0A0;
   --forth-color: #E6E6E6;
+  --fifth-color: #6C6A6A;
   --primary-background-color: #F9FBFD;
   --secondary-background-color: #242424;
   --tertiary-background-color: #f1f1f1;
@@ -27,4 +28,16 @@
 *::selection {
   background-color: var(--secondary-color);
   color: var(--tertiary-color);
+}
+
+.pending {
+  position: absolute;
+  top: 24%;
+  left: 14%;
+  color: var(--red);
+  font-size: 14rem;
+  font-weight: 900;
+  opacity: 0.3;
+  transform: rotate(-12deg);
+  text-align: center;
 }

@@ -33,7 +33,7 @@
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 868px) {
     .body-templates {
         margin-bottom: 120px;
         flex-direction: column;
@@ -121,6 +121,7 @@
     text-decoration: none;
     font-family: var(--primary-font);
     transition: all 0.3s linear;
+    cursor: pointer;
 }
 
 .template:hover {
@@ -154,4 +155,28 @@
 .red {
     color: var(--red);
     filter: drop-shadow(0px 2px 15px var(--red));
+}
+
+.template-add {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--forth-color);
+    border-radius: 15px;
+    text-decoration: none;
+    font-family: var(--primary-font);
+    transition: all 0.3s linear;
+    cursor: pointer;
+    height: 80px;
+}
+
+.template-add:hover {
+    background-color: var(--tertiary-background-color);
+    transform: translateY(-1px);
+}
+
+.template-add svg {
+    scale: 0.05;
+    opacity: 0.3;
 }

@@ -11,7 +11,7 @@ import { AnalyticsSVG } from "../../../assets/svg/AnalyticsSVG"
 export function Home() {
     return (
         <section>
-            <Title title="Home" />
+            <Title title="Home" text="Home" />
             <div className="body-home">
                 <aside className="left-home">
                     <Link to="/management" className="box"><ManagementSVG /><h2>Management</h2></Link>

@@ -1,5 +1,6 @@
 .screen {
     position: absolute;
     top: 120px;
+    min-height: 75vh;
     overflow-x: hidden;
 }

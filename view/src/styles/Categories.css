@@ -1,0 +1,151 @@
+.template-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    border-radius: 15px;
+    margin: 20px auto;
+}
+
+.template-options-div {
+    display: flex;
+    gap: 10px;
+}
+
+.template-options button {
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: var(--primary-font);
+    font-size: 1.1rem;
+    transition: all 0.2s linear;
+}
+
+.template-options button:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+}
+
+.goback-button {
+    color: var(--secondary-color);
+    background-color: var(--forth-color);
+}
+
+.goback-button:hover {
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
+}
+
+.name-button {
+    color: var(--secondary-color);
+    background-color: var(--forth-color);
+}
+
+.name-button:hover {
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
+}
+
+.delete-button {
+    color: var(--forth-color);
+    background-color: rgb(204, 60, 60);
+}
+
+.delete-button:hover {
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
+}
+
+.set-online {
+    background-color: var(--green);
+    color: var(--white);
+}
+
+.set-offline {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.set-online:hover {
+    filter: drop-shadow(1px 2px 4px var(--green));
+}
+
+.set-offline:hover {
+    filter: drop-shadow(1px 2px 4px var(--red));
+}
+
+.categories-add {
+    margin: auto;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--forth-color);
+    border-radius: 15px;
+    text-decoration: none;
+    font-family: var(--primary-font);
+    transition: all 0.3s linear;
+    cursor: pointer;
+    height: 80px;
+}
+
+.categories-add:hover {
+    background-color: var(--tertiary-background-color);
+    transform: translateY(-1px);
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
+}
+
+.categories-add svg {
+    scale: 0.03;
+    opacity: 0.3;
+}
+
+.categories {
+    margin: auto;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    column-gap: 90px;
+    row-gap: 30px;
+    padding: 20px 0px;
+    overflow-y: auto;
+    margin-bottom: 200px;
+}
+
+.category {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 300px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-family: var(--primary-font);
+    transition: all 0.3s linear;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.category:hover {
+    transform: translateY(-1px);
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
+}
+
+.category img {
+    width: 300px;
+    height: 300px;
+    border-radius: 15px;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+}
+
+.category h1 {
+    color: var(--fifth-color);
+    font-family: var(--primary-font);
+    font-size: 1.6rem;
+    font-weight: 900;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+}

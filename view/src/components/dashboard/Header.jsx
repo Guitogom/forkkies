@@ -1,29 +1,29 @@
-import { useState, useEffect } from 'react';
-import "./../../styles/Header.css";
+import { useState, useEffect } from 'react'
+import "./../../styles/Header.css"
 import { getFetch } from '../../utils/fetch.js'
 
 export function Header() {
-    const [businessName, setBusinessName] = useState('Not feched yet');
-    const [businessType, setBusinessType] = useState('Not feched yet');
-    const [businessStatus, setBusinessStatus] = useState(false);
+    const [businessName, setBusinessName] = useState('Not feched yet')
+    const [businessType, setBusinessType] = useState('Not feched yet')
+    const [businessStatus, setBusinessStatus] = useState(false)
 
 
     async function fetchBusinessName() {
         try {
-            const nombre = await getFetch('nombreNegocio');
-            const tipo = await getFetch('tipoNegocio');
-            const status = await getFetch('statusNegocio');
-            setBusinessName(nombre || 'Fetch fail');
-            setBusinessType(tipo || 'Fetch fail');
-            setBusinessStatus(status || 'Fetch fail');
+            const nombre = await getFetch('nombreNegocio')
+            const tipo = await getFetch('tipoNegocio')
+            const status = await getFetch('statusNegocio')
+            setBusinessName(nombre || 'Fetch fail')
+            setBusinessType(tipo || 'Fetch fail')
+            setBusinessStatus(status || 'Fetch fail')
         } catch (error) {
-            console.error('Error: ', error);
+            console.error('Error: ', error)
         }
     }
 
     useEffect(() => {
-        fetchBusinessName();
-    }, []);
+        // fetchBusinessName()
+    }, [])
 
     return (
         <header className="business-header">

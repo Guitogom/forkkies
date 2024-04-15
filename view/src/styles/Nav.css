@@ -33,6 +33,10 @@
     transform: translateY(0);
 }
 
+.business-nav ul li:not(.selected) a svg path {
+    filter: url(#inset-shadow);
+}
+
 .selected {
     transform: translateY(-10px);
     scale: 1.2;
