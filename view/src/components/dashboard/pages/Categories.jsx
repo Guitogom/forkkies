@@ -9,7 +9,7 @@ export function Categories({ template, setDisplay }) {
     const [changeNameDisplay, setChangeNameDisplay] = useState('none')
     const [templateName, setTemplateName] = useState(template.name);
     const [nameError, setNameError] = useState('')
-    const button_text = status ? "Set Offline" : "Set Online"
+    const buttonText = status ? "Set Offline" : "Set Online"
 
     const handleGoBack = () => {
         setDisplay('default')
@@ -37,7 +37,7 @@ export function Categories({ template, setDisplay }) {
 
     useEffect(() => {
         template.status = status
-        button_text === status ? "Set Offline" : "Set Online"
+        buttonText === status ? "Set Offline" : "Set Online"
     }, [status])
 
     return (
@@ -52,12 +52,12 @@ export function Categories({ template, setDisplay }) {
             </div>
 
 
-            <Title title="Templates" text={`${template.name}`} />
+            <Title title="Templates" text={`${templateName}`} />
             <div className="template-options">
                 <button className="goback-button" onClick={handleGoBack}>Go Back</button>
                 <div className="template-options-div">
                     <button className="name-button" onClick={changeTemplateName}>Change Name</button>
-                    <button className={status ? "set-offline" : "set-online"} onClick={handleStatus}>{button_text}</button>
+                    <button className={status ? "set-offline" : "set-online"} onClick={handleStatus}>{buttonText}</button>
                     <button className="delete-button">Delete Template</button></div>
             </div>
             <div className="categories-add" onClick={handleCreateCategory}><PlusSVG /></div>
