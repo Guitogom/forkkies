@@ -34,7 +34,7 @@
 .pending {
   position: absolute;
   top: 24%;
-  left: 14%;
+  left: 24%;
   color: var(--red);
   font-size: 14rem;
   font-weight: 900;

@@ -6,6 +6,9 @@ import { useEffect, useState } from "react"
 
 export function Categories({ template, setDisplay }) {
     const [status, setStatus] = useState(template.status)
+    const [changeNameDisplay, setChangeNameDisplay] = useState('none')
+    const [templateName, setTemplateName] = useState(template.name);
+    const [nameError, setNameError] = useState('')
     const button_text = status ? "Set Offline" : "Set Online"
 
     const handleGoBack = () => {
@@ -20,6 +23,18 @@ export function Categories({ template, setDisplay }) {
         setDisplay('create-category')
     }
 
+    const changeTemplateName = () => {
+        setChangeNameDisplay('flex')
+    }
+
+    const saveTemplateName = () => {
+        if (templateName.trim() === '') {
+            setNameError('Name cannot be empty');
+            return;
+        }
+        setChangeNameDisplay('none')
+    }
+
     useEffect(() => {
         template.status = status
         button_text === status ? "Set Offline" : "Set Online"
@@ -27,11 +42,21 @@ export function Categories({ template, setDisplay }) {
 
     return (
         <section>
+            <div className="notification">
+
+            </div>
+            <div className="change-template-name" style={{ display: `${changeNameDisplay}` }}>
+                <input type="text" placeholder="Introduce a new name" value={templateName} onChange={(e) => setTemplateName(e.target.value)} />
+                <p className="error-text">{nameError}</p>
+                <button onClick={saveTemplateName}>Save</button>
+            </div>
+
+
             <Title title="Templates" text={`${template.name}`} />
             <div className="template-options">
                 <button className="goback-button" onClick={handleGoBack}>Go Back</button>
                 <div className="template-options-div">
-                    <button className="name-button">Change Name</button>
+                    <button className="name-button" onClick={changeTemplateName}>Change Name</button>
                     <button className={status ? "set-offline" : "set-online"} onClick={handleStatus}>{button_text}</button>
                     <button className="delete-button">Delete Template</button></div>
             </div>
