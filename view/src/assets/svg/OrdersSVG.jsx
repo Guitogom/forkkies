@@ -19,8 +19,8 @@ export function OrdersSVG() {
             />
 
             <feFlood
-                flood-color='black'
-                flood-opacity='.95'
+                floodColor='black'
+                floodOpacity='.95'
                 result='color'
             />
             <feComposite

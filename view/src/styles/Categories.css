@@ -151,12 +151,61 @@
 }
 
 .new-category {
+    width: 80%;
+    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 40px;
     height: 75vh;
+}
+
+.new-category input[type="text"] {
+    width: 20%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    font-family: var(--secondary-font);
+    font-size: 1.1rem;
+}
+
+.new-category input[type="text"]:focus {
+    outline: none;
+    animation: blink 1s linear alternate infinite;
+}
+
+.new-category input[type="text"]:active {
+    outline: none;
+}
+
+@keyframes blink {
+    from {
+        background-color: transparent;
+    }
+
+    to {
+        background-color: var(--tertiary-background-color);
+    }
+}
+
+.save-button {
+    padding: 20px 50px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    font-family: var(--primary-font);
+    background-color: var(--forth-color);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+.save-button:hover {
+    background-color: var(--tertiary-background-color);
+    transform: translateY(-1px);
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
 }
 
 .image-input {
@@ -166,14 +215,17 @@
     overflow: hidden;
     filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, 0.295));
     border-radius: 15px;
-    background: #D9D9D9 url('../assets/media/camera.webp') no-repeat center;
-    background-size: 60px;
-    opacity: 0.6;
+    background-color: #D9D9D9;
+    /* background-image: url('../assets/media/camera.webp'); */
+    background-position: center;
+    background-repeat: no-repeat;
+    /* background-size: 60px; */
+    opacity: 1;
     transition: all 0.3s linear;
 }
 
 .image-input:hover {
-    opacity: 1;
+    opacity: 0.6;
     filter: drop-shadow(0px 4px 2px rgba(0, 0, 0, 0.295));
 }
 
@@ -194,4 +246,33 @@
     height: 100%;
     opacity: 0;
     cursor: pointer;
+}
+
+.error-text {
+    color: var(--red);
+    filter: drop-shadow(2px 2px 7px var(--red));
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+@media screen and (max-width: 1200px) {
+    .categories {
+        column-gap: 50px;
+        row-gap: 20px;
+    }
+
+    .category {
+        width: 250px;
+    }
+
+    .category img {
+        width: 250px;
+        height: 250px;
+    }
+
+    .new-category input[type="text"] {
+        width: 80%;
+    }
 }

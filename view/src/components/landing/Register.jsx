@@ -7,8 +7,8 @@ import { RegisterStep3 } from './RegisterStep3.jsx'
 
 export function Register({ setCurrentPage }) {
     const [currentStep, setCurrentStep] = useState(1)
-
     const [divHeight, setDivHeight] = useState("full")
+    const content = null
 
     return (
         <div className='register-div'>
