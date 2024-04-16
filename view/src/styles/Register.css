@@ -127,6 +127,13 @@
     color: var(--secondary-color);
 }
 
+.password-feedback {
+    position: absolute;
+    transform: translate(190px, 24px);
+    width: 40px;
+    height: 40px;
+}
+
 /* .full {
     height: fit-content;
 }
