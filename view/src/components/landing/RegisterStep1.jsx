@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import debounce from "just-debounce-it"
 
 export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusinessName, setTag, setPhoneNumber, setBusinessType, businessName, tag, phoneNumber, businessType }) {
-    const [avalibleTag, setAvalibleTag] = useState(true)
+    const [avalibleTag, setAvalibleTag] = useState(false)
     const [tagProvisional, setTagProvisional] = useState('')
 
 

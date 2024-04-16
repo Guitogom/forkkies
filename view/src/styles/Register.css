@@ -134,6 +134,13 @@
     height: 40px;
 }
 
+@media screen and (max-width: 578px) {
+    .password-feedback {
+        position: absolute;
+        transform: translate(120px, 24px);
+    }
+}
+
 /* .full {
     height: fit-content;
 }
