@@ -109,9 +109,7 @@ app.post('/newbusiness', async (req, res) => {
 
     try {
         var token = await newbusiness(req.body);
-        res.sendStatus(200);
-        //Devolvemos el token
-        res.json({ token });
+        res.sendStatus(200).json({ token: token });
     } catch (error) {
         res.sendStatus(500).json({ error: error.message });
     }
