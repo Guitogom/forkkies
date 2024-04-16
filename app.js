@@ -101,17 +101,18 @@ async function newbusiness(business) {
     }
     //Se genera un jwt con el tag del negocio
     const token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
+    console.log('Token generado funcion:', token)
     return token;
 };
 
 
 app.post('/newbusiness', async (req, res) => {
-
     try {
         var token = await newbusiness(req.body);
-        res.sendStatus(200).json({ token: token });
+        console.log('Token generado:', token)
+        res.status(200).json({ token: token });
     } catch (error) {
-        res.sendStatus(500).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
 });
 

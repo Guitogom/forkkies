@@ -30,9 +30,8 @@ export function Register({ setCurrentPage }) {
                     tel: phoneNumber,
                 }),
             })
+            console.log('Negocio registrado:', response)
             if (response.ok) {
-                const data = await response.json()
-                console.log('Negocio registrado:', data)
                 setDivHeight("zero")
                 setCurrentStep(3)
                 setTimeout(() => {
