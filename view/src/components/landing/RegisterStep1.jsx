@@ -29,7 +29,30 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
     }
 
     useEffect(() => {
+        const fetchTagExists = async () => {
+            try {
+                console.log('fetching');
+                const response = await fetch(
+                    `http://147.182.207.78:3000/verifytag?tag=${tag}`
+                );
+                const data = await response.json();
+                console.log('Response:', data);
+                if (data.exists) {
+                    console.log('Tag exists');
+                    setAvalibleTag(false);
+                } else {
+                    console.log('Tag does not exist');
+                    setAvalibleTag(true);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
 
+        if (tag) {
+            console.log('Tag:', tag);
+            fetchTagExists();
+        }
     }, [tag])
 
     return (
