@@ -83,6 +83,23 @@ async function newbusiness(business) {
     return token;
 };
 
+async function getBusiness(tag) {
+    try {
+        const result = await db.execute(
+            {
+                sql: 'SELECT * FROM business WHERE tag = :tag',
+                args: { tag }
+            }
+        );
+
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+
+}
+
 function verificarToken(req, res, next) {
     // Extraer el token del encabezado de la solicitud
     const token = req.headers.authorization;
@@ -141,7 +158,15 @@ app.get('/business', verificarToken, (req, res) => {
     // Obtener el tag del token decodificado
     const tag = req.tag;
 
-    res.json({ tag });
+    // Obtener la información del negocio
+    getBusiness(tag)
+        .then((business) => {
+            res.json(business);
+        })
+        .catch((error) => {
+            console.error('Error:', error.message);
+            res.status(500).json({ error: error.message });
+        });
 });
 
 app.listen(3000, () => {
