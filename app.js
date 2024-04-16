@@ -19,9 +19,6 @@ const db = createClient({
 //await db.execute('DROP TABLE users');
 
 app.get('/', (req, res) => {
-    //GET
-    //uwu = req.query.uwu;
-    //Status
     //String
     //res.send(`Hello ${uwu}`);
     //JSON
