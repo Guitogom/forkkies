@@ -7,3 +7,4 @@ POST http://147.182.207.78:3000/newbusiness
     "tag": "uwu",
     "type": "uwu",
 }
+// Falta la password
