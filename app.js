@@ -18,11 +18,11 @@ app.get('/', (req, res) => {
     //GET
     //uwu = req.query.uwu;
     //Status
-    res.sendStatus(200);
     //String
     //res.send(`Hello ${uwu}`);
     //JSON
     res.json({ message: `Hey, this is the backend!` });
+    res.sendStatus(200);
 }
 );
 
@@ -92,7 +92,7 @@ async function newbusiness(business) {
         } catch (error) {
             throw new Error('Error en la base de datos: ' + error.message);
         }
-    }else{
+    } else {
         //Le devolvemos la array de campos incorrectos
         throw new Error('Campos incorrectos: ' + incorrect_field);
     }
