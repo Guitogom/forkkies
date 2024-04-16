@@ -50,7 +50,7 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
         }, 400)
     }
 
-    const fetchTagExists = debounce(async () => {
+    const fetchTagExists = async () => {
         try {
             const response = await fetch(
                 `http://147.182.207.78:3000/verifytag?tag=${tagProvisional}`
@@ -65,10 +65,10 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
         } catch (error) {
             console.error('Error:', error)
         }
-    }, 300)
+    }
 
     useEffect(() => {
-        fetchTagExists()
+        debounce(fetchTagExists, 500)()
     }, [tagProvisional])
 
     return (

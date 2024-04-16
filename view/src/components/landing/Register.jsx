@@ -30,8 +30,11 @@ export function Register({ setCurrentPage }) {
                     tel: phoneNumber,
                 }),
             })
-            console.log('Negocio registrado:', response)
+
+
             if (response.ok) {
+                const data = await response.json()
+                localStorage.setItem('token', data.token)
                 setDivHeight("zero")
                 setCurrentStep(3)
                 setTimeout(() => {
@@ -44,6 +47,7 @@ export function Register({ setCurrentPage }) {
             console.error('Error al comunicarse con el servidor:', error.message)
         }
     }
+
 
     return (
         <div className='register-div'>
