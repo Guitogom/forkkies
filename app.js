@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { createClient } from '@libsql/client';
 import cors from 'cors';
+import jwt from 'jsonwebtoken';
+
 
 dotenv.config();
 
@@ -100,7 +102,9 @@ async function newbusiness(business) {
         //Le devolvemos la array de campos incorrectos
         throw new Error('Campos incorrectos: ' + incorrect_field);
     }
-
+    //Se genera un jwt con el tag del negocio
+    const token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
+    return token;
 };
 
 
