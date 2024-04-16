@@ -106,6 +106,8 @@ async function newbusiness(business) {
 };
 
 
+
+
 app.post('/newbusiness', async (req, res) => {
     try {
         var token = await newbusiness(req.body);
