@@ -16,17 +16,6 @@ const db = createClient({
     authToken: process.env.DB_TOKEN
 });
 
-//await db.execute('DROP TABLE users');
-
-app.get('/', (req, res) => {
-    //String
-    //res.send(`Hello ${uwu}`);
-    //JSON
-    res.json({ message: `Hey, this is the backend!` });
-    res.sendStatus(200);
-}
-);
-
 async function verifyTag(tag) {
     // Verifica que tag sea una cadena
     if (typeof tag !== 'string') {
@@ -52,17 +41,6 @@ async function verifyTag(tag) {
     }
 }
 
-// Uso de la función
-app.get('/verifytag', async (req, res) => {
-    try {
-        const tag = req.query.tag;
-        const exists = await verifyTag(tag);
-        res.json({ exists });
-    } catch (error) {
-        console.error('Error:', error.message);
-        res.status(500).json({ error: error.message });
-    }
-});
 
 async function newbusiness(business) {
     var incorrect_field = [];
@@ -105,8 +83,49 @@ async function newbusiness(business) {
     return token;
 };
 
+function verificarToken(req, res, next) {
+    // Extraer el token del encabezado de la solicitud
+    const token = req.headers.authorization;
+
+    // Verificar si el token está presente
+    if (!token) {
+        return res.status(401).json({ mensaje: 'Token no proporcionado' });
+    }
+
+    try {
+        // Verificar el token y decodificar su contenido
+        const decoded = jwt.verify(token, secretKey);
+
+        req.tag = decoded.tag;
+
+        // Si el token es válido, puedes acceder a la información contenida en él
+        console.log('Información del token:', decoded);
+
+        // Continuar con la ejecución del siguiente middleware o controlador
+        next();
+    } catch (error) {
+        // Si ocurre un error al verificar el token, devolver un error de autenticación
+        return res.status(401).json({ mensaje: 'Token inválido' });
+    }
+}
 
 
+//Rutas
+app.get('/', (req, res) => {
+    res.sendStatus(200).json({ message: `Hey, this is the backend!` });
+}
+);
+
+app.get('/verifytag', async (req, res) => {
+    try {
+        const tag = req.query.tag;
+        const exists = await verifyTag(tag);
+        res.json({ exists });
+    } catch (error) {
+        console.error('Error:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+});
 
 app.post('/newbusiness', async (req, res) => {
     try {
@@ -116,6 +135,13 @@ app.post('/newbusiness', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+});
+
+app.get('/business', verificarToken, (req, res) => {
+    // Obtener el tag del token decodificado
+    const tag = req.tag;
+
+    res.json({ tag });
 });
 
 app.listen(3000, () => {
