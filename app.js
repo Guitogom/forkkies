@@ -50,7 +50,9 @@ async function verifyTag(tag) {
 
         console.log('Tag verification result:', result.rows.length);
 
-        return result.length > 0;
+        let response = result.length > 0 ? true : false;
+        console.log('Tag verification response:', response);
+        return response;
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
