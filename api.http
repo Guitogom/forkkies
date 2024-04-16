@@ -1,1 +1,9 @@
-GET http://localhost:3000/verifytag/?tag=uwu
+//GET http://147.182.207.78:3000/verifytag/?tag=uwu
+
+POST http://147.182.207.78:3000/newbusiness
+{
+    "name": "uwu",
+    "tel": "uwu",
+    "tag": "uwu",
+    "type": "uwu",
+}
