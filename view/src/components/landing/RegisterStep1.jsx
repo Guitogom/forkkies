@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react'
 
-export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight }) {
-    const [businessName, setBusinessName] = useState('')
-    const [tag, setTag] = useState('')
+export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusinessName, tag, setTag, setPhoneNumber, setBusinessType }) {
     const [avalibleTag, setAvalibleTag] = useState(true)
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [businessType, setBusinessType] = useState('')
 
 
     const handleNameChange = (e) => {
@@ -37,7 +33,7 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight }) {
     }, [tag])
 
     return (
-        <form className={`register-form ${divHeight}`}>
+        <div className={`register-form ${divHeight}`}>
             <input type="text" placeholder='business name' onInput={handleNameChange} className='register-input' />
             <p className='register-tag-text'>The tag is a unique word that identifies your business publicly on forkkies. <span className={tag.length == 0 ? "not-available" : (avalibleTag ? "available" : "not-available")}>
                 {tag.length == 0 ? "Tag can't be empty" : (avalibleTag ? "This tag is available" : "This tag is in use")}</span></p>
@@ -45,6 +41,6 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight }) {
             <input type="text" placeholder='phone number' onInput={handlePhoneChange} className='register-input' />
             <input type="text" placeholder='business type' onInput={handleTypeChange} className='register-input' />
             <button className='register-button' onClick={handleRegister}>Next</button>
-        </form>
+        </div>
     )
 }

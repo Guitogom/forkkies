@@ -7,7 +7,7 @@ import { Dashboard } from './components/dashboard/Dashboard.jsx'
 import { getFetch } from './utils/fetch.js'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('dashboard')
+  const [currentPage, setCurrentPage] = useState('landing')
   if (window.location.pathname !== '/') window.location = '/'
 
 

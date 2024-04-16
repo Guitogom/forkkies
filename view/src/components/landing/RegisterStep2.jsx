@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight }) {
-    const handleRegister = () => {
-        setDivHeight("zero")
-        setCurrentStep(3)
-    }
+export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPassword, handleRegisterBusiness }) {
 
     const handleGoBack = () => {
         setDivHeight("zero")
@@ -15,11 +11,11 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight }) {
     }
 
     return (
-        <form className={`register-form ${divHeight}`}>
+        <div className={`register-form ${divHeight}`}>
             <button className='register-back' onClick={handleGoBack}>Go Back</button>
             <input type="password" name="" id="password" placeholder='create a business password...' className='register-input' />
             <input type="password" name="" id="repeat-password" placeholder='repeat the business password...' className='register-input' />
-            <button className='register-button' onClick={handleRegister}>Next</button>
-        </form>
+            <button className='register-button' onClick={handleRegisterBusiness}>Next</button>
+        </div>
     )
 }

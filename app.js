@@ -7,6 +7,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+
 const db = createClient({
     url: "libsql://forkkies-tumse.turso.io",
     authToken: process.env.DB_TOKEN
@@ -106,7 +107,7 @@ app.post('/newbusiness', async (req, res) => {
         await newbusiness(req.body);
         res.sendStatus(200);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.sendStatus(500).json({ error: error.message });
     }
 });
 

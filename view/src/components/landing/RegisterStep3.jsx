@@ -6,9 +6,9 @@ export function RegisterStep3({ setCurrentPage }) {
     }
 
     return (
-        <form className="register-form">
+        <div className="register-form">
             <h2>Thank you!</h2>
             <button className='register-button' onClick={handleClick}>Begin</button>
-        </form>
+        </div>
     )
 }
