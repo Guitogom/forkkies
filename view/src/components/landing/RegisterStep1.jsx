@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 
-export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusinessName, tag, setTag, setPhoneNumber, setBusinessType }) {
+export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusinessName, setTag, setPhoneNumber, setBusinessType }) {
     const [avalibleTag, setAvalibleTag] = useState(true)
+    const [tagProvisional, setTagProvisional] = useState('')
 
 
     const handleNameChange = (e) => {
@@ -9,7 +10,7 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
     }
 
     const handleTagChange = (e) => {
-        setTag(e.target.value)
+        setTagProvisional(e.target.value)
     }
 
     const handlePhoneChange = (e) => {
@@ -28,38 +29,34 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
         }, 400)
     }
 
-    useEffect(() => {
-        const fetchTagExists = async () => {
-            try {
-                console.log('fetching');
-                const response = await fetch(
-                    `http://147.182.207.78:3000/verifytag?tag=${tag}`
-                );
-                const data = await response.json();
-                console.log('Response:', data);
-                if (data.exists) {
-                    console.log('Tag exists');
-                    setAvalibleTag(false);
-                } else {
-                    console.log('Tag does not exist');
-                    setAvalibleTag(true);
-                }
-            } catch (error) {
-                console.error('Error:', error);
+    const fetchTagExists = async () => {
+        try {
+            const response = await fetch(
+                `http://147.182.207.78:3000/verifytag?tag=${tagProvisional}`
+            )
+            const data = await response.json()
+            if (data.exists) {
+                setAvalibleTag(false)
+            } else {
+                setAvalibleTag(true)
+                setTag(tagProvisional)
             }
-        };
-
-        if (tag) {
-            console.log('Tag:', tag);
-            fetchTagExists();
+        } catch (error) {
+            console.error('Error:', error)
         }
-    }, [tag])
+    }
+
+    useEffect(() => {
+        if (tagProvisional > 0) {
+            fetchTagExists()
+        }
+    }, [tagProvisional])
 
     return (
         <div className={`register-form ${divHeight}`}>
             <input type="text" placeholder='business name' onInput={handleNameChange} className='register-input' />
-            <p className='register-tag-text'>The tag is a unique word that identifies your business publicly on forkkies. <span className={tag.length == 0 ? "not-available" : (avalibleTag ? "available" : "not-available")}>
-                {tag.length == 0 ? "Tag can't be empty" : (avalibleTag ? "This tag is available" : "This tag is in use")}</span></p>
+            <p className='register-tag-text'>The tag is a unique word that identifies your business publicly on forkkies. <span className={tagProvisional.length == 0 ? "not-available" : (avalibleTag ? "available" : "not-available")}>
+                {tagProvisional.length == 0 ? "Tag can't be empty" : (avalibleTag ? "This tag is available" : "This tag is in use")}</span></p>
             <input type="text" placeholder='tag' onInput={handleTagChange} className='register-input' />
             <input type="text" placeholder='phone number' onInput={handlePhoneChange} className='register-input' />
             <input type="text" placeholder='business type' onInput={handleTypeChange} className='register-input' />

@@ -37,8 +37,6 @@ async function verifyTag(tag) {
     // Elimina espacios en blanco adicionales al principio y al final de la cadena
     tag = tag.trim();
 
-    console.log('Verifying tag:', tag);
-
     try {
         // Check if tag exists in the database
         const result = await db.execute(
@@ -47,8 +45,6 @@ async function verifyTag(tag) {
                 args: { tag }
             }
         );
-
-        console.log('Tag verification result:', result.rows.length);
 
         return result.rows.length > 0;
     } catch (error) {
@@ -61,9 +57,7 @@ async function verifyTag(tag) {
 app.get('/verifytag', async (req, res) => {
     try {
         const tag = req.query.tag;
-        console.log('Verifying tag:', tag);
         const exists = await verifyTag(tag);
-        console.log('Tag verification result:', exists);
         res.json({ exists });
     } catch (error) {
         console.error('Error:', error.message);
