@@ -61,9 +61,12 @@ async function verifyTag(tag) {
 app.get('/verifytag', async (req, res) => {
     try {
         const tag = req.query.tag;
+        console.log('Verifying tag:', tag);
         const exists = await verifyTag(tag);
+        console.log('Tag verification result:', exists);
         res.json({ exists });
     } catch (error) {
+        console.error('Error:', error.message);
         res.status(500).json({ error: error.message });
     }
 });
