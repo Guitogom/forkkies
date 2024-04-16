@@ -48,7 +48,7 @@ async function verifyTag(tag) {
             }
         );
 
-        console.log('Tag verification result:', result);
+        console.log('Tag verification result:', result.rows.length);
 
         return result.length > 0;
     } catch (error) {
