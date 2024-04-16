@@ -8,7 +8,6 @@ import { RegisterStep3 } from './RegisterStep3.jsx'
 export function Register({ setCurrentPage }) {
     const [currentStep, setCurrentStep] = useState(1)
     const [divHeight, setDivHeight] = useState("full")
-    const content = null
 
     /* REGISTER BUSINESS */
     const [businessName, setBusinessName] = useState('')
@@ -30,8 +29,10 @@ export function Register({ setCurrentPage }) {
                     type: businessType,
                     tel: phoneNumber,
                 }),
-            });
+            })
             if (response.ok) {
+                const data = await response.json()
+                console.log('Negocio registrado:', data)
                 setDivHeight("zero")
                 setCurrentStep(3)
                 setTimeout(() => {
@@ -52,13 +53,13 @@ export function Register({ setCurrentPage }) {
                 (() => {
                     switch (currentStep) {
                         case 1:
-                            return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setBusinessName={setBusinessName} tag={tag} setTag={setTag} setPhoneNumber={setPhoneNumber} setBusinessType={setBusinessType} />
+                            return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setBusinessName={setBusinessName} setTag={setTag} setPhoneNumber={setPhoneNumber} setBusinessType={setBusinessType} businessName={businessName} tag={tag} phoneNumber={phoneNumber} businessType={businessType} />
                         case 2:
                             return <RegisterStep2 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setPassword={setPassword} handleRegisterBusiness={handleRegisterBusiness} />
                         case 3:
                             return <RegisterStep3 setCurrentPage={setCurrentPage} />
                         default:
-                            return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setBusinessName={setBusinessName} setTag={setTag} setPhoneNumber={setPhoneNumber} setBusinessType={setBusinessType} />
+                            return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setBusinessName={setBusinessName} setTag={setTag} setPhoneNumber={setPhoneNumber} setBusinessType={setBusinessType} businessName={businessName} tag={tag} phoneNumber={phoneNumber} businessType={businessType} />
                     }
                 })()
             }
