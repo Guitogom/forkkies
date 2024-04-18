@@ -104,19 +104,32 @@ function verificarToken(req, res, next) {
     // Extraer el token del encabezado de la solicitud
     const token = req.headers.authorization;
 
-    // Verificar si el token está presente
+    // Verificar si el token está presente y es válido
     if (!token) {
         return res.status(401).json({ mensaje: 'Token no proporcionado' });
     }
 
+    // Separar el token de la palabra "Bearer"
+    const tokenParts = token.split(' ');
+    if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
+        return res.status(401).json({ mensaje: 'Formato de token inválido' });
+    }
+    const tokenValue = tokenParts[1];
+
     try {
         // Verificar el token y decodificar su contenido
-        const decoded = jwt.verify(token, secretKey);
+        const decoded = jwt.verify(tokenValue, secretKey);
 
-        req.tag = decoded.tag;
+        // Verificar si el token contiene la información requerida
+        if (!decoded.tag) {
+            return res.status(401).json({ mensaje: 'Token incompleto: falta la etiqueta' });
+        }
 
         // Si el token es válido, puedes acceder a la información contenida en él
         console.log('Información del token:', decoded);
+
+        // Guardar la etiqueta en el objeto de solicitud para su uso posterior
+        req.tag = decoded.tag;
 
         // Continuar con la ejecución del siguiente middleware o controlador
         next();
@@ -125,6 +138,7 @@ function verificarToken(req, res, next) {
         return res.status(401).json({ mensaje: 'Token inválido' });
     }
 }
+
 
 
 //Rutas
@@ -170,6 +184,6 @@ app.get('/business', verificarToken, (req, res) => {
 });
 
 app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+    console.log('Server is running on http://147.182.207.78:3000');
 }
 );

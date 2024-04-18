@@ -80,6 +80,11 @@ export function Templates() {
                 <CreateCategory />
             </div>
             break
+        case 'products':
+            content = <div>
+                <h1>Products</h1>
+            </div>
+            break
     }
 
 

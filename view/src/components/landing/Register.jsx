@@ -34,7 +34,8 @@ export function Register({ setCurrentPage }) {
 
             if (response.ok) {
                 const data = await response.json()
-                localStorage.setItem('token', data.token)
+                console.log('Token generado:', data.token)
+                localStorage.setItem('session_token', data.token)
                 setDivHeight("zero")
                 setCurrentStep(3)
                 setTimeout(() => {

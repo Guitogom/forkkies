@@ -72,14 +72,15 @@
     background-color: var(--black);
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1500px) {
     .box {
         gap: 5px;
     }
 
     .box svg {
-        scale: 4;
+        display: none;
     }
+
 }
 
 @media screen and (max-width: 800px) {
@@ -98,8 +99,7 @@
     }
 
     .box svg {
-        scale: 3;
-        fill: var(--secondary-color);
+        display: none;
     }
 
     .box h2 {
