@@ -103,16 +103,21 @@ async function getBusiness(tag) {
 function verificarToken(req, res, next) {
     // Extraer el token del encabezado de la solicitud
     const token = req.headers.authorization;
+    console.log('Token middleware:', token);
 
     // Verificar si el token está presente
     if (!token) {
         return res.status(401).json({ mensaje: 'Token no proporcionado' });
     }
+    console.log('llega');
+    console.log(jwt.verify(token, process.env.JWT_SECRET));
 
     try {
         // Verificar el token y decodificar su contenido
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log('llega al try')
         req.tag = decoded.tag;
+        console.log('ReqTag:', req.tag);
 
         // Si el token es válido, puedes acceder a la información contenida en él
         console.log('Información del token:', decoded);
