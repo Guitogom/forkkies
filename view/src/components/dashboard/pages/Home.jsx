@@ -15,7 +15,7 @@ export function Home() {
         fetch('http://147.182.207.78:3000/business', {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `${token}`,
                 'Content-Type': 'application/json'
             },
         })
@@ -24,7 +24,7 @@ export function Home() {
                 if (!response.ok) {
                     throw new Error('Error al obtener los datos');
                 }
-                return
+                return response.json();
             })
     }
 
