@@ -103,33 +103,21 @@ async function getBusiness(tag) {
 function verificarToken(req, res, next) {
     // Extraer el token del encabezado de la solicitud
     const token = req.headers.authorization;
+    console.log('Token middleware:', token);
 
-    // Verificar si el token está presente y es válido
+    // Verificar si el token está presente
     if (!token) {
         return res.status(401).json({ mensaje: 'Token no proporcionado' });
     }
 
-    // Separar el token de la palabra "Bearer"
-    const tokenParts = token.split(' ');
-    if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
-        return res.status(401).json({ mensaje: 'Formato de token inválido' });
-    }
-    const tokenValue = tokenParts[1];
-
     try {
         // Verificar el token y decodificar su contenido
-        const decoded = jwt.verify(tokenValue, secretKey);
+        const decoded = jwt.verify(token, secretKey);
 
-        // Verificar si el token contiene la información requerida
-        if (!decoded.tag) {
-            return res.status(401).json({ mensaje: 'Token incompleto: falta la etiqueta' });
-        }
+        req.tag = decoded.tag;
 
         // Si el token es válido, puedes acceder a la información contenida en él
         console.log('Información del token:', decoded);
-
-        // Guardar la etiqueta en el objeto de solicitud para su uso posterior
-        req.tag = decoded.tag;
 
         // Continuar con la ejecución del siguiente middleware o controlador
         next();
@@ -138,7 +126,6 @@ function verificarToken(req, res, next) {
         return res.status(401).json({ mensaje: 'Token inválido' });
     }
 }
-
 
 
 //Rutas
@@ -171,6 +158,7 @@ app.post('/newbusiness', async (req, res) => {
 app.get('/business', verificarToken, (req, res) => {
     // Obtener el tag del token decodificado
     const tag = req.tag;
+    console.log('Tag:', tag);
 
     // Obtener la información del negocio
     getBusiness(tag)
