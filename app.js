@@ -109,12 +109,15 @@ function verificarToken(req, res, next) {
     if (!token) {
         return res.status(401).json({ mensaje: 'Token no proporcionado' });
     }
+    console.log('llega');
+    console.log(jwt.verify(token, secretKey));
 
     try {
         // Verificar el token y decodificar su contenido
         const decoded = jwt.verify(token, secretKey);
-
+        console.log('llega al try')
         req.tag = decoded.tag;
+        console.log('ReqTag:', req.tag);
 
         // Si el token es válido, puedes acceder a la información contenida en él
         console.log('Información del token:', decoded);
