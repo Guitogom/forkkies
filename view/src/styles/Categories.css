@@ -168,6 +168,8 @@
     border: none;
     text-align: center;
     font-family: var(--secondary-font);
+    background-color: transparent;
+    color: var(--secondary-color);
     font-size: 1.1rem;
 }
 

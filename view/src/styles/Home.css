@@ -83,6 +83,21 @@
 
 }
 
+@media screen and (max-width: 1300px) {
+    .box {
+        gap: 5px;
+    }
+
+    .box svg {
+        display: none;
+    }
+
+    .box h2 {
+        font-size: 1.8rem;
+    }
+
+}
+
 @media screen and (max-width: 800px) {
     .body-home {
         margin-bottom: 120px;

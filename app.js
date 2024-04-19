@@ -153,7 +153,6 @@ app.post('/newbusiness', async (req, res) => {
 app.get('/business', verificarToken, (req, res) => {
     // Obtener el tag del token decodificado
     const tag = req.tag;
-    console.log('Tag:', tag);
 
     // Obtener la información del negocio
     getBusiness(tag)

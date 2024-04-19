@@ -1,7 +1,7 @@
 import '../../../styles/Categories.css'
 import React, { useState } from 'react'
 
-export function CreateCategory() {
+export function CreateCategory({ setDisplay }) {
     const [categoryName, setCategoryName] = useState('New Category')
     const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
     const [backgroundSize, setBackgroundSize] = useState('60px')
@@ -35,9 +35,10 @@ export function CreateCategory() {
             return
         }
 
-
         setError('')
 
+        // APi call
+        setDisplay('categories')
     }
 
     return (

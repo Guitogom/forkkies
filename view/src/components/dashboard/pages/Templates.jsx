@@ -13,13 +13,7 @@ export function Templates({ business, setBusiness }) {
         { id: 1, name: "Menu Otoño", status: false, categories: [{ name: "Fish", img: "fish.jpg" }, { name: "Meat", img: "meat.jpg" }, { name: "Vegan", img: "vegan.jpg" }, { name: "Chips", img: "none" }, { name: "Drinks", img: "drinks.jpg" }] },
         { id: 2, name: "Menu Verano", status: true, categories: [{ name: "Fish", img: "fish.jpg" }, { name: "Meat", img: "meat.jpg" }, { name: "Vegan", img: "vegan.jpg" }] },
         { id: 3, name: "Menu Primavera", status: false, categories: [{ name: "Fish", img: "fish.jpg" }, { name: "Meat", img: "meat.jpg" }, { name: "Vegan", img: "vegan.jpg" }] },
-        { id: 4, name: "Menu Invierno", status: false },
-        { id: 5, name: "Menu Navidad", status: false },
-        { id: 6, name: "Menu Invierno", status: false },
-        { id: 7, name: "Menu Navidad", status: false },
-        { id: 8, name: "Menu Verano", status: false },
-        { id: 9, name: "Menu Otoño", status: false },
-        { id: 10, name: "Menu Primavera", status: false }
+        { id: 4, name: "Menu Invierno", status: false }
     ])
 
     const [template, setTemplate] = useState({})
@@ -77,7 +71,7 @@ export function Templates({ business, setBusiness }) {
             break
         case 'create-category':
             content = <div>
-                <CreateCategory />
+                <CreateCategory setDisplay={setDisplay} />
             </div>
             break
         case 'products':
