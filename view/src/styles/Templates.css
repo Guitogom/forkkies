@@ -149,12 +149,12 @@
 
 .green {
     color: var(--green);
-    filter: drop-shadow(0px 2px 15px var(--green));
+    /* filter: drop-shadow(0px 2px 15px var(--green)); */
 }
 
 .red {
     color: var(--red);
-    filter: drop-shadow(0px 2px 15px var(--red));
+    /* filter: drop-shadow(0px 2px 15px var(--red)); */
 }
 
 .template-add {
@@ -177,7 +177,7 @@
 }
 
 .template-add svg {
-    scale: 0.05;
+    scale: 0.04;
     opacity: 0.3;
 }
 

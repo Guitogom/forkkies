@@ -9,7 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 20px 20px 0px 0px;
+    /* border-radius: 20px 20px 0px 0px; */
     z-index: 100;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .selected {
-    transform: translateY(-10px);
+    /* transform: translateY(-10px); */
     scale: 1.2;
 }
 
