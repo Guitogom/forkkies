@@ -5,7 +5,7 @@ export function Properties() {
     const [properties, setProperties] = useState([])
 
     const handleAdd = () => {
-        alert('Menu para añadir')
+
     }
 
     return (

@@ -13,7 +13,7 @@ export function Register({ setCurrentPage }) {
     const [businessName, setBusinessName] = useState('')
     const [tag, setTag] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
-    const [businessType, setBusinessType] = useState('')
+    const [businessLocation, setBusinessLocation] = useState('')
     const [password, setPassword] = useState('')
 
     const handleRegisterBusiness = async () => {
@@ -26,7 +26,7 @@ export function Register({ setCurrentPage }) {
                 body: JSON.stringify({
                     name: businessName,
                     tag: tag,
-                    type: businessType,
+                    type: businessLocation,
                     tel: phoneNumber,
                 }),
             })
@@ -57,13 +57,13 @@ export function Register({ setCurrentPage }) {
                 (() => {
                     switch (currentStep) {
                         case 1:
-                            return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setBusinessName={setBusinessName} setTag={setTag} setPhoneNumber={setPhoneNumber} setBusinessType={setBusinessType} businessName={businessName} tag={tag} phoneNumber={phoneNumber} businessType={businessType} />
+                            return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setBusinessName={setBusinessName} setTag={setTag} setPhoneNumber={setPhoneNumber} setBusinessLocation={setBusinessLocation} businessName={businessName} tag={tag} phoneNumber={phoneNumber} businessLocation={businessLocation} />
                         case 2:
                             return <RegisterStep2 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setPassword={setPassword} handleRegisterBusiness={handleRegisterBusiness} />
                         case 3:
                             return <RegisterStep3 setCurrentPage={setCurrentPage} />
                         default:
-                            return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setBusinessName={setBusinessName} setTag={setTag} setPhoneNumber={setPhoneNumber} setBusinessType={setBusinessType} businessName={businessName} tag={tag} phoneNumber={phoneNumber} businessType={businessType} />
+                            return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setBusinessName={setBusinessName} setTag={setTag} setPhoneNumber={setPhoneNumber} setBusinessLocation={setBusinessLocation} businessName={businessName} tag={tag} phoneNumber={phoneNumber} businessLocation={businessLocation} />
                     }
                 })()
             }

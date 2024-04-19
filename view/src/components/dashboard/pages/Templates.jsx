@@ -34,7 +34,7 @@ export function Templates({ business, setBusiness }) {
     }
 
     const addTemplate = () => {
-        alert('Agregar template')
+
     }
 
     let content = null

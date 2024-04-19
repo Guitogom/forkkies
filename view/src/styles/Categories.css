@@ -199,6 +199,7 @@
     font-weight: bold;
     font-family: var(--primary-font);
     background-color: var(--forth-color);
+    color: #3C3C3C;
     font-size: 1.4rem;
     cursor: pointer;
     transition: all 0.3s linear;

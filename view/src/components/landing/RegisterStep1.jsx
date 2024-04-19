@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import debounce from "just-debounce-it"
 
-export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusinessName, setTag, setPhoneNumber, setBusinessType, businessName, tag, phoneNumber, businessType }) {
+export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusinessName, setTag, setPhoneNumber, setBusinessLocation, businessName, tag, phoneNumber, businessLocation }) {
     const [avalibleTag, setAvalibleTag] = useState(false)
     const [tagProvisional, setTagProvisional] = useState('')
 
@@ -18,8 +18,8 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
         setPhoneNumber(e.target.value)
     }
 
-    const handleTypeChange = (e) => {
-        setBusinessType(e.target.value)
+    const handleLocationChange = (e) => {
+        setBusinessLocation(e.target.value)
     }
 
     const handleRegister = () => {
@@ -38,8 +38,8 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
             return
         }
 
-        if (businessType.trim() === '') {
-            alert('Business type cannot be empty')
+        if (businessLocation.trim() === '') {
+            alert('Business location cannot be empty')
             return
         }
 
@@ -78,7 +78,7 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
                 {tagProvisional.length == 0 ? "Tag can't be empty" : (avalibleTag ? "This tag is available" : "This tag is in use")}</span></p>
             <input type="text" placeholder='tag' onInput={handleTagChange} className='register-input' />
             <input type="text" placeholder='phone number' onInput={handlePhoneChange} className='register-input' value={phoneNumber} />
-            <input type="text" placeholder='business type' onInput={handleTypeChange} className='register-input' value={businessType} />
+            <input type="text" placeholder='business location' onInput={handleLocationChange} className='register-input' value={businessLocation} />
             <button className='register-button' onClick={handleRegister}>Next</button>
         </div>
     )
