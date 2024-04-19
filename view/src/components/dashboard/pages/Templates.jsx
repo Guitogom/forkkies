@@ -7,7 +7,7 @@ import { Categories } from "./Categories.jsx"
 import { CreateCategory } from "./CreateCategory.jsx"
 import { PlusSVG } from "../../../assets/svg/PlusSVG.jsx"
 
-export function Templates() {
+export function Templates({ business, setBusiness }) {
     const [display, setDisplay] = useState('default')
     const [templates, setTemplates] = useState([
         { id: 1, name: "Menu Otoño", status: false, categories: [{ name: "Fish", img: "fish.jpg" }, { name: "Meat", img: "meat.jpg" }, { name: "Vegan", img: "vegan.jpg" }, { name: "Chips", img: "none" }, { name: "Drinks", img: "drinks.jpg" }] },

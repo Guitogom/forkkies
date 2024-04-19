@@ -24,7 +24,7 @@ function App() {
       content = <Register setCurrentPage={setCurrentPage} />
       break
     case 'dashboard':
-      content = <Dashboard />
+      content = <Dashboard setCurrentPage={setCurrentPage} />
       break
     default:
       content = <Landing setCurrentPage={setCurrentPage} />

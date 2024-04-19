@@ -42,3 +42,35 @@
   transform: rotate(-12deg);
   text-align: center;
 }
+
+.loading {
+  position: relative;
+  width: 100%;
+  height: 5px;
+  color: var(--primary-color);
+  font-size: 2rem;
+  font-weight: 700;
+  z-index: 0;
+}
+
+.inside {
+  position: absolute;
+  width: 20%;
+  height: 5px;
+  background-color: var(--primary-color);
+  z-index: 1;
+  transform: translateX(-100%);
+  animation: loading 0.5s ease-out infinite;
+}
+
+@keyframes loading {
+  from {
+    transform: translateX(0);
+    width: 20%;
+  }
+
+  to {
+    transform: translateX(100vw);
+    width: 40%;
+  }
+}

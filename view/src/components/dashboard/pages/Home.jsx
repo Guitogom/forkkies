@@ -8,25 +8,7 @@ import { ProductsSVG } from '../../../assets/svg/ProductsSVG'
 import { OrdersSVG } from "../../../assets/svg/OrdersSVG"
 import { AnalyticsSVG } from "../../../assets/svg/AnalyticsSVG"
 
-export function Home() {
-    if (localStorage.getItem('session_token') !== null) {
-        const token = localStorage.getItem('session_token')
-        console.log('Iniciando fetch')
-        fetch('http://147.182.207.78:3000/business', {
-            method: 'GET',
-            headers: {
-                'Authorization': `${token}`,
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(response => {
-                console.log('fetch Response:', response)
-                if (!response.ok) {
-                    throw new Error('Error al obtener los datos');
-                }
-                return response.json();
-            })
-    }
+export function Home({ business, setBusiness }) {
 
     return (
         <section>
