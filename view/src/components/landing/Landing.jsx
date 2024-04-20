@@ -1,4 +1,4 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
 import '../../styles/Landing.css'
 import { BackArrow } from '../../assets/svg/BackArrow.jsx'
 
@@ -7,6 +7,13 @@ export function Landing({ setCurrentPage }) {
         <main className='landing-base'>
             <div className="header-landing">
                 <aside className='side-landing left-side-landing'>
+                    <div className="box-landing"></div>
+                    <div className="box-landing">
+                        <div className="box-landing-cube"></div>
+                        <div className="box-landing-cube"></div>
+                        <div className="box-landing-cube"></div>
+                        <div className="box-landing-cube"></div>
+                    </div>
                     <div className="box-landing"></div>
                 </aside>
                 <section className='center-landing'>
