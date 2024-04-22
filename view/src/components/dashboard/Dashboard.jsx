@@ -18,6 +18,10 @@ export function Dashboard({ setCurrentPage }) {
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
+            const timeout = setTimeout(() => {
+                setCurrentPage('error')
+                console.error('Error: Timeout')
+            }, 8000)
             fetch('http://147.182.207.78:3000/business', {
                 method: 'GET',
                 headers: {
@@ -26,6 +30,7 @@ export function Dashboard({ setCurrentPage }) {
                 },
             })
                 .then(response => {
+                    clearTimeout(timeout)
                     if (!response.ok) {
                         throw new Error('Error al obtener los datos')
                     }
@@ -37,9 +42,10 @@ export function Dashboard({ setCurrentPage }) {
                     setLoaded(true)
                 })
                 .catch(error => {
+                    clearTimeout(timeout)
                     setCurrentPage('landing')
                     console.error('Error:', error.message)
-                });
+                })
         }
     }, [])
 

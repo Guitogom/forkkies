@@ -1,21 +1,56 @@
 /* eslint-disable react/prop-types */
 import '../../styles/Landing.css'
+import useMeasure from 'react-use-measure'
+import { animate, useMotionValue, motion } from 'framer-motion'
 import { BackArrow } from '../../assets/svg/BackArrow.jsx'
+import { useEffect } from 'react'
 
 export function Landing({ setCurrentPage }) {
+    let [ref, { height }] = useMeasure()
+    const yTranslation = useMotionValue(0)
+
+    useEffect(() => {
+        let controls
+        let finalPosition = -height / 2 - 8
+
+        controls = animate(yTranslation, [0, finalPosition], {
+            ease: "linear",
+            duration: 10,
+            repeat: Infinity,
+            repeatType: "reverse",
+            repeatDelay: 0,
+            delay: 0.5,
+        })
+
+        return controls.stop
+    }, [yTranslation, height])
+
+    const generateBoxes = (count, isCube = false) => {
+        const boxes = [];
+        for (let i = 0; i < count; i++) {
+            if (isCube) {
+                boxes.push(<div key={i} className="box-landing-cube"></div>);
+            } else {
+                boxes.push(<div key={i} className="box-landing"></div>);
+            }
+        }
+        return boxes;
+    };
+
     return (
         <main className='landing-base'>
             <div className="header-landing">
-                <aside className='side-landing left-side-landing'>
-                    <div className="box-landing"></div>
-                    <div className="box-landing">
-                        <div className="box-landing-cube"></div>
-                        <div className="box-landing-cube"></div>
-                        <div className="box-landing-cube"></div>
-                        <div className="box-landing-cube"></div>
+                <motion.div className='side-landing left-side-landing' ref={ref} style={{ y: yTranslation }}>
+                    {generateBoxes(2)}
+                    <div className="box-landing-four">
+                        {generateBoxes(4, true)}
                     </div>
-                    <div className="box-landing"></div>
-                </aside>
+                    {generateBoxes(2)}
+                    <div className="box-landing-four">
+                        {generateBoxes(4, true)}
+                    </div>
+                    {generateBoxes(2)}
+                </motion.div>
                 <section className='center-landing'>
                     <h1 className='title-landing'>FORKKIES</h1>
                     <h3 className='subtitle-landing'>Self-service online orders</h3>
@@ -24,7 +59,17 @@ export function Landing({ setCurrentPage }) {
                     <button onClick={() => setCurrentPage('login')} className='log-in-landing'>Log In</button>
                 </section>
                 <aside className='side-landing right-side-landing'>
-                    <div className="box-landing"></div>
+                    <motion.div className='side-landing left-side-landing' ref={ref} style={{ y: yTranslation }}>
+                        {generateBoxes(2)}
+                        <div className="box-landing-four">
+                            {generateBoxes(4, true)}
+                        </div>
+                        {generateBoxes(2)}
+                        <div className="box-landing-four">
+                            {generateBoxes(4, true)}
+                        </div>
+                        {generateBoxes(2)}
+                    </motion.div>
                 </aside>
             </div>
         </main>

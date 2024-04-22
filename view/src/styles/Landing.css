@@ -10,6 +10,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin: 0px 10px;
 }
 
 .left-side-landing {
@@ -23,6 +24,23 @@
 .box-landing {
     width: 250px;
     height: 250px;
+    background-color: #D9D9D9;
+    border-radius: 15px;
+}
+
+.box-landing-four {
+    width: 250px;
+    height: 250px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+}
+
+
+.box-landing-cube {
+    width: 120px;
+    height: 120px;
     background-color: #D9D9D9;
     border-radius: 15px;
 }
