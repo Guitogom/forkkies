@@ -8,22 +8,33 @@ import { useEffect } from 'react'
 export function Landing({ setCurrentPage }) {
     let [ref, { height }] = useMeasure()
     const yTranslation = useMotionValue(0)
+    const yTranslationReverse = useMotionValue(0)
 
     useEffect(() => {
         let controls
         let finalPosition = -height / 2 - 8
+        let finalPositionReverse = height / 2 - 8
 
         controls = animate(yTranslation, [0, finalPosition], {
-            ease: "linear",
+            ease: "easeInOut",
             duration: 10,
             repeat: Infinity,
             repeatType: "reverse",
-            repeatDelay: 0,
+            repeatDelay: 0.4,
+            delay: 0.5,
+        })
+
+        controls = animate(yTranslationReverse, [0, finalPositionReverse], {
+            ease: "easeInOut",
+            duration: 10,
+            repeat: Infinity,
+            repeatType: "reverse",
+            repeatDelay: 0.4,
             delay: 0.5,
         })
 
         return controls.stop
-    }, [yTranslation, height])
+    }, [yTranslation, yTranslationReverse, height])
 
     const generateBoxes = (count, isCube = false) => {
         const boxes = [];
@@ -58,20 +69,18 @@ export function Landing({ setCurrentPage }) {
                     <p>You already have an account</p>
                     <button onClick={() => setCurrentPage('login')} className='log-in-landing'>Log In</button>
                 </section>
-                <aside className='side-landing right-side-landing'>
-                    <motion.div className='side-landing left-side-landing' ref={ref} style={{ y: yTranslation }}>
-                        {generateBoxes(2)}
-                        <div className="box-landing-four">
-                            {generateBoxes(4, true)}
-                        </div>
-                        {generateBoxes(2)}
-                        <div className="box-landing-four">
-                            {generateBoxes(4, true)}
-                        </div>
-                        {generateBoxes(2)}
-                    </motion.div>
-                </aside>
+                <motion.div className='side-landing right-side-landing' ref={ref} style={{ y: yTranslationReverse }}>
+                    {generateBoxes(2)}
+                    <div className="box-landing-four">
+                        {generateBoxes(4, true)}
+                    </div>
+                    {generateBoxes(2)}
+                    <div className="box-landing-four">
+                        {generateBoxes(4, true)}
+                    </div>
+                    {generateBoxes(2)}
+                </motion.div>
             </div>
-        </main>
+        </main >
     )
 }
