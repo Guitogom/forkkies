@@ -2,18 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import { verifyTag, newBusiness, getBusiness, verificarToken } from './functions.js';
 
-
-dotenv.config();
-
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-const db = createClient({
-    url: "libsql://forkkies-tumse.turso.io",
-    authToken: process.env.DB_TOKEN
-});
-
 
 //Rutas
 app.get('/', (req, res) => {
