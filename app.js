@@ -44,21 +44,20 @@ async function verifyTag(tag) {
 
 async function newbusiness(business) {
     var incorrect_field = [];
-    //Verificamos que el tag no exista, si existe lo añadimos en incorrect_field
     if (await verifyTag(business.tag)) {
         incorrect_field.push("tag");
     }
-    //Verificamos que el nombre no sea nulo
-    if (business.name === null) {
+    if (!business.name) {
         incorrect_field.push("name");
     }
-    //Verificamos que el tupo de business no sea nulo
-    if (business.type === null) {
+    if (!business.type) {
         incorrect_field.push("type");
     }
-    //Verificamos que el telefono sea correcto
-    if (business.tel === null) {
+    if (!business.tel) {
         incorrect_field.push("phone");
+    }
+    if (!business.password) {
+        incorrect_field.push("password");
     }
 
     //Si no hay campos incorrectos, añadimos el negocio a la base de datos
@@ -66,7 +65,7 @@ async function newbusiness(business) {
         try {
             await db.execute(
                 {
-                    sql: 'INSERT INTO business (tag, name, type, tel) VALUES (:tag, :name, :type, :tel)',
+                    sql: 'INSERT INTO business (tag, name, type, tel, password) VALUES (:tag, :name, :type, :tel, :password)',
                     args: business
                 }
             );
