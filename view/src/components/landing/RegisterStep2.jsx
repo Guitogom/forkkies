@@ -24,6 +24,13 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
         }, 400)
     }
 
+    const handleCheckRegister = () => {
+        if (passwordMatch) {
+            handleRegisterBusiness()
+        }
+    }
+
+
     useEffect(() => {
         if (passwordProvisional === repeatPassword && passwordProvisional.length > 0) {
             setPasswordMatch(true)
@@ -39,7 +46,7 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
             <input type="password" name="" id="password" placeholder='create a business password...' className='register-input' onInput={handlePassword} />
             <input type="password" name="" id="repeat-password" placeholder='repeat the business password...' className='register-input' onInput={handleRepeatPassword} />
             <div className="password-feedback">{passwordMatch ? <CheckSVG /> : <WarnSVG />}</div>
-            <button className='register-button' onClick={handleRegisterBusiness}>Next</button>
+            <button className='register-button' onClick={handleCheckRegister}>Next</button>
         </div>
     )
 }
