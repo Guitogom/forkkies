@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { CheckSVG } from '../../assets/svg/CheckSVG'
 import { WarnSVG } from '../../assets/svg/WarnSVG'
+import sha256 from 'crypto-js/sha256'
+
 
 export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPassword, handleRegisterBusiness }) {
     const [passwordProvisional, setPasswordProvisional] = useState('')
@@ -34,7 +36,9 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
     useEffect(() => {
         if (passwordProvisional === repeatPassword && passwordProvisional.length > 0) {
             setPasswordMatch(true)
-            setPassword(passwordProvisional)
+            const hashedPassword = sha256(passwordProvisional).toString()
+            console.log('Password: ', hashedPassword)
+            setPassword(hashedPassword)
         } else {
             setPasswordMatch(false)
         }

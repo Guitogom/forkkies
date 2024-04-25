@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import '../../styles/Register.css'
 
+
 import { RegisterStep1 } from './RegisterStep1.jsx'
 import { RegisterStep2 } from './RegisterStep2.jsx'
 import { RegisterStep3 } from './RegisterStep3.jsx'
@@ -28,6 +29,7 @@ export function Register({ setCurrentPage }) {
                     tag: tag,
                     type: businessLocation,
                     tel: phoneNumber,
+                    password: password
                 }),
             })
 
