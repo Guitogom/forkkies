@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import "./../../styles/Header.css"
-import { getFetch } from '../../utils/fetch.js'
 
 export function Header({ business }) {
     const [businessName, setBusinessName] = useState(business.name)

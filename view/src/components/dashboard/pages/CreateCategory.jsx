@@ -20,6 +20,10 @@ export function CreateCategory({ setDisplay }) {
         }
     }
 
+    const handleGoBack = () => {
+        setDisplay('categories')
+    }
+
     const handleNameChange = (e) => {
         setCategoryName(e.target.value)
     }
@@ -43,6 +47,7 @@ export function CreateCategory({ setDisplay }) {
 
     return (
         <section className='new-category'>
+            <button className="goback-button" onClick={handleGoBack}>Go Back</button>
             <div className="image-input" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: `${backgroundSize}` }}>
                 <label htmlFor="categoryImage"></label>
                 <input type="file" name="categoryImage" id="categoryImage" onChange={handleImageChange} />

@@ -4,7 +4,6 @@ import { Landing } from './components/landing/Landing.jsx'
 import { Login } from './components/landing/Login.jsx'
 import { Register } from './components/landing/Register.jsx'
 import { Dashboard } from './components/dashboard/Dashboard.jsx'
-import { getFetch } from './utils/fetch.js'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('landing')
