@@ -21,7 +21,7 @@ export async function verifyTag(tag) {
 
     try {
         // Check if tag exists in the database
-        const result = await db.execute(
+        var result = await db.execute(
             {
                 sql: 'SELECT * FROM business WHERE tag = :tag',
                 args: { tag }
@@ -71,14 +71,14 @@ export async function newBusiness(business) {
         throw new Error('Campos incorrectos: ' + incorrect_field);
     }
     //Se genera un jwt con el tag del negocio
-    const token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
+    var token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
     console.log('Token generado funcion:', token)
     return token;
 };
 
 export function verificarToken(req, res, next) {
     // Extraer el token del encabezado de la solicitud
-    const token = req.headers.authorization;
+    var token = req.headers.authorization;
 
     // Verificar si el token está presente
     if (!token) {
@@ -87,7 +87,7 @@ export function verificarToken(req, res, next) {
 
     try {
         // Verificar el token y decodificar su contenido
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        var decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         req.tag = decoded.tag;
         // Continuar con la ejecución del siguiente middleware o controlador
@@ -101,7 +101,7 @@ export function verificarToken(req, res, next) {
 export async function logBusiness(business) {
     console.log('LogBusiness:', business);
     try {
-        const result = await db.execute(
+        var result = await db.execute(
             {
                 sql: 'SELECT * FROM business WHERE tag = :tag AND password = :password',
                 args: business
@@ -112,7 +112,7 @@ export async function logBusiness(business) {
             throw new Error('Usuario o contraseña incorrectos');
         }
 
-        const token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
+        let token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
         return token;
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
@@ -122,7 +122,7 @@ export async function logBusiness(business) {
 
 export async function getBusiness(tag) {
     try {
-        const result = await db.execute(
+        var result = await db.execute(
             {
                 sql: 'SELECT * FROM business WHERE tag = :tag',
                 args: { tag }
