@@ -140,7 +140,6 @@ export async function getBusiness(tag) {
 //Templates
 
 export async function getTemplates(tag) {
-    //Obtenemos el id y la active_template del negocio
     try {
         var result = await db.execute(
             {
@@ -152,11 +151,9 @@ export async function getTemplates(tag) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
     }
-    //Guardamos el id y la active_template en variables
     var id = result.rows[0].id;
     var active_template = result.rows[0].active_template;
 
-    //Obtenemos los templates del negocio
     try {
         var result = await db.execute(
             {
@@ -168,9 +165,35 @@ export async function getTemplates(tag) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
     }
-    //Guardamos los templates en una variable
     var templates = result.rows;
 
-    //Devolvemos los templates y el active_template
     return { templates, active_template };
+}
+
+export async function newTemplate(tag) {
+    try {
+        var result = await db.execute(
+            {
+                sql: 'SELECT id FROM business WHERE tag = :tag',
+                args: { tag }
+            }
+        );
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+    var id = result.rows[0].id;
+
+    try {
+        await db.execute(
+            {
+            sql: 'INSERT INTO template (business_id, name) VALUES (:id, "Unnamed template")',
+            args: { id }
+            }
+        );
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+    return true;
 }
