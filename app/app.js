@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getTemplates, newTemplate } from './functions.js';
+import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getTemplates, newTemplate, modifyTemplate } from './functions.js';
 
 const app = express();
 app.use(express.json());
@@ -79,6 +79,17 @@ app.get('/newtemplate', verificarToken, async (req, res) => {
     } catch (error) {
         console.error('Error al añadir template:', error.message);
         res.status(500).json({ error: 'Error al añadir template' });
+    }
+});
+
+app.post('/modifytemplate', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await modifyTemplate(tag, req.body);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al modificar template:', error.message);
+        res.status(500).json({ error: 'Error al modificar template' });
     }
 });
 

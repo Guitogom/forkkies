@@ -187,8 +187,8 @@ export async function newTemplate(tag) {
     try {
         await db.execute(
             {
-            sql: 'INSERT INTO template (business_id, name) VALUES (:id, "Unnamed template")',
-            args: { id }
+                sql: 'INSERT INTO template (business_id, name) VALUES (:id, "Unnamed template")',
+                args: { id }
             }
         );
     } catch (error) {
@@ -196,4 +196,66 @@ export async function newTemplate(tag) {
         throw new Error('Error en la base de datos: ' + error.message);
     }
     return true;
+}
+
+export async function modifyTemplate(tag, template) {
+    var template_id = template.id;
+    //Obtenemos el id del negocio
+    try {
+        var result = await db.execute(
+            {
+                sql: 'SELECT id FROM business WHERE tag = :tag',
+                args: { tag }
+            }
+        );
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+    var business_id = result.rows[0].id;
+
+    //Comprobamos que el template pertenezca al negocio
+    try {
+        var result = await db.execute(
+            {
+                sql: 'SELECT * FROM template WHERE id = :template_id AND business_id = :business_id',
+                args: { template_id, business_id }
+            }
+        );
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+    if (result.rows.length === 0) {
+        throw new Error('Template no encontrado');
+    } else {
+        if (template.name) {
+            try {
+                await db.execute(
+                    {
+                        sql: 'UPDATE template SET name = :name WHERE id = :id',
+                        args: template
+                    }
+                );
+                return "Name modified"
+            } catch (error) {
+                console.error('Error en la base de datos:', error.message);
+                throw new Error('Error en la base de datos: ' + error.message);
+            }
+        }
+        if (template.active) {
+            try {
+                await db.execute(
+                    {
+                        sql: 'UPDATE business SET active_template = :template_id WHERE id = :business_id',
+                        args: { template_id, business_id }
+                    }
+                );
+                return "Template activated"
+            } catch (error) {
+                console.error('Error en la base de datos:', error.message);
+                throw new Error('Error en la base de datos: ' + error.message);
+            }
+        }
+    }
 }
