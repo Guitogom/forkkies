@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness } from './functions.js';
+import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getTemplates } from './functions.js';
 
 const app = express();
 app.use(express.json());
@@ -60,9 +60,15 @@ app.get('/getbusiness', verificarToken, (req, res) => {
 
 //Templates
 
-app.get('/gettemplates', verificarToken, (req, res) => {
-    const tag = req.tag;
-    getTemplates(tag);
+app.get('/gettemplates', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var { templates, active_template } = await getTemplates(tag);
+        res.status(200).json({ templates, active_template });
+    } catch (error) {
+        console.error('Error al obtener templates:', error.message);
+        res.status(500).json({ error: 'Error al obtener templates' });
+    }
 });
 
 app.listen(3000, () => {
