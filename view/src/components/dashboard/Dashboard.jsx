@@ -22,7 +22,7 @@ export function Dashboard({ setCurrentPage }) {
                 setCurrentPage('error')
                 console.error('Error: Timeout')
             }, 8000)
-            fetch('http://147.182.207.78:3000/business', {
+            fetch('http://147.182.207.78:3000/getbusiness', {
                 method: 'GET',
                 headers: {
                     'Authorization': `${token}`,

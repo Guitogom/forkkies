@@ -119,6 +119,14 @@
     color: var(--secondary-color);
 }
 
+.login-error {
+    color: red;
+    font-size: 1rem;
+    font-family: var(--secondary-font);
+    margin: 10px 0;
+    height: 20px;
+}
+
 /* .full {
     height: fit-content;
 }

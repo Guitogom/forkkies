@@ -63,6 +63,7 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
                 setTag(tagProvisional)
             }
         } catch (error) {
+            setAvalibleTag(false)
             console.error('Error:', error)
         }
     }

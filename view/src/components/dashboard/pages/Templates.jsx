@@ -5,12 +5,13 @@ import '../../../styles/Templates.css'
 import { TemplateDisplay } from "./TemplateDisplay.jsx"
 import { Categories } from "./Categories.jsx"
 import { CreateCategory } from "./CreateCategory.jsx"
+import { Products } from "./Products.jsx"
 import { PlusSVG } from "../../../assets/svg/PlusSVG.jsx"
 
 export function Templates({ business, setBusiness }) {
     const [display, setDisplay] = useState('default')
     const [templates, setTemplates] = useState([
-        { id: 1, name: "Menu Otoño", status: false, categories: [{ name: "Fish", img: "fish.jpg" }, { name: "Meat", img: "meat.jpg" }, { name: "Vegan", img: "vegan.jpg" }, { name: "Chips", img: "none" }, { name: "Drinks", img: "drinks.jpg" }] },
+        { id: 1, name: "Menu Otoño", status: false, categories: [{ name: "Fish", img: "fish.jpg" }, { name: "Meat", img: "meat.jpg" }, { name: "Vegan", img: "vegan.jpg" }, { name: "Chips", img: "none" }, { name: "Drinks", img: "drinks.jpg" }], products: [{ name: "Salmon", img: "nose.jpg", category: "Fish" }] },
         { id: 2, name: "Menu Verano", status: true, categories: [{ name: "Fish", img: "fish.jpg" }, { name: "Meat", img: "meat.jpg" }, { name: "Vegan", img: "vegan.jpg" }] },
         { id: 3, name: "Menu Primavera", status: false, categories: [{ name: "Fish", img: "fish.jpg" }, { name: "Meat", img: "meat.jpg" }, { name: "Vegan", img: "vegan.jpg" }] },
         { id: 4, name: "Menu Invierno", status: false }
@@ -76,7 +77,7 @@ export function Templates({ business, setBusiness }) {
             break
         case 'products':
             content = <div>
-                <h1>Products</h1>
+                <Products setDisplay={setDisplay} />
             </div>
             break
     }
