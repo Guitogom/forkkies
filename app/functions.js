@@ -76,6 +76,27 @@ export async function newBusiness(business) {
     return token;
 };
 
+export async function logIn(business) {
+    try {
+        const result = await db.execute(
+            {
+                sql: 'SELECT * FROM business WHERE tag = :tag AND password = :password',
+                args: business
+            }
+        );
+
+        if (result.rows.length === 0) {
+            throw new Error('Usuario o contraseña incorrectos');
+        }
+
+        const token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
+        return token;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
 export async function getBusiness(tag) {
     try {
         const result = await db.execute(

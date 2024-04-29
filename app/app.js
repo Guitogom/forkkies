@@ -33,6 +33,15 @@ app.post('/newbusiness', async (req, res) => {
     }
 });
 
+app.post('/login', async (req, res) => {
+    try {
+        var token = await logIn(req.body);
+        res.status(200).json({ token: token });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 app.get('/business', verificarToken, (req, res) => {
     // Obtener el tag del token decodificado
     const tag = req.tag;
