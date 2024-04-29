@@ -98,24 +98,7 @@ export function verificarToken(req, res, next) {
     }
 }
 
-export async function getBusiness(tag) {
-    try {
-        const result = await db.execute(
-            {
-                sql: 'SELECT * FROM business WHERE tag = :tag',
-                args: { tag }
-            }
-        );
-
-        return result.rows[0];
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
-
-}
-
-export async function logIn(business) {
+export async function logBusiness(business) {
     try {
         const result = await db.execute(
             {
@@ -134,6 +117,23 @@ export async function logIn(business) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
     }
+}
+
+export async function getBusiness(tag) {
+    try {
+        const result = await db.execute(
+            {
+                sql: 'SELECT * FROM business WHERE tag = :tag',
+                args: { tag }
+            }
+        );
+
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+
 }
 
 //Templates

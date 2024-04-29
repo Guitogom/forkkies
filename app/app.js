@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, getBusiness, verificarToken } from './functions.js';
+import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness } from './functions.js';
 
 const app = express();
 app.use(express.json());
@@ -37,7 +37,7 @@ app.post('/newbusiness', async (req, res) => {
 
 app.get('/logbusiness', async (req, res) => {
     try {
-        var token = await logIn(req);
+        var token = await logBusiness(req);
         console.log('Token generado:', token)
         res.status(200).json({ token: token });
     } catch (error) {
