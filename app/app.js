@@ -42,11 +42,8 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.get('/business', verificarToken, (req, res) => {
-    // Obtener el tag del token decodificado
+app.get('/getbusiness', verificarToken, (req, res) => {
     const tag = req.tag;
-
-    // Obtener la información del negocio
     getBusiness(tag)
         .then((business) => {
             console.log('Business:', business);
