@@ -99,6 +99,7 @@ export function verificarToken(req, res, next) {
 }
 
 export async function logBusiness(business) {
+    console.log('LogBusiness:', business);
     try {
         const result = await db.execute(
             {
