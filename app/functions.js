@@ -76,7 +76,7 @@ export async function newBusiness(business) {
     return token;
 };
 
-export async function logBusiness(business) {
+export async function logIn(business) {
     try {
         const result = await db.execute(
             {
