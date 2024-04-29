@@ -12,6 +12,8 @@ app.get('/', (req, res) => {
 }
 );
 
+
+//Business
 app.get('/verifytag', async (req, res) => {
     try {
         const tag = req.query.tag;
@@ -33,20 +35,18 @@ app.post('/newbusiness', async (req, res) => {
     }
 });
 
-app.post('/login', async (req, res) => {
+app.get('/logbusiness', async (req, res) => {
     try {
-        var token = await logIn(req.body);
+        var token = await logIn(req);
+        console.log('Token generado:', token)
         res.status(200).json({ token: token });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/business', verificarToken, (req, res) => {
-    // Obtener el tag del token decodificado
+app.get('/getbusiness', verificarToken, (req, res) => {
     const tag = req.tag;
-
-    // Obtener la información del negocio
     getBusiness(tag)
         .then((business) => {
             console.log('Business:', business);
@@ -56,6 +56,13 @@ app.get('/business', verificarToken, (req, res) => {
             console.error('Error:', error.message);
             res.status(500).json({ error: error.message });
         });
+});
+
+//Templates
+
+app.get('/gettemplates', verificarToken, (req, res) => {
+    const tag = req.tag;
+    getTemplates(tag);
 });
 
 app.listen(3000, () => {
