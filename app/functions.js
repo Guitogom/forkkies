@@ -160,7 +160,7 @@ export async function getTemplates(tag) {
     try {
         var result = await db.execute(
             {
-                sql: 'SELECT * FROM templates WHERE business_id = :id',
+                sql: 'SELECT * FROM template WHERE business_id = :id',
                 args: { id }
             }
         );
