@@ -12,6 +12,8 @@ app.get('/', (req, res) => {
 }
 );
 
+
+//Business
 app.get('/verifytag', async (req, res) => {
     try {
         const tag = req.query.tag;
@@ -53,6 +55,13 @@ app.get('/getbusiness', verificarToken, (req, res) => {
             console.error('Error:', error.message);
             res.status(500).json({ error: error.message });
         });
+});
+
+//Templates
+
+app.get('/gettemplates', verificarToken, (req, res) => {
+    const tag = req.tag;
+    getTemplates(tag);
 });
 
 app.listen(3000, () => {

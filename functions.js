@@ -10,13 +10,13 @@ const db = createClient({
     authToken: process.env.DB_TOKEN
 });
 
+//Business
 export async function verifyTag(tag) {
     // Verifica que tag sea una cadena
     if (typeof tag !== 'string') {
         throw new Error('El parámetro tag debe ser una cadena');
     }
 
-    // Elimina espacios en blanco adicionales al principio y al final de la cadena
     tag = tag.trim();
 
     try {
@@ -76,44 +76,6 @@ export async function newBusiness(business) {
     return token;
 };
 
-export async function logIn(business) {
-    try {
-        const result = await db.execute(
-            {
-                sql: 'SELECT * FROM business WHERE tag = :tag AND password = :password',
-                args: business
-            }
-        );
-
-        if (result.rows.length === 0) {
-            throw new Error('Usuario o contraseña incorrectos');
-        }
-
-        const token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
-        return token;
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
-}
-
-export async function getBusiness(tag) {
-    try {
-        const result = await db.execute(
-            {
-                sql: 'SELECT * FROM business WHERE tag = :tag',
-                args: { tag }
-            }
-        );
-
-        return result.rows[0];
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
-
-}
-
 export function verificarToken(req, res, next) {
     // Extraer el token del encabezado de la solicitud
     const token = req.headers.authorization;
@@ -135,3 +97,43 @@ export function verificarToken(req, res, next) {
         return res.status(401).json({ mensaje: 'Token inválido' });
     }
 }
+
+export async function getBusiness(tag) {
+    try {
+        const result = await db.execute(
+            {
+                sql: 'SELECT * FROM business WHERE tag = :tag',
+                args: { tag }
+            }
+        );
+
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+
+}
+
+export async function logIn(business) {
+    try {
+        const result = await db.execute(
+            {
+                sql: 'SELECT * FROM business WHERE tag = :tag AND password = :password',
+                args: business
+            }
+        );
+
+        if (result.rows.length === 0) {
+            throw new Error('Usuario o contraseña incorrectos');
+        }
+
+        const token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
+        return token;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
+//Templates
