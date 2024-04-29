@@ -33,9 +33,9 @@ app.post('/newbusiness', async (req, res) => {
     }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/logbusiness', async (req, res) => {
     try {
-        var token = await logIn(req.body);
+        var token = await logBusiness(req.body);
         res.status(200).json({ token: token });
     } catch (error) {
         res.status(500).json({ error: error.message });
