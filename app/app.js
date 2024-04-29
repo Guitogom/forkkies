@@ -38,6 +38,7 @@ app.post('/newbusiness', async (req, res) => {
 app.get('/logbusiness', async (req, res) => {
     try {
         var token = await logIn(req);
+        console.log('Token generado:', token)
         res.status(200).json({ token: token });
     } catch (error) {
         res.status(500).json({ error: error.message });
