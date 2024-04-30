@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getTemplates, newTemplate, modifyTemplate } from './functions.js';
+import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate} from './functions.js';
 
 const app = express();
 app.use(express.json());
@@ -60,10 +60,10 @@ app.get('/getbusiness', verificarToken, (req, res) => {
 
 //Templates
 
-app.get('/gettemplates', verificarToken, async (req, res) => {
+app.get('/getalltemplates', verificarToken, async (req, res) => {
     try {
         var tag = req.tag;
-        var { templates, active_template } = await getTemplates(tag);
+        var { templates, active_template } = await getallTemplates(tag);
         res.status(200).json({ templates, active_template });
     } catch (error) {
         console.error('Error al obtener templates:', error.message);
@@ -90,6 +90,17 @@ app.post('/modifytemplate', verificarToken, async (req, res) => {
     } catch (error) {
         console.error('Error al modificar template:', error.message);
         res.status(500).json({ error: 'Error al modificar template' });
+    }
+});
+
+app.get('/gettemplate', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await getTemplate(tag, req.query.id);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al obtener template:', error.message);
+        res.status(500).json({ error: 'Error al obtener template' });
     }
 });
 

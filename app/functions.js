@@ -139,7 +139,7 @@ export async function getBusiness(tag) {
 
 //Templates
 
-export async function getTemplates(tag) {
+export async function getallTemplates(tag) {
     try {
         var result = await db.execute(
             {
@@ -198,64 +198,85 @@ export async function newTemplate(tag) {
     return true;
 }
 
+async function checkTemplateOwnership(tag, template_id) {
+    try {
+        var businessResult = await db.execute({
+            sql: 'SELECT id FROM business WHERE tag = :tag',
+            args: { tag }
+        });
+        var business_id = businessResult.rows[0].id;
+
+        var templateResult = await db.execute({
+            sql: 'SELECT * FROM template WHERE id = :template_id AND business_id = :business_id',
+            args: { template_id, business_id }
+        });
+
+        return templateResult.rows.length > 0;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
 export async function modifyTemplate(tag, template) {
     var template_id = template.id;
-    //Obtenemos el id del negocio
-    try {
-        var result = await db.execute(
-            {
-                sql: 'SELECT id FROM business WHERE tag = :tag',
-                args: { tag }
-            }
-        );
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
-    var business_id = result.rows[0].id;
 
-    //Comprobamos que el template pertenezca al negocio
-    try {
-        var result = await db.execute(
-            {
-                sql: 'SELECT * FROM template WHERE id = :template_id AND business_id = :business_id',
-                args: { template_id, business_id }
-            }
-        );
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
-    if (result.rows.length === 0) {
+    // Comprobamos que el template pertenezca al negocio
+    if (!(await checkTemplateOwnership(tag, template_id))) {
         throw new Error('Template no encontrado');
-    } else {
+    }
+
+    try {
         if (template.name) {
-            try {
-                await db.execute(
-                    {
-                        sql: 'UPDATE template SET name = :name WHERE id = :id',
-                        args: template
-                    }
-                );
-                return "Name modified"
-            } catch (error) {
-                console.error('Error en la base de datos:', error.message);
-                throw new Error('Error en la base de datos: ' + error.message);
-            }
+            await db.execute({
+                sql: 'UPDATE template SET name = :name WHERE id = :id',
+                args: template
+            });
+            return "Name modified";
         }
         if (template.active) {
-            try {
-                await db.execute(
-                    {
-                        sql: 'UPDATE business SET active_template = :template_id WHERE id = :business_id',
-                        args: { template_id, business_id }
-                    }
-                );
-                return "Template activated"
-            } catch (error) {
-                console.error('Error en la base de datos:', error.message);
-                throw new Error('Error en la base de datos: ' + error.message);
-            }
+            await db.execute({
+                sql: 'UPDATE business SET active_template = :template_id WHERE tag = :tag',
+                args: { template_id, tag }
+            });
+            return "Template activated";
         }
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
     }
+}
+
+
+export async function getTemplate(tag, template_id) {
+    // Comprobamos que el template pertenezca al negocio
+    if (!(await checkTemplateOwnership(tag, template_id))) {
+        throw new Error('Template no encontrado');
+    }
+    //Si pertenece, obtenemos el template
+    try {
+        var result = await db.execute({
+            sql: 'SELECT * FROM template WHERE id = :template_id',
+            args: { template_id }
+        });
+        var template = result.rows[0];
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+
+    //Obtenemos las categorias del template
+    try {
+        var result = await db.execute({
+            sql: 'SELECT * FROM category WHERE template_id = :template_id',
+            args: { template_id }
+        });
+        var categories = result.rows;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+
+    //Devolvemos el template con sus categorias
+    return { template, categories };
 }
