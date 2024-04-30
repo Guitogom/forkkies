@@ -242,9 +242,28 @@ export async function modifyTemplate(tag, template) {
             return "Template activated";
         }
         if (template.delete) {
+            template_id = template.id;
+            //Seleccionamos las categorias del template
+            var result = await db.execute({
+                sql: 'SELECT id FROM category WHERE template_id = :template_id',
+                args: { template_id }
+            });
+            //Eliminamos los registros de cat_product
+            for (var i = 0; i < result.rows.length; i++) {
+                await db.execute({
+                    sql: 'DELETE FROM cat_product WHERE category_id = :id',
+                    args: result.rows[i]
+                });
+            }
+            //Eliminamos las categorias
             await db.execute({
-                sql: 'DELETE FROM template WHERE id = :id',
-                args: template
+                sql: 'DELETE FROM category WHERE template_id = :template_id',
+                args: { template_id }
+            });
+            //Eliminamos el template
+            await db.execute({
+                sql: 'DELETE FROM template WHERE id = :template_id',
+                args: { template_id }
             });
             return "Template deleted";
         }
