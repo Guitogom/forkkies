@@ -309,3 +309,59 @@ export async function newCategory(tag, body) {
         throw new Error('Error en la base de datos: ' + error.message);
     }
 }
+
+export async function modifyCategory(tag, body) {
+    var category = body.category;
+    var template_id = body.template_id;
+
+    //Verificamos que el template pertenezca al negocio
+    if (!(await checkTemplateOwnership(tag, template_id))) {
+        throw new Error('Template no encontrado');
+    }
+
+    if (category.delete) {
+        //Eliminamos la categoria
+        try {
+            //Primero obtenemos los productos de la categoría
+            var result = await db.execute({
+                sql: 'SELECT product_id FROM cat_product WHERE category_id = :id',
+                args: category.id
+            });
+
+            //Los borramos de la tabla product
+            for (var i = 0; i < result.rows.length; i++) {
+                await db.execute({
+                    sql: 'DELETE FROM product WHERE id = :product_id',
+                    args: { product_id: result.rows[i].product_id }
+                });
+            }
+
+            //Borramos los registros de cat_product
+            await db.execute({
+                sql: 'DELETE FROM cat_product WHERE category_id = :id',
+                args: category_id
+            });
+
+            //Borramos la categoría
+            await db.execute({
+                sql: 'DELETE FROM category WHERE id = :id',
+                args: category_id
+            });
+
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+    } else {
+        //Modificamos la categoria con su nombre, imagen y el template al que pertenece
+        try {
+            await db.execute({
+                sql: 'UPDATE category SET name = :name, image = :image WHERE id = :id',
+                args: category
+            });
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+    }
+}

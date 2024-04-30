@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory } from './functions.js';
+import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory, newProduct, modifyProduct } from './functions.js';
 
 const app = express();
 app.use(express.json());
@@ -116,8 +116,18 @@ app.post('/newcategory', verificarToken, async (req, res) => {
     }
 });
 
+app.post('/modifycategory', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await modifyCategory(tag, req.body);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al modificar categoría:', error.message);
+        res.status(500).json({ error: 'Error al modificar categoría' });
+    }
+});
+
 app.listen(3000, () => {
     console.log('Server is running on http://147.182.207.78:3000');
 }
 );
-
