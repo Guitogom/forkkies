@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate} from './functions.js';
+import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory } from './functions.js';
 
 const app = express();
 app.use(express.json());
@@ -101,6 +101,18 @@ app.get('/gettemplate', verificarToken, async (req, res) => {
     } catch (error) {
         console.error('Error al obtener template:', error.message);
         res.status(500).json({ error: 'Error al obtener template' });
+    }
+});
+
+//Categories
+app.post('/newcategory', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await newCategory(tag, req.body);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al añadir categoría:', error.message);
+        res.status(500).json({ error: 'Error al añadir categoría' });
     }
 });
 

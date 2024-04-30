@@ -234,12 +234,19 @@ export async function modifyTemplate(tag, template) {
             });
             return "Name modified";
         }
-        if (template.active) {
+        if (template.activate) {
             await db.execute({
                 sql: 'UPDATE business SET active_template = :template_id WHERE tag = :tag',
                 args: { template_id, tag }
             });
             return "Template activated";
+        }
+        if (template.delete) {
+            await db.execute({
+                sql: 'DELETE FROM template WHERE id = :id',
+                args: template
+            });
+            return "Template deleted";
         }
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
@@ -279,4 +286,26 @@ export async function getTemplate(tag, template_id) {
 
     //Devolvemos el template con sus categorias
     return { template, categories };
+}
+
+//Categories
+export async function newCategory(tag, body) {
+    var category = body.category;
+    var template_id = body.template_id;
+
+    //Verificamos que el template pertenezca al negocio
+    if (!(await checkTemplateOwnership(tag, template_id))) {
+        throw new Error('Template no encontrado');
+    }
+
+    //Añadimos la categoria con su nombre, imagen y el template al que pertenece
+    try {
+        await db.execute({
+            sql: 'INSERT INTO category (name, image, template_id) VALUES (:name, :image, :template_id)',
+            args: { name: category.name, image: category.image, template_id }
+        });
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
 }
