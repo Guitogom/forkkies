@@ -278,33 +278,46 @@ export async function getTemplate(tag, template_id) {
     // Comprobamos que el template pertenezca al negocio
     if (!(await checkTemplateOwnership(tag, template_id))) {
         throw new Error('Template no encontrado');
-    }
-    //Si pertenece, obtenemos el template
-    try {
-        var result = await db.execute({
-            sql: 'SELECT * FROM template WHERE id = :template_id',
-            args: { template_id }
-        });
-        var template = result.rows[0];
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
+    } else {
+        //Si pertenece, obtenemos el template
+        try {
+            var result = await db.execute({
+                sql: 'SELECT * FROM template WHERE id = :template_id',
+                args: { template_id }
+            });
+            var template = result.rows[0];
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
 
-    //Obtenemos las categorias del template
-    try {
-        var result = await db.execute({
-            sql: 'SELECT * FROM category WHERE template_id = :template_id',
-            args: { template_id }
-        });
-        var categories = result.rows;
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
+        //Obtenemos el active_template del negocio
+        try {
+            var result = await db.execute({
+                sql: 'SELECT active_template FROM business WHERE tag = :tag',
+                args: { tag }
+            });
+            template.status = result.rows[0].active_template === template_id;
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
 
-    //Devolvemos el template con sus categorias
-    return { template, categories };
+        //Obtenemos las categorias del template
+        try {
+            var result = await db.execute({
+                sql: 'SELECT * FROM category WHERE template_id = :template_id',
+                args: { template_id }
+            });
+            var categories = result.rows;
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+
+        //Devolvemos el template con sus categorias
+        return { template, categories };
+    }
 }
 
 //Categories
@@ -367,6 +380,76 @@ export async function modifyCategory(tag, body) {
         } catch (error) {
             console.error('Error en la base de datos:', error.message);
             throw new Error('Error en la base de datos: ' + error.message);
+        }
+    }
+}
+
+//Products
+export async function modifyProduct(tag, body) {
+    var category_id = body.category_id;
+    var product = body.product;
+    var steps = body.steps;
+
+    if (!body.product.id) {
+        //Obtenemos el id_template de la categoria
+        try {
+            var result = await db.execute({
+                sql: 'SELECT template_id FROM category WHERE id = :category_id',
+                args: { category_id }
+            });
+            var template_id = result.rows[0].template_id;
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+
+        //Verificamos que el template pertenezca al negocio
+        if (!(await checkTemplateOwnership(tag, template_id))) {
+            throw new Error('Template no encontrado');
+        } else {
+            try {
+                var result = await db.execute({
+                    sql: 'INSERT INTO product (name, desc, price, image) VALUES (:name, :desc, :price, :image) RETURNING id',
+                    args: { name: product.name, desc: product.desc, price: product.price, image: product.image, category_id }
+                });
+                var product_id = result.rows[0].id;
+
+                //Añadimos el producto a la categoria
+                await db.execute({
+                    sql: 'INSERT INTO cat_product (category_id, product_id) VALUES (:category_id, :product_id)',
+                    args: { category_id, product_id }
+                });
+            } catch (error) {
+                console.error('Error en la base de datos:', error.message);
+                throw new Error('Error en la base de datos: ' + error.message);
+            }
+        }
+    } else {
+        var product_id = product.id;
+        try {
+            await db.execute({
+                sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, image = :image WHERE id = :id',
+                args: product
+            });
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+    }
+    //Recorremos los steps
+    for (var i = 0; i < steps.length; i++) {
+        var step = steps[i];
+        //Si el step no tiene id, lo añadimos
+        if (!step.id) {
+            try {
+                await db.execute({
+                    sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id)',
+                    args: { title: step.title, type: step.type, product_id }
+                });
+            } catch (error) {
+                console.error('Error en la base de datos:', error.message);
+                throw new Error('Error en la base de datos: ' + error.message);
+            }
         }
     }
 }
