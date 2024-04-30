@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory, newProduct, modifyProduct } from './functions.js';
+import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory} from './functions.js';
 
 const app = express();
 app.use(express.json());

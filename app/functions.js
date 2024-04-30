@@ -322,30 +322,16 @@ export async function modifyCategory(tag, body) {
     if (category.delete) {
         //Eliminamos la categoria
         try {
-            //Primero obtenemos los productos de la categoría
-            var result = await db.execute({
-                sql: 'SELECT product_id FROM cat_product WHERE category_id = :id',
-                args: category.id
-            });
-
-            //Los borramos de la tabla product
-            for (var i = 0; i < result.rows.length; i++) {
-                await db.execute({
-                    sql: 'DELETE FROM product WHERE id = :product_id',
-                    args: { product_id: result.rows[i].product_id }
-                });
-            }
-
             //Borramos los registros de cat_product
             await db.execute({
                 sql: 'DELETE FROM cat_product WHERE category_id = :id',
-                args: category_id
+                args: category.id
             });
 
             //Borramos la categoría
             await db.execute({
                 sql: 'DELETE FROM category WHERE id = :id',
-                args: category_id
+                args: category.id
             });
 
         } catch (error) {
