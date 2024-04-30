@@ -341,8 +341,8 @@ export async function newCategory(tag, body) {
     //Añadimos la categoria con su nombre, imagen y el template al que pertenece
     try {
         await db.execute({
-            sql: 'INSERT INTO category (name, image, template_id) VALUES (:name, :image, :template_id)',
-            args: { name: category.name, image: category.image, template_id }
+            sql: 'INSERT INTO category (name, img, template_id) VALUES (:name, :img, :template_id)',
+            args: { name: category.name, img: category.img, template_id }
         });
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
