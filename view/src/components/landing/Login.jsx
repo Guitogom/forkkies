@@ -1,27 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../styles/Login.css';
 import sha256 from 'crypto-js/sha256'
 
 export function Login({ setCurrentPage }) {
-    const [loginTag, setLoginTag] = useState('');
-    const [loginPassword, setLoginPassword] = useState('');
-    const [loginError, setLoginError] = useState('');
+    const [loginTag, setLoginTag] = useState('')
+    const [loginPassword, setLoginPassword] = useState('')
+    const [loginError, setLoginError] = useState('')
 
     const handleLogin = async () => {
         try {
             const hashedPassword = sha256(loginPassword).toString()
             const response = await fetch(`http://147.182.207.78:3000/logbusiness?tag=${loginTag}&password=${hashedPassword}`)
-            console.log(response)
-            console.log(hashedPassword)
             if (response.ok) {
-                setCurrentPage('dashboard');
+                const data = await response.json()
+                console.log('Token generado:', data.token)
+                localStorage.setItem('session_token', data.token)
+                setCurrentPage('dashboard')
             } else {
-                setLoginError('Tag and password do not match');
+                setLoginError('Tag and password do not match')
             }
         } catch (error) {
-            console.error('Error:', error.message);
+            console.error('Error:', error.message)
         }
     }
+
+    useEffect(() => {
+        if (localStorage.getItem('session_token') !== null) {
+            setCurrentPage('dashboard')
+        }
+    }, [])
 
     return (
         <div className='login-div'>
@@ -34,5 +41,5 @@ export function Login({ setCurrentPage }) {
             </div>
             <p className='login-register-link'>Don't have an account? <span onClick={() => setCurrentPage('register')}>Register</span></p>
         </div>
-    );
+    )
 }

@@ -233,6 +233,10 @@
 }
 
 @media screen and (max-width: 868px) {
+    .properties {
+        margin: 20px 0px;
+    }
+
     .template {
         flex-direction: column;
         padding: 20px;

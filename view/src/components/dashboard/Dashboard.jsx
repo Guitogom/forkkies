@@ -60,6 +60,7 @@ export function Dashboard({ setCurrentPage }) {
                     <Routes>
                         <Route path="/management" element={<Management business={business} setBusiness={setBusiness} />} />
                         <Route path="/templates" element={<Templates business={business} setBusiness={setBusiness} />} />
+                        <Route path="/templates/:id" element={<CreateCategory setDisplay={setDisplay} />} />
                         <Route path="/" element={<Home business={business} setBusiness={setBusiness} />} />
                         <Route path="/orders" element={<Orders business={business} setBusiness={setBusiness} />} />
                         <Route path="/analytics" element={<Analytics business={business} setBusiness={setBusiness} />} />

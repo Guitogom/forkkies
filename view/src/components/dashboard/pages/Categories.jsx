@@ -4,8 +4,8 @@ import { PlusSVG } from "../../../assets/svg/PlusSVG.jsx"
 import { Category } from "./Category.jsx"
 import { useEffect, useState } from "react"
 
-export function Categories({ template, setDisplay }) {
-    const [status, setStatus] = useState(template.status)
+export function Categories({ template, isActive, setDisplay }) {
+    const [status, setStatus] = useState(isActive)
     const [changeNameDisplay, setChangeNameDisplay] = useState('none')
     const [templateName, setTemplateName] = useState(template.name);
     const [nameError, setNameError] = useState('')
