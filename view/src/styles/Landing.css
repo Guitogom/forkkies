@@ -85,6 +85,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    text-decoration: none;
 }
 
 .get-started-landing svg {
@@ -109,6 +110,8 @@
 .log-in-landing {
     width: 240px;
     height: 50px;
+    padding: 10px;
+    text-align: center;
     font-size: 1.5rem;
     font-weight: bold;
     background-color: var(--secondary-color);
@@ -118,4 +121,5 @@
     font-family: var(--primary-font);
     cursor: pointer;
     transition: all 0.3s;
+    text-decoration: none;
 }

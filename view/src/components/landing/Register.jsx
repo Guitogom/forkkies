@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import '../../styles/Register.css'
-
+import { Link } from 'react-router-dom'
 
 import { RegisterStep1 } from './RegisterStep1.jsx'
 import { RegisterStep2 } from './RegisterStep2.jsx'
 import { RegisterStep3 } from './RegisterStep3.jsx'
 
-export function Register({ setCurrentPage }) {
+export function Register() {
     const [currentStep, setCurrentStep] = useState(1)
     const [divHeight, setDivHeight] = useState("full")
 
@@ -36,7 +36,6 @@ export function Register({ setCurrentPage }) {
 
             if (response.ok) {
                 const data = await response.json()
-                console.log('Token generado:', data.token)
                 localStorage.setItem('session_token', data.token)
                 setDivHeight("zero")
                 setCurrentStep(3)
@@ -63,13 +62,13 @@ export function Register({ setCurrentPage }) {
                         case 2:
                             return <RegisterStep2 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setPassword={setPassword} handleRegisterBusiness={handleRegisterBusiness} />
                         case 3:
-                            return <RegisterStep3 setCurrentPage={setCurrentPage} />
+                            return <RegisterStep3 />
                         default:
                             return <RegisterStep1 setCurrentStep={setCurrentStep} setDivHeight={setDivHeight} divHeight={divHeight} setBusinessName={setBusinessName} setTag={setTag} setPhoneNumber={setPhoneNumber} setBusinessLocation={setBusinessLocation} businessName={businessName} tag={tag} phoneNumber={phoneNumber} businessLocation={businessLocation} />
                     }
                 })()
             }
-            <p className='register-login-link'>Already have an account? <span onClick={() => setCurrentPage('login')} >Login</span></p>
+            <p className='register-login-link'>Already have an account? <Link to='/login' >Login</Link></p>
         </div>
     )
 }

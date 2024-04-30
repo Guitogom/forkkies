@@ -82,6 +82,8 @@
     cursor: pointer;
     transition: all 0.3s;
     font-weight: bold;
+    text-align: center;
+    text-decoration: none;
 }
 
 .register-button:hover {
@@ -113,7 +115,7 @@
     margin-top: 15px;
 }
 
-.register-login-link span {
+.register-login-link a {
     transition: color 0.3s;
     font-size: 1rem;
     color: var(--primary-color);
@@ -123,7 +125,7 @@
     cursor: pointer;
 }
 
-.register-login-link span:hover {
+.register-login-link a:hover {
     color: var(--secondary-color);
 }
 
