@@ -297,7 +297,8 @@ export async function getTemplate(tag, template_id) {
                 sql: 'SELECT active_template FROM business WHERE tag = :tag',
                 args: { tag }
             });
-            template.status = result.rows[0].active_template === template_id;
+            console.log('Active template:', result.rows[0].active_template);
+            template.status = result.rows[0].active_template == template_id;
         } catch (error) {
             console.error('Error en la base de datos:', error.message);
             throw new Error('Error en la base de datos: ' + error.message);
