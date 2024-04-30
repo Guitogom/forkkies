@@ -235,19 +235,18 @@ export async function modifyTemplate(tag, template) {
             return "Name modified";
         }
         if (template.activate) {
-            if (template.activate == 'false') {
-                await db.execute({
-                    sql: 'UPDATE business SET active_template = :template_id WHERE tag = :tag',
-                    args: { template_id, tag }
-                });
-                return "Template activated";
-            } else {
-                await db.execute({
-                    sql: 'UPDATE business SET active_template = NULL WHERE tag = :tag',
-                    args: { tag }
-                });
-                return "Template deactivated";
-            }
+            await db.execute({
+                sql: 'UPDATE business SET active_template = :template_id WHERE tag = :tag',
+                args: { template_id, tag }
+            });
+            return "Template activated";
+        }
+        if (template.deactivate) {
+            await db.execute({
+                sql: 'UPDATE business SET active_template = NULL WHERE tag = :tag',
+                args: { tag }
+            });
+            return "Template deactivated";
         }
         if (template.delete) {
             template_id = template.id;
