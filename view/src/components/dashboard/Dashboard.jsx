@@ -11,15 +11,17 @@ import { Home } from './pages/Home.jsx'
 import { Orders } from './pages/Orders.jsx'
 import { Analytics } from './pages/Analytics.jsx'
 import { Loading } from './Loading.jsx'
+import { Template } from "./pages/Template.jsx"
+import { CreateCategory } from "./pages/CreateCategory.jsx"
 
-export function Dashboard({ setCurrentPage }) {
+export function Dashboard() {
     const [loaded, setLoaded] = useState(false)
     const [business, setBusiness] = useState({})
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
             const timeout = setTimeout(() => {
-                setCurrentPage('error')
+                window.location.href = '/error'
                 console.error('Error: Timeout')
             }, 8000)
             fetch('http://147.182.207.78:3000/getbusiness', {
@@ -32,19 +34,18 @@ export function Dashboard({ setCurrentPage }) {
                 .then(response => {
                     clearTimeout(timeout)
                     if (!response.ok) {
-                        throw new Error('Error al obtener los datos')
+                        window.location.href = '/error'
                     }
                     return response.json()
                 })
                 .then(business => {
-                    console.log('Datos del negocio:', business)
                     setBusiness(business)
                     setLoaded(true)
                 })
                 .catch(error => {
                     clearTimeout(timeout)
-                    setCurrentPage('landing')
                     console.error('Error:', error.message)
+                    window.location.href = '/error'
                 })
         }
     }, [])
@@ -59,7 +60,8 @@ export function Dashboard({ setCurrentPage }) {
                 <Routes>
                     <Route path="/management" element={<Management business={business} setBusiness={setBusiness} />} />
                     <Route path="/templates" element={<Templates business={business} setBusiness={setBusiness} />} />
-                    <Route path="/templates/:id" element={<CreateCategory setDisplay={setDisplay} />} />
+                    <Route path="/t/:id" element={<Template />} />
+                    <Route path="/t/:id/newcategory" element={<CreateCategory />} />
                     <Route path="/" element={<Home business={business} setBusiness={setBusiness} />} />
                     <Route path="/orders" element={<Orders business={business} setBusiness={setBusiness} />} />
                     <Route path="/analytics" element={<Analytics business={business} setBusiness={setBusiness} />} />

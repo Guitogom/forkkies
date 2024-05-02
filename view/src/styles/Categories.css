@@ -27,48 +27,56 @@
     transform: translateY(-1px);
 }
 
-.goback-button {
+.template-goback-button {
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: var(--primary-font);
+    font-size: 1.1rem;
+    transition: all 0.2s linear;
+    color: var(--secondary-color);
+    background-color: var(--forth-color);
+    text-decoration: none;
+}
+
+.template-goback-button:hover {
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
+}
+
+.template-name-button {
     color: var(--secondary-color);
     background-color: var(--forth-color);
 }
 
-.goback-button:hover {
+.template-name-button:hover {
     filter: drop-shadow(1px 2px 4px var(--tertiary-color));
 }
 
-.name-button {
-    color: var(--secondary-color);
-    background-color: var(--forth-color);
-}
-
-.name-button:hover {
-    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
-}
-
-.delete-button {
+.template-delete-button {
     color: var(--forth-color);
     background-color: rgb(204, 60, 60);
 }
 
-.delete-button:hover {
+.template-delete-button:hover {
     filter: drop-shadow(1px 2px 4px var(--tertiary-color));
 }
 
-.set-online {
+.template-set-online {
     background-color: var(--green);
     color: var(--white);
 }
 
-.set-offline {
+.template-set-offline {
     background-color: var(--red);
     color: var(--white);
 }
 
-.set-online:hover {
+.template-set-online:hover {
     filter: drop-shadow(1px 2px 4px var(--green));
 }
 
-.set-offline:hover {
+.template-set-offline:hover {
     filter: drop-shadow(1px 2px 4px var(--red));
 }
 
@@ -257,7 +265,6 @@
     font-size: 1.2rem;
     font-weight: bold;
     text-align: center;
-
 }
 
 @media screen and (max-width: 1200px) {

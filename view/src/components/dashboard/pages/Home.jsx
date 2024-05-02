@@ -15,10 +15,10 @@ export function Home({ business, setBusiness }) {
             <Title title="Home" text="Home" />
             <div className="body-home">
                 <aside className="left-home">
-                    <Link to="/management" className="box"><ManagementSVG /><h2>Management</h2></Link>
-                    <Link to="/templates" className="box"><ProductsSVG /><h2>Templates</h2></Link>
-                    <Link to="/orders" className="box"><OrdersSVG /><h2>Orders</h2></Link>
-                    <Link to="/analytics" className="box"><AnalyticsSVG /><h2>Analytics</h2></Link>
+                    <Link to="/dashboard/management" className="box"><ManagementSVG /><h2>Management</h2></Link>
+                    <Link to="/dashboard/templates" className="box"><ProductsSVG /><h2>Templates</h2></Link>
+                    <Link to="/dashboard/orders" className="box"><OrdersSVG /><h2>Orders</h2></Link>
+                    <Link to="/dashboard/analytics" className="box"><AnalyticsSVG /><h2>Analytics</h2></Link>
                 </aside>
                 <aside className="right-home">
                     <p className="uppertext">Here is your preview</p>

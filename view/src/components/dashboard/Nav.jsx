@@ -15,11 +15,11 @@ export function Nav() {
     return (
         <nav className="business-nav">
             <ul>
-                <li title='Management' className={location.pathname.includes('/management') ? 'selected' : ''}><Link to="/management"><ManagementSVG /></Link></li>
-                <li title='Templates' className={location.pathname.includes('/templates') ? 'selected' : ''}><Link to="/templates"><ProductsSVG /></Link></li>
-                <li title='Home' className={location.pathname !== '/' ? '' : 'selected'}><Link to="/"><HomeSVG /></Link></li>
-                <li title='Orders' className={location.pathname.includes('/orders') ? 'selected' : ''}><Link to="/orders"><OrdersSVG /></Link></li>
-                <li title='Analytics' className={location.pathname.includes('/analytics') ? 'selected' : ''}><Link to="/analytics"><AnalyticsSVG /></Link></li>
+                <li title='Management' className={location.pathname.includes('/management') ? 'selected' : ''}><Link to="/dashboard/management"><ManagementSVG /></Link></li>
+                <li title='Templates' className={location.pathname.includes('/templates') ? 'selected' : ''}><Link to="/dashboard/templates"><ProductsSVG /></Link></li>
+                <li title='Home' className={location.pathname !== '/dashboard' ? '' : 'selected'}><Link to="/dashboard"><HomeSVG /></Link></li>
+                <li title='Orders' className={location.pathname.includes('/orders') ? 'selected' : ''}><Link to="/dashboard/orders"><OrdersSVG /></Link></li>
+                <li title='Analytics' className={location.pathname.includes('/analytics') ? 'selected' : ''}><Link to="/dashboard/analytics"><AnalyticsSVG /></Link></li>
             </ul>
         </nav>
     )

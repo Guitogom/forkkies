@@ -192,7 +192,7 @@
     justify-content: center;
     align-items: center;
     gap: 30px;
-    background-color: #adadadf5;
+    background-color: #2c2c2cef;
     text-decoration: none;
     font-family: var(--primary-font);
     transition: all 0.3s linear;
@@ -207,6 +207,8 @@
     text-align: center;
     font-family: var(--secondary-font);
     font-size: 1.1rem;
+    background-color: var(--forth-color);
+    color: var(--secondary-color);
 }
 
 .change-template-name input:focus,
@@ -221,6 +223,7 @@
     font-weight: bold;
     font-family: var(--primary-font);
     background-color: var(--forth-color);
+    color: var(--secondary-color);
     font-size: 1.4rem;
     cursor: pointer;
     transition: all 0.3s linear;

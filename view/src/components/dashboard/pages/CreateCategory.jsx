@@ -1,12 +1,14 @@
 import '../../../styles/Categories.css'
 import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-export function CreateCategory({ setDisplay }) {
+export function CreateCategory() {
     const [categoryName, setCategoryName] = useState('New Category')
     const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
     const [backgroundSize, setBackgroundSize] = useState('60px')
     const [inputBackground, setInputBackground] = useState('none')
     const [error, setError] = useState('')
+    const { id } = useParams()
 
     const handleImageChange = (e) => {
         const file = e.target.files[0]
@@ -18,10 +20,6 @@ export function CreateCategory({ setDisplay }) {
             }
             reader.readAsDataURL(file)
         }
-    }
-
-    const handleGoBack = () => {
-        setDisplay('categories')
     }
 
     const handleNameChange = (e) => {
@@ -41,13 +39,53 @@ export function CreateCategory({ setDisplay }) {
 
         setError('')
 
-        // APi call
-        setDisplay('categories')
+        if (localStorage.getItem('session_token') !== null) {
+            const token = localStorage.getItem('session_token')
+            const timeout = setTimeout(() => {
+                setCurrentPage('error')
+            }, 8000)
+
+            const file = backgroundImage
+            const reader = new FileReader()
+            reader.onload = () => {
+                const base64Image = reader.result.split(',')[1]
+
+                fetch('http://147.182.207.78:3000/newcategory', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ template_id: id, category: { name: categoryName, img: base64Image } })
+                })
+                    .then(response => {
+                        clearTimeout(timeout)
+                        if (!response.ok) {
+                            window.location.href = '/error'
+                        }
+                        return response.json()
+                    })
+                    .then(business => {
+                        console.log(business)
+                        setActiveTemplate(business.active_template)
+                        setTemplates(business.templates)
+                        setLoaded(true)
+                    })
+                    .catch(error => {
+                        clearTimeout(timeout)
+                        console.error('Error:', error.message)
+                        window.location.href = '/error'
+                    })
+            }
+            reader.readAsDataURL(file)
+        }
+
+        window.location.href = `/dashboard/t/${id}`
     }
+
 
     return (
         <section className='new-category'>
-            <button className="goback-button" onClick={handleGoBack}>Go Back</button>
             <div className="image-input" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: `${backgroundSize}` }}>
                 <label htmlFor="categoryImage"></label>
                 <input type="file" name="categoryImage" id="categoryImage" onChange={handleImageChange} />

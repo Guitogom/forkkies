@@ -63,6 +63,25 @@
   animation: loading 0.5s ease-out infinite;
 }
 
+.general-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.general-error h1 {
+  font-size: 10rem;
+  font-weight: 900;
+  color: var(--primary-color);
+}
+
+.general-error p {
+  font-size: 1.5rem;
+  color: #c0c0c0;
+}
+
 @keyframes loading {
   from {
     transform: translateX(0);
@@ -74,4 +93,3 @@
     width: 40%;
   }
 }
-

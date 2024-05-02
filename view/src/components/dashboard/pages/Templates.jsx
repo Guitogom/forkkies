@@ -4,7 +4,7 @@ import { Properties } from "./Properties.jsx"
 import '../../../styles/Templates.css'
 import { TemplateDisplay } from "./TemplateDisplay.jsx"
 import { Loading } from '../Loading.jsx'
-import { Categories } from "./Categories.jsx"
+
 import { CreateCategory } from "./CreateCategory.jsx"
 import { Products } from "./Products.jsx"
 import { PlusSVG } from "../../../assets/svg/PlusSVG.jsx"
@@ -12,6 +12,7 @@ import { PlusSVG } from "../../../assets/svg/PlusSVG.jsx"
 export function Templates({ business, setBusiness }) {
     const [loaded, setLoaded] = useState(false)
     const [display, setDisplay] = useState('default')
+    const [newTemplate, setNewTemplate] = useState(false)
     const [templates, setTemplates] = useState([])
     const [activeTemplate, setActiveTemplate] = useState(null)
     // { id: 1, name: "Menu Otoño", status: false, categories: [{ name: "Fish", img: "fish.jpg" }, { name: "Meat", img: "meat.jpg" }, { name: "Vegan", img: "vegan.jpg" }, { name: "Chips", img: "none" }, { name: "Drinks", img: "drinks.jpg" }], products: [{ name: "Salmon", img: "nose.jpg", category: "Fish" }] },
@@ -28,7 +29,6 @@ export function Templates({ business, setBusiness }) {
             const token = localStorage.getItem('session_token')
             const timeout = setTimeout(() => {
                 setCurrentPage('error')
-                console.error('Error: Timeout')
             }, 8000)
             fetch('http://147.182.207.78:3000/getalltemplates', {
                 method: 'GET',
@@ -40,12 +40,12 @@ export function Templates({ business, setBusiness }) {
                 .then(response => {
                     clearTimeout(timeout)
                     if (!response.ok) {
-                        throw new Error('Error al obtener los datos')
+                        window.location.href = '/error'
                     }
                     return response.json()
                 })
                 .then(business => {
-                    console.log('Datos del negocio:', business.templates)
+                    console.log(business)
                     setActiveTemplate(business.active_template)
                     setTemplates(business.templates)
                     setLoaded(true)
@@ -53,9 +53,10 @@ export function Templates({ business, setBusiness }) {
                 .catch(error => {
                     clearTimeout(timeout)
                     console.error('Error:', error.message)
+                    window.location.href = '/error'
                 })
         }
-    }, [])
+    }, [newTemplate])
 
     if (!loaded) return <Loading />
 
@@ -83,6 +84,14 @@ export function Templates({ business, setBusiness }) {
                 'Authorization': `${token}`,
                 'Content-Type': 'application/json'
             },
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Error al obtener los datos')
+            }
+            setNewTemplate(!newTemplate)
+        }
+        ).catch(error => {
+            console.error('Error:', error.message)
         })
     }
 
@@ -112,16 +121,6 @@ export function Templates({ business, setBusiness }) {
                         <Properties />
                     </aside>
                 </div>
-            </div>
-            break
-        case 'categories':
-            content = <div>
-                <Categories template={template} isActive={isActive} setDisplay={setDisplay} />
-            </div>
-            break
-        case 'create-category':
-            content = <div>
-                <CreateCategory setDisplay={setDisplay} />
             </div>
             break
         case 'products':
