@@ -59,7 +59,7 @@ export async function newBusiness(business) {
         try {
             await db.execute(
                 {
-                    sql: 'INSERT INTO business (tag, name, type, tel, password, color1, color2, color3, color4) VALUES (:tag, :name, :type, :tel, :password, "ADD861", "4D4D4D", "D9D9D9", "F9FBFD")',
+                    sql: 'INSERT INTO business (tag, name, type, tel, password, color1, color2, color3, color4) VALUES (:tag, :name, :type, :tel, :password, "#ADD861", "#4D4D4D", "#D9D9D9", "#F9FBFD")',
                     args: business
                 }
             );
