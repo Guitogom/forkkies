@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
-import { Title } from "../Title.jsx"
-import { Properties } from "./Properties.jsx"
-import '../../../styles/Templates.css'
+import { Title } from "../../Title.jsx"
+import { Properties } from "../Properties.jsx"
+import '../../../../styles/Templates.css'
 import { TemplateDisplay } from "./TemplateDisplay.jsx"
-import { Loading } from '../Loading.jsx'
+import { Loading } from '../../Loading.jsx'
 
 import { CreateCategory } from "./CreateCategory.jsx"
 import { Products } from "./Products.jsx"
-import { PlusSVG } from "../../../assets/svg/PlusSVG.jsx"
+import { PlusSVG } from "../../../../assets/svg/PlusSVG.jsx"
 
 export function Templates({ business, setBusiness }) {
     const [loaded, setLoaded] = useState(false)

@@ -1,7 +1,7 @@
 .management-flex {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -11,7 +11,82 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+}
+
+.management-inner h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    font-family: var(--primary-font);
+}
+
+.management-inner h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin: 10px 0px;
+}
+
+.management-inner p {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+.management-colors {
+    display: flex;
+    justify-content: start;
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
+    padding-right: 100px;
+}
+
+.management-colors div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.management-colors div:hover {
+    transform: translateY(-2px);
+}
+
+.management-colors label {
+    padding: 20px 100px;
+    text-wrap: nowrap;
+    text-shadow: 1px 0 #000, -2px 0 #000, 0 1px #000, 0 -2px #000,
+        1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--forth-color);
+    font-family: var(--secondary-font);
+}
+
+.management-colors input {
+    opacity: 0;
+    position: absolute;
+    left: 0px;
+}
+
+@media screen and (max-width: 968px) {
+    .management-inner {
+        width: 90%;
+    }
 }

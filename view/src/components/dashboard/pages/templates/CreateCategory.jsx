@@ -1,4 +1,4 @@
-import '../../../styles/Categories.css'
+import '../../../../styles/Categories.css'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
@@ -32,7 +32,7 @@ export function CreateCategory() {
             return
         }
 
-        if (backgroundImage === '/src/assets/media/camera.webp') {
+        if (!backgroundImage) {
             setError('Category image cannot be empty')
             return
         }
@@ -42,46 +42,47 @@ export function CreateCategory() {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
             const timeout = setTimeout(() => {
-                setCurrentPage('error')
+                window.location.href = '/error'
             }, 8000)
 
-            const file = backgroundImage
-            const reader = new FileReader()
-            reader.onload = () => {
-                const base64Image = reader.result.split(',')[1]
+            const formData = new FormData()
+            formData.append('template_id', id)
+            formData.append('name', categoryName)
+            formData.append('img', backgroundImage)
 
-                fetch('http://147.182.207.78:3000/newcategory', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ template_id: id, category: { name: categoryName, img: base64Image } })
-                })
-                    .then(response => {
-                        clearTimeout(timeout)
-                        if (!response.ok) {
-                            window.location.href = '/error'
-                        }
-                        return response.json()
-                    })
-                    .then(business => {
-                        console.log(business)
-                        setActiveTemplate(business.active_template)
-                        setTemplates(business.templates)
-                        setLoaded(true)
-                    })
-                    .catch(error => {
-                        clearTimeout(timeout)
-                        console.error('Error:', error.message)
+            fetch('http://147.182.207.78:3000/newcategory', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `${token}`,
+                    'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+                    'Content-Type': 'multipart/form-data'
+                },
+                body: formData,
+            })
+                .then(response => {
+                    clearTimeout(timeout)
+                    if (!response.ok) {
                         window.location.href = '/error'
-                    })
-            }
-            reader.readAsDataURL(file)
+                    }
+                    return response.json()
+                })
+                .then(business => {
+                    console.log(business)
+                    setActiveTemplate(business.active_template)
+                    setTemplates(business.templates)
+                    setLoaded(true)
+                })
+                .catch(error => {
+                    clearTimeout(timeout)
+                    console.error('Error:', error.message)
+                    window.location.href = '/error'
+                })
         }
 
         window.location.href = `/dashboard/t/${id}`
     }
+
+
 
 
     return (
@@ -93,6 +94,6 @@ export function CreateCategory() {
             <input type="text" placeholder='Category Name' value={categoryName} onChange={handleNameChange} style={{ backgroundColor: `${inputBackground}` }} />
             <p className='error-text'>{error}</p>
             <button onClick={handleSave} className='save-button'>Save</button>
-        </section >
+        </section>
     )
 }

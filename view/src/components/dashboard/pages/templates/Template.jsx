@@ -1,11 +1,11 @@
-import { Title } from "../Title.jsx"
-import '../../../styles/Categories.css'
-import { PlusSVG } from "../../../assets/svg/PlusSVG.jsx"
-import { Category } from "./Category.jsx"
+import { Title } from "../../Title.jsx"
+import '../../../../styles/Categories.css'
+import { PlusSVG } from "../../../../assets/svg/PlusSVG.jsx"
+import { CategoryDisplay } from "./CategoryDisplay.jsx"
 import { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { Loading } from '../Loading.jsx'
+import { Loading } from '../../Loading.jsx'
 
 export function Template() {
     const [loaded, setLoaded] = useState(false)
@@ -182,7 +182,7 @@ export function Template() {
                     template.length === 0 ? <p>No categories yet</p> :
                         categories.map((category, index) => {
                             return (
-                                <Category key={index} category={category} />
+                                <CategoryDisplay key={index} category={category} />
                             )
                         })
                 }

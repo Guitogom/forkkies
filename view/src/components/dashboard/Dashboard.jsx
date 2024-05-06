@@ -5,14 +5,15 @@ import { Header } from './Header.jsx'
 import { Nav } from './Nav.jsx'
 
 /* Pages */
-import { Management } from './pages/Management.jsx'
-import { Templates } from './pages/Templates.jsx'
+import { Management } from './pages/management/Management.jsx'
+import { Templates } from './pages/templates/Templates.jsx'
 import { Home } from './pages/Home.jsx'
-import { Orders } from './pages/Orders.jsx'
-import { Analytics } from './pages/Analytics.jsx'
+import { Orders } from './pages/orders/Orders.jsx'
+import { Analytics } from './pages/analytics/Analytics.jsx'
 import { Loading } from './Loading.jsx'
-import { Template } from "./pages/Template.jsx"
-import { CreateCategory } from "./pages/CreateCategory.jsx"
+import { Template } from "./pages/templates/Template.jsx"
+import { CreateCategory } from "./pages/templates/CreateCategory.jsx"
+import { Category } from "./pages/templates/Category.jsx"
 
 export function Dashboard() {
     const [loaded, setLoaded] = useState(false)
@@ -62,6 +63,7 @@ export function Dashboard() {
                     <Route path="/templates" element={<Templates business={business} setBusiness={setBusiness} />} />
                     <Route path="/t/:id" element={<Template />} />
                     <Route path="/t/:id/newcategory" element={<CreateCategory />} />
+                    <Route path="/t/:id/:category-id" element={<Category />} />
                     <Route path="/" element={<Home business={business} setBusiness={setBusiness} />} />
                     <Route path="/orders" element={<Orders business={business} setBusiness={setBusiness} />} />
                     <Route path="/analytics" element={<Analytics business={business} setBusiness={setBusiness} />} />
