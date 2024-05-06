@@ -2,13 +2,13 @@ import { useState } from "react"
 import { Title } from "../../Title"
 import '../../../../styles/Management.css'
 
-export function Management() {
-    const [businessTag, setBusinessTag] = useState('tagrandom')
+export function Management({ business, businessName, setBusinessName }) {
 
-    const [primary, setPrimary] = useState('#ADD861')
-    const [secondary, setSecondary] = useState('#4D4D4D')
-    const [action, setAction] = useState('#D9D9D9')
-    const [theme, setTheme] = useState('#F9FbFD')
+    console.log(business)
+    const [primary, setPrimary] = useState(business.color1)
+    const [secondary, setSecondary] = useState(business.color2)
+    const [action, setAction] = useState(business.color3)
+    const [theme, setTheme] = useState(business.color4)
 
     const changeColor = (color) => {
         switch (color) {
@@ -25,6 +25,16 @@ export function Management() {
         }
     }
 
+    const handleChangeName = (e) => {
+        setBusinessName(e.target.value)
+        // Fetch
+    }
+
+    const handleLogOut = () => {
+        localStorage.removeItem('session_token')
+        window.location.href = '/'
+    }
+
     return (
         <section>
             <Title title="Management" text="Management" />
@@ -33,8 +43,8 @@ export function Management() {
                     <h2>My business</h2>
                     <p>Manage your business</p>
                     <h3>Name</h3>
-                    <p>/{businessTag}</p>
-                    <input type="text" value={businessTag} onChange={(e) => setBusinessTag(e.target.value)} />
+                    <p>/{business.tag}</p>
+                    <input type="text" value={businessName} onChange={handleChangeName} />
                     <h3>Style</h3>
                     <p>Change your business colors by tapping on them</p>
                     <div className="management-colors">
@@ -44,6 +54,9 @@ export function Management() {
                         <div style={{ backgroundColor: theme }}><label htmlFor="change-theme-color">Theme Color</label><input type="color" name="change-theme-color" id="change-theme-color" onChange={changeColor(theme)} /></div>
                     </div>
                     <h3>Payment</h3>
+
+                    <h3>Business</h3>
+                    <button onClick={handleLogOut}>Log out</button>
                 </div>
                 <div className="management-inner">
                     <h2>Credentials</h2>

@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react'
 import "./../../styles/Header.css"
 
-export function Header({ business }) {
-    const [businessName, setBusinessName] = useState(business.name)
-    const [businessType, setBusinessType] = useState(business.type)
-    const [businessStatus, setBusinessStatus] = useState(business.active_template)
+export function Header({ businessName, businessType, businessStatus }) {
 
     return (
         <header className="business-header">

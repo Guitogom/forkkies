@@ -18,6 +18,11 @@ import { Category } from "./pages/templates/Category.jsx"
 export function Dashboard() {
     const [loaded, setLoaded] = useState(false)
     const [business, setBusiness] = useState({})
+
+    const [businessName, setBusinessName] = useState(business.name)
+    const [businessType, setBusinessType] = useState(business.type)
+    const [businessStatus, setBusinessStatus] = useState(business.active_template)
+
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
@@ -41,6 +46,9 @@ export function Dashboard() {
                 })
                 .then(business => {
                     setBusiness(business)
+                    setBusinessName(business.name)
+                    setBusinessType(business.type)
+                    setBusinessStatus(business.active_template)
                     setLoaded(true)
                 })
                 .catch(error => {
@@ -56,13 +64,13 @@ export function Dashboard() {
 
     return (
         <main>
-            <Header business={business} />
+            <Header business={business} businessName={businessName} businessType={businessType} businessStatus={businessStatus} />
             <section className="screen">
                 <Routes>
-                    <Route path="/management" element={<Management business={business} setBusiness={setBusiness} />} />
+                    <Route path="/management" element={<Management business={business} setBusiness={setBusiness} businessName={businessName} setBusinessName={setBusinessName} />} />
                     <Route path="/templates" element={<Templates business={business} setBusiness={setBusiness} />} />
-                    <Route path="/t/:id" element={<Template />} />
-                    <Route path="/t/:id/newcategory" element={<CreateCategory />} />
+                    <Route path="/t/:id" element={<Template business={business} setBusiness={setBusiness} />} />
+                    <Route path="/t/:id/newcategory" element={<CreateCategory business={business} setBusiness={setBusiness} />} />
                     <Route path="/t/:id/:category-id" element={<Category />} />
                     <Route path="/" element={<Home business={business} setBusiness={setBusiness} />} />
                     <Route path="/orders" element={<Orders business={business} setBusiness={setBusiness} />} />

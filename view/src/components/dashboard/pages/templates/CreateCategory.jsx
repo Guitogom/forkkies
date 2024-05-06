@@ -1,5 +1,5 @@
 import '../../../../styles/Categories.css'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 export function CreateCategory() {
@@ -26,13 +26,13 @@ export function CreateCategory() {
         setCategoryName(e.target.value)
     }
 
-    const handleSave = () => {
+    const handleSaveCategory = () => {
         if (categoryName.trim() === '') {
             setError('Category name cannot be empty')
             return
         }
 
-        if (!backgroundImage) {
+        if (backgroundImage === '/src/assets/media/camera.webp') {
             setError('Category image cannot be empty')
             return
         }
@@ -41,48 +41,41 @@ export function CreateCategory() {
 
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                window.location.href = '/error'
-            }, 8000)
 
-            const formData = new FormData()
-            formData.append('template_id', id)
-            formData.append('name', categoryName)
-            formData.append('img', backgroundImage)
-
-            fetch('http://147.182.207.78:3000/newcategory', {
+            fetch('http://147.182.207.78:3000/newcat', {
                 method: 'POST',
                 headers: {
                     'Authorization': `${token}`,
-                    'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'application/json'
                 },
-                body: formData,
+                body: JSON.stringify({ template_id: id, category: { name: categoryName, img: backgroundImage } })
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
                         window.location.href = '/error'
                     }
                     return response.json()
                 })
-                .then(business => {
-                    console.log(business)
-                    setActiveTemplate(business.active_template)
-                    setTemplates(business.templates)
-                    setLoaded(true)
+                .then(data => {
+                    console.log(data)
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
-                    console.error('Error:', error.message)
+                    console.error('Error en el fetch:', error.message)
+                    console.log('Error:', error);
+                    console.log('Error message:', error.message);
+                    console.log('Error stack:', error.stack);
+                    console.log('Error name:', error.name);
+                    console.log('Error code:', error.code);
+                    console.log('Error status:', error.status);
+                    console.log('Error response:', error.response);
+                    console.log('Error data:', error.data);
+                    console.log('Error config:', error.config);
                     window.location.href = '/error'
                 })
         }
 
-        window.location.href = `/dashboard/t/${id}`
+        // window.location.href = `/dashboard/t/${id}`
     }
-
-
 
 
     return (
@@ -93,7 +86,7 @@ export function CreateCategory() {
             </div>
             <input type="text" placeholder='Category Name' value={categoryName} onChange={handleNameChange} style={{ backgroundColor: `${inputBackground}` }} />
             <p className='error-text'>{error}</p>
-            <button onClick={handleSave} className='save-button'>Save</button>
+            <button onClick={handleSaveCategory} className='save-button'>Save</button>
         </section>
     )
 }
