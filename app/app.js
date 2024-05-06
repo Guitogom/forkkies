@@ -1,17 +1,16 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory} from './functions.js';
+import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory} from './functions.js';
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 //Rutas
-app.get('/', (req, res) => {
+app.get('/', (res) => {
     res.sendStatus(200).json({ message: `Hey, this is the backend!` });
 }
 );
-
 
 //Business
 app.get('/verifytag', async (req, res) => {
@@ -32,6 +31,17 @@ app.post('/newbusiness', async (req, res) => {
         res.status(200).json({ token: token });
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+app.post('/modifybusiness', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await modifyBusiness(tag, req.body);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al modificar negocio:', error.message);
+        res.status(500).json({ error: 'Error al modificar negocio' });
     }
 });
 
@@ -106,6 +116,7 @@ app.get('/gettemplate', verificarToken, async (req, res) => {
 
 //Categories
 app.post('/newcategory', verificarToken, async (req, res) => {
+    console.log('req.body:', req.body)
     try {
         var tag = req.tag;
         var result = await newCategory(tag, req.body);

@@ -59,7 +59,7 @@ export async function newBusiness(business) {
         try {
             await db.execute(
                 {
-                    sql: 'INSERT INTO business (tag, name, type, tel, password) VALUES (:tag, :name, :type, :tel, :password)',
+                    sql: 'INSERT INTO business (tag, name, type, tel, password, color1, color2, color3, color4) VALUES (:tag, :name, :type, :tel, :password, "ADD861", "4D4D4D", "D9D9D9", "F9FBFD")',
                     args: business
                 }
             );
@@ -114,6 +114,112 @@ export async function logBusiness(business) {
 
         let token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
         return token;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
+export async function modifyBusiness(tag, business) {
+    business.tag = tag;
+    try {
+        if (business.name) {
+            await db.execute(
+                {
+                    sql: 'UPDATE business SET name = :name WHERE tag = :tag',
+                    args: business
+                }
+            );
+            return "Name modified";
+        }
+        if (business.tel) {
+            await db.execute(
+                {
+                    sql: 'UPDATE business SET tel = :tel WHERE tag = :tag',
+                    args: business
+                }
+            );
+            return "Phone modified";
+        }
+        if (business.password) {
+            await db.execute(
+                {
+                    sql: 'UPDATE business SET password = :password WHERE tag = :tag',
+                    args: business
+                }
+            );
+            return "Password modified";
+        }
+        if (business.delete) {
+            //Modificamos el tag del business a inactive
+            await db.execute(
+                {
+                    sql: 'UPDATE business SET tag = "deleted" WHERE tag = :tag',
+                    args: { tag }
+                }
+            );
+            return "Business deleted";
+        }
+
+        if (business.color1) {
+            await db.execute(
+                {
+                    sql: 'UPDATE business SET color1 = :color1 WHERE tag = :tag',
+                    args: business
+                }
+            );
+            return "Color1 modified";
+        }
+
+        if (business.color2) {
+            await db.execute(
+                {
+                    sql: 'UPDATE business SET color2 = :color2 WHERE tag = :tag',
+                    args: business
+                }
+            );
+            return "Color2 modified";
+        }
+
+        if (business.color3) {
+            await db.execute(
+                {
+                    sql: 'UPDATE business SET color3 = :color3 WHERE tag = :tag',
+                    args: business
+                }
+            );
+            return "Color3 modified";
+        }
+
+        if (business.color4) {
+            await db.execute(
+                {
+                    sql: 'UPDATE business SET color4 = :color4 WHERE tag = :tag',
+                    args: business
+                }
+            );
+            return "Color4 modified";
+        }
+
+        if (business.iban) {
+            await db.execute(
+                {
+                    sql: 'UPDATE business SET IBAN = :iban WHERE tag = :tag',
+                    args: business
+                }
+            );
+            return "Iban modified";
+        }
+
+        if (business.landing_img) {
+            await db.execute(
+                {
+                    sql: 'UPDATE business SET landing_img = :landing_img WHERE tag = :tag',
+                    args: business
+                }
+            );
+            return "Landing image modified";
+        }
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);

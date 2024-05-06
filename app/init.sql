@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS business (
     color1 TEXT,
     color2 TEXT,
     color3 TEXT,
+    color4 TEXT,
     IBAN TEXT,
     active_template INTEGER
 );
