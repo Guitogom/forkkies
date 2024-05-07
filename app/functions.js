@@ -504,23 +504,23 @@ export async function modifyProduct(tag, body) {
     var product = body.product;
     var steps = body.steps;
 
-    if (!body.product.id) {
-        //Obtenemos el id_template de la categoria
-        try {
-            var result = await db.execute({
-                sql: 'SELECT template_id FROM category WHERE id = :category_id',
-                args: { category_id }
-            });
-            var template_id = result.rows[0].template_id;
-        } catch (error) {
-            console.error('Error en la base de datos:', error.message);
-            throw new Error('Error en la base de datos: ' + error.message);
-        }
+    //Obtenemos el id_template de la categoria
+    try {
+        var result = await db.execute({
+            sql: 'SELECT template_id FROM category WHERE id = :category_id',
+            args: { category_id }
+        });
+        var template_id = result.rows[0].template_id;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
 
-        //Verificamos que el template pertenezca al negocio
-        if (!(await checkTemplateOwnership(tag, template_id))) {
-            throw new Error('Template no encontrado');
-        } else {
+    //Verificamos que el template pertenezca al negocio
+    if (!(await checkTemplateOwnership(tag, template_id))) {
+        throw new Error('Template no encontrado');
+    } else {
+        if (!body.product.id) {
             try {
                 var result = await db.execute({
                     sql: 'INSERT INTO product (name, desc, price, image) VALUES (:name, :desc, :price, :image) RETURNING id',
@@ -537,32 +537,99 @@ export async function modifyProduct(tag, body) {
                 console.error('Error en la base de datos:', error.message);
                 throw new Error('Error en la base de datos: ' + error.message);
             }
-        }
-    } else {
-        var product_id = product.id;
-        try {
-            await db.execute({
-                sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, image = :image WHERE id = :id',
-                args: product
-            });
-        } catch (error) {
-            console.error('Error en la base de datos:', error.message);
-            throw new Error('Error en la base de datos: ' + error.message);
-        }
-    }
-    //Recorremos los steps
-    for (var i = 0; i < steps.length; i++) {
-        var step = steps[i];
-        //Si el step no tiene id, lo añadimos
-        if (!step.id) {
+        } else {
+            var product_id = product.id;
+            //Verificamos que el producto pertenezca a la categoria
             try {
-                await db.execute({
-                    sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id)',
-                    args: { title: step.title, type: step.type, product_id }
+                var result = await db.execute({
+                    sql: 'SELECT * FROM cat_product WHERE category_id = :category_id AND product_id = :product_id',
+                    args: { category_id, product_id }
                 });
+                if (result.rows.length === 0) {
+                    throw new Error('El producto no pertenece a la categoria');
+                } else {
+                    try {
+                        await db.execute({
+                            sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, image = :image WHERE id = :id',
+                            args: product
+                        });
+                    } catch (error) {
+                        console.error('Error en la base de datos:', error.message);
+                        throw new Error('Error en la base de datos: ' + error.message);
+                    }
+                }
             } catch (error) {
                 console.error('Error en la base de datos:', error.message);
                 throw new Error('Error en la base de datos: ' + error.message);
+            }
+        }
+        //Recorremos los steps
+        for (var i = 0; i < steps.length; i++) {
+            var step = steps[i];
+            //Si el step no tiene id, lo añadimos
+            if (!step.id) {
+                try {
+                    var result = await db.execute({
+                        sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id) RETURNING id',
+                        args: { title: step.title, type: step.type, product_id }
+                    });
+                    var step_id = result.rows[0].id;
+                } catch (error) {
+                    console.error('Error en la base de datos:', error.message);
+                    throw new Error('Error en la base de datos: ' + error.message);
+                }
+            } else {
+                var step_id = step.id;
+                try {
+                    await db.execute({
+                        sql: 'UPDATE step SET title = :title, type = :type WHERE id = :id AND product_id = :product_id',
+                        args: { title: step.title, type: step.type, id: step_id, product_id }
+                    });
+                } catch (error) {
+                    console.error('Error en la base de datos:', error.message);
+                    throw new Error('Error en la base de datos: ' + error.message);
+                }
+            }
+
+            if (step.specials) {
+                //Recorremos los specials
+                for (var j = 0; j < step.specials.length; j++) {
+                    var special = step.specials[j];
+                    //Si el special no tiene id, lo añadimos
+                    if (!special.id) {
+                        try {
+                            await db.execute({
+                                sql: 'INSERT INTO special (name, price_changer, img, step_id) VALUES (:name, :price_changer, :img, :step_id)',
+                                args: { name: special.name, price_changer: special.price_changer, img: special.img, step_id }
+                            });
+                        } catch (error) {
+                            console.error('Error en la base de datos:', error.message);
+                            throw new Error('Error en la base de datos: ' + error.message);
+                        }
+                    } else {
+                        if (special.delete) {
+                            try {
+                                await db.execute({
+                                    sql: 'DELETE FROM special WHERE id = :id AND step_id = :step_id',
+                                    args: { id: special.id, step_id }
+                                });
+                            } catch (error) {
+                                console.error('Error en la base de datos:', error.message);
+                                throw new Error('Error en la base de datos: ' + error.message);
+                            }
+                        } else {
+                            try {
+                                await db.execute({
+                                    sql: 'UPDATE special SET name = :name, price_changer = :price_changer, img = :img WHERE id = :id AND step_id = :step_id',
+                                    args: { name: special.name, price_changer: special.price_changer, img: special.img, id: special.id, step_id }
+                                });
+                            } catch (error) {
+                                console.error('Error en la base de datos:', error.message);
+                                throw new Error('Error en la base de datos: ' + error.message);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
