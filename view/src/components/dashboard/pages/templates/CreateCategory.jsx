@@ -28,54 +28,50 @@ export function CreateCategory() {
 
     const handleSaveCategory = () => {
         if (categoryName.trim() === '') {
-            setError('Category name cannot be empty')
-            return
+            setError('Category name cannot be empty');
+            return;
         }
 
         if (backgroundImage === '/src/assets/media/camera.webp') {
-            setError('Category image cannot be empty')
-            return
+            setError('Category image cannot be empty');
+            return;
         }
 
-        setError('')
+        setError('');
 
         if (localStorage.getItem('session_token') !== null) {
-            const token = localStorage.getItem('session_token')
+            const token = localStorage.getItem('session_token');
+
+            const formData = new FormData()
+            formData.append('template_id', id)
+            formData.append('category[name]', categoryName)
+            formData.append('category[img]', backgroundImage)
 
             fetch('http://147.182.207.78:3000/newcat', {
                 method: 'POST',
                 headers: {
                     'Authorization': `${token}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'multipart/form-data'
                 },
-                body: JSON.stringify({ template_id: id, category: { name: categoryName, img: backgroundImage } })
+                body: formData
             })
                 .then(response => {
                     if (!response.ok) {
-                        window.location.href = '/error'
+                        throw new Error('La solicitud no fue exitosa');
                     }
-                    return response.json()
+                    return response.json();
                 })
                 .then(data => {
-                    console.log(data)
+                    console.log(data);
                 })
                 .catch(error => {
-                    console.error('Error en el fetch:', error.message)
-                    console.log('Error:', error);
-                    console.log('Error message:', error.message);
-                    console.log('Error stack:', error.stack);
-                    console.log('Error name:', error.name);
-                    console.log('Error code:', error.code);
-                    console.log('Error status:', error.status);
-                    console.log('Error response:', error.response);
-                    console.log('Error data:', error.data);
-                    console.log('Error config:', error.config);
-                    window.location.href = '/error'
-                })
+                    console.error('Error en el fetch:', error.message);
+                    window.location.href = '/error';
+                });
         }
-
         // window.location.href = `/dashboard/t/${id}`
     }
+
 
 
     return (
