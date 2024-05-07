@@ -93,6 +93,7 @@ app.get('/newtemplate', verificarToken, async (req, res) => {
 });
 
 app.post('/modifytemplate', verificarToken, async (req, res) => {
+    console.log('req.body:', req.body)
     try {
         var tag = req.tag;
         var result = await modifyTemplate(tag, req.body);
@@ -115,7 +116,7 @@ app.get('/gettemplate', verificarToken, async (req, res) => {
 });
 
 //Categories
-app.post('/newcat', verificarToken, async (req, res) => {
+app.post('/newcategory', verificarToken, async (req, res) => {
     console.log('req.body:', req.body)
     try {
         var tag = req.tag;
