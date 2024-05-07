@@ -546,7 +546,7 @@ export async function modifyCategory(tag, body) {
         //Modificamos la categoria con su nombre, imagen y el template al que pertenece
         try {
             await db.execute({
-                sql: 'UPDATE category SET name = :name, image = :image WHERE id = :id',
+                sql: 'UPDATE category SET name = :name, img = :img WHERE id = :id',
                 args: category
             });
         } catch (error) {
