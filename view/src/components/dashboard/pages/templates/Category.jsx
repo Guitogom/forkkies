@@ -14,12 +14,37 @@ export function Category() {
     const [category, setCategory] = useState([])
     const [products, setProducts] = useState([])
 
-    const changeCategoryName = () => {
-        console.log('Change name')
+    const modifyCategory = () => {
+        window.location.href = `/dashboard/t/${id}/cp/${c_id}`
     }
 
     const handleCategoryDelete = () => {
-        console.log('Delete category')
+        if (localStorage.getItem('session_token') !== null) {
+            const token = localStorage.getItem('session_token')
+            const timeout = setTimeout(() => {
+                window.location.href = '/error'
+            }, 6000)
+            fetch('http://147.182.207.78:3000/modifycategory', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ template_id: id, category: { id: c_id, delete: true } })
+            })
+                .then(response => {
+                    clearTimeout(timeout)
+                    if (!response.ok) {
+                        window.location.href = '/error'
+                    }
+                    window.location.href = `/dashboard/t/${id}`
+                })
+                .catch(error => {
+                    clearTimeout(timeout)
+                    console.error('Error:', error.message)
+                    window.location.href = '/error'
+                })
+        }
     }
 
     const handleCreateProduct = () => {
@@ -70,7 +95,7 @@ export function Category() {
 
             <Title title="Templates" text={`${categoryName}`} />
             <div className="template-options">
-                <button className="template-name-button" onClick={changeCategoryName}>Modify Category</button>
+                <button className="template-name-button" onClick={modifyCategory}>Modify Category</button>
                 <div className="template-options-div">
                     <button className="template-delete-button" onClick={handleCategoryDelete}>Delete Category</button>
                     <Link className="template-goback-button" to={`/dashboard/t/${id}`}>Go Back</Link></div>

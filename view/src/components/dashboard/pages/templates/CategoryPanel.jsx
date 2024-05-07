@@ -1,8 +1,10 @@
 import '../../../../styles/Categories.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { Loading } from '../../Loading.jsx'
 
 export function CategoryPanel() {
+    const [loaded, setLoaded] = useState(false)
     const [categoryName, setCategoryName] = useState('')
     const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
     const [backgroundSize, setBackgroundSize] = useState('60px')
@@ -12,35 +14,42 @@ export function CategoryPanel() {
     const { id } = useParams()
     const { c_id } = useParams()
 
-    if (c_id !== 'new') {
-        const token = localStorage.getItem('session_token')
-        const timeout = setTimeout(() => {
-            window.location.href = '/error'
-        }, 6000)
-        fetch(`http://147.182.207.78:3000/getcategory?id=${c_id}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `${token}`,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-                clearTimeout(timeout)
-                if (!response.ok) {
-                    window.location.href = '/error'
-                }
-                return response.json()
-            })
-            .then(response => {
-                setCategoryName(response.result.category.name)
-                setBackgroundImage(`data:image/jpeg;base64,${response.result.category.img}`)
-            })
-            .catch(error => {
-                clearTimeout(timeout)
-                console.error('Error:', error.message)
+    useEffect(() => {
+        if (c_id !== 'new' && !loaded) {
+            const token = localStorage.getItem('session_token')
+            const timeout = setTimeout(() => {
                 window.location.href = '/error'
+            }, 6000)
+            fetch(`http://147.182.207.78:3000/getcategory?id=${c_id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `${token}`,
+                    'Content-Type': 'application/json'
+                }
             })
-    }
+                .then(response => {
+                    clearTimeout(timeout)
+                    if (!response.ok) {
+                        window.location.href = '/error'
+                    }
+                    return response.json()
+                })
+                .then(response => {
+                    setCategoryName(response.result.category.name)
+                    setBackgroundImage(`data:image/jpeg;base64,${response.result.category.img}`)
+                    setBackgroundSize('cover')
+                    setImageAEnviar(response.result.category.img)
+                    setLoaded(true)
+                })
+                .catch(error => {
+                    clearTimeout(timeout)
+                    console.error('Error:', error.message)
+                    window.location.href = '/error'
+                })
+        } else {
+            setLoaded(true)
+        }
+    }, [])
 
     const handleImageChange = (e) => {
         const file = e.target.files[0]
@@ -62,12 +71,12 @@ export function CategoryPanel() {
 
     const handleSaveCategory = () => {
         if (categoryName.trim() === '') {
-            setError('Category name cannot be empty');
+            setError('Category name cannot be empty')
             return;
         }
 
         if (backgroundImage === '/src/assets/media/camera.webp') {
-            setError('Category image cannot be empty');
+            setError('Category image cannot be empty')
             return;
         }
 
@@ -77,34 +86,57 @@ export function CategoryPanel() {
             const token = localStorage.getItem('session_token')
             const timeout = setTimeout(() => {
                 window.location.href = '/error'
-                console.error('Error: Timeout')
             }, 8000)
 
-            fetch(`http://147.182.207.78:3000/newcategory`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ template_id: id, category: { name: categoryName, img: imagenAEnviar } })
-            })
-                .then(response => {
-                    clearTimeout(timeout)
-                    if (!response.ok) {
+            if (c_id === 'new') {
+                fetch(`http://147.182.207.78:3000/newcategory`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ template_id: id, category: { name: categoryName, img: imagenAEnviar } })
+                })
+                    .then(response => {
+                        clearTimeout(timeout)
+                        if (!response.ok) {
+                            window.location.href = '/error'
+                        } else {
+                            window.location.href = `/dashboard/t/${id}`
+                        }
+                    })
+                    .catch(error => {
+                        clearTimeout(timeout)
+                        console.error('Error:', error.message)
                         window.location.href = '/error'
-                    } else {
-                        window.location.href = `/dashboard/t/${id}`
-                    }
+                    })
+            } else {
+                fetch(`http://147.182.207.78:3000/modifycategory`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ template_id: id, category: { id: c_id, name: categoryName, img: imagenAEnviar } })
                 })
-                .catch(error => {
-                    clearTimeout(timeout)
-                    console.error('Error:', error.message)
-                    window.location.href = '/error'
-                })
+                    .then(response => {
+                        clearTimeout(timeout)
+                        if (!response.ok) {
+                            window.location.href = '/error'
+                        } else {
+                            window.location.href = `/dashboard/t/${id}`
+                        }
+                    })
+                    .catch(error => {
+                        clearTimeout(timeout)
+                        console.error('Error:', error.message)
+                        window.location.href = '/error'
+                    })
+            }
         }
     }
 
-
+    if (!loaded) return <Loading />
 
     return (
         <section className='new-category'>
