@@ -456,6 +456,64 @@ export async function newCategory(tag, body) {
     }
 }
 
+export async function getCategory(tag, category_id) {
+    //Obtenemos el id_template de la categoria
+    try {
+        var result = await db.execute({
+            sql: 'SELECT template_id FROM category WHERE id = :category_id',
+            args: { category_id }
+        });
+        var template_id = result.rows[0].template_id;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+    //Verifivamos que el template pertenezca al negocio
+    if (!(await checkTemplateOwnership(tag, template_id))) {
+        throw new Error('No tienes acceso a esta categoria');
+    } else {
+        //Obtenemos la categoria
+        try {
+            var result = await db.execute({
+                sql: 'SELECT * FROM category WHERE id = :category_id',
+                args: { category_id }
+            });
+            var category = result.rows[0];
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+
+        //Obtenemos los productos de la categoria
+        try {
+            var result = await db.execute({
+                sql: 'SELECT product_id FROM cat_product WHERE category_id = :category_id',
+                args: { category_id }
+            });
+            var products_id = result.rows;
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+        //Obtenemos el name, img de cada producto y lo vocamos a una array
+        var products = [];
+        for (var i = 0; i < products_id.length; i++) {
+            try {
+                var result = await db.execute({
+                    sql: 'SELECT id, name, image FROM product WHERE id = :product_id',
+                    args: products_id[i]
+                });
+                products.push(result.rows[0]);
+            } catch (error) {
+                console.error('Error en la base de datos:', error.message);
+                throw new Error('Error en la base de datos: ' + error.message);
+            }
+        }
+        //Devolvemos la categoria con sus productos
+        return { category, products };
+    }
+}
+
 export async function modifyCategory(tag, body) {
     var category = body.category;
     var template_id = body.template_id;

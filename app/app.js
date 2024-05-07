@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory } from './functions.js';
+import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, getCategory, modifyCategory } from './functions.js';
 
 const app = express();
 
@@ -131,6 +131,17 @@ app.post('/newcategory', verificarToken, async (req, res) => {
     } catch (error) {
         console.error('Error al añadir categoría:', error.message);
         res.status(500).json({ error: 'Error al añadir categoría' });
+    }
+});
+
+app.get('/getcategory', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await getCategory(tag, req.query.id);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al obtener categoría:', error.message);
+        res.status(500).json({ error: 'Error al obtener categoría' });
     }
 });
 
