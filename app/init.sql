@@ -1,3 +1,30 @@
+-- Eliminar todas las tablas si existen
+DROP TABLE IF EXISTS order_special;
+
+DROP TABLE IF EXISTS order_product;
+
+DROP TABLE IF EXISTS order_table;
+
+DROP TABLE IF EXISTS cat_product;
+
+DROP TABLE IF EXISTS category;
+
+DROP TABLE IF EXISTS template;
+
+DROP TABLE IF EXISTS special;
+
+DROP TABLE IF EXISTS step;
+
+DROP TABLE IF EXISTS product_properties;
+
+DROP TABLE IF EXISTS product;
+
+DROP TABLE IF EXISTS properties;
+
+DROP TABLE IF EXISTS users;
+
+DROP TABLE IF EXISTS business;
+
 -- Tabla 'business'
 CREATE TABLE IF NOT EXISTS business (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -8,7 +35,7 @@ CREATE TABLE IF NOT EXISTS business (
     tel TEXT,
     email TEXT,
     logo TEXT,
-    landing_img TEXT,
+    landing_img BLOB,
     color1 TEXT,
     color2 TEXT,
     color3 TEXT,
@@ -31,7 +58,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS properties (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
-    img TEXT,
+    img BLOB,
     business_id INTEGER,
     FOREIGN KEY(business_id) REFERENCES business(id)
 );
@@ -42,7 +69,7 @@ CREATE TABLE IF NOT EXISTS product (
     name TEXT,
     desc TEXT,
     price REAL,
-    img TEXT
+    img BLOB
 );
 
 -- Tabla 'product_properties'
@@ -68,7 +95,7 @@ CREATE TABLE IF NOT EXISTS special (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     price_changer REAL,
-    img TEXT,
+    img BLOB,
     step_id INTEGER,
     FOREIGN KEY(step_id) REFERENCES step(id)
 );
@@ -85,7 +112,7 @@ CREATE TABLE IF NOT EXISTS template (
 CREATE TABLE IF NOT EXISTS category (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
-    img TEXT,
+    img BLOB,
     template_id INTEGER,
     FOREIGN KEY(template_id) REFERENCES template(id)
 );
