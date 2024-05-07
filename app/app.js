@@ -1,9 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory} from './functions.js';
+import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory } from './functions.js';
 
 const app = express();
-app.use(express.json());
+
+// Middleware para analizar los cuerpos de las solicitudes JSON con límite de tamaño
+app.use(express.json({ limit: '50mb' }));
+
+// Middleware para analizar los cuerpos de las solicitudes URL codificadas con límite de tamaño
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cors());
 
 //Rutas
@@ -116,6 +121,7 @@ app.get('/gettemplate', verificarToken, async (req, res) => {
 });
 
 //Categories
+
 app.post('/newcategory', verificarToken, async (req, res) => {
     console.log('req.body:', req.body)
     try {
