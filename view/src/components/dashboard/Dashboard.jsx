@@ -29,7 +29,7 @@ export function Dashboard() {
             const timeout = setTimeout(() => {
                 window.location.href = '/error'
                 console.error('Error: Timeout')
-            }, 8000)
+            }, 6000)
             fetch('http://147.182.207.78:3000/getbusiness', {
                 method: 'GET',
                 headers: {
@@ -56,7 +56,9 @@ export function Dashboard() {
                     console.error('Error:', error.message)
                     window.location.href = '/error'
                 })
+
         }
+
     }, [])
 
     if (!loaded) return <Loading />

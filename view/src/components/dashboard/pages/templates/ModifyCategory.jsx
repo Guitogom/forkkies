@@ -84,7 +84,7 @@ export function CreateCategory() {
             </div>
             <input type="text" placeholder='Category Name' value={categoryName} onChange={handleNameChange} style={{ backgroundColor: `${inputBackground}` }} />
             <p className='error-text'>{error}</p>
-            <button onClick={handleSaveCategory} className='save-button'>Save</button>
+            <button onClick={handleSaveCategory} className='save-button'>Change</button>
         </section>
     )
 }
