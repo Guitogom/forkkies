@@ -475,7 +475,7 @@ export async function getCategory(tag, category_id) {
         //Obtenemos la categoria
         try {
             var result = await db.execute({
-                sql: 'SELECT * FROM category WHERE id = :category_id',
+                sql: 'SELECT name, img FROM category WHERE id = :category_id',
                 args: { category_id }
             });
             var category = result.rows[0];

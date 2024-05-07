@@ -138,6 +138,7 @@ app.get('/getcategory', verificarToken, async (req, res) => {
     try {
         var tag = req.tag;
         var result = await getCategory(tag, req.query.id);
+        console.log('result:', result);
         res.status(200).json({ result });
     } catch (error) {
         console.error('Error al obtener categoría:', error.message);
