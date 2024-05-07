@@ -2,14 +2,45 @@ import '../../../../styles/Categories.css'
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 
-export function CreateCategory() {
-    const [categoryName, setCategoryName] = useState('New Category')
+export function CategoryPanel() {
+    const [categoryName, setCategoryName] = useState('')
     const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
     const [backgroundSize, setBackgroundSize] = useState('60px')
     const [inputBackground, setInputBackground] = useState('none')
     const [imagenAEnviar, setImageAEnviar] = useState('')
     const [error, setError] = useState('')
     const { id } = useParams()
+    const { c_id } = useParams()
+
+    if (c_id !== 'new') {
+        const token = localStorage.getItem('session_token')
+        const timeout = setTimeout(() => {
+            window.location.href = '/error'
+        }, 6000)
+        fetch(`http://147.182.207.78:3000/getcategory?id=${c_id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                clearTimeout(timeout)
+                if (!response.ok) {
+                    window.location.href = '/error'
+                }
+                return response.json()
+            })
+            .then(response => {
+                setCategoryName(response.result.category.name)
+                setBackgroundImage(`data:image/jpeg;base64,${response.result.category.img}`)
+            })
+            .catch(error => {
+                clearTimeout(timeout)
+                console.error('Error:', error.message)
+                window.location.href = '/error'
+            })
+    }
 
     const handleImageChange = (e) => {
         const file = e.target.files[0]
@@ -77,14 +108,16 @@ export function CreateCategory() {
 
     return (
         <section className='new-category'>
-            <Link className="template-goback-button" to={`/dashboard/t/${id}`}>Go Back</Link>
+            <div className="template-go-back-container">
+                <Link className="template-goback-button" to={`/dashboard/t/${id}`}>Go Back</Link>
+            </div>
             <div className="image-input" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: `${backgroundSize}` }}>
                 <label htmlFor="categoryImage"></label>
                 <input type="file" name="categoryImage" id="categoryImage" onChange={handleImageChange} />
             </div>
             <input type="text" placeholder='Category Name' value={categoryName} onChange={handleNameChange} style={{ backgroundColor: `${inputBackground}` }} />
             <p className='error-text'>{error}</p>
-            <button onClick={handleSaveCategory} className='save-button'>Change</button>
+            <button onClick={handleSaveCategory} className='save-button'>Save</button>
         </section>
     )
 }

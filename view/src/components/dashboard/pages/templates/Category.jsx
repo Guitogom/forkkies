@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Title } from "../../Title.jsx"
 import '../../../../styles/Categories.css'
 import { PlusSVG } from "../../../../assets/svg/PlusSVG.jsx"
@@ -8,9 +8,11 @@ import { Loading } from '../../Loading.jsx'
 
 
 export function Category() {
-    const { id } = useParams()
-    const [categoryName, setCategoryName] = useState('New Category')
+    const [loaded, setLoaded] = useState(false)
+    const { id, c_id } = useParams()
+    const [categoryName, setCategoryName] = useState('')
     const [category, setCategory] = useState([])
+    const [products, setProducts] = useState([])
 
     const changeCategoryName = () => {
         console.log('Change name')
@@ -24,7 +26,41 @@ export function Category() {
         console.log('Create product')
     }
 
+    useEffect(() => {
+        if (localStorage.getItem('session_token') !== null) {
+            const token = localStorage.getItem('session_token')
+            const timeout = setTimeout(() => {
+                window.location.href = '/error'
+            }, 6000)
+            fetch(`http://147.182.207.78:3000/getcategory?id=${c_id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `${token}`,
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    clearTimeout(timeout)
+                    if (!response.ok) {
+                        window.location.href = '/error'
+                    }
+                    return response.json()
+                })
+                .then(response => {
+                    setCategory(response.result)
+                    setCategoryName(response.result.category.name)
+                    setProducts(response.result.products)
+                    setLoaded(true)
+                })
+                .catch(error => {
+                    clearTimeout(timeout)
+                    console.error('Error:', error.message)
+                    window.location.href = '/error'
+                })
+        }
+    }, [])
 
+    if (!loaded) return <Loading />
 
     return (
         <section>
@@ -34,15 +70,15 @@ export function Category() {
 
             <Title title="Templates" text={`${categoryName}`} />
             <div className="template-options">
-                <Link className="template-goback-button" to={`/dashboard/t/${id}`}>Go Back</Link>
+                <button className="template-name-button" onClick={changeCategoryName}>Modify Category</button>
                 <div className="template-options-div">
-                    <button className="template-name-button" onClick={changeCategoryName}>Change Name</button>
-                    <button className="template-delete-button" onClick={handleCategoryDelete}>Delete Category</button></div>
+                    <button className="template-delete-button" onClick={handleCategoryDelete}>Delete Category</button>
+                    <Link className="template-goback-button" to={`/dashboard/t/${id}`}>Go Back</Link></div>
             </div>
             <div className="categories-add" onClick={handleCreateProduct}><PlusSVG /></div>
             <div className="categories">
                 {
-                    category.length === 0 ? <p>No categories yet</p> :
+                    category.length === 0 ? <p>No products yet</p> :
                         products.map((product, index) => {
                             return (
                                 <ProductDisplay key={index} category={product} />

@@ -23,8 +23,8 @@ export function Template() {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
             const timeout = setTimeout(() => {
-                setCurrentPage('error')
-            }, 8000)
+                window.location.href = '/error'
+            }, 6000)
             fetch(`http://147.182.207.78:3000/modifytemplate`, {
                 method: 'POST',
                 headers: {
@@ -49,7 +49,7 @@ export function Template() {
     }
 
     const handleCreateCategory = () => {
-        window.location.href = `/dashboard/t/${id}/newcategory`
+        window.location.href = `/dashboard/t/${id}/cp/new`
     }
 
     const changeTemplateName = () => {
@@ -122,8 +122,8 @@ export function Template() {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
             const timeout = setTimeout(() => {
-                setCurrentPage('error')
-            }, 8000)
+                window.location.href = '/error'
+            }, 6000)
             fetch(`http://147.182.207.78:3000/gettemplate?id=${id}`, {
                 method: 'GET',
                 headers: {
@@ -139,7 +139,6 @@ export function Template() {
                     return response.json()
                 })
                 .then(template => {
-                    console.log(template)
                     setTemplate(template.result.template)
                     setTemplateName(template.result.template.name)
                     setStatus(template.result.template.status)
@@ -170,11 +169,11 @@ export function Template() {
 
             <Title title="Templates" text={`${templateName}`} />
             <div className="template-options">
-                <Link className="template-goback-button" to='/dashboard/templates'>Go Back</Link>
+                <button className="template-name-button" onClick={changeTemplateName}>Change Name</button>
                 <div className="template-options-div">
-                    <button className="template-name-button" onClick={changeTemplateName}>Change Name</button>
                     <button className={status ? "template-set-offline" : "template-set-online"} onClick={handleStatus}>{buttonText}</button>
-                    <button className="template-delete-button" onClick={handleTemplateDelete}>Delete Template</button></div>
+                    <button className="template-delete-button" onClick={handleTemplateDelete}>Delete Template</button>
+                    <Link className="template-goback-button" to='/dashboard/templates'>Go Back</Link></div>
             </div>
             <div className="categories-add" onClick={handleCreateCategory}><PlusSVG /></div>
             <div className="categories">

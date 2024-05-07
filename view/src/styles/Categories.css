@@ -80,6 +80,15 @@
     filter: drop-shadow(1px 2px 4px var(--red));
 }
 
+.template-go-back-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+
+}
+
 .categories-add {
     margin: auto;
     width: 80%;

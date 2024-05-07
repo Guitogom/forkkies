@@ -12,7 +12,7 @@ import { Orders } from './pages/orders/Orders.jsx'
 import { Analytics } from './pages/analytics/Analytics.jsx'
 import { Loading } from './Loading.jsx'
 import { Template } from "./pages/templates/Template.jsx"
-import { CreateCategory } from "./pages/templates/CreateCategory.jsx"
+import { CategoryPanel } from "./pages/templates/CategoryPanel.jsx"
 import { Category } from "./pages/templates/Category.jsx"
 
 export function Dashboard() {
@@ -72,8 +72,8 @@ export function Dashboard() {
                     <Route path="/management" element={<Management business={business} setBusiness={setBusiness} businessName={businessName} setBusinessName={setBusinessName} />} />
                     <Route path="/templates" element={<Templates business={business} setBusiness={setBusiness} />} />
                     <Route path="/t/:id" element={<Template business={business} setBusiness={setBusiness} />} />
-                    <Route path="/t/:id/newcategory" element={<CreateCategory business={business} setBusiness={setBusiness} />} />
-                    <Route path="/t/:id/:category-id" element={<Category />} />
+                    <Route path="/t/:id/cp/:c_id" element={<CategoryPanel business={business} setBusiness={setBusiness} />} />
+                    <Route path="/t/:id/:c_id" element={<Category />} />
                     <Route path="/" element={<Home business={business} setBusiness={setBusiness} />} />
                     <Route path="/orders" element={<Orders business={business} setBusiness={setBusiness} />} />
                     <Route path="/analytics" element={<Analytics business={business} setBusiness={setBusiness} />} />
