@@ -116,7 +116,7 @@ app.get('/gettemplate', verificarToken, async (req, res) => {
 
 //Categories
 app.post('/newcat', verificarToken, async (req, res) => {
-    console.log('req:', req)
+    console.log('req.body:', req.body)
     try {
         var tag = req.tag;
         var result = await newCategory(tag, req.body);
