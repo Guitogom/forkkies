@@ -555,7 +555,7 @@ export async function getCategory(tag, category_id) {
         for (var i = 0; i < products_id.length; i++) {
             try {
                 var result = await db.execute({
-                    sql: 'SELECT id, name, image FROM product WHERE id = :product_id',
+                    sql: 'SELECT id, name, img FROM product WHERE id = :product_id',
                     args: products_id[i]
                 });
                 products.push(result.rows[0]);
@@ -591,23 +591,26 @@ export async function modifyProduct(tag, body) {
         throw new Error('Template no encontrado');
     } else {
         if (!body.product.id) {
-            console.log('Insertando producto');
+            console.log('Name:', product.name, 'Desc:', product.desc, 'Price:', product.price, 'Img:', product.img);
             try {
                 var result = await db.execute({
-                    sql: 'INSERT INTO product (name, desc, price, image) VALUES (:name, :desc, :price, :image) RETURNING id',
-                    args: { name: product.name, desc: product.desc, price: product.price, image: product.image, category_id }
+                    sql: 'INSERT INTO product (name, desc, price, img) VALUES (:name, :desc, :price, :img) RETURNING id',
+                    args: { name: product.name, desc: product.desc, price: product.price, img: product.img}
                 });
                 var product_id = result.rows[0].id;
-                console.log('category_id:', category_id);
-                
-                //Añadimos el producto a la categoria
+            } catch (error) {
+                console.error('Error al insertar el producto:', error.message);
+                throw new Error('Error al insertar el producto: ' + error.message);
+            }
+            
+            try {
                 await db.execute({
                     sql: 'INSERT INTO cat_product (category_id, product_id) VALUES (:category_id, :product_id)',
                     args: { category_id, product_id }
                 });
             } catch (error) {
-                console.error('2Error en la base de datos:', error.message);
-                throw new Error('Error en la base de datos: ' + error.message);
+                console.error('Error al insertar el producto en la categoría:', error.message);
+                throw new Error('Error al insertar el producto en la categoría: ' + error.message);
             }
         } else {
             console.log('Modificando producto');
@@ -623,7 +626,7 @@ export async function modifyProduct(tag, body) {
                 } else {
                     try {
                         await db.execute({
-                            sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, image = :image WHERE id = :id',
+                            sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, img = :img WHERE id = :id',
                             args: product
                         });
                     } catch (error) {
