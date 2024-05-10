@@ -5,7 +5,6 @@ import '../../../../styles/Templates.css'
 import { TemplateDisplay } from "./TemplateDisplay.jsx"
 import { Loading } from '../../Loading.jsx'
 
-import { Products } from "./Products.jsx"
 import { PlusSVG } from "../../../../assets/svg/PlusSVG.jsx"
 
 export function Templates({ business, setBusiness }) {

@@ -171,7 +171,7 @@ export function Template() {
             <div className="template-options">
                 <button className="template-name-button" onClick={changeTemplateName}>Change Name</button>
                 <div className="template-options-div">
-                    <button className={status ? "template-set-offline" : "template-set-online"} onClick={handleStatus}>{buttonText}</button>
+                    <button className={status ? "template-set-online" : "template-set-offline"} onClick={handleStatus}>{buttonText}</button>
                     <button className="template-delete-button" onClick={handleTemplateDelete}>Delete Template</button>
                     <Link className="template-goback-button" to='/dashboard/templates'>Go Back</Link></div>
             </div>

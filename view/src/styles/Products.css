@@ -1,0 +1,248 @@
+.product-parent {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+.left-product-column {
+    width: 40%;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 60px 50px;
+}
+
+.product-basic-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-basic-info-2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-propierties {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: purple;
+}
+
+.product-propierties svg {
+    width: 50px;
+    opacity: 0.8;
+}
+
+.product-propierties svg:hover {
+    opacity: 1;
+}
+
+.right-product-column {
+    width: 60%;
+    height: 60vh;
+    padding: 80px 50px;
+}
+
+.steps-panel {
+    border-radius: 10px;
+    background-color: var(--forth-color);
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.steps-list {
+    height: 88%;
+    overflow-y: scroll;
+}
+
+.steps-add {
+    height: 12%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.steps-add:hover {
+    background-color: var(--primary-color);
+}
+
+.steps-add:active {
+    transform: translateY(1px);
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
+}
+
+.steps-add svg {
+    width: 34px;
+}
+
+.down-product-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 15vh;
+}
+
+.down-product-column button {
+    padding: 20px 50px;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 900;
+    font-family: var(--primary-font);
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.empty-steps {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.step {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    transition: all 0.2s ease-in-out;
+}
+
+.step:hover {
+    transform: translateY(-1px);
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
+}
+
+.step-even {
+    background-color: #E8E8E8;
+}
+
+.step-odd {
+    background-color: #BBBBBB;
+}
+
+.step-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: var(--primary-font);
+    width: 50%;
+    text-wrap: nowrap;
+    overflow: hidden;
+    cursor: default;
+}
+
+.step-select {
+    border-radius: 10px;
+    background-color: white;
+    border: 0;
+    padding: 4px;
+    color: black;
+    font-family: var(--secondary-font);
+    font-size: 1rem;
+}
+
+.step-select:focus {
+    outline: none;
+}
+
+.step-select option {
+    font-family: var(--primary-font);
+    font-size: 1.2rem;
+    color: var(--third-color);
+}
+
+.step-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.step-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.step-edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.3s linear;
+}
+
+.step-edit:hover {
+    background-color: rgb(238, 141, 51);
+    filter: drop-shadow(1px 1px 4px rgb(238, 141, 51))
+}
+
+.step-edit svg {
+    width: 30px;
+    cursor: pointer;
+}
+
+.step-delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.3s linear;
+}
+
+.step-delete:hover {
+    background-color: rgb(238, 51, 51);
+    filter: drop-shadow(1px 1px 4px rgb(238, 51, 51));
+}
+
+.step-delete svg {
+    width: 30px;
+    cursor: pointer;
+}
+
+.edit-step {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(228, 228, 228, 0.336);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.edit-step-inner {
+    width: 80%;
+    background-color: orange;
+}
+
+.edit-step-upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+}
+
+.edit-step-upper svg {
+    width: 40px;
+    cursor: pointer;
+    transform: rotate(45deg);
+}

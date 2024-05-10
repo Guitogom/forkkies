@@ -48,7 +48,7 @@ export function Category() {
     }
 
     const handleCreateProduct = () => {
-        console.log('Create product')
+        window.location.href = `/dashboard/t/${id}/${c_id}/pp/new`
     }
 
     useEffect(() => {

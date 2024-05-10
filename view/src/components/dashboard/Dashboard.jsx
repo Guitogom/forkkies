@@ -14,6 +14,7 @@ import { Loading } from './Loading.jsx'
 import { Template } from "./pages/templates/Template.jsx"
 import { CategoryPanel } from "./pages/templates/CategoryPanel.jsx"
 import { Category } from "./pages/templates/Category.jsx"
+import { ProductPanel } from "./pages/templates/ProductPanel.jsx"
 
 export function Dashboard() {
     const [loaded, setLoaded] = useState(false)
@@ -74,6 +75,7 @@ export function Dashboard() {
                     <Route path="/t/:id" element={<Template business={business} setBusiness={setBusiness} />} />
                     <Route path="/t/:id/cp/:c_id" element={<CategoryPanel business={business} setBusiness={setBusiness} />} />
                     <Route path="/t/:id/:c_id" element={<Category />} />
+                    <Route path="/t/:id/:c_id/pp/:p_id" element={<ProductPanel />} />
                     <Route path="/" element={<Home business={business} setBusiness={setBusiness} />} />
                     <Route path="/orders" element={<Orders business={business} setBusiness={setBusiness} />} />
                     <Route path="/analytics" element={<Analytics business={business} setBusiness={setBusiness} />} />
