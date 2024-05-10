@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, getCategory, modifyCategory } from './functions.js';
+import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory, getCategory, modifyProduct, getProduct } from './functions.js';
 
 const app = express();
 
@@ -134,6 +134,17 @@ app.post('/newcategory', verificarToken, async (req, res) => {
     }
 });
 
+app.post('/modifycategory', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await modifyCategory(tag, req.body);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al modificar categoría:', error.message);
+        res.status(500).json({ error: 'Error al modificar categoría' });
+    }
+});
+
 app.get('/getcategory', verificarToken, async (req, res) => {
     try {
         var tag = req.tag;
@@ -146,14 +157,61 @@ app.get('/getcategory', verificarToken, async (req, res) => {
     }
 });
 
-app.post('/modifycategory', verificarToken, async (req, res) => {
+//Products
+app.post('/modifyproduct', verificarToken, async (req, res) => {
     try {
         var tag = req.tag;
-        var result = await modifyCategory(tag, req.body);
+        var result = await modifyProduct(tag, req.body);
         res.status(200).json({ result });
     } catch (error) {
-        console.error('Error al modificar categoría:', error.message);
-        res.status(500).json({ error: 'Error al modificar categoría' });
+        console.error('Error al modificar producto:', error.message);
+        res.status(500).json({ error: 'Error al modificar producto' });
+    }
+});
+
+app.get('/getproduct', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await getProduct(tag, req.query.id);
+        console.log('result:', result);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al obtener producto:', error.message);
+        res.status(500).json({ error: 'Error al obtener producto' });
+    }
+});
+
+/*Client*/
+app.get('/clienttemplate', async (req, res) => {
+    try {
+        var tag = req.query.tag;
+        var result = await getTemplate(tag, "active");
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al obtener negocio:', error.message);
+        res.status(500).json({ error: 'Error al obtener negocio' });
+    }
+});
+
+app.get('/clientcategory', async (req, res) => {
+    try {
+        var tag = req.query.tag;
+        var result = await getCategory(tag, req.query.id);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al obtener negocio:', error.message);
+        res.status(500).json({ error: 'Error al obtener negocio' });
+    }
+});
+
+app.get ('/clientproduct', async (req, res) => {
+    try {
+        var tag = req.query.tag;
+        var result = await getProduct(tag, req.query.id);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al obtener negocio:', error.message);
+        res.status(500).json({ error: 'Error al obtener negocio' });
     }
 });
 
