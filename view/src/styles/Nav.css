@@ -28,18 +28,19 @@
 
 .business-nav ul li a svg {
     fill: #fff;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    /* filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); */
     scale: 2;
     transform: translateY(0);
 }
 
-.business-nav ul li:not(.selected) a svg path {
+/* .business-nav ul li:not(.selected) a svg path {
     filter: url(#inset-shadow);
-}
+} */
 
 .selected {
     /* transform: translateY(-10px); */
     scale: 1.2;
+    filter: drop-shadow(0px 4px 1px rgba(0, 0, 0, 0.25));
 }
 
 @media screen and (max-width: 768px) {

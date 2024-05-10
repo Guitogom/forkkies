@@ -5,9 +5,53 @@
     overflow-y: scroll;
 }
 
+.up-product-column {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 5vh;
+    padding: 30px 50px;
+}
+
+.product-delete {
+    background-color: rgb(238, 51, 51);
+    border-radius: 10px;
+    padding: 5px 10px;
+    border: 0;
+    color: white;
+    transition: all 0.3s linear;
+    font-size: 1.5rem;
+    font-family: var(--secondary-font);
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.product-delete svg {
+    width: 30px;
+    filter: invert(1);
+}
+
+.product-delete:hover {
+    background-color: rgb(141, 37, 37);
+}
+
+.product-close {
+    background-color: transparent;
+    border: 0;
+}
+
+.product-close svg {
+    width: 40px;
+    cursor: pointer;
+    transform: rotate(45deg);
+}
+
 .left-product-column {
     width: 40%;
-    height: 60vh;
+    height: 55vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -27,11 +71,10 @@
 .product-propierties {
     display: flex;
     flex-wrap: wrap;
-    background-color: purple;
 }
 
 .product-propierties svg {
-    width: 50px;
+    width: 40px;
     opacity: 0.8;
 }
 
@@ -41,8 +84,8 @@
 
 .right-product-column {
     width: 60%;
-    height: 60vh;
-    padding: 80px 50px;
+    height: 55vh;
+    padding: 60px 50px;
 }
 
 .steps-panel {
@@ -86,7 +129,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 15vh;
+    height: 10vh;
 }
 
 .down-product-column button {

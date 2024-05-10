@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import './../../styles/Dashboard.css'
 import { Header } from './Header.jsx'
@@ -79,6 +79,7 @@ export function Dashboard() {
                     <Route path="/" element={<Home business={business} setBusiness={setBusiness} />} />
                     <Route path="/orders" element={<Orders business={business} setBusiness={setBusiness} />} />
                     <Route path="/analytics" element={<Analytics business={business} setBusiness={setBusiness} />} />
+                    <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </section>
             <Nav />
