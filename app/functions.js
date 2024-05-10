@@ -555,7 +555,7 @@ export async function getCategory(tag, category_id) {
         for (var i = 0; i < products_id.length; i++) {
             try {
                 var result = await db.execute({
-                    sql: 'SELECT id, name, image FROM product WHERE id = :product_id',
+                    sql: 'SELECT id, name, img FROM product WHERE id = :product_id',
                     args: products_id[i]
                 });
                 products.push(result.rows[0]);
@@ -594,12 +594,10 @@ export async function modifyProduct(tag, body) {
             console.log('Insertando producto');
             try {
                 var result = await db.execute({
-                    sql: 'INSERT INTO product (name, desc, price, image) VALUES (:name, :desc, :price, :image) RETURNING id',
-                    args: { name: product.name, desc: product.desc, price: product.price, image: product.image, category_id }
+                    sql: 'INSERT INTO product (name, desc, price, img) VALUES (:name, :desc, :price, :img) RETURNING id',
+                    args: { name: product.name, desc: product.desc, price: product.price, img: product.img, category_id }
                 });
                 var product_id = result.rows[0].id;
-                console.log('category_id:', category_id);
-                
                 //Añadimos el producto a la categoria
                 await db.execute({
                     sql: 'INSERT INTO cat_product (category_id, product_id) VALUES (:category_id, :product_id)',
@@ -623,7 +621,7 @@ export async function modifyProduct(tag, body) {
                 } else {
                     try {
                         await db.execute({
-                            sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, image = :image WHERE id = :id',
+                            sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, img = :img WHERE id = :id',
                             args: product
                         });
                     } catch (error) {
