@@ -598,7 +598,8 @@ export async function modifyProduct(tag, body) {
                     args: { name: product.name, desc: product.desc, price: product.price, image: product.image, category_id }
                 });
                 var product_id = result.rows[0].id;
-
+                console.log('category_id:', category_id);
+                
                 //Añadimos el producto a la categoria
                 await db.execute({
                     sql: 'INSERT INTO cat_product (category_id, product_id) VALUES (:category_id, :product_id)',
