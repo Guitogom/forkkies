@@ -100,8 +100,21 @@ export function ProductPanel() {
         setProduct({ ...product, steps: updatedSteps })
     }
 
-    const handleEdit = () => {
-        setEdit(!edit)
+    const [editStep, setEditStep] = useState({})
+
+    const handleEdit = (step) => {
+        if (step === 'close') {
+            setEdit(false)
+            setEditStep({})
+        } else {
+            setEdit(true)
+            setEditStep(step)
+        }
+    }
+
+    const handleTitleChange = (e) => {
+        const newTitle = e.target.value;
+        setEditStep({ ...editStep, title: newTitle });
     }
 
     const addNewStep = () => {
@@ -127,11 +140,12 @@ export function ProductPanel() {
             <div className="edit-step" style={{ top: edit ? '0%' : '-100%' }}>
                 <div className="edit-step-inner">
                     <div className="edit-step-upper">
-                        <input type="text" placeholder='Step Name' />
-                        <div className="step-close" onClick={handleEdit}>
+                        <input type="text" placeholder='Step text' value={editStep.title || ''} onInput={handleTitleChange} />
+                        <div className="step-close" onClick={() => handleEdit('close')}>
                             <PlusSVG />
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -160,7 +174,7 @@ export function ProductPanel() {
                             product.steps.length === 0 ? <div className='empty-steps'><p>This product is currently an individual item.</p></div> :
                                 product.steps.map((step, index) => {
                                     return (
-                                        <StepDisplay className={`step ${index % 2 === 0 ? 'step-even' : 'step-odd'}`} step={step} key={index} setStepType={(newType) => handleStepTypeChange(index, newType)} handleDeleteStep={() => handleStepDelete(index)} handleEdit={handleEdit} />
+                                        <StepDisplay className={`step ${index % 2 === 0 ? 'step-even' : 'step-odd'}`} step={step} key={index} setStepType={(newType) => handleStepTypeChange(index, newType)} handleDeleteStep={() => handleStepDelete(index)} handleEdit={() => handleEdit(step)} />
                                     )
                                 })
                         }
