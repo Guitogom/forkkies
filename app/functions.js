@@ -591,7 +591,7 @@ export async function modifyProduct(tag, body) {
         throw new Error('Template no encontrado');
     } else {
         if (!body.product.id) {
-            console.log('Insertando producto');
+            console.log('Name:', product.name, 'Desc:', product.desc, 'Price:', product.price, 'Img:', product.img);
             try {
                 var result = await db.execute({
                     sql: 'INSERT INTO product (name, desc, price, img) VALUES (:name, :desc, :price, :img) RETURNING id',
