@@ -158,7 +158,6 @@ app.get('/getcategory', verificarToken, async (req, res) => {
 
 //Products
 app.post('/modifyproduct', verificarToken, async (req, res) => {
-    console.log('req.body:', req.body)
     try {
         var tag = req.tag;
         var result = await modifyProduct(tag, req.body);
