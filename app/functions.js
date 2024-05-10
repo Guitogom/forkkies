@@ -565,7 +565,7 @@ export async function getCategory(tag, category_id) {
             }
         }
         //Devolvemos la categoria con sus productos
-        return { category, products };
+        return { category, products};
     }
 }
 
