@@ -10,13 +10,14 @@ export function ProductPanel() {
     const [loaded, setLoaded] = useState(false)
     const { id } = useParams()
     const { c_id } = useParams()
+    const { p_id } = useParams()
     const [edit, setEdit] = useState(false)
     const [product, setProduct] = useState({
         id: '',
         name: 'hamburguesa',
         description: 'bla bla',
         price: '10.99',
-        image: 'img',
+        image: '',
         steps: [
             {
                 id: '',
@@ -27,7 +28,7 @@ export function ProductPanel() {
                         id: '',
                         name: 'Ternera',
                         price_changer: '0',
-                        img: 'img'
+                        img: ''
                     }
                 ]
             },
@@ -40,56 +41,93 @@ export function ProductPanel() {
                         id: '',
                         name: 'Ketchup',
                         price_changer: '0.50',
-                        img: 'img'
+                        img: ''
                     },
                     {
                         id: '',
                         name: 'Mostaza',
                         price_changer: '0.50',
-                        img: 'img'
+                        img: ''
                     }
                 ]
             },
             {
                 id: '',
-                title: 'Añade tus condimentos',
+                title: 'Añade tus salsas',
                 type: '3',
                 specials: [
                     {
                         id: '',
-                        name: 'Ketchup',
+                        name: 'Ranchera',
                         price_changer: '0.50',
-                        img: 'img'
+                        img: ''
                     },
                     {
                         id: '',
-                        name: 'Mostaza',
+                        name: 'Tartara',
                         price_changer: '0.50',
-                        img: 'img'
+                        img: ''
                     }
                 ]
             },
             {
                 id: '',
-                title: 'Añade tus condimentos',
+                title: 'Quita los ingredientes que no quieras',
                 type: '2',
                 specials: [
                     {
                         id: '',
-                        name: 'Ketchup',
+                        name: 'Lechuga',
                         price_changer: '0.50',
-                        img: 'img'
+                        img: ''
                     },
                     {
                         id: '',
-                        name: 'Mostaza',
+                        name: 'Yogurt',
                         price_changer: '0.50',
-                        img: 'img'
+                        img: ''
                     }
                 ]
             }
         ]
     })
+
+    // useEffect(() => {
+    //     if (p_id !== 'new' && !loaded) {
+    //         const token = localStorage.getItem('session_token')
+    //         const timeout = setTimeout(() => {
+    //             window.location.href = '/error'
+    //         }, 6000)
+    //         fetch(`http://147.182.207.78:3000/getcategory?id=${c_id}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Authorization': `${token}`,
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         })
+    //             .then(response => {
+    //                 clearTimeout(timeout)
+    //                 if (!response.ok) {
+    //                     window.location.href = '/error'
+    //                 }
+    //                 return response.json()
+    //             })
+    //             .then(response => {
+    //                 setCategoryName(response.result.category.name)
+    //                 setBackgroundImage(`data:image/jpeg;base64,${response.result.category.img}`)
+    //                 setBackgroundSize('cover')
+    //                 setImageAEnviar(response.result.category.img)
+    //                 setLoaded(true)
+    //             })
+    //             .catch(error => {
+    //                 clearTimeout(timeout)
+    //                 console.error('Error:', error.message)
+    //                 window.location.href = '/error'
+    //             })
+    //     } else {
+    //         setLoaded(true)
+    //     }
+    // }, [])
 
     const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
     const [backgroundSize, setBackgroundSize] = useState('60px')
@@ -162,6 +200,34 @@ export function ProductPanel() {
         setProduct({ ...product, steps: updatedSteps })
     }
 
+    const saveProduct = () => {
+        const token = localStorage.getItem('session_token')
+        fetch(`http://147.182.207.78:3000/modifyproduct`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ category_id: c_id, product: product })
+        })
+            .then(response => {
+                clearTimeout(timeout)
+                if (!response.ok) {
+                    window.location.href = '/error'
+                } else {
+                    window.location.href = `/dashboard/t/${id}/${c_id}`
+                }
+            })
+            .catch(error => {
+                clearTimeout(timeout)
+                console.error('Error:', error.message)
+                window.location.href = '/error'
+            })
+
+    }
+
+
+
 
     // if (!loaded) return <Loading />
 
@@ -175,7 +241,15 @@ export function ProductPanel() {
                             <PlusSVG />
                         </div>
                     </div>
-
+                    <div className="edit-step-lower">
+                        {editStep && editStep.specials && editStep.specials.length > 0 ? (
+                            editStep.specials.map((special, index) => (
+                                <h1 key={index}>{special.name}</h1>
+                            ))
+                        ) : (
+                            <div className='empty-steps'><p>This product has currently no items.</p></div>
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -217,7 +291,7 @@ export function ProductPanel() {
                 </div>
             </div>
             <div className="down-product-column">
-                <button>Save</button>
+                <button onClick={saveProduct}>Save</button>
             </div>
         </div >
     )
