@@ -591,6 +591,7 @@ export async function modifyProduct(tag, body) {
         throw new Error('Template no encontrado');
     } else {
         if (!body.product.id) {
+            console.log('Insertando producto');
             try {
                 var result = await db.execute({
                     sql: 'INSERT INTO product (name, desc, price, image) VALUES (:name, :desc, :price, :image) RETURNING id',
@@ -608,6 +609,7 @@ export async function modifyProduct(tag, body) {
                 throw new Error('Error en la base de datos: ' + error.message);
             }
         } else {
+            console.log('Modificando producto');
             var product_id = product.id;
             //Verificamos que el producto pertenezca a la categoria
             try {
