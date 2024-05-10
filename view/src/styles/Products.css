@@ -47,6 +47,7 @@
     width: 40px;
     cursor: pointer;
     transform: rotate(45deg);
+    transition: all 0.3s linear;
 }
 
 .left-product-column {
@@ -142,6 +143,12 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+.down-product-column button:hover {
+    transform: translateY(-1px);
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
 }
 
 .empty-steps {
@@ -293,11 +300,13 @@
 }
 
 .edit-step-lower {
+    border-radius: 10px;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     background-color: #C3C3C3;
     padding: 20px 30px;
+    overflow-x: scroll;
 }
 
 .special-item {
@@ -307,4 +316,11 @@
     gap: 20px;
     padding: 20px 30px;
     transition: all 0.2s ease-in-out;
+}
+
+.step-close svg {
+    width: 40px;
+    cursor: pointer;
+    transform: rotate(45deg);
+    transition: all 0.3s linear;
 }

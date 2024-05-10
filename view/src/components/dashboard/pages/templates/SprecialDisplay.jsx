@@ -1,4 +1,4 @@
-
+import { useState } from 'react'
 
 export function SpecialDisplay({ special }) {
     const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
@@ -27,7 +27,10 @@ export function SpecialDisplay({ special }) {
 
     return (
         <div className="special-item">
-            <img src={special.img} alt={special.name} />
+            <div className="image-input" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: `${backgroundSize}` }} >
+                <label htmlFor="categoryImage"></label>
+                <input type="file" name="categoryImage" id="categoryImage" onChange={handleImageChange} />
+            </div>
             <input type="text" placeholder="Item Name" value={special.name} onChange={changeSpecialName} />
             <input type="text" placeholder="Price diference (+ or -)" value={special.price_changer} onChange={changeSpecialPriceChanger} />
         </div>

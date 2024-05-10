@@ -5,6 +5,7 @@ import { PlusSVG } from "../../../../assets/svg/PlusSVG.jsx"
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Loading } from '../../Loading.jsx'
+import { ProductDisplay } from './ProductDisplay.jsx'
 
 
 export function Category() {
@@ -106,7 +107,7 @@ export function Category() {
                     category.length === 0 ? <p>No products yet</p> :
                         products.map((product, index) => {
                             return (
-                                <ProductDisplay key={index} category={product} />
+                                <ProductDisplay key={index} product={product} />
                             )
                         })
                 }

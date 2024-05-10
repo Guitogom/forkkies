@@ -15,120 +15,47 @@ export function ProductPanel() {
     const [edit, setEdit] = useState(false)
     const [product, setProduct] = useState({
         id: '',
-        name: 'hamburguesa',
-        description: 'bla bla',
-        price: '10.99',
-        image: '',
-        steps: [
-            {
-                id: '',
-                title: 'Que tipo de carne quieres?',
-                type: '1',
-                specials: [
-                    {
-                        id: '',
-                        name: 'Ternera',
-                        price_changer: '0',
-                        img: ''
-                    }
-                ]
-            },
-            {
-                id: '',
-                title: 'Añade tus condimentos',
-                type: '3',
-                specials: [
-                    {
-                        id: '',
-                        name: 'Ketchup',
-                        price_changer: '0.50',
-                        img: ''
-                    },
-                    {
-                        id: '',
-                        name: 'Mostaza',
-                        price_changer: '0.50',
-                        img: ''
-                    }
-                ]
-            },
-            {
-                id: '',
-                title: 'Añade tus salsas',
-                type: '3',
-                specials: [
-                    {
-                        id: '',
-                        name: 'Ranchera',
-                        price_changer: '0.50',
-                        img: ''
-                    },
-                    {
-                        id: '',
-                        name: 'Tartara',
-                        price_changer: '0.50',
-                        img: ''
-                    }
-                ]
-            },
-            {
-                id: '',
-                title: 'Quita los ingredientes que no quieras',
-                type: '2',
-                specials: [
-                    {
-                        id: '',
-                        name: 'Lechuga',
-                        price_changer: '0.50',
-                        img: ''
-                    },
-                    {
-                        id: '',
-                        name: 'Yogurt',
-                        price_changer: '0.50',
-                        img: ''
-                    }
-                ]
-            }
-        ]
+        name: '',
+        desc: '',
+        price: '',
+        img: '',
+        steps: []
     })
 
-    // useEffect(() => {
-    //     if (p_id !== 'new' && !loaded) {
-    //         const token = localStorage.getItem('session_token')
-    //         const timeout = setTimeout(() => {
-    //             window.location.href = '/error'
-    //         }, 6000)
-    //         fetch(`http://147.182.207.78:3000/getcategory?id=${c_id}`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Authorization': `${token}`,
-    //                 'Content-Type': 'application/json'
-    //             }
-    //         })
-    //             .then(response => {
-    //                 clearTimeout(timeout)
-    //                 if (!response.ok) {
-    //                     window.location.href = '/error'
-    //                 }
-    //                 return response.json()
-    //             })
-    //             .then(response => {
-    //                 setCategoryName(response.result.category.name)
-    //                 setBackgroundImage(`data:image/jpeg;base64,${response.result.category.img}`)
-    //                 setBackgroundSize('cover')
-    //                 setImageAEnviar(response.result.category.img)
-    //                 setLoaded(true)
-    //             })
-    //             .catch(error => {
-    //                 clearTimeout(timeout)
-    //                 console.error('Error:', error.message)
-    //                 window.location.href = '/error'
-    //             })
-    //     } else {
-    //         setLoaded(true)
-    //     }
-    // }, [])
+    useEffect(() => {
+        if (p_id !== 'new' && !loaded) {
+            const token = localStorage.getItem('session_token')
+            fetch(`http://147.182.207.78:3000/getproduct?id=${p_id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    clearTimeout(timeout)
+                    if (!response.ok) {
+                        window.location.href = '/error'
+                    }
+                    return response.json()
+                })
+                .then(response => {
+                    setProduct(response.result.product)
+                    setBackgroundImage(`data:image/jpeg;base64,${response.result.product.img}`)
+                    setBackgroundSize('cover')
+                    setImageAEnviar(response.result.product.img)
+                    setLoaded(true)
+                    console.log(response)
+                })
+                .catch(error => {
+                    clearTimeout(timeout)
+                    console.error('Error:', error.message)
+                    window.location.href = '/error'
+                })
+        } else {
+            setLoaded(true)
+        }
+    }, [])
 
     const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
     const [backgroundSize, setBackgroundSize] = useState('60px')
@@ -140,7 +67,7 @@ export function ProductPanel() {
             reader.onload = () => {
                 setBackgroundImage(reader.result)
                 setBackgroundSize('cover')
-                setProduct({ ...product, image: reader.result.split(',')[1] })
+                setProduct({ ...product, img: reader.result.split(',')[1] })
             }
             reader.readAsDataURL(file)
         }
@@ -151,7 +78,7 @@ export function ProductPanel() {
     }
 
     const handleProductDescriptionChange = (value) => {
-        setProduct({ ...product, description: value });
+        setProduct({ ...product, desc: value });
     }
 
     const handleProductPriceChange = (value) => {
@@ -230,7 +157,7 @@ export function ProductPanel() {
 
 
 
-    // if (!loaded) return <Loading />
+    if (!loaded) return <Loading />
 
     return (
         <div className='product-parent'>
@@ -271,7 +198,7 @@ export function ProductPanel() {
                         </div>
                     </div>
                 </div>
-                <textarea onChange={(e) => handleProductDescriptionChange(e.target.value)} value={product.description}></textarea>
+                <textarea onChange={(e) => handleProductDescriptionChange(e.target.value)} value={product.desc}></textarea>
                 <input type="text" placeholder='00,00€' value={product.price} onChange={(e) => handleProductPriceChange(e.target.value)} />
             </div>
             <div className="right-product-column">
