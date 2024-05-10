@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Loading } from '../../Loading.jsx';
 import { StepDisplay } from './StepDisplay.jsx';
 import { DeleteSVG } from '../../../../assets/svg/DeleteSVG.jsx';
+import { SpecialDisplay } from './SprecialDisplay.jsx';
 
 export function ProductPanel() {
     const [loaded, setLoaded] = useState(false)
@@ -244,7 +245,7 @@ export function ProductPanel() {
                     <div className="edit-step-lower">
                         {editStep && editStep.specials && editStep.specials.length > 0 ? (
                             editStep.specials.map((special, index) => (
-                                <h1 key={index}>{special.name}</h1>
+                                <SpecialDisplay special={special} key={index} />
                             ))
                         ) : (
                             <div className='empty-steps'><p>This product has currently no items.</p></div>

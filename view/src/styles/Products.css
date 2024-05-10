@@ -274,7 +274,9 @@
 
 .edit-step-inner {
     width: 80%;
-    background-color: orange;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+    padding: 20px;
 }
 
 .edit-step-upper {
@@ -288,4 +290,21 @@
     width: 40px;
     cursor: pointer;
     transform: rotate(45deg);
+}
+
+.edit-step-lower {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #C3C3C3;
+    padding: 20px 30px;
+}
+
+.special-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 30px;
+    transition: all 0.2s ease-in-out;
 }
