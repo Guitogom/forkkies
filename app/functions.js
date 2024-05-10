@@ -565,7 +565,7 @@ export async function getCategory(tag, category_id) {
             }
         }
         //Devolvemos la categoria con sus productos
-        return { category, products};
+        return { category, products };
     }
 }
 
@@ -595,17 +595,22 @@ export async function modifyProduct(tag, body) {
             try {
                 var result = await db.execute({
                     sql: 'INSERT INTO product (name, desc, price, img) VALUES (:name, :desc, :price, :img) RETURNING id',
-                    args: { name: product.name, desc: product.desc, price: product.price, img: product.img, category_id }
+                    args: { name: product.name, desc: product.desc, price: product.price, img: product.img}
                 });
                 var product_id = result.rows[0].id;
-                //Añadimos el producto a la categoria
+            } catch (error) {
+                console.error('Error al insertar el producto:', error.message);
+                throw new Error('Error al insertar el producto: ' + error.message);
+            }
+            
+            try {
                 await db.execute({
                     sql: 'INSERT INTO cat_product (category_id, product_id) VALUES (:category_id, :product_id)',
                     args: { category_id, product_id }
                 });
             } catch (error) {
-                console.error('2Error en la base de datos:', error.message);
-                throw new Error('Error en la base de datos: ' + error.message);
+                console.error('Error al insertar el producto en la categoría:', error.message);
+                throw new Error('Error al insertar el producto en la categoría: ' + error.message);
             }
         } else {
             console.log('Modificando producto');
