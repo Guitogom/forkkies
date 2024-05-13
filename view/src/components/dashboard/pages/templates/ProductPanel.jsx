@@ -151,7 +151,6 @@ export function ProductPanel() {
                 console.error('Error:', error.message)
                 window.location.href = '/error'
             })
-
     }
 
 
