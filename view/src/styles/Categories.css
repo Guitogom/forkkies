@@ -115,6 +115,20 @@
     opacity: 0.3;
 }
 
+.products-grid {
+    margin: auto;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 30px;
+    padding: 20px 0px;
+    overflow-y: auto;
+    margin-bottom: 200px;
+}
+
 .categories {
     margin: auto;
     width: 80%;

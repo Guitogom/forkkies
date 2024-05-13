@@ -324,3 +324,51 @@
     transform: rotate(45deg);
     transition: all 0.3s linear;
 }
+
+.product {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
+.product:hover {
+    transform: translateY(-1px);
+    filter: drop-shadow(1px 2px 4px var(--tertiary-color));
+}
+
+.product-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: var(--primary-font);
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    text-wrap: nowrap;
+    overflow: hidden;
+    cursor: default;
+}
+
+.product-price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: var(--primary-font);
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    text-wrap: nowrap;
+    overflow: hidden;
+    cursor: default;
+    opacity: 0.8;
+}
+
+.product img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+}

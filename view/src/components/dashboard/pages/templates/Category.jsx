@@ -22,9 +22,6 @@ export function Category() {
     const handleCategoryDelete = () => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                window.location.href = '/error'
-            }, 6000)
             fetch('http://147.182.207.78:3000/modifycategory', {
                 method: 'POST',
                 headers: {
@@ -34,14 +31,12 @@ export function Category() {
                 body: JSON.stringify({ template_id: id, category: { id: c_id, delete: true } })
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
                         window.location.href = '/error'
                     }
                     window.location.href = `/dashboard/t/${id}`
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
                     console.error('Error:', error.message)
                     window.location.href = '/error'
                 })
@@ -55,9 +50,6 @@ export function Category() {
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                window.location.href = '/error'
-            }, 6000)
             fetch(`http://147.182.207.78:3000/getcategory?id=${c_id}`, {
                 method: 'GET',
                 headers: {
@@ -66,7 +58,6 @@ export function Category() {
                 },
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
                         window.location.href = '/error'
                     }
@@ -75,11 +66,10 @@ export function Category() {
                 .then(response => {
                     setCategory(response.result)
                     setCategoryName(response.result.category.name)
-                    setProducts(response.result.products)
+                    setProducts(response.result.products) // Falta el precio
                     setLoaded(true)
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
                     console.error('Error:', error.message)
                     window.location.href = '/error'
                 })
@@ -102,7 +92,7 @@ export function Category() {
                     <Link className="template-goback-button" to={`/dashboard/t/${id}`}>Go Back</Link></div>
             </div>
             <div className="categories-add" onClick={handleCreateProduct}><PlusSVG /></div>
-            <div className="categories">
+            <div className="products-grid">
                 {
                     category.length === 0 ? <p>No products yet</p> :
                         products.map((product, index) => {

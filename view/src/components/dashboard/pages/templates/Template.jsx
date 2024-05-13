@@ -65,7 +65,7 @@ export function Template() {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
             const timeout = setTimeout(() => {
-                setCurrentPage('error')
+                window.location.href = '/error'
             }, 8000)
             fetch(`http://147.182.207.78:3000/modifytemplate`, {
                 method: 'POST',
@@ -93,7 +93,7 @@ export function Template() {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
             const timeout = setTimeout(() => {
-                setCurrentPage('error')
+                window.location.href = '/error'
             }, 8000)
             fetch(`http://147.182.207.78:3000/modifytemplate`, {
                 method: 'POST',

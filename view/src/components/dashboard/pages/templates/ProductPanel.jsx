@@ -33,7 +33,6 @@ export function ProductPanel() {
                 }
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
                         window.location.href = '/error'
                     }
@@ -43,12 +42,10 @@ export function ProductPanel() {
                     setProduct(response.result.product)
                     setBackgroundImage(`data:image/jpeg;base64,${response.result.product.img}`)
                     setBackgroundSize('cover')
-                    setImageAEnviar(response.result.product.img)
                     setLoaded(true)
                     console.log(response)
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
                     console.error('Error:', error.message)
                     window.location.href = '/error'
                 })
@@ -139,7 +136,6 @@ export function ProductPanel() {
             body: JSON.stringify({ category_id: c_id, product: product })
         })
             .then(response => {
-                clearTimeout(timeout)
                 if (!response.ok) {
                     window.location.href = '/error'
                 } else {
@@ -147,7 +143,6 @@ export function ProductPanel() {
                 }
             })
             .catch(error => {
-                clearTimeout(timeout)
                 console.error('Error:', error.message)
                 window.location.href = '/error'
             })
