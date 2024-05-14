@@ -72,7 +72,6 @@ export async function newBusiness(business) {
     }
     //Se genera un jwt con el tag del negocio
     var token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
-    console.log('Token generado funcion:', token)
     return token;
 };
 
@@ -99,7 +98,6 @@ export function verificarToken(req, res, next) {
 }
 
 export async function logBusiness(business) {
-    console.log('LogBusiness:', business);
     try {
         var result = await db.execute(
             {
@@ -423,7 +421,6 @@ export async function getTemplate(tag, template_id) {
                 sql: 'SELECT active_template FROM business WHERE tag = :tag',
                 args: { tag }
             });
-            console.log('Active template:', result.rows[0].active_template);
             template.status = result.rows[0].active_template == template_id;
         } catch (error) {
             console.error('Error en la base de datos:', error.message);
@@ -555,7 +552,7 @@ export async function getCategory(tag, category_id) {
         for (var i = 0; i < products_id.length; i++) {
             try {
                 var result = await db.execute({
-                    sql: 'SELECT id, name, img FROM product WHERE id = :product_id',
+                    sql: 'SELECT id, name, img, price FROM product WHERE id = :product_id',
                     args: products_id[i]
                 });
                 products.push(result.rows[0]);
@@ -591,18 +588,17 @@ export async function modifyProduct(tag, body) {
         throw new Error('Template no encontrado');
     } else {
         if (!body.product.id) {
-            console.log('Name:', product.name, 'Desc:', product.desc, 'Price:', product.price, 'Img:', product.img);
             try {
                 var result = await db.execute({
                     sql: 'INSERT INTO product (name, desc, price, img) VALUES (:name, :desc, :price, :img) RETURNING id',
-                    args: { name: product.name, desc: product.desc, price: product.price, img: product.img}
+                    args: { name: product.name, desc: product.desc, price: product.price, img: product.img }
                 });
                 var product_id = result.rows[0].id;
             } catch (error) {
                 console.error('Error al insertar el producto:', error.message);
                 throw new Error('Error al insertar el producto: ' + error.message);
             }
-            
+
             try {
                 await db.execute({
                     sql: 'INSERT INTO cat_product (category_id, product_id) VALUES (:category_id, :product_id)',
@@ -625,9 +621,10 @@ export async function modifyProduct(tag, body) {
                     throw new Error('El producto no pertenece a la categoria');
                 } else {
                     try {
+                        console.log ('Product:', product);
                         await db.execute({
                             sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, img = :img WHERE id = :id',
-                            args: product
+                            args: {name: product.name, desc: product.desc, price: product.price, img: product.img, id: product.id}
                         });
                     } catch (error) {
                         console.error('3Error en la base de datos:', error.message);
@@ -672,7 +669,6 @@ export async function modifyProduct(tag, body) {
                 for (var j = 0; j < step.specials.length; j++) {
                     var special = step.specials[j];
                     //Si el special no tiene id, lo añadimos
-                    if (!special.id) {
                         try {
                             await db.execute({
                                 sql: 'INSERT INTO special (name, price_changer, img, step_id) VALUES (:name, :price_changer, :img, :step_id)',
@@ -682,29 +678,6 @@ export async function modifyProduct(tag, body) {
                             console.error('7Error en la base de datos:', error.message);
                             throw new Error('Error en la base de datos: ' + error.message);
                         }
-                    } else {
-                        if (special.delete) {
-                            try {
-                                await db.execute({
-                                    sql: 'DELETE FROM special WHERE id = :id AND step_id = :step_id',
-                                    args: { id: special.id, step_id }
-                                });
-                            } catch (error) {
-                                console.error('8Error en la base de datos:', error.message);
-                                throw new Error('Error en la base de datos: ' + error.message);
-                            }
-                        } else {
-                            try {
-                                await db.execute({
-                                    sql: 'UPDATE special SET name = :name, price_changer = :price_changer, img = :img WHERE id = :id AND step_id = :step_id',
-                                    args: { name: special.name, price_changer: special.price_changer, img: special.img, id: special.id, step_id }
-                                });
-                            } catch (error) {
-                                console.error('9Error en la base de datos:', error.message);
-                                throw new Error('Error en la base de datos: ' + error.message);
-                            }
-                        }
-                    }
                 }
             }
         }
