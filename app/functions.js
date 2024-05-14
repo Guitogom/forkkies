@@ -628,7 +628,7 @@ export async function modifyProduct(tag, body) {
                         console.log ('Product:', product);
                         await db.execute({
                             sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, img = :img WHERE id = :id',
-                            args: product
+                            args: {name: product.name, desc: product.desc, price: product.price, img: product.img, id: product.id}
                         });
                     } catch (error) {
                         console.error('3Error en la base de datos:', error.message);
