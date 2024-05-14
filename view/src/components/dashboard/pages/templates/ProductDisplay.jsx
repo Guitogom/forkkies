@@ -14,7 +14,7 @@ export function ProductDisplay({ product }) {
         <Link className="product" to={`/dashboard/t/${id}/${c_id}/pp/${product.id}`}>
             <img src={imagenDisplay} alt={product.name} />
             <h2 className='product-name'>{product.name}</h2>
-            <p className='product-price'>{product.price || '54.00'}€</p>
+            <p className='product-price'>{product.price || '-'}€</p>
         </Link>
     )
 }
