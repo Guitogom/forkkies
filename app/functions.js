@@ -72,7 +72,6 @@ export async function newBusiness(business) {
     }
     //Se genera un jwt con el tag del negocio
     var token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
-    console.log('Token generado funcion:', token)
     return token;
 };
 
@@ -99,7 +98,6 @@ export function verificarToken(req, res, next) {
 }
 
 export async function logBusiness(business) {
-    console.log('LogBusiness:', business);
     try {
         var result = await db.execute(
             {
@@ -423,7 +421,6 @@ export async function getTemplate(tag, template_id) {
                 sql: 'SELECT active_template FROM business WHERE tag = :tag',
                 args: { tag }
             });
-            console.log('Active template:', result.rows[0].active_template);
             template.status = result.rows[0].active_template == template_id;
         } catch (error) {
             console.error('Error en la base de datos:', error.message);
@@ -555,7 +552,7 @@ export async function getCategory(tag, category_id) {
         for (var i = 0; i < products_id.length; i++) {
             try {
                 var result = await db.execute({
-                    sql: 'SELECT id, name, img FROM product WHERE id = :product_id',
+                    sql: 'SELECT id, name, img, price FROM product WHERE id = :product_id',
                     args: products_id[i]
                 });
                 products.push(result.rows[0]);
@@ -591,7 +588,6 @@ export async function modifyProduct(tag, body) {
         throw new Error('Template no encontrado');
     } else {
         if (!body.product.id) {
-            console.log('Name:', product.name, 'Desc:', product.desc, 'Price:', product.price, 'Img:', product.img);
             try {
                 var result = await db.execute({
                     sql: 'INSERT INTO product (name, desc, price, img) VALUES (:name, :desc, :price, :img) RETURNING id',
