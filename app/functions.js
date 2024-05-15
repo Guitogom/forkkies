@@ -726,12 +726,13 @@ export async function getProduct(tag, product_id) {
 
         //Recorremos los steps
         for (var i = 0; i < product.steps.length; i++) {
-            var step = product.steps[i];
+            var step = product.steps[i].id;
+            console.log(step);
             //Obtenemos los specials del step
             try {
                 var result = await db.execute({
                     sql: 'SELECT * FROM special WHERE step_id = :id',
-                    args: step
+                    args: { id: step.id }
                 });
                 //Si hay specials, los añadimos al step
                 if (result.rows.length > 0) {
