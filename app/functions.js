@@ -730,8 +730,8 @@ export async function getProduct(tag, product_id) {
             //Obtenemos los specials del step
             try {
                 var result = await db.execute({
-                    sql: 'SELECT * FROM special WHERE step_id = :step_id',
-                    args: step_id
+                    sql: 'SELECT * FROM special WHERE step_id = :id',
+                    args: {id: step_id}
                 });
                 //Si hay specials, los añadimos al step
                 if (result.rows.length > 0) {
