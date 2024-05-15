@@ -1,21 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export function SpecialDisplay({ special }) {
+export function SpecialDisplay({ special, onDelete }) {
     const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
     const [backgroundSize, setBackgroundSize] = useState('60px')
 
-    const handleImageChange = (e) => {
+    useEffect(() => {
+        if (special.img) {
+            setBackgroundImage(`data:image/jpeg;base64,${special.img}`)
+            setBackgroundSize('cover')
+        }
+    })
+
+    const handleSpecialImageChange = (e) => {
         const file = e.target.files[0]
         if (file) {
             const reader = new FileReader()
             reader.onload = () => {
                 setBackgroundImage(reader.result)
                 setBackgroundSize('cover')
-                setProduct({ ...product, image: reader.result.split(',')[1] })
+                special.img = reader.result.split(',')[1]
+                console.log("imagen actualizada: ", special.img)
             }
             reader.readAsDataURL(file)
         }
-    }
+    };
 
     const changeSpecialName = (e) => {
         special.name = e.target.value
@@ -25,15 +33,19 @@ export function SpecialDisplay({ special }) {
         special.price_changer = e.target.value
     }
 
+    const deleteSpecial = () => {
+        onDelete(special.id)
+    }
+
     return (
         <div className="special-item">
             <div className="image-input-special" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: `${backgroundSize}` }} >
                 <label htmlFor="categoryImage"></label>
-                <input type="file" name="categoryImage" id="categoryImage" onChange={handleImageChange} />
+                <input type="file" name="categoryImage" id="categoryImage" onChange={handleSpecialImageChange} />
             </div>
-            <input type="text" placeholder="Item Name" value={special.name} onChange={changeSpecialName} className='special-name-input' />
-            <input type="text" placeholder="Price diference (+ or -)" value={special.price_changer} onChange={changeSpecialPriceChanger} className='special-price-input' />
-            <button className='special-delete'>Delete</button>
+            <input type="text" placeholder="Item Name" defaultValue={special.name} onChange={changeSpecialName} className='special-name-input' />
+            <input type="text" placeholder="Price difference (+ or -)" defaultValue={special.price_changer} onChange={changeSpecialPriceChanger} className='special-price-input' />
+            <button className='special-delete' onClick={deleteSpecial}>Delete</button>
         </div>
     )
 }

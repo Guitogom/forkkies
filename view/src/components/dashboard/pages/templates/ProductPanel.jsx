@@ -34,7 +34,7 @@ export function ProductPanel() {
             })
                 .then(response => {
                     if (!response.ok) {
-                        window.location.href = '/error'
+                        window.location.href + '/error'
                     }
                     return response.json()
                 })
@@ -47,7 +47,7 @@ export function ProductPanel() {
                 })
                 .catch(error => {
                     console.error('Error:', error.message)
-                    window.location.href = '/error'
+                    window.location.href + '/error'
                 })
         } else {
             setLoaded(true)
@@ -94,11 +94,18 @@ export function ProductPanel() {
         setProduct({ ...product, steps: updatedSteps })
     }
 
+    const handleSpecialDelete = (specialID) => {
+        const updatedSteps = [...product.steps]
+        updatedSteps[stepIndex].specials.splice(specialIndex, 1)
+        setProduct({ ...product, steps: updatedSteps })
+    }
+
     const [editStep, setEditStep] = useState({})
 
     const handleEdit = (step) => {
         if (step === 'close') {
             setEdit(false)
+            setEditStep(null)
         } else {
             setEditStep(step)
             setEdit(true)
@@ -106,11 +113,11 @@ export function ProductPanel() {
     }
 
     const handleEditStepChange = (fieldName, value) => {
-        const updatedSteps = [...product.steps];
-        const index = updatedSteps.findIndex((step) => step === editStep);
+        const updatedSteps = [...product.steps]
+        const index = updatedSteps.findIndex((step) => step === editStep)
         if (index !== -1) {
-            updatedSteps[index][fieldName] = value;
-            setProduct({ ...product, steps: updatedSteps });
+            updatedSteps[index][fieldName] = value
+            setProduct({ ...product, steps: updatedSteps })
         }
     }
 
@@ -132,7 +139,8 @@ export function ProductPanel() {
             updatedSteps[index].specials.push({
                 id: '',
                 name: 'New Item',
-                price_changer: ''
+                price_changer: '',
+                img: ''
             })
             setProduct({ ...product, steps: updatedSteps })
         }
@@ -140,6 +148,7 @@ export function ProductPanel() {
 
     const saveProduct = () => {
         const token = localStorage.getItem('session_token')
+        console.log(product)
         fetch(`http://147.182.207.78:3000/modifyproduct`, {
             method: 'POST',
             headers: {
@@ -150,14 +159,14 @@ export function ProductPanel() {
         })
             .then(response => {
                 if (!response.ok) {
-                    window.location.href = '/error'
+                    window.location.href + '/error'
                 } else {
                     window.location.href = `/dashboard/t/${id}/${c_id}`
                 }
             })
             .catch(error => {
                 console.error('Error:', error.message)
-                window.location.href = '/error'
+                window.location.href + '/error'
             })
     }
 
@@ -171,7 +180,7 @@ export function ProductPanel() {
             <div className="edit-step" style={{ top: edit ? '0%' : '-100%' }}>
                 <div className="edit-step-inner">
                     <div className="edit-step-upper">
-                        <input type="text" placeholder='Step text' value={editStep.title} onInput={(e) => handleEditStepChange('title', e.target.value)} className='special-title-input' />
+                        <input type="text" placeholder='Step text' value={editStep.title || ''} onInput={(e) => handleEditStepChange('title', e.target.value)} className='special-title-input' />
                         <div className="step-close" onClick={() => handleEdit('close')}>
                             <PlusSVG />
                         </div>
