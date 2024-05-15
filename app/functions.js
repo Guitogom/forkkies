@@ -634,32 +634,31 @@ export async function modifyProduct(tag, body) {
                 throw new Error('Error en la base de datos: ' + error.message);
             }
         }
+        //Eliminamos los steps del producto
+        try {
+            await db.execute({
+                sql: 'DELETE FROM step WHERE product_id = :product_id',
+                args: { product_id }
+            });
+        } catch (error) {
+            console.error('5Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+
         //Recorremos los steps
         for (var i = 0; i < steps.length; i++) {
             var step = steps[i];
             //Si el step no tiene id, lo añadimos
-            if (!step.id) {
-                try {
-                    var result = await db.execute({
-                        sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id) RETURNING id',
-                        args: { title: step.title, type: step.type, product_id }
-                    });
-                    var step_id = result.rows[0].id;
-                } catch (error) {
-                    console.error('5Error en la base de datos:', error.message);
-                    throw new Error('Error en la base de datos: ' + error.message);
-                }
-            } else {
-                var step_id = step.id;
-                try {
-                    await db.execute({
-                        sql: 'UPDATE step SET title = :title, type = :type WHERE id = :id AND product_id = :product_id',
-                        args: { title: step.title, type: step.type, id: step_id, product_id }
-                    });
-                } catch (error) {
-                    console.error('6Error en la base de datos:', error.message);
-                    throw new Error('Error en la base de datos: ' + error.message);
-                }
+
+            try {
+                var result = await db.execute({
+                    sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id) RETURNING id',
+                    args: { title: step.title, type: step.type, product_id }
+                });
+                var step_id = result.rows[0].id;
+            } catch (error) {
+                console.error('5Error en la base de datos:', error.message);
+                throw new Error('Error en la base de datos: ' + error.message);
             }
 
             if (step.specials) {
@@ -731,11 +730,13 @@ export async function getProduct(tag, product_id) {
             try {
                 var result = await db.execute({
                     sql: 'SELECT * FROM special WHERE step_id = :id',
-                    args: {id: step_id}
+                    args: { id: step_id }
                 });
                 //Si hay specials, los añadimos al step
                 if (result.rows.length > 0) {
                     product.steps[i].specials = result.rows;
+                } else {
+                    product.steps[i].specials = [];
                 }
             } catch (error) {
                 console.error('4Error en la base de datos al recorrer steps:', error.message);
