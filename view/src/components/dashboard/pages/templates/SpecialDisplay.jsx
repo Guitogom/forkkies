@@ -27,12 +27,13 @@ export function SpecialDisplay({ special }) {
 
     return (
         <div className="special-item">
-            <div className="image-input" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: `${backgroundSize}` }} >
+            <div className="image-input-special" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: `${backgroundSize}` }} >
                 <label htmlFor="categoryImage"></label>
                 <input type="file" name="categoryImage" id="categoryImage" onChange={handleImageChange} />
             </div>
-            <input type="text" placeholder="Item Name" value={special.name} onChange={changeSpecialName} />
-            <input type="text" placeholder="Price diference (+ or -)" value={special.price_changer} onChange={changeSpecialPriceChanger} />
+            <input type="text" placeholder="Item Name" value={special.name} onChange={changeSpecialName} className='special-name-input' />
+            <input type="text" placeholder="Price diference (+ or -)" value={special.price_changer} onChange={changeSpecialPriceChanger} className='special-price-input' />
+            <button className='special-delete'>Delete</button>
         </div>
     )
 }

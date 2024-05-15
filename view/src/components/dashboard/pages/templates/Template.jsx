@@ -22,9 +22,6 @@ export function Template() {
         setStatus(!status)
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                window.location.href = '/error'
-            }, 6000)
             fetch(`http://147.182.207.78:3000/modifytemplate`, {
                 method: 'POST',
                 headers: {
@@ -34,14 +31,12 @@ export function Template() {
                 body: JSON.stringify({ id: id, [`${status ? 'deactivate' : 'activate'}`]: true })
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
                         window.location.href = '/error'
                     }
                     buttonText === status ? "Set Offline" : "Set Online"
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
                     console.error('Error:', error.message)
                     window.location.href = '/error'
                 })

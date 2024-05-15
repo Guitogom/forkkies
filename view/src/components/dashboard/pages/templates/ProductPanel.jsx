@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Loading } from '../../Loading.jsx';
 import { StepDisplay } from './StepDisplay.jsx';
 import { DeleteSVG } from '../../../../assets/svg/DeleteSVG.jsx';
-import { SpecialDisplay } from './SprecialDisplay.jsx';
+import { SpecialDisplay } from './SpecialDisplay.jsx';
 
 export function ProductPanel() {
     const [loaded, setLoaded] = useState(false)
@@ -125,6 +125,19 @@ export function ProductPanel() {
         setProduct({ ...product, steps: updatedSteps })
     }
 
+    const addStepItem = () => {
+        const updatedSteps = [...product.steps]
+        const index = updatedSteps.findIndex((step) => step === editStep)
+        if (index !== -1) {
+            updatedSteps[index].specials.push({
+                id: '',
+                name: 'New Item',
+                price_changer: ''
+            })
+            setProduct({ ...product, steps: updatedSteps })
+        }
+    }
+
     const saveProduct = () => {
         const token = localStorage.getItem('session_token')
         fetch(`http://147.182.207.78:3000/modifyproduct`, {
@@ -158,7 +171,7 @@ export function ProductPanel() {
             <div className="edit-step" style={{ top: edit ? '0%' : '-100%' }}>
                 <div className="edit-step-inner">
                     <div className="edit-step-upper">
-                        <input type="text" placeholder='Step text' value={editStep.title} onInput={(e) => handleEditStepChange('title', e.target.value)} />
+                        <input type="text" placeholder='Step text' value={editStep.title} onInput={(e) => handleEditStepChange('title', e.target.value)} className='special-title-input' />
                         <div className="step-close" onClick={() => handleEdit('close')}>
                             <PlusSVG />
                         </div>
@@ -169,8 +182,11 @@ export function ProductPanel() {
                                 <SpecialDisplay special={special} key={index} />
                             ))
                         ) : (
-                            <div className='empty-steps'><p>This product has currently no items.</p></div>
+                            <div className='empty-steps'></div>
                         )}
+                        <div className="special-item-add" onClick={addStepItem}>
+                            <PlusSVG />
+                        </div>
                     </div>
                 </div>
             </div>

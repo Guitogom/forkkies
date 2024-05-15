@@ -66,7 +66,7 @@ export function Category() {
                 .then(response => {
                     setCategory(response.result)
                     setCategoryName(response.result.category.name)
-                    setProducts(response.result.products) // Falta el precio
+                    setProducts(response.result.products)
                     setLoaded(true)
                 })
                 .catch(error => {

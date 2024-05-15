@@ -84,9 +84,6 @@ export function CategoryPanel() {
 
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                window.location.href = '/error'
-            }, 8000)
 
             if (c_id === 'new') {
                 fetch(`http://147.182.207.78:3000/newcategory`, {
@@ -120,7 +117,6 @@ export function CategoryPanel() {
                     body: JSON.stringify({ template_id: id, category: { id: c_id, name: categoryName, img: imagenAEnviar } })
                 })
                     .then(response => {
-                        clearTimeout(timeout)
                         if (!response.ok) {
                             window.location.href = '/error'
                         } else {
@@ -128,7 +124,6 @@ export function CategoryPanel() {
                         }
                     })
                     .catch(error => {
-                        clearTimeout(timeout)
                         console.error('Error:', error.message)
                         window.location.href = '/error'
                     })
