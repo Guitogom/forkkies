@@ -726,21 +726,20 @@ export async function getProduct(tag, product_id) {
 
         //Recorremos los steps
         for (var i = 0; i < product.steps.length; i++) {
-            var step = product.steps[i].id;
-            console.log(step);
+            var step_id = product.steps[i].id;
             //Obtenemos los specials del step
             try {
                 var result = await db.execute({
                     sql: 'SELECT * FROM special WHERE step_id = :id',
-                    args: { id: step.id }
+                    args: step_id
                 });
                 //Si hay specials, los añadimos al step
                 if (result.rows.length > 0) {
                     product.steps[i].specials = result.rows;
                 }
             } catch (error) {
-                console.error('4Error en la base de datos:', error.message);
-                throw new Error('4Error en la base de datos: ' + error.message);
+                console.error('4Error en la base de datos al recorrer steps:', error.message);
+                throw new Error('4Error en la base de datos al recorrer steps: ' + error.message);
             }
         }
 
