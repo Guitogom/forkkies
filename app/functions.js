@@ -622,7 +622,7 @@ export async function modifyProduct(tag, body) {
                     try {
                         await db.execute({
                             sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, img = :img WHERE id = :id',
-                            args: {name: product.name, desc: product.desc, price: product.price, img: product.img, id: product.id}
+                            args: { name: product.name, desc: product.desc, price: product.price, img: product.img, id: product.id }
                         });
                     } catch (error) {
                         console.error('3Error en la base de datos:', error.message);
@@ -667,15 +667,15 @@ export async function modifyProduct(tag, body) {
                 for (var j = 0; j < step.specials.length; j++) {
                     var special = step.specials[j];
                     //Si el special no tiene id, lo añadimos
-                        try {
-                            await db.execute({
-                                sql: 'INSERT INTO special (name, price_changer, img, step_id) VALUES (:name, :price_changer, :img, :step_id)',
-                                args: { name: special.name, price_changer: special.price_changer, img: special.img, step_id }
-                            });
-                        } catch (error) {
-                            console.error('7Error en la base de datos:', error.message);
-                            throw new Error('Error en la base de datos: ' + error.message);
-                        }
+                    try {
+                        await db.execute({
+                            sql: 'INSERT INTO special (name, price_changer, img, step_id) VALUES (:name, :price_changer, :img, :step_id)',
+                            args: { name: special.name, price_changer: special.price_changer, img: special.img, step_id }
+                        });
+                    } catch (error) {
+                        console.error('7Error en la base de datos:', error.message);
+                        throw new Error('Error en la base de datos: ' + error.message);
+                    }
                 }
             }
         }
@@ -733,7 +733,10 @@ export async function getProduct(tag, product_id) {
                     sql: 'SELECT * FROM special WHERE step_id = :id',
                     args: step
                 });
-                product.steps[i].specials = result.rows;
+                //Si hay specials, los añadimos al step
+                if (result.rows.length > 0) {
+                    product.steps[i].specials = result.rows;
+                }
             } catch (error) {
                 console.error('4Error en la base de datos:', error.message);
                 throw new Error('4Error en la base de datos: ' + error.message);
