@@ -27,10 +27,6 @@ export function Dashboard() {
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                window.location.href = '/error'
-                console.error('Error: Timeout')
-            }, 6000)
             fetch('http://147.182.207.78:3000/getbusiness', {
                 method: 'GET',
                 headers: {
@@ -39,7 +35,6 @@ export function Dashboard() {
                 },
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
                         window.location.href = '/error'
                     }
@@ -53,7 +48,6 @@ export function Dashboard() {
                     setLoaded(true)
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
                     console.error('Error:', error.message)
                     window.location.href = '/error'
                 })

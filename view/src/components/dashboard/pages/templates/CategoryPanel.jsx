@@ -17,9 +17,6 @@ export function CategoryPanel() {
     useEffect(() => {
         if (c_id !== 'new' && !loaded) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                window.location.href = '/error'
-            }, 6000)
             fetch(`http://147.182.207.78:3000/getcategory?id=${c_id}`, {
                 method: 'GET',
                 headers: {
@@ -28,7 +25,6 @@ export function CategoryPanel() {
                 }
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
                         window.location.href = '/error'
                     }
@@ -42,7 +38,6 @@ export function CategoryPanel() {
                     setLoaded(true)
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
                     console.error('Error:', error.message)
                     window.location.href = '/error'
                 })
@@ -95,7 +90,6 @@ export function CategoryPanel() {
                     body: JSON.stringify({ template_id: id, category: { name: categoryName, img: imagenAEnviar } })
                 })
                     .then(response => {
-                        clearTimeout(timeout)
                         if (!response.ok) {
                             window.location.href = '/error'
                         } else {
@@ -103,9 +97,7 @@ export function CategoryPanel() {
                         }
                     })
                     .catch(error => {
-                        clearTimeout(timeout)
                         console.error('Error:', error.message)
-                        window.location.href = '/error'
                     })
             } else {
                 fetch(`http://147.182.207.78:3000/modifycategory`, {
@@ -125,7 +117,6 @@ export function CategoryPanel() {
                     })
                     .catch(error => {
                         console.error('Error:', error.message)
-                        window.location.href = '/error'
                     })
             }
         }

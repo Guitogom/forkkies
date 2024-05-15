@@ -6,9 +6,11 @@ import { Loading } from '../../Loading.jsx';
 import { StepDisplay } from './StepDisplay.jsx';
 import { DeleteSVG } from '../../../../assets/svg/DeleteSVG.jsx';
 import { SpecialDisplay } from './SpecialDisplay.jsx';
+import { LoadingWithText } from '../../LoadingWithText.jsx';
 
 export function ProductPanel() {
     const [loaded, setLoaded] = useState(false)
+    const [loading2, setLoading2] = useState(true)
     const { id } = useParams()
     const { c_id } = useParams()
     const { p_id } = useParams()
@@ -149,6 +151,7 @@ export function ProductPanel() {
     const saveProduct = () => {
         const token = localStorage.getItem('session_token')
         console.log(product)
+        setLoading2(false)
         fetch(`http://147.182.207.78:3000/modifyproduct`, {
             method: 'POST',
             headers: {
@@ -161,18 +164,18 @@ export function ProductPanel() {
                 if (!response.ok) {
                     window.location.href + '/error'
                 } else {
+                    setLoading2(true)
                     window.location.href = `/dashboard/t/${id}/${c_id}`
                 }
             })
             .catch(error => {
                 console.error('Error:', error.message)
-                window.location.href + '/error'
             })
     }
 
 
 
-
+    if (!loading2) return <LoadingWithText />
     if (!loaded) return <Loading />
 
     return (

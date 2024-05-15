@@ -93,3 +93,39 @@
     width: 40%;
   }
 }
+
+.loading-with-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  height: 78vh;
+  background-color: rgba(226, 226, 226, 0.904);
+}
+
+.spinning-wheel {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 5px solid var(--primary-color);
+  border-bottom-color: var(--secondary-color);
+  animation: spin 2s linear infinite;
+}
+
+.spinning-wheel svg {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  font-family: var(--secondary-font);
+}

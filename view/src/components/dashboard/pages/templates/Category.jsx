@@ -38,7 +38,6 @@ export function Category() {
                 })
                 .catch(error => {
                     console.error('Error:', error.message)
-                    window.location.href = '/error'
                 })
         }
     }
@@ -71,7 +70,6 @@ export function Category() {
                 })
                 .catch(error => {
                     console.error('Error:', error.message)
-                    window.location.href = '/error'
                 })
         }
     }, [])
