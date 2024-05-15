@@ -609,7 +609,6 @@ export async function modifyProduct(tag, body) {
                 throw new Error('Error al insertar el producto en la categoría: ' + error.message);
             }
         } else {
-            console.log('Modificando producto');
             var product_id = product.id;
             //Verificamos que el producto pertenezca a la categoria
             try {
@@ -621,10 +620,9 @@ export async function modifyProduct(tag, body) {
                     throw new Error('El producto no pertenece a la categoria');
                 } else {
                     try {
-                        console.log ('Product:', product);
                         await db.execute({
                             sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, img = :img WHERE id = :id',
-                            args: {name: product.name, desc: product.desc, price: product.price, img: product.img, id: product.id}
+                            args: { name: product.name, desc: product.desc, price: product.price, img: product.img, id: product.id }
                         });
                     } catch (error) {
                         console.error('3Error en la base de datos:', error.message);
@@ -636,32 +634,31 @@ export async function modifyProduct(tag, body) {
                 throw new Error('Error en la base de datos: ' + error.message);
             }
         }
+        //Eliminamos los steps del producto
+        try {
+            await db.execute({
+                sql: 'DELETE FROM step WHERE product_id = :product_id',
+                args: { product_id }
+            });
+        } catch (error) {
+            console.error('5Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+
         //Recorremos los steps
         for (var i = 0; i < steps.length; i++) {
             var step = steps[i];
             //Si el step no tiene id, lo añadimos
-            if (!step.id) {
-                try {
-                    var result = await db.execute({
-                        sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id) RETURNING id',
-                        args: { title: step.title, type: step.type, product_id }
-                    });
-                    var step_id = result.rows[0].id;
-                } catch (error) {
-                    console.error('5Error en la base de datos:', error.message);
-                    throw new Error('Error en la base de datos: ' + error.message);
-                }
-            } else {
-                var step_id = step.id;
-                try {
-                    await db.execute({
-                        sql: 'UPDATE step SET title = :title, type = :type WHERE id = :id AND product_id = :product_id',
-                        args: { title: step.title, type: step.type, id: step_id, product_id }
-                    });
-                } catch (error) {
-                    console.error('6Error en la base de datos:', error.message);
-                    throw new Error('Error en la base de datos: ' + error.message);
-                }
+
+            try {
+                var result = await db.execute({
+                    sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id) RETURNING id',
+                    args: { title: step.title, type: step.type, product_id }
+                });
+                var step_id = result.rows[0].id;
+            } catch (error) {
+                console.error('5Error en la base de datos:', error.message);
+                throw new Error('Error en la base de datos: ' + error.message);
             }
 
             if (step.specials) {
@@ -669,15 +666,15 @@ export async function modifyProduct(tag, body) {
                 for (var j = 0; j < step.specials.length; j++) {
                     var special = step.specials[j];
                     //Si el special no tiene id, lo añadimos
-                        try {
-                            await db.execute({
-                                sql: 'INSERT INTO special (name, price_changer, img, step_id) VALUES (:name, :price_changer, :img, :step_id)',
-                                args: { name: special.name, price_changer: special.price_changer, img: special.img, step_id }
-                            });
-                        } catch (error) {
-                            console.error('7Error en la base de datos:', error.message);
-                            throw new Error('Error en la base de datos: ' + error.message);
-                        }
+                    try {
+                        await db.execute({
+                            sql: 'INSERT INTO special (name, price_changer, img, step_id) VALUES (:name, :price_changer, :img, :step_id)',
+                            args: { name: special.name, price_changer: special.price_changer, img: special.img, step_id }
+                        });
+                    } catch (error) {
+                        console.error('7Error en la base de datos:', error.message);
+                        throw new Error('Error en la base de datos: ' + error.message);
+                    }
                 }
             }
         }
@@ -694,8 +691,8 @@ export async function getProduct(tag, product_id) {
         });
         var template_id = result.rows[0].template_id;
     } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
+        console.error('1Error en la base de datos:', error.message);
+        throw new Error('1Error en la base de datos: ' + error.message);
     }
 
     //Verificamos que el template pertenezca al negocio
@@ -710,8 +707,8 @@ export async function getProduct(tag, product_id) {
             });
             var product = result.rows[0];
         } catch (error) {
-            console.error('Error en la base de datos:', error.message);
-            throw new Error('Error en la base de datos: ' + error.message);
+            console.error('2Error en la base de datos:', error.message);
+            throw new Error('2Error en la base de datos: ' + error.message);
         }
 
         //Obtenemos los steps del producto
@@ -722,23 +719,28 @@ export async function getProduct(tag, product_id) {
             });
             product.steps = result.rows;
         } catch (error) {
-            console.error('Error en la base de datos:', error.message);
-            throw new Error('Error en la base de datos: ' + error.message);
+            console.error('3Error en la base de datos:', error.message);
+            throw new Error('3Error en la base de datos: ' + error.message);
         }
 
         //Recorremos los steps
         for (var i = 0; i < product.steps.length; i++) {
-            var step = product.steps[i];
+            var step_id = product.steps[i].id;
             //Obtenemos los specials del step
             try {
                 var result = await db.execute({
                     sql: 'SELECT * FROM special WHERE step_id = :id',
-                    args: step
+                    args: { id: step_id }
                 });
-                product.steps[i].specials = result.rows;
+                //Si hay specials, los añadimos al step
+                if (result.rows.length > 0) {
+                    product.steps[i].specials = result.rows;
+                } else {
+                    product.steps[i].specials = [];
+                }
             } catch (error) {
-                console.error('Error en la base de datos:', error.message);
-                throw new Error('Error en la base de datos: ' + error.message);
+                console.error('4Error en la base de datos al recorrer steps:', error.message);
+                throw new Error('4Error en la base de datos al recorrer steps: ' + error.message);
             }
         }
 
