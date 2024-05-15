@@ -609,7 +609,6 @@ export async function modifyProduct(tag, body) {
                 throw new Error('Error al insertar el producto en la categoría: ' + error.message);
             }
         } else {
-            console.log('Modificando producto');
             var product_id = product.id;
             //Verificamos que el producto pertenezca a la categoria
             try {
@@ -621,7 +620,6 @@ export async function modifyProduct(tag, body) {
                     throw new Error('El producto no pertenece a la categoria');
                 } else {
                     try {
-                        console.log ('Product:', product);
                         await db.execute({
                             sql: 'UPDATE product SET name = :name, desc = :desc, price = :price, img = :img WHERE id = :id',
                             args: {name: product.name, desc: product.desc, price: product.price, img: product.img, id: product.id}
@@ -694,8 +692,8 @@ export async function getProduct(tag, product_id) {
         });
         var template_id = result.rows[0].template_id;
     } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
+        console.error('1Error en la base de datos:', error.message);
+        throw new Error('1Error en la base de datos: ' + error.message);
     }
 
     //Verificamos que el template pertenezca al negocio
@@ -710,8 +708,8 @@ export async function getProduct(tag, product_id) {
             });
             var product = result.rows[0];
         } catch (error) {
-            console.error('Error en la base de datos:', error.message);
-            throw new Error('Error en la base de datos: ' + error.message);
+            console.error('2Error en la base de datos:', error.message);
+            throw new Error('2Error en la base de datos: ' + error.message);
         }
 
         //Obtenemos los steps del producto
@@ -722,8 +720,8 @@ export async function getProduct(tag, product_id) {
             });
             product.steps = result.rows;
         } catch (error) {
-            console.error('Error en la base de datos:', error.message);
-            throw new Error('Error en la base de datos: ' + error.message);
+            console.error('3Error en la base de datos:', error.message);
+            throw new Error('3Error en la base de datos: ' + error.message);
         }
 
         //Recorremos los steps
@@ -737,8 +735,8 @@ export async function getProduct(tag, product_id) {
                 });
                 product.steps[i].specials = result.rows;
             } catch (error) {
-                console.error('Error en la base de datos:', error.message);
-                throw new Error('Error en la base de datos: ' + error.message);
+                console.error('4Error en la base de datos:', error.message);
+                throw new Error('4Error en la base de datos: ' + error.message);
             }
         }
 
