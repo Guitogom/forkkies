@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory, getCategory, modifyProduct, getProduct } from './functions.js';
+import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness } from './functions.js';
 
 const app = express();
 
@@ -9,7 +9,12 @@ app.use(express.json({ limit: '50mb' }));
 
 // Middleware para analizar los cuerpos de las solicitudes URL codificadas con límite de tamaño
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-app.use(cors());
+const corsOptions = {
+    origin: ['https://forkkies.live', 'https://www.forkkies.live'],
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 
 //Rutas
 app.get('/', (res) => {
@@ -203,10 +208,20 @@ app.get('/clientcategory', async (req, res) => {
     }
 });
 
-app.get ('/clientproduct', async (req, res) => {
+app.get('/clientproduct', async (req, res) => {
     try {
         var tag = req.query.tag;
         var result = await getProduct(tag, req.query.id);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al obtener negocio:', error.message);
+        res.status(500).json({ error: 'Error al obtener negocio' });
+    }
+});
+
+app.get('/loadbusiness', async (req, res) => {
+    try {
+        var result = await getAllBusiness(req.query.tag);
         res.status(200).json({ result });
     } catch (error) {
         console.error('Error al obtener negocio:', error.message);

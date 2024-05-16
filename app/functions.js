@@ -748,3 +748,81 @@ export async function getProduct(tag, product_id) {
         return { product };
     }
 }
+
+export async function getAllBusiness(tag) {
+    try {
+        const business = await fetchBusiness(tag);
+        const categories = await fetchCategoriesForTemplate(business.active_template);
+
+        for (const category of categories) {
+            const products = await fetchProductsForCategory(category.id);
+            for (const product of products) {
+                product.steps = await fetchStepsForProduct(product.id);
+                for (const step of product.steps) {
+                    step.specials = await fetchSpecialsForStep(step.id);
+                }
+            }
+            category.products = products;
+        }
+
+        business.categories = categories;
+
+        return { business };
+    } catch (error) {
+        console.error('Error fetching data from the database:', error.message);
+        throw new Error('Error fetching data from the database: ' + error.message);
+    }
+}
+
+async function fetchBusiness(tag) {
+    const result = await db.execute({
+        sql: 'SELECT name, color1, color2, color3, color4, landing_img, active_template FROM business WHERE tag = :tag',
+        args: { tag }
+    });
+
+    if (!result || result.rows.length === 0) {
+        throw new Error('No businesses found');
+    }
+
+    return result.rows[0];
+}
+
+async function fetchCategoriesForTemplate(active_template) {
+    const result = await db.execute({
+        sql: 'SELECT * FROM category WHERE template_id = :active_template',
+        args: { active_template }
+    });
+
+    if (result.rows.length === 0) {
+        throw new Error('No categories found');
+    }
+
+    return result.rows;
+}
+
+async function fetchProductsForCategory(category_id) {
+    const result = await db.execute({
+        sql: 'SELECT id, name, img, price FROM product WHERE id IN (SELECT product_id FROM cat_product WHERE category_id = :category_id)',
+        args: { category_id }
+    });
+
+    return result.rows;
+}
+
+async function fetchStepsForProduct(product_id) {
+    const result = await db.execute({
+        sql: 'SELECT * FROM step WHERE product_id = :product_id',
+        args: { product_id }
+    });
+
+    return result.rows;
+}
+
+async function fetchSpecialsForStep(step_id) {
+    const result = await db.execute({
+        sql: 'SELECT * FROM special WHERE step_id = :step_id',
+        args: { step_id }
+    });
+
+    return result.rows;
+}
