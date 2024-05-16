@@ -752,9 +752,12 @@ export async function getProduct(tag, product_id) {
 export async function getAllBusiness(tag) {
     try {
         var result = await db.execute({
-            sql: 'SELECT tag, name, type, tel, color1, color2, color3, color4, landing_img, active_template FROM business WHERE tag != "deleted"'
+            sql: 'SELECT tag, name, color1, color2, color3, color4, landing_img, active_template FROM business WHERE tag != "deleted"'
         });
-        if (result.rows.length === 0) {
+    
+        console.log('Result:', result); // Add this line for logging
+    
+        if (!result || result.rows.length === 0) {
             throw new Error('No hay negocios');
         } else {
             var business = result.rows;
@@ -763,6 +766,7 @@ export async function getAllBusiness(tag) {
         console.error('1Error en la base de datos:', error.message);
         throw new Error('1Error en la base de datos: ' + error.message);
     }
+    
 
     //Obtenemos las categorias del active_template
     try {
