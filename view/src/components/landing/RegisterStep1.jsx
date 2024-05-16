@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import debounce from "just-debounce-it"
 
 export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusinessName, setTag, setPhoneNumber, setBusinessLocation, businessName, tag, phoneNumber, businessLocation }) {
-    const [avalibleTag, setAvalibleTag] = useState(false)
+    const [availableTag, setAvailableTag] = useState(false)
     const [tagProvisional, setTagProvisional] = useState('')
 
 
@@ -50,33 +50,42 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
         }, 400)
     }
 
-    const fetchTagExists = async () => {
+    const fetchTagExists = async (tag) => {
         try {
             const response = await fetch(
-                `http://147.182.207.78:3000/verifytag?tag=${tagProvisional}`
+                `http://147.182.207.78:3000/verifytag?tag=${tag}`
             )
             const data = await response.json()
             if (data.exists) {
-                setAvalibleTag(false)
+                setAvailableTag(false)
             } else {
-                setAvalibleTag(true)
-                setTag(tagProvisional)
+                setAvailableTag(true)
+                setTag(tag)
             }
         } catch (error) {
-            setAvalibleTag(false)
+            setAvailableTag(false)
             console.error('Error:', error)
         }
     }
 
+    const debouncedFetchTagExists = useCallback(
+        debounce((tag) => {
+            fetchTagExists(tag)
+        }, 300),
+        []
+    )
+
     useEffect(() => {
-        debounce(fetchTagExists, 500)()
+        if (tagProvisional.trim() !== '') {
+            debouncedFetchTagExists(tagProvisional)
+        }
     }, [tagProvisional])
 
     return (
         <div className={`register-form ${divHeight}`}>
             <input type="text" placeholder='business name' onInput={handleNameChange} className='register-input' value={businessName} />
-            <p className='register-tag-text'>The tag is a unique word that identifies your business publicly on forkkies. <span className={tagProvisional.length == 0 ? "not-available" : (avalibleTag ? "available" : "not-available")}>
-                {tagProvisional.length == 0 ? "Tag can't be empty" : (avalibleTag ? "This tag is available" : "This tag is in use")}</span></p>
+            <p className='register-tag-text'>The tag is a unique word that identifies your business publicly on forkkies. <span className={tagProvisional.length == 0 ? "not-available" : (availableTag ? "available" : "not-available")}>
+                {tagProvisional.length == 0 ? "Tag can't be empty" : (availableTag ? "This tag is available" : "This tag is in use")}</span></p>
             <input type="text" placeholder='tag' onInput={handleTagChange} className='register-input' />
             <input type="text" placeholder='phone number' onInput={handlePhoneChange} className='register-input' value={phoneNumber} />
             <input type="text" placeholder='business location' onInput={handleLocationChange} className='register-input' value={businessLocation} />

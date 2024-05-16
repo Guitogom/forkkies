@@ -129,3 +129,13 @@
   color: var(--primary-color);
   font-family: var(--secondary-font);
 }
+
+.client-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  height: 100dvh;
+  background-color: rgba(241, 241, 241, 0.959);
+}
