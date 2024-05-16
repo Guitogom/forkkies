@@ -748,3 +748,107 @@ export async function getProduct(tag, product_id) {
         return { product };
     }
 }
+
+export async function getAllBusiness(tag) {
+    try {
+        var result = await db.execute({
+            sql: 'SELECT tag, name, type, tel, color1, color2, color3, color4, landing_img, active_template FROM business WHERE tag != "deleted"'
+        });
+        if (result.rows.length === 0) {
+            throw new Error('No hay negocios');
+        } else {
+            var business = result.rows;
+        }
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+
+    //Obtenemos las categorias del active_template
+    try {
+        var result = await db.execute({
+            sql: 'SELECT * FROM category WHERE template_id = :active_template',
+            args: { active_template: business.active_template }
+        });
+        if (result.rows.length === 0) {
+            throw new Error('No hay categorias');
+        } else {
+            var categories = result.rows;
+        }
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+
+    //Recorremos las categorias
+    for (var i = 0; i < categories.length; i++) {
+        var category_id = categories[i].id;
+        //Obtenemos los productos de la categoria
+        try {
+            var result = await db.execute({
+                sql: 'SELECT product_id FROM cat_product WHERE category_id = :category_id',
+                args: { category_id }
+            });
+            var products_id = result.rows;
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+        //Obtenemos el name, img de cada producto y lo vocamos a una array
+        var products = [];
+        for (var j = 0; j < products_id.length; j++) {
+            try {
+                var result = await db.execute({
+                    sql: 'SELECT id, name, img, price FROM product WHERE id = :product_id',
+                    args: products_id[j]
+                });
+            } catch (error) {
+                console.error('Error en la base de datos:', error.message);
+                throw new Error('Error en la base de datos: ' + error.message);
+            }
+        }
+        //Obtenemos los steps de cada producto
+        try {
+            var result = await db.execute({
+                sql: 'SELECT * FROM step WHERE product_id = :product_id',
+                args: products_id[j]
+            });
+            if (result.rows.length > 0) {
+                products[j].steps = result.rows;
+            } else {
+                products[j].steps = [];
+            }
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+
+        //Recorremos los steps
+        for (var k = 0; k < products[j].steps.length; k++) {
+            var step_id = products[j].steps[k].id;
+            //Obtenemos los specials del step
+            try {
+                var result = await db.execute({
+                    sql: 'SELECT * FROM special WHERE step_id = :id',
+                    args: { id: step_id }
+                });
+                //Si hay specials, los añadimos al step
+                if (result.rows.length > 0) {
+                    products[j].steps[k].specials = result.rows;
+                } else {
+                    products[j].steps[k].specials = [];
+                }
+            } catch (error) {
+                console.error('Error en la base de datos al recorrer steps:', error.message);
+                throw new Error('Error en la base de datos al recorrer steps: ' + error.message);
+            }
+        }
+        //Añadimos los productos a la categoria
+        categories[i].products = products;
+
+        business.categories = categories;
+
+        //Devolvemos el negocio con sus categorias y productos
+        return { business };
+    }
+}
