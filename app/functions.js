@@ -752,7 +752,8 @@ export async function getProduct(tag, product_id) {
 export async function getAllBusiness(tag) {
     try {
         var result = await db.execute({
-            sql: 'SELECT * FROM business WHERE tag != "deleted"'
+            sql: 'SELECT * FROM business WHERE tag = :tag',
+            args: { tag }
         });
     
         console.log('Result:', result); // Add this line for logging
