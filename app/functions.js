@@ -760,8 +760,8 @@ export async function getAllBusiness(tag) {
             var business = result.rows;
         }
     } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
+        console.error('1Error en la base de datos:', error.message);
+        throw new Error('1Error en la base de datos: ' + error.message);
     }
 
     //Obtenemos las categorias del active_template
@@ -776,8 +776,8 @@ export async function getAllBusiness(tag) {
             var categories = result.rows;
         }
     } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
+        console.error('2Error en la base de datos:', error.message);
+        throw new Error('2Error en la base de datos: ' + error.message);
     }
 
     //Recorremos las categorias
@@ -791,8 +791,8 @@ export async function getAllBusiness(tag) {
             });
             var products_id = result.rows;
         } catch (error) {
-            console.error('Error en la base de datos:', error.message);
-            throw new Error('Error en la base de datos: ' + error.message);
+            console.error('3Error en la base de datos:', error.message);
+            throw new Error('3Error en la base de datos: ' + error.message);
         }
         //Obtenemos el name, img de cada producto y lo vocamos a una array
         var products = [];
@@ -803,8 +803,8 @@ export async function getAllBusiness(tag) {
                     args: products_id[j]
                 });
             } catch (error) {
-                console.error('Error en la base de datos:', error.message);
-                throw new Error('Error en la base de datos: ' + error.message);
+                console.error('4Error en la base de datos:', error.message);
+                throw new Error('4Error en la base de datos: ' + error.message);
             }
         }
         //Obtenemos los steps de cada producto
@@ -819,8 +819,8 @@ export async function getAllBusiness(tag) {
                 products[j].steps = [];
             }
         } catch (error) {
-            console.error('Error en la base de datos:', error.message);
-            throw new Error('Error en la base de datos: ' + error.message);
+            console.error('5Error en la base de datos:', error.message);
+            throw new Error('5Error en la base de datos: ' + error.message);
         }
 
         //Recorremos los steps
@@ -839,8 +839,8 @@ export async function getAllBusiness(tag) {
                     products[j].steps[k].specials = [];
                 }
             } catch (error) {
-                console.error('Error en la base de datos al recorrer steps:', error.message);
-                throw new Error('Error en la base de datos al recorrer steps: ' + error.message);
+                console.error('6Error en la base de datos al recorrer steps:', error.message);
+                throw new Error('6Error en la base de datos al recorrer steps: ' + error.message);
             }
         }
         //Añadimos los productos a la categoria
