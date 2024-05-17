@@ -29,6 +29,7 @@ export function Client() {
             .then(response => {
                 if (!response.ok) {
                     console.error('Error:', response.statusText)
+                    window.location.href = '/'
                 }
                 return response.json()
             })
@@ -43,6 +44,7 @@ export function Client() {
             })
             .catch(error => {
                 console.error('Error:', error.message)
+                window.location.href = '/'
             })
 
     }, [])

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Title } from "../../Title"
 import '../../../../styles/Management.css'
 
@@ -11,23 +11,124 @@ export function Management({ business, businessName, setBusinessName }) {
     const [theme, setTheme] = useState(business.color4)
 
     const changeColor = (color) => {
+        const token = localStorage.getItem('session_token')
         switch (color) {
             case primary:
-                return (e) => setPrimary(e.target.value)
+                (e) => setPrimary(e.target.value)
+                fetch('https://api.forkkies.live/modifybusiness', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ color1: primary })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            console.error('Error:', response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                        console.error('Error:', error.message)
+                    })
             case action:
-                return (e) => setAction(e.target.value)
+                (e) => setAction(e.target.value)
+                fetch('https://api.forkkies.live/modifybusiness', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ color2: secondary })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            console.error('Error:', response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                        console.error('Error:', error.message)
+                    })
             case secondary:
-                return (e) => setSecondary(e.target.value)
+                (e) => setSecondary(e.target.value)
+                fetch('https://api.forkkies.live/modifybusiness', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ color3: action })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            console.error('Error:', response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                        console.error('Error:', error.message)
+                    })
             case theme:
-                return (e) => setTheme(e.target.value)
+                (e) => setTheme(e.target.value)
+                fetch('https://api.forkkies.live/modifybusiness', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ color4: theme })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            console.error('Error:', response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                        console.error('Error:', error.message)
+                    })
             default:
                 console.error('Error: Color not found')
         }
     }
 
-    const handleChangeName = (e) => {
+    const handleChangeName = async (e) => {
+        const token = localStorage.getItem('session_token')
         setBusinessName(e.target.value)
-        // Fetch
+        fetch('https://api.forkkies.live/modifybusiness', {
+            method: 'POST',
+            headers: {
+                'Authorization': `${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: businessName })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Error:', response.statusText)
+                }
+                return response.json()
+            })
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.error('Error:', error.message)
+            })
     }
 
     const handleLogOut = () => {

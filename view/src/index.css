@@ -82,6 +82,22 @@
   color: #c0c0c0;
 }
 
+.general-error a {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  background-color: var(--forth-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 40px;
+  transition: all 0.2s linear;
+}
+
+.general-error a:hover {
+  background-color: var(--primary-color);
+  color: var(--forth-color);
+}
+
 @keyframes loading {
   from {
     transform: translateX(0);

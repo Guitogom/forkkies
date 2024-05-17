@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom';
 
 export function Error() {
     return (
@@ -6,6 +6,7 @@ export function Error() {
             <h1>Oops...</h1>
             <p>It seems that something went wrong</p>
             <img src="" alt="" />
+            <Link to='/'>Go Home</Link>
         </div>
     )
 }
