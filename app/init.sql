@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS business;
 -- Tabla 'business'
 CREATE TABLE IF NOT EXISTS business (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    type TEXT,
+    location TEXT,
     tag TEXT,
     password TEXT,
     name TEXT,
