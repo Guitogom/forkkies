@@ -444,6 +444,81 @@ export async function getTemplate(tag, template_id) {
     }
 }
 
+//Properties
+export async function newProperty(tag, property) {
+    //Obtenemos la id del business
+    try {
+        var result = await db.execute({
+            sql: 'SELECT id FROM business WHERE tag = :tag',
+            args: { tag }
+        });
+        var business_id = result.rows[0].id;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+    //Añadimos la propiedad con su nombre y el negocio al que pertenece
+    try {
+        await db.execute({
+            sql: 'INSERT INTO properties (name, img, business_id) VALUES (:name, :img ,:business_id)',
+            args: { name: property.name, img: property.img, business_id }
+        });
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
+export async function deleteProperty(tag, property) {
+    //Obtenemos la id del business
+    try {
+        var result = await db.execute({
+            sql: 'SELECT id FROM business WHERE tag = :tag',
+            args: { tag }
+        });
+        var business_id = result.rows[0].id;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+    //Eliminamos la propiedad
+    try {
+        await db.execute({
+            sql: 'DELETE FROM properties WHERE id = :id AND business_id = :business_id',
+            args: { id: property.id, business_id }
+        });
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
+export async function getProperties(tag, property) {
+    //Obtenemos la id del business
+    try {
+        var result = await db.execute({
+            sql: 'SELECT id FROM business WHERE tag = :tag',
+            args: { tag }
+        });
+        var business_id = result.rows[0].id;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+    //Obtenemos las propiedades del negocio
+    try {
+        var result = await db.execute({
+            sql: 'SELECT * FROM properties WHERE business_id = :business_id',
+            args: { business_id }
+        });
+        var properties = result.rows;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+    return { properties };
+}
+
 //Categories
 export async function newCategory(tag, body) {
     var category = body.category;
@@ -608,6 +683,39 @@ export async function modifyProduct(tag, body) {
                 console.error('Error al insertar el producto en la categoría:', error.message);
                 throw new Error('Error al insertar el producto en la categoría: ' + error.message);
             }
+
+            //Recorremos los steps
+            for (var i = 0; i < steps.length; i++) {
+                var step = steps[i];
+                //Si el step no tiene id, lo añadimos
+                try {
+                    var result = await db.execute({
+                        sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id) RETURNING id',
+                        args: { title: step.title, type: step.type, product_id }
+                    });
+                    var step_id = result.rows[0].id;
+                } catch (error) {
+                    console.error('Error al insertar el step:', error.message);
+                    throw new Error('Error al insertar el step: ' + error.message);
+                }
+
+                if (step.specials) {
+                    //Recorremos los specials
+                    for (var j = 0; j < step.specials.length; j++) {
+                        var special = step.specials[j];
+                        //Si el special no tiene id, lo añadimos
+                        try {
+                            await db.execute({
+                                sql: 'INSERT INTO special (name, price_changer, img, step_id) VALUES (:name, :price_changer, :img, :step_id)',
+                                args: { name: special.name, price_changer: special.price_changer, img: special.img, step_id }
+                            });
+                        } catch (error) {
+                            console.error('Error al insertar el special:', error.message);
+                            throw new Error('Error al insertar el special: ' + error.message);
+                        }
+                    }
+                }
+            }
         } else {
             var product_id = product.id;
             //Verificamos que el producto pertenezca a la categoria
@@ -648,8 +756,8 @@ export async function modifyProduct(tag, body) {
                                 args: { product_id }
                             });
                         } catch (error) {
-                            console.error('5Error en la base de datos:', error.message);
-                            throw new Error('Error en la base de datos: ' + error.message);
+                            console.error('4Error en la base de datos:', error.message);
+                            throw new Error('4Error en la base de datos: ' + error.message);
                         }
 
                         //Recorremos los steps
@@ -659,13 +767,13 @@ export async function modifyProduct(tag, body) {
 
                             try {
                                 var result = await db.execute({
-                                    sql: 'INSERT INTO step (title, location, product_id) VALUES (:title, :type, :product_id) RETURNING id',
-                                    args: { title: step.title, location: step.location, product_id }
+                                    sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id) RETURNING id',
+                                    args: { title: step.title, type: step.type, product_id }
                                 });
                                 var step_id = result.rows[0].id;
                             } catch (error) {
                                 console.error('5Error en la base de datos:', error.message);
-                                throw new Error('Error en la base de datos: ' + error.message);
+                                throw new Error('5Error en la base de datos: ' + error.message);
                             }
 
                             if (step.specials) {
@@ -679,8 +787,8 @@ export async function modifyProduct(tag, body) {
                                             args: { name: special.name, price_changer: special.price_changer, img: special.img, step_id }
                                         });
                                     } catch (error) {
-                                        console.error('7Error en la base de datos:', error.message);
-                                        throw new Error('Error en la base de datos: ' + error.message);
+                                        console.error('6Error en la base de datos:', error.message);
+                                        throw new Error('6Error en la base de datos: ' + error.message);
                                     }
                                 }
                             }
@@ -688,8 +796,8 @@ export async function modifyProduct(tag, body) {
                     }
                 }
             } catch (error) {
-                console.error('4Error en la base de datos:', error.message);
-                throw new Error('Error en la base de datos: ' + error.message);
+                console.error('7Error en la base de datos:', error.message);
+                throw new Error('7Error en la base de datos: ' + error.message);
             }
         }
     }
