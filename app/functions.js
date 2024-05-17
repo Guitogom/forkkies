@@ -44,8 +44,8 @@ export async function newBusiness(business) {
     if (!business.name) {
         incorrect_field.push("name");
     }
-    if (!business.type) {
-        incorrect_field.push("type");
+    if (!business.location) {
+        incorrect_field.push("location");
     }
     if (!business.tel) {
         incorrect_field.push("phone");
@@ -59,7 +59,7 @@ export async function newBusiness(business) {
         try {
             await db.execute(
                 {
-                    sql: 'INSERT INTO business (tag, name, type, tel, password, color1, color2, color3, color4) VALUES (:tag, :name, :type, :tel, :password, "#ADD861", "#4D4D4D", "#D9D9D9", "#F9FBFD")',
+                    sql: 'INSERT INTO business (tag, name, location, tel, password, color1, color2, color3, color4) VALUES (:tag, :name, :location, :tel, :password, "#ADD861", "#4D4D4D", "#D9D9D9", "#F9FBFD")',
                     args: business
                 }
             );
@@ -619,18 +619,6 @@ export async function modifyProduct(tag, body) {
                 if (result.rows.length === 0) {
                     throw new Error('El producto no pertenece a la categoria');
                 } else {
-
-                    //Eliminamos los steps y los specials del producto
-                    try {
-                        await db.execute({
-                            sql: 'DELETE FROM step WHERE product_id = :product_id',
-                            args: { product_id }
-                        });
-                    } catch (error) {
-                        console.error('5Error en la base de datos:', error.message);
-                        throw new Error('Error en la base de datos: ' + error.message);
-                    }
-
                     if (product.delete) {
                         try {
                             await db.execute({
@@ -653,6 +641,17 @@ export async function modifyProduct(tag, body) {
                             throw new Error('Error en la base de datos: ' + error.message);
                         }
 
+                        //Eliminamos los steps y los specials del producto
+                        try {
+                            await db.execute({
+                                sql: 'DELETE FROM step WHERE product_id = :product_id',
+                                args: { product_id }
+                            });
+                        } catch (error) {
+                            console.error('5Error en la base de datos:', error.message);
+                            throw new Error('Error en la base de datos: ' + error.message);
+                        }
+
                         //Recorremos los steps
                         for (var i = 0; i < steps.length; i++) {
                             var step = steps[i];
@@ -660,8 +659,8 @@ export async function modifyProduct(tag, body) {
 
                             try {
                                 var result = await db.execute({
-                                    sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id) RETURNING id',
-                                    args: { title: step.title, type: step.type, product_id }
+                                    sql: 'INSERT INTO step (title, location, product_id) VALUES (:title, :type, :product_id) RETURNING id',
+                                    args: { title: step.title, location: step.location, product_id }
                                 });
                                 var step_id = result.rows[0].id;
                             } catch (error) {
