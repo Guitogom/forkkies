@@ -29,6 +29,9 @@
     font-size: 25px;
     font-weight: bold;
     color: var(--tertiary-color);
+    width: 60%;
+    text-wrap: nowrap;
+    overflow-x: scroll;
 }
 
 .business-status {
