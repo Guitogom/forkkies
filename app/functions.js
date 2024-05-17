@@ -35,7 +35,6 @@ export async function verifyTag(tag) {
     }
 }
 
-
 export async function newBusiness(business) {
     var incorrect_field = [];
     if (await verifyTag(business.tag)) {
@@ -87,7 +86,6 @@ export function verificarToken(req, res, next) {
     try {
         // Verificar el token y decodificar su contenido
         var decoded = jwt.verify(token, process.env.JWT_SECRET);
-
         req.tag = decoded.tag;
         // Continuar con la ejecución del siguiente middleware o controlador
         next();
@@ -627,10 +625,12 @@ export async function getCategory(tag, category_id) {
         for (var i = 0; i < products_id.length; i++) {
             try {
                 var result = await db.execute({
-                    sql: 'SELECT id, name, img, price FROM product WHERE id = :product_id',
+                    sql: 'SELECT id, name, img, price FROM product WHERE id = :product_id AND name != "deleted"',
                     args: products_id[i]
                 });
-                products.push(result.rows[0]);
+                if (result.rows.length > 0) {
+                    products.push(result.rows[0]);
+                }
             } catch (error) {
                 console.error('Error en la base de datos:', error.message);
                 throw new Error('Error en la base de datos: ' + error.message);
@@ -728,14 +728,15 @@ export async function modifyProduct(tag, body) {
                     throw new Error('El producto no pertenece a la categoria');
                 } else {
                     if (product.delete) {
+                        //Cambiamos el nombre del producto a deleted
                         try {
                             await db.execute({
-                                sql: 'DELETE FROM product WHERE id = :product_id',
-                                args: { product_id }
+                                sql: 'UPDATE product SET name = "deleted" WHERE id = :id',
+                                args: { id: product_id }
                             });
                         } catch (error) {
-                            console.error('6Error en la base de datos:', error.message);
-                            throw new Error('Error en la base de datos: ' + error.message);
+                            console.error('2Error en la base de datos:', error.message);
+                            throw new Error('2Error en la base de datos: ' + error.message);
                         }
                     } else {
 
