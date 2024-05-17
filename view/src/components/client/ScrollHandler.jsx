@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
 function ScrollHandler() {
-    const [startY, setStartY] = useState(0);
-    const [scrollStarted, setScrollStarted] = useState(false);
+    const [startY, setStartY] = useState(0)
+    const [isTouching, setIsTouching] = useState(false)
 
     function handleScroll(event) {
-        if (!scrollStarted) {
-            setScrollStarted(true);
+        const currentY = event.touches ? event.touches[0].clientY : window.scrollY;
 
-            const currentY = event.touches ? event.touches[0].clientY : window.scrollY;
-            if (currentY > startY) {
-                console.log("Abajo");
-            } else {
-                console.log("Arriba");
-            }
-
-            setStartY(currentY);
+        if (currentY > startY) {
+            console.log("Abajo");
+            setIsTouching(true);
+        } else {
+            console.log("Arriba");
+            setIsTouching(true);
         }
     }
 
@@ -32,14 +29,12 @@ function ScrollHandler() {
     }, []);
 
     useEffect(() => {
-        if (!scrollStarted) {
-            window.addEventListener("touchmove", handleScroll, false);
-        }
+        window.addEventListener("touchmove", handleScroll, false);
 
         return () => {
             window.removeEventListener("touchmove", handleScroll, false);
         };
-    }, [scrollStarted]);
+    }, [startY]);
 
     return null;
 }
