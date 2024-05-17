@@ -1,28 +1,16 @@
 -- Eliminar todas las tablas si existen
 DROP TABLE IF EXISTS order_special;
-
 DROP TABLE IF EXISTS order_product;
-
 DROP TABLE IF EXISTS order_table;
-
 DROP TABLE IF EXISTS cat_product;
-
 DROP TABLE IF EXISTS category;
-
 DROP TABLE IF EXISTS template;
-
 DROP TABLE IF EXISTS special;
-
 DROP TABLE IF EXISTS step;
-
 DROP TABLE IF EXISTS product_properties;
-
 DROP TABLE IF EXISTS product;
-
 DROP TABLE IF EXISTS properties;
-
 DROP TABLE IF EXISTS users;
-
 DROP TABLE IF EXISTS business;
 
 -- Tabla 'business'
@@ -126,7 +114,7 @@ CREATE TABLE IF NOT EXISTS cat_product (
     PRIMARY KEY(category_id, product_id)
 );
 
--- Tabla 'order'
+-- Tabla 'order_table'
 CREATE TABLE IF NOT EXISTS order_table (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     status TEXT,
@@ -153,3 +141,58 @@ CREATE TABLE IF NOT EXISTS order_special (
     FOREIGN KEY(special_id) REFERENCES special(id),
     PRIMARY KEY(order_product_id, special_id)
 );
+
+-- Triggers para eliminación en cascada
+
+-- Trigger para eliminar dependencias de 'business'
+CREATE TRIGGER IF NOT EXISTS delete_business_dependencies
+AFTER DELETE ON business
+FOR EACH ROW
+BEGIN
+    DELETE FROM users WHERE business_id = OLD.id;
+    DELETE FROM properties WHERE business_id = OLD.id;
+    DELETE FROM template WHERE business_id = OLD.id;
+END;
+
+-- Trigger para eliminar dependencias de 'template'
+CREATE TRIGGER IF NOT EXISTS delete_template_dependencies
+AFTER DELETE ON template
+FOR EACH ROW
+BEGIN
+    DELETE FROM category WHERE template_id = OLD.id;
+END;
+
+-- Trigger para eliminar dependencias de 'category'
+CREATE TRIGGER IF NOT EXISTS delete_category_dependencies
+AFTER DELETE ON category
+FOR EACH ROW
+BEGIN
+    DELETE FROM cat_product WHERE category_id = OLD.id;
+END;
+
+-- Trigger para eliminar dependencias de 'product'
+CREATE TRIGGER IF NOT EXISTS delete_product_dependencies
+AFTER DELETE ON product
+FOR EACH ROW
+BEGIN
+    DELETE FROM product_properties WHERE product_id = OLD.id;
+    DELETE FROM step WHERE product_id = OLD.id;
+    DELETE FROM order_product WHERE product_id = OLD.id;
+END;
+
+-- Trigger para eliminar dependencias de 'step'
+CREATE TRIGGER IF NOT EXISTS delete_step_dependencies
+AFTER DELETE ON step
+FOR EACH ROW
+BEGIN
+    DELETE FROM special WHERE step_id = OLD.id;
+END;
+
+-- Trigger para eliminar dependencias de 'order_product'
+CREATE TRIGGER IF NOT EXISTS delete_order_product_dependencies
+AFTER DELETE ON order_product
+FOR EACH ROW
+BEGIN
+    DELETE FROM order_special WHERE order_product_id = OLD.order_id;
+END;
+

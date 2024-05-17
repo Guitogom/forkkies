@@ -660,8 +660,8 @@ export async function modifyProduct(tag, body) {
 
                             try {
                                 var result = await db.execute({
-                                    sql: 'INSERT INTO step (title, type, product_id) VALUES (:title, :type, :product_id) RETURNING id',
-                                    args: { title: step.title, type: step.type, product_id }
+                                    sql: 'INSERT INTO step (title, location, product_id) VALUES (:title, :type, :product_id) RETURNING id',
+                                    args: { title: step.title, location: step.location, product_id }
                                 });
                                 var step_id = result.rows[0].id;
                             } catch (error) {
