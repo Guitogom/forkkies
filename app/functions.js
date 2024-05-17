@@ -44,8 +44,8 @@ export async function newBusiness(business) {
     if (!business.name) {
         incorrect_field.push("name");
     }
-    if (!business.type) {
-        incorrect_field.push("type");
+    if (!business.location) {
+        incorrect_field.push("location");
     }
     if (!business.tel) {
         incorrect_field.push("phone");
@@ -619,18 +619,6 @@ export async function modifyProduct(tag, body) {
                 if (result.rows.length === 0) {
                     throw new Error('El producto no pertenece a la categoria');
                 } else {
-
-                    //Eliminamos los steps y los specials del producto
-                    try {
-                        await db.execute({
-                            sql: 'DELETE FROM step WHERE product_id = :product_id',
-                            args: { product_id }
-                        });
-                    } catch (error) {
-                        console.error('5Error en la base de datos:', error.message);
-                        throw new Error('Error en la base de datos: ' + error.message);
-                    }
-
                     if (product.delete) {
                         try {
                             await db.execute({
@@ -650,6 +638,17 @@ export async function modifyProduct(tag, body) {
                             });
                         } catch (error) {
                             console.error('3Error en la base de datos:', error.message);
+                            throw new Error('Error en la base de datos: ' + error.message);
+                        }
+
+                        //Eliminamos los steps y los specials del producto
+                        try {
+                            await db.execute({
+                                sql: 'DELETE FROM step WHERE product_id = :product_id',
+                                args: { product_id }
+                            });
+                        } catch (error) {
+                            console.error('5Error en la base de datos:', error.message);
                             throw new Error('Error en la base de datos: ' + error.message);
                         }
 
