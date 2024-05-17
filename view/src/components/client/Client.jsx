@@ -56,10 +56,10 @@ export function Client() {
         <main className="client-app">
             <ClientHeader name={template.name} primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} />
             <div className="client-screen" style={{ backgroundColor: themeColor }}>
-                <Link to={`/b/${tag}/categories`}>AAAAA</Link>
                 <Routes>
                     <Route path='/categories' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
                     <Route path='/c/:categoryId' element={<ClientProducts categories={template.categories} secondaryColor={secondaryColor} />} />
+                    <Route path='/c/:categoryId/:productId' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
 
                 </Routes>
