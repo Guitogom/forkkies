@@ -10,15 +10,17 @@ export function ClientProducts({ categories, secondaryColor }) {
     }
 
     return (
-        <div className="client-products-categories"></div>
-        <div className="client-products">
-            {category.products && category.products.length > 0 ? (
-                category.products.map((product, index) => (
-                    <ClientProductProp key={index} product={product} secondaryColor={secondaryColor} />
-                ))
-            ) : (
-                <div>No products available in this category.</div>
-            )}
-        </div>
+        <section>
+            <div className="client-products-categories"></div>
+            <div className="client-products">
+                {category.products && category.products.length > 0 ? (
+                    category.products.map((product, index) => (
+                        <ClientProductProp key={index} product={product} secondaryColor={secondaryColor} />
+                    ))
+                ) : (
+                    <div>No products available in this category.</div>
+                )}
+            </div>
+        </section>
     )
 }
