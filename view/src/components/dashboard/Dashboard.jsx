@@ -37,7 +37,9 @@ export function Dashboard() {
                 .then(response => {
                     if (!response.ok) {
                         localStorage.removeItem('session_token')
-                        window.location.href = '/error'
+                        setTimeout(() => {
+                            window.location.href = '/error'
+                        }, 1000)
                     }
                     return response.json()
                 })
