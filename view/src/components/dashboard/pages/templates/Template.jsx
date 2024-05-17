@@ -22,7 +22,7 @@ export function Template() {
         setStatus(!status)
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            fetch(`http://147.182.207.78:3000/modifytemplate`, {
+            fetch(`https://api.forkkies.live/modifytemplate`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `${token}`,
@@ -62,7 +62,7 @@ export function Template() {
             const timeout = setTimeout(() => {
                 window.location.href = '/error'
             }, 8000)
-            fetch(`http://147.182.207.78:3000/modifytemplate`, {
+            fetch(`https://api.forkkies.live/modifytemplate`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `${token}`,
@@ -90,7 +90,7 @@ export function Template() {
             const timeout = setTimeout(() => {
                 window.location.href = '/error'
             }, 8000)
-            fetch(`http://147.182.207.78:3000/modifytemplate`, {
+            fetch(`https://api.forkkies.live/modifytemplate`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `${token}`,
@@ -119,7 +119,7 @@ export function Template() {
             const timeout = setTimeout(() => {
                 window.location.href = '/error'
             }, 6000)
-            fetch(`http://147.182.207.78:3000/gettemplate?id=${id}`, {
+            fetch(`https://api.forkkies.live/gettemplate?id=${id}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `${token}`,

@@ -27,7 +27,7 @@ export function ProductPanel() {
     useEffect(() => {
         if (p_id !== 'new' && !loaded) {
             const token = localStorage.getItem('session_token')
-            fetch(`http://147.182.207.78:3000/getproduct?id=${p_id}`, {
+            fetch(`https://api.forkkies.live/getproduct?id=${p_id}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `${token}`,
@@ -152,7 +152,7 @@ export function ProductPanel() {
         const token = localStorage.getItem('session_token')
         console.log(product)
         setLoading2(false)
-        fetch(`http://147.182.207.78:3000/modifyproduct`, {
+        fetch(`https://api.forkkies.live/modifyproduct`, {
             method: 'POST',
             headers: {
                 'Authorization': `${token}`,

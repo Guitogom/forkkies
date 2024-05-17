@@ -17,7 +17,7 @@ export function CategoryPanel() {
     useEffect(() => {
         if (c_id !== 'new' && !loaded) {
             const token = localStorage.getItem('session_token')
-            fetch(`http://147.182.207.78:3000/getcategory?id=${c_id}`, {
+            fetch(`https://api.forkkies.live/getcategory?id=${c_id}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `${token}`,
@@ -81,7 +81,7 @@ export function CategoryPanel() {
             const token = localStorage.getItem('session_token')
 
             if (c_id === 'new') {
-                fetch(`http://147.182.207.78:3000/newcategory`, {
+                fetch(`https://api.forkkies.live/newcategory`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `${token}`,
@@ -100,7 +100,7 @@ export function CategoryPanel() {
                         console.error('Error:', error.message)
                     })
             } else {
-                fetch(`http://147.182.207.78:3000/modifycategory`, {
+                fetch(`https://api.forkkies.live/modifycategory`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `${token}`,

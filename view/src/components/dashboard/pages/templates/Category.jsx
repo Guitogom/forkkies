@@ -22,7 +22,7 @@ export function Category() {
     const handleCategoryDelete = () => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            fetch('http://147.182.207.78:3000/modifycategory', {
+            fetch('https://api.forkkies.live/modifycategory', {
                 method: 'POST',
                 headers: {
                     'Authorization': `${token}`,
@@ -49,7 +49,7 @@ export function Category() {
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            fetch(`http://147.182.207.78:3000/getcategory?id=${c_id}`, {
+            fetch(`https://api.forkkies.live/getcategory?id=${c_id}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `${token}`,

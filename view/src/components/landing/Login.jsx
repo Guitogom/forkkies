@@ -11,7 +11,7 @@ export function Login() {
     const handleLogin = async () => {
         try {
             const hashedPassword = sha256(loginPassword).toString()
-            const response = await fetch(`http://147.182.207.78:3000/logbusiness?tag=${loginTag}&password=${hashedPassword}`)
+            const response = await fetch(`https://api.forkkies.live/logbusiness?tag=${loginTag}&password=${hashedPassword}`)
             if (response.ok) {
                 const data = await response.json()
                 localStorage.setItem('session_token', data.token)

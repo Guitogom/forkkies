@@ -1,6 +1,6 @@
-//GET http://147.182.207.78:3000/verifytag/?tag=uwu
+//GET https://api.forkkies.live/verifytag/?tag=uwu
 
-POST http://147.182.207.78:3000/newbusiness
+POST https://api.forkkies.live/newbusiness
 {
     "name": "uwu",
     "tel": "uwu",

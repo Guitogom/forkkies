@@ -19,7 +19,7 @@ export function Register() {
 
     const handleRegisterBusiness = async () => {
         try {
-            const response = await fetch('http://147.182.207.78:3000/newbusiness', {
+            const response = await fetch('https://api.forkkies.live/newbusiness', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

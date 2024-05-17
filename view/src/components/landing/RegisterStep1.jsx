@@ -53,7 +53,7 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
     const fetchTagExists = async (tag) => {
         try {
             const response = await fetch(
-                `http://147.182.207.78:3000/verifytag?tag=${tag}`
+                `https://api.forkkies.live/verifytag?tag=${tag}`
             )
             const data = await response.json()
             if (data.exists) {

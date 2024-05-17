@@ -27,7 +27,7 @@ export function Dashboard() {
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            fetch('http://147.182.207.78:3000/getbusiness', {
+            fetch('https://api.forkkies.live/getbusiness', {
                 method: 'GET',
                 headers: {
                     'Authorization': `${token}`,

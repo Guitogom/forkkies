@@ -28,7 +28,7 @@ export function Templates({ business, setBusiness }) {
             const timeout = setTimeout(() => {
                 setCurrentPage('error')
             }, 8000)
-            fetch('http://147.182.207.78:3000/getalltemplates', {
+            fetch('https://api.forkkies.live/getalltemplates', {
                 method: 'GET',
                 headers: {
                     'Authorization': `${token}`,
@@ -76,7 +76,7 @@ export function Templates({ business, setBusiness }) {
 
     const addTemplate = () => {
         const token = localStorage.getItem('session_token')
-        fetch('http://147.182.207.78:3000/newtemplate', {
+        fetch('https://api.forkkies.live/newtemplate', {
             method: 'GET',
             headers: {
                 'Authorization': `${token}`,
