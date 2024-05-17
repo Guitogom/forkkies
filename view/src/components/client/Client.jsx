@@ -7,6 +7,7 @@ import { ClientHeader } from './ClientHeader.jsx'
 import { ClientFooter } from './ClientFooter.jsx'
 import { ClientLoading } from "./ClientLoading.jsx"
 import { ClientCategories } from "./ClientCategories.jsx"
+import { ClientProducts } from "./ClientProducts.jsx"
 
 export function Client() {
     const { tag } = useParams()
@@ -56,8 +57,9 @@ export function Client() {
                 <Link to={`/b/${tag}/categories`}>AAAAA</Link>
                 <Routes>
                     <Route path='/categories' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
-                    <Route path='/c/:categoryId' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
+                    <Route path='/c/:categoryId' element={<ClientProducts categories={template.categories} secondaryColor={secondaryColor} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
+
                 </Routes>
             </div>
             <ClientFooter primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} />
