@@ -125,6 +125,40 @@ app.get('/gettemplate', verificarToken, async (req, res) => {
     }
 });
 
+//Properties
+app.post('/newproperty', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await newProperty(tag, req.body);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al añadir propiedad:', error.message);
+        res.status(500).json({ error: 'Error al añadir propiedad' });
+    }
+});
+
+app.post('/deleteproperty', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await deleteProperty(tag, req.body);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al eliminar propiedad:', error.message);
+        res.status(500).json({ error: 'Error al eliminar propiedad' });
+    }
+});
+
+app.get('/getproperties', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await getProperties(tag);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al obtener propiedades:', error.message);
+        res.status(500).json({ error: 'Error al obtener propiedades' });
+    }
+});
+
 //Categories
 
 app.post('/newcategory', verificarToken, async (req, res) => {

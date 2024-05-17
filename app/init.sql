@@ -135,14 +135,23 @@ CREATE TABLE IF NOT EXISTS order_product (
 
 -- Tabla 'order_special'
 CREATE TABLE IF NOT EXISTS order_special (
-    order_product_id INTEGER,
+    order_id INTEGER,
+    product_id INTEGER,
     special_id INTEGER,
-    FOREIGN KEY(order_product_id) REFERENCES order_product(order_id),
+    FOREIGN KEY(order_id, product_id) REFERENCES order_product(order_id, product_id),
     FOREIGN KEY(special_id) REFERENCES special(id),
-    PRIMARY KEY(order_product_id, special_id)
+    PRIMARY KEY(order_id, product_id, special_id)
 );
 
--- Triggers para eliminación en cascada
+-- Eliminar triggers actuales
+DROP TRIGGER IF EXISTS delete_business_dependencies;
+DROP TRIGGER IF EXISTS delete_template_dependencies;
+DROP TRIGGER IF EXISTS delete_category_dependencies;
+DROP TRIGGER IF EXISTS delete_product_dependencies;
+DROP TRIGGER IF EXISTS delete_step_dependencies;
+DROP TRIGGER IF EXISTS delete_order_product_dependencies;
+
+-- Crear triggers nuevos
 
 -- Trigger para eliminar dependencias de 'business'
 CREATE TRIGGER IF NOT EXISTS delete_business_dependencies
@@ -193,6 +202,5 @@ CREATE TRIGGER IF NOT EXISTS delete_order_product_dependencies
 AFTER DELETE ON order_product
 FOR EACH ROW
 BEGIN
-    DELETE FROM order_special WHERE order_product_id = OLD.order_id;
+    DELETE FROM order_special WHERE order_id = OLD.order_id AND product_id = OLD.product_id;
 END;
-
