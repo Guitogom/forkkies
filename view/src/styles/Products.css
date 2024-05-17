@@ -61,7 +61,7 @@
 
 .product-basic-info {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 }
 
 .product-basic-info-2 {
@@ -72,6 +72,7 @@
 .product-propierties {
     display: flex;
     flex-wrap: wrap;
+    opacity: 0;
 }
 
 .product-propierties svg {
@@ -497,4 +498,49 @@
     height: 100%;
     opacity: 0;
     cursor: pointer;
+}
+
+.product-name-label {
+    margin: 10px;
+}
+
+.product-name-input {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #ececec71;
+    color: black;
+    font-family: var(--secondary-font);
+    font-size: 1.2rem;
+    width: 90%;
+    margin: 0px 10px;
+}
+
+.product-desc-input {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #ececec71;
+    color: black;
+    font-family: var(--secondary-font);
+    font-size: 1.2rem;
+    width: 100%;
+    resize: none;
+}
+
+.product-price-input {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #ececec71;
+    color: black;
+    font-family: var(--secondary-font);
+    font-size: 1.2rem;
+    width: 100%;
+}
+
+.product-name-input,
+.product-desc-input,
+.product-price-input:focus {
+    outline: none;
 }

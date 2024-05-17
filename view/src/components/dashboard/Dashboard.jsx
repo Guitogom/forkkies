@@ -21,7 +21,7 @@ export function Dashboard() {
     const [business, setBusiness] = useState({})
 
     const [businessName, setBusinessName] = useState(business.name)
-    const [businessType, setBusinessType] = useState(business.type)
+    const [businessLocation, setBusinessLocation] = useState(business.location)
     const [businessStatus, setBusinessStatus] = useState(business.active_template)
 
     useEffect(() => {
@@ -43,13 +43,14 @@ export function Dashboard() {
                 .then(business => {
                     setBusiness(business)
                     setBusinessName(business.name)
-                    setBusinessType(business.type)
+                    setBusinessLocation(business.location)
                     setBusinessStatus(business.active_template)
                     setLoaded(true)
                 })
                 .catch(error => {
                     console.error('Error:', error.message)
-                    window.location.href = '/error'
+                    localStorage.removeItem('session_token')
+                    window.location.href = '/'
                 })
 
         }
@@ -61,7 +62,7 @@ export function Dashboard() {
 
     return (
         <main>
-            <Header business={business} businessName={businessName} businessType={businessType} businessStatus={businessStatus} />
+            <Header business={business} businessName={businessName} businessLocation={businessLocation} businessStatus={businessStatus} />
             <section className="screen">
                 <Routes>
                     <Route path="/management" element={<Management business={business} setBusiness={setBusiness} businessName={businessName} setBusinessName={setBusinessName} />} />

@@ -24,6 +24,11 @@ export function Login() {
         }
     }
 
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        handleLogin()
+    }
+
     // useEffect(() => {
     //     if (localStorage.getItem('session_token') !== null) {
     //         window.location.href = '/dashboard'
@@ -33,12 +38,12 @@ export function Login() {
     return (
         <div className='login-div'>
             <h2 className='login-title'>FORKKIES</h2>
-            <div className='login-form'>
+            <form className='login-form' onSubmit={handleSubmit}>
                 <p className='login-error'>{loginError}</p>
                 <input type="text" placeholder='business tag' className='login-input' value={loginTag} onChange={(event) => setLoginTag(event.target.value)} />
                 <input type="password" className='login-input' placeholder='business password' value={loginPassword} onChange={(event) => setLoginPassword(event.target.value)} />
-                <button onClick={handleLogin} className='login-button'>Next</button>
-            </div>
+                <button type="submit" className='login-button'>Next</button>
+            </form>
             <p className='login-register-link'>Don't have an account? <Link to='/register'>Register</Link></p>
         </div>
     )

@@ -86,9 +86,13 @@
 }
 
 .client-categories {
-    display: grid;
+    /*display: grid;
     grid-template-columns: repeat(2, 1fr);
-    place-items: center;
+    place-items: center; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
     padding: 10px;
     flex-wrap: wrap;

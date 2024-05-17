@@ -104,12 +104,12 @@ export function ProductPanel() {
 
     const [editStep, setEditStep] = useState({})
 
-    const handleEdit = (step) => {
+    const handleEdit = async (step) => {
         if (step === 'close') {
             setEdit(false)
-            setEditStep(null)
+            setEditStep({})
         } else {
-            setEditStep(step)
+            await setEditStep(step)
             setEdit(true)
         }
     }
@@ -148,6 +148,31 @@ export function ProductPanel() {
         }
     }
 
+    const handleDeleteProduct = () => {
+        const token = localStorage.getItem('session_token')
+        setLoading2(false)
+        fetch(`https://api.forkkies.live/modifyproduct`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ category_id: c_id, product: { id: p_id, delete: true } })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    window.location.href + '/error'
+                } else {
+                    setLoading2(true)
+                    window.location.href = `/dashboard/t/${id}/${c_id}`
+                }
+            })
+            .catch(error => {
+                setLoading2(true)
+                console.error('Error:', error.message)
+            })
+    }
+
     const saveProduct = () => {
         const token = localStorage.getItem('session_token')
         console.log(product)
@@ -169,6 +194,7 @@ export function ProductPanel() {
                 }
             })
             .catch(error => {
+                setLoading2(true)
                 console.error('Error:', error.message)
             })
     }
@@ -204,7 +230,7 @@ export function ProductPanel() {
             </div>
 
             <div className="up-product-column">
-                <button className='product-delete'><DeleteSVG /> Delete</button>
+                <button className='product-delete' onClick={handleDeleteProduct}><DeleteSVG /> Delete</button>
                 <button className='product-close' onClick={() => window.location.href = `/dashboard/t/${id}/${c_id}/`}><PlusSVG /></button>
             </div>
             <div className="left-product-column">
@@ -214,14 +240,17 @@ export function ProductPanel() {
                         <input type="file" name="categoryImage" id="categoryImage" onChange={handleImageChange} />
                     </div>
                     <div className="product-basic-info-2">
-                        <input type="text" placeholder='Product Name' value={product.name} onChange={(e) => handleProductNameChange(e.target.value)} />
+                        <label htmlFor="name" className='product-name-label'>Product Name:</label>
+                        <input type="text" name='name' placeholder='Product Name' value={product.name} onChange={(e) => handleProductNameChange(e.target.value)} className='product-name-input' />
                         <div className="product-propierties">
                             <PlusSVG />
                         </div>
                     </div>
                 </div>
-                <textarea onChange={(e) => handleProductDescriptionChange(e.target.value)} value={product.desc}></textarea>
-                <input type="text" placeholder='00,00€' value={product.price} onChange={(e) => handleProductPriceChange(e.target.value)} />
+                <label htmlFor="desc">Product Description:</label>
+                <textarea onChange={(e) => handleProductDescriptionChange(e.target.value)} value={product.desc} className='product-desc-input' name='desc' rows={5}></textarea>
+                <label htmlFor="price">Product Price:</label>
+                <input type="text" name='price' placeholder='00,00€' value={product.price} onChange={(e) => handleProductPriceChange(e.target.value)} className='product-price-input' />
             </div>
             <div className="right-product-column">
                 <div className="steps-panel">

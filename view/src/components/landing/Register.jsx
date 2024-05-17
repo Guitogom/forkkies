@@ -27,7 +27,7 @@ export function Register() {
                 body: JSON.stringify({
                     name: businessName,
                     tag: tag,
-                    type: businessLocation,
+                    location: businessLocation,
                     tel: phoneNumber,
                     password: password
                 }),
