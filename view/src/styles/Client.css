@@ -123,7 +123,7 @@
 }
 
 .category-prop-name {
-    width: 100%;
+    width: 100px;
     overflow-x: scroll;
     font-size: 18px;
     font-weight: bold;
@@ -164,7 +164,7 @@
 }
 
 .category-products-prop-name {
-    width: 100px;
+    width: 100%;
     overflow-x: scroll;
     font-size: 18px;
     font-weight: bold;
