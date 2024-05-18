@@ -15,7 +15,7 @@ export function ClientProducts({ categories, secondaryColor }) {
 
     return (
         <section>
-            <div className="client-products-categories" style={{ boxShadow: divHeight === '0px' ? 'none' : `0 -5px 15px ${secondaryColor}`, height: `${divHeight}`, opacity: divHeight === '0px' ? '0' : '1' }}>
+            <div className="client-products-categories" style={{ boxShadow: `0 -5px 15px ${secondaryColor}`, height: `${divHeight}`, opacity: divHeight === '0px' ? '0' : '1', justifyContent: categories && categories.length > 2 ? 'start' : 'center' }}>
                 {
                     categories && categories.length > 0 ? (
                         categories.map((category, index) => (

@@ -135,7 +135,7 @@
 .client-products-categories {
     display: flex;
     align-items: center;
-    justify-content: start;
+    /* justify-content: start; */
     padding: 10px;
     text-decoration: none;
     width: 100%;
@@ -164,7 +164,7 @@
 }
 
 .category-products-prop-name {
-    width: 100%;
+    width: 100px;
     overflow-x: scroll;
     font-size: 18px;
     font-weight: bold;
