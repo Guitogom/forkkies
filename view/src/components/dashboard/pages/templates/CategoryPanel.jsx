@@ -2,9 +2,11 @@ import '../../../../styles/Categories.css'
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Loading } from '../../Loading.jsx'
+import { LoadingWithText } from '../../LoadingWithText.jsx';
 
 export function CategoryPanel() {
     const [loaded, setLoaded] = useState(false)
+    const [loading2, setLoading2] = useState(true)
     const [categoryName, setCategoryName] = useState('')
     const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
     const [backgroundSize, setBackgroundSize] = useState('60px')
@@ -79,6 +81,7 @@ export function CategoryPanel() {
 
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
+            setLoading2(false)
 
             if (c_id === 'new') {
                 fetch(`https://api.forkkies.live/newcategory`, {
@@ -93,10 +96,12 @@ export function CategoryPanel() {
                         if (!response.ok) {
                             window.location.href = '/error'
                         } else {
+                            setLoading2(true)
                             window.location.href = `/dashboard/t/${id}`
                         }
                     })
                     .catch(error => {
+                        setLoading2(true)
                         console.error('Error:', error.message)
                     })
             } else {
@@ -112,16 +117,19 @@ export function CategoryPanel() {
                         if (!response.ok) {
                             window.location.href = '/error'
                         } else {
+                            setLoading2(true)
                             window.location.href = `/dashboard/t/${id}`
                         }
                     })
                     .catch(error => {
+                        setLoading2(true)
                         console.error('Error:', error.message)
                     })
             }
         }
     }
 
+    if (!loading2) return <LoadingWithText />
     if (!loaded) return <Loading />
 
     return (

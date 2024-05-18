@@ -8,6 +8,7 @@ import { ClientFooter } from './ClientFooter.jsx'
 import { ClientLoading } from "./ClientLoading.jsx"
 import { ClientCategories } from "./ClientCategories.jsx"
 import { ClientProducts } from "./ClientProducts.jsx"
+import { ClientFullProduct } from "./ClientFullProduct.jsx"
 
 export function Client() {
     const { tag } = useParams()
@@ -49,17 +50,18 @@ export function Client() {
 
     }, [])
 
+    const clientHeight = window.innerHeight - 140
 
     if (!loaded) return <ClientLoading />
 
     return (
-        <main className="client-app">
+        <main className="client-app" style={{ backgroundColor: themeColor }}>
             <ClientHeader name={template.name} primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} />
-            <div className="client-screen" style={{ backgroundColor: themeColor }}>
+            <div className="client-screen" >
                 <Routes>
                     <Route path='/categories' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
-                    <Route path='/c/:categoryId' element={<ClientProducts categories={template.categories} secondaryColor={secondaryColor} />} />
-                    <Route path='/c/:categoryId/:productId' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
+                    <Route path='/c/:categoryId' element={<ClientProducts categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} />} />
+                    <Route path='/c/:categoryId/p/:productId' element={<ClientFullProduct categories={template.categories} secondaryColor={secondaryColor} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
 
                 </Routes>

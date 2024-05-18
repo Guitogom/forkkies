@@ -14,6 +14,8 @@
     height: 60px;
     padding: 20px;
     filter: drop-shadow(0px 1px 5px rgba(0, 0, 0, 0.705));
+    position: fixed;
+    z-index: 100;
 }
 
 .client-nav {
@@ -37,7 +39,7 @@
 
 .client-title h1 {
     width: 100%;
-    overflow: hidden;
+    overflow-x: scroll;
     text-wrap: nowrap;
     font-size: 30px;
     margin-left: 10px;
@@ -46,15 +48,20 @@
 .client-screen {
     height: 100%;
     overflow-y: scroll;
+    padding-top: 60px;
 }
 
 .client-footer {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 80px;
     padding: 10px 20px;
     filter: drop-shadow(0px -1px 5px rgba(0, 0, 0, 0.212));
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
 }
 
 .client-show-price {
@@ -132,7 +139,17 @@
     text-decoration: none;
 }
 
+.client-products-screen {
+    position: absolute;
+    top: 210px;
+    transition: transform 0.4s ease;
+    padding-bottom: 80px;
+}
+
 .client-products-categories {
+    position: fixed;
+    top: 60px;
+    left: 0;
     display: flex;
     align-items: center;
     /* justify-content: start; */
@@ -141,7 +158,8 @@
     width: 100%;
     /* height: 150px; */
     overflow-x: scroll;
-    transition: all 0.7s ease, opacity 0.1s ease;
+    transition: all 0.7s ease, opacity 0.1s ease, height 0.4s ease;
+    z-index: 10;
 }
 
 .client-products-category-prop {
@@ -189,4 +207,29 @@
     padding: 20px;
     flex-wrap: wrap;
     text-decoration: none;
+    overflow-y: scroll;
+}
+
+.client-full-product-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 50px;
+    text-decoration: none;
+
+}
+
+.client-full-product-image {
+    width: 150px;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+}
+
+.client-full-product-name {
+    width: 80%;
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
 }

@@ -81,6 +81,14 @@ export function ProductPanel() {
     }
 
     const handleProductPriceChange = (value) => {
+        if (value.indexOf(',') !== -1) {
+            value = value.replace(',', '.')
+        }
+
+        if (value.indexOf('.') === -1) {
+            value = value + '.00'
+        }
+
         setProduct({ ...product, price: value });
     }
 
