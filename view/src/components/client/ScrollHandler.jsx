@@ -1,42 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
-function ScrollHandler() {
+function ScrollHandler({ divHeight, setDivHeight, targetRef }) {
     const [startY, setStartY] = useState(0)
-    const [isTouching, setIsTouching] = useState(false)
 
     function handleScroll(event) {
-        const currentY = event.touches ? event.touches[0].clientY : window.scrollY;
+        const currentY = event.touches ? event.touches[0].clientY : window.scrollY
+
+        if (!targetRef.current.contains(event.target)) {
+            return
+        }
 
         if (currentY > startY) {
-            console.log("Abajo");
-            setIsTouching(true);
+            if (divHeight === '150px') return
+            setDivHeight('150px')
         } else {
-            console.log("Arriba");
-            setIsTouching(true);
+            if (divHeight === '0px') return
+            setDivHeight('0px')
         }
     }
 
     useEffect(() => {
         const handleTouchStart = (event) => {
-            setStartY(event.touches ? event.touches[0].clientY : window.scrollY);
-        };
+            if (!targetRef.current.contains(event.target)) {
+                return
+            }
+            setStartY(event.touches ? event.touches[0].clientY : window.scrollY)
+        }
 
-        window.addEventListener("touchstart", handleTouchStart, false);
+        window.addEventListener("touchstart", handleTouchStart, false)
 
         return () => {
-            window.removeEventListener("touchstart", handleTouchStart, false);
-        };
-    }, []);
+            window.removeEventListener("touchstart", handleTouchStart, false)
+        }
+    }, [targetRef])
 
     useEffect(() => {
-        window.addEventListener("touchmove", handleScroll, false);
+        window.addEventListener("touchmove", handleScroll, false)
 
         return () => {
-            window.removeEventListener("touchmove", handleScroll, false);
-        };
-    }, [startY]);
+            window.removeEventListener("touchmove", handleScroll, false)
+        }
+    }, [startY, targetRef])
 
-    return null;
+    return null
 }
 
-export default ScrollHandler;
+export default ScrollHandler

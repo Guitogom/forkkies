@@ -1,11 +1,13 @@
 import { useParams, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ClientProductProp } from "./props/ClientProductProp.jsx"
 import ScrollHandler from "./ScrollHandler.jsx";
 
 export function ClientProducts({ categories, secondaryColor }) {
+    const [divHeight, setDivHeight] = useState('150px')
     const { categoryId, tag } = useParams()
     const category = categories.find(cat => cat.id === parseInt(categoryId))
+    const clientProductsRef = useRef(null);
 
     if (!category) {
         return <div>Category not found</div>
@@ -13,8 +15,7 @@ export function ClientProducts({ categories, secondaryColor }) {
 
     return (
         <section>
-            <ScrollHandler />
-            <div className="client-products-categories" style={{ boxShadow: `0 -5px 15px ${secondaryColor}` }}>
+            <div className="client-products-categories" style={{ boxShadow: divHeight === '0px' ? 'none' : `0 -5px 15px ${secondaryColor}`, height: `${divHeight}`, opacity: divHeight === '0px' ? '0' : '1' }}>
                 {
                     categories && categories.length > 0 ? (
                         categories.map((category, index) => (
@@ -27,7 +28,8 @@ export function ClientProducts({ categories, secondaryColor }) {
                 }
             </div>
             <h2 className="client-products-category-name" style={{ color: `${secondaryColor}` }}>{category.name}</h2>
-            <div className="client-products">
+            <div className="client-products" ref={clientProductsRef}>
+                <ScrollHandler divHeight={divHeight} setDivHeight={setDivHeight} targetRef={clientProductsRef} />
                 {category.products && category.products.length > 0 ? (
                     category.products.map((product, index) => (
                         <ClientProductProp key={index} product={product} secondaryColor={secondaryColor} />
