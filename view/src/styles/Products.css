@@ -413,8 +413,10 @@
 }
 
 .product {
+    width: 250px;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     gap: 10px;
     padding: 10px 20px;
@@ -433,10 +435,9 @@
     font-weight: 600;
     font-family: var(--primary-font);
     width: 100%;
-    overflow: hidden;
+    overflow-x: scroll;
     text-align: center;
-    text-wrap: nowrap;
-    overflow: hidden;
+    /* text-wrap: nowrap; */
     cursor: default;
 }
 

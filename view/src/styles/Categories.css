@@ -178,7 +178,7 @@
     font-weight: 900;
     text-align: center;
     width: 100%;
-    overflow: hidden;
+    overflow-x: scroll;
 }
 
 .new-category {

@@ -85,10 +85,6 @@ export function ProductPanel() {
             value = value.replace(',', '.')
         }
 
-        if (value.indexOf('.') === -1) {
-            value = value + '.00'
-        }
-
         setProduct({ ...product, price: value });
     }
 
@@ -258,7 +254,7 @@ export function ProductPanel() {
                 <label htmlFor="desc">Product Description:</label>
                 <textarea onChange={(e) => handleProductDescriptionChange(e.target.value)} value={product.desc} className='product-desc-input' name='desc' rows={5}></textarea>
                 <label htmlFor="price">Product Price:</label>
-                <input type="text" name='price' placeholder='00,00€' value={product.price} onChange={(e) => handleProductPriceChange(e.target.value)} className='product-price-input' />
+                <input type="text" name='price' placeholder='00.00€' value={product.price} onChange={(e) => handleProductPriceChange(e.target.value)} className='product-price-input' />
             </div>
             <div className="right-product-column">
                 <div className="steps-panel">
