@@ -42,16 +42,25 @@
     margin: 10px 0;
     padding: 15px;
     filter: drop-shadow(7px 7px 3.9px rgba(0, 0, 0, 0.25));
-    border: 0;
+    border: 1px transparent;
     border-radius: 15px;
     font-size: 1.2rem;
     background-color: var(--white);
     color: var(--black);
     font-family: var(--secondary-font);
+    transition: all 0.3s;
 }
 
 .login-input:focus {
     outline: none;
+}
+
+.mistake-error {
+    color: #fd3e3ee8;
+    font-size: 1rem;
+    font-family: var(--secondary-font);
+    margin: 2px 10px;
+    align-self: start;
 }
 
 .login-tag-text {
@@ -59,6 +68,29 @@
     color: #868686;
     font-family: var(--secondary-font);
     margin: 10px 0;
+}
+
+.wrong {
+    border: 1px solid #ff2d2dd0;
+    animation: wrongField 0.5s;
+}
+
+@keyframes wrongField {
+    0% {
+        transform: translateX(0px);
+    }
+
+    25% {
+        transform: translateX(10px);
+    }
+
+    50% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
 }
 
 .login-button {

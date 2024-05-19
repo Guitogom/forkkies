@@ -8,6 +8,16 @@ export function Login() {
     const [loginPassword, setLoginPassword] = useState('')
     const [loginError, setLoginError] = useState('')
 
+    const handleLoginTag = (event) => {
+        setLoginError('')
+        setLoginTag(event.target.value)
+    }
+
+    const handleLoginPassword = (event) => {
+        setLoginError('')
+        setLoginPassword(event.target.value)
+    }
+
     const handleLogin = async () => {
         try {
             const hashedPassword = sha256(loginPassword).toString()
@@ -40,8 +50,8 @@ export function Login() {
             <h2 className='login-title'>FORKKIES</h2>
             <form className='login-form' onSubmit={handleSubmit}>
                 <p className='login-error'>{loginError}</p>
-                <input type="text" placeholder='business tag' className='login-input' value={loginTag} onChange={(event) => setLoginTag(event.target.value)} />
-                <input type="password" className='login-input' placeholder='business password' value={loginPassword} onChange={(event) => setLoginPassword(event.target.value)} />
+                <input type="text" placeholder='business tag' className={`login-input ${loginError !== '' ? 'wrong' : ''}`} value={loginTag} onChange={handleLoginTag} />
+                <input type="password" className={`login-input ${loginError !== '' ? 'wrong' : ''}`} placeholder='business password' value={loginPassword} onChange={handleLoginPassword} />
                 <button type="submit" className='login-button'>Next</button>
             </form>
             <p className='login-register-link'>Don't have an account? <Link to='/register'>Register</Link></p>

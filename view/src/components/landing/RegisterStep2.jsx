@@ -9,12 +9,17 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
     const [repeatPassword, setRepeatPassword] = useState('')
     const [passwordMatch, setPasswordMatch] = useState(false)
 
+    const [passwordMistake, setPasswordMistake] = useState('')
+    const [repeatMistake, setRepeatMistake] = useState('')
+
 
     const handlePassword = (e) => {
+        setPasswordMistake('')
         setPasswordProvisional(e.target.value)
     }
 
     const handleRepeatPassword = (e) => {
+        setRepeatMistake('')
         setRepeatPassword(e.target.value)
     }
 
@@ -27,9 +32,26 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
     }
 
     const handleCheckRegister = () => {
-        if (passwordMatch) {
-            handleRegisterBusiness()
+        let hasError = false
+
+        if (passwordProvisional === '') {
+            setPasswordMistake("Password can't be empty")
+            hasError = true
         }
+
+        if (repeatPassword === '') {
+            setRepeatMistake("Repeat password can't be empty")
+            hasError = true
+        }
+
+        if (!passwordMatch) {
+            setRepeatMistake("Passwords don't match")
+            hasError = true
+        }
+
+        if (hasError) return
+
+        handleRegisterBusiness()
     }
 
 
@@ -47,8 +69,11 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
     return (
         <div className={`register-form ${divHeight}`}>
             <button className='register-back' onClick={handleGoBack}>Go Back</button>
-            <input type="password" name="" id="password" placeholder='create a business password...' className='register-input' onInput={handlePassword} />
-            <input type="password" name="" id="repeat-password" placeholder='repeat the business password...' className='register-input' onInput={handleRepeatPassword} />
+            <p className='register-password-text'>Password must have 8 digits</p>
+            <input type="password" name="" id="password" placeholder='create a business password...' className={`register-input ${passwordMistake !== '' ? 'wrong' : ''}`} onInput={handlePassword} />
+            <p className="mistake-error">{passwordMistake}</p>
+            <input type="password" name="" id="repeat-password" placeholder='repeat the business password...' className={`register-input ${repeatMistake !== '' ? 'wrong' : ''}`} onInput={handleRepeatPassword} />
+            <p className="mistake-error">{repeatMistake}</p>
             <div className="password-feedback">{passwordMatch ? <CheckSVG /> : <WarnSVG />}</div>
             <button className='register-button' onClick={handleCheckRegister}>Next</button>
         </div>

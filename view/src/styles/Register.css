@@ -55,11 +55,27 @@
     outline: none;
 }
 
+.mistake-error {
+    color: #fd3e3ee8;
+    font-size: 1rem;
+    font-family: var(--secondary-font);
+    margin: 2px 10px;
+    align-self: start;
+}
+
 .register-tag-text {
     font-size: 1rem;
     color: #868686;
     font-family: var(--secondary-font);
     margin: 10px 0;
+}
+
+.register-password-text {
+    font-size: 1rem;
+    color: #868686;
+    font-family: var(--secondary-font);
+    margin: 10px 0;
+    align-self: start;
 }
 
 .available {
@@ -132,7 +148,7 @@
 
 .password-feedback {
     position: absolute;
-    transform: translate(190px, 24px);
+    transform: translate(190px, 44px);
     width: 40px;
     height: 40px;
 }
@@ -140,7 +156,7 @@
 @media screen and (max-width: 578px) {
     .password-feedback {
         position: absolute;
-        transform: translate(120px, 24px);
+        transform: translate(120px, 44px);
     }
 }
 
