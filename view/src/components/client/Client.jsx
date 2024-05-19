@@ -11,7 +11,7 @@ import { ClientProducts } from "./ClientProducts.jsx"
 import { ClientFullProduct } from "./ClientFullProduct.jsx"
 
 export function Client() {
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [])
 
     const { tag } = useParams()
     const [loaded, setLoaded] = useState(false)
@@ -52,6 +52,11 @@ export function Client() {
 
     }, [])
 
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart))
+        console.log('Cart updated:', cart)
+    }, [cart])
+
     const clientHeight = window.innerHeight - 140
 
     if (!loaded) return <ClientLoading />
@@ -63,7 +68,7 @@ export function Client() {
                 <Routes>
                     <Route path='/categories' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
                     <Route path='/c/:categoryId' element={<ClientProducts categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} />} />
-                    <Route path='/c/:categoryId/p/:productId' element={<ClientFullProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} />} />
+                    <Route path='/c/:categoryId/p/:productId' element={<ClientFullProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
 
                 </Routes>
