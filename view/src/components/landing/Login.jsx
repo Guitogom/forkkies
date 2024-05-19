@@ -19,6 +19,11 @@ export function Login() {
     }
 
     const handleLogin = async () => {
+        if (loginTag === '' || loginPassword === '') {
+            setLoginError("Tag and password can't be empty")
+            return
+        }
+
         try {
             const hashedPassword = sha256(loginPassword).toString()
             const response = await fetch(`https://api.forkkies.live/logbusiness?tag=${loginTag}&password=${hashedPassword}`)
