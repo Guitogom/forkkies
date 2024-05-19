@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
+import { useState } from 'react'
 
-export function ClientFullProduct({ categories, secondaryColor }) {
+export function ClientFullProduct({ categories, secondaryColor, primaryColor }) {
     const { categoryId, productId } = useParams()
     const category = categories.find(cat => cat.id === parseInt(categoryId))
     const product = category.products.find(pro => pro.id === parseInt(productId))
@@ -19,6 +20,24 @@ export function ClientFullProduct({ categories, secondaryColor }) {
         return price
     }
 
+    const lessQuantity = () => {
+        if (innerCart.quantity > 1) {
+            setInnerCart({ ...innerCart, quantity: innerCart.quantity - 1 })
+        }
+    }
+
+    const plusQuantity = () => {
+        setInnerCart({ ...innerCart, quantity: innerCart.quantity + 1 })
+    }
+
+    const [innerCart, setInnerCart] = useState({
+        category: category.id,
+        product: product.id,
+        quantity: 1,
+        individualPrice: product.price,
+        totalPrice: 0
+    })
+
     return (
         <section>
             <div className="client-full-product-info">
@@ -26,6 +45,11 @@ export function ClientFullProduct({ categories, secondaryColor }) {
                 <h2 className="client-full-product-name" style={{ color: secondaryColor }}>{product.name}</h2>
                 <p className="client-full-product-description" style={{ color: secondaryColor }}>{product.description}</p>
                 <p className="client-full-product-price" style={{ color: secondaryColor }}>{formatPrice(product.price)}€</p>
+            </div>
+            <div className="client-full-product-add-to-cart">
+                <button className='client-full-product-add-to-cart-less' style={{ backgroundColor: secondaryColor, color: primaryColor }} onClick={lessQuantity}>-</button>
+                <input type="text" value={innerCart.quantity} className='client-full-product-add-to-cart-input' style={{ backgroundColor: secondaryColor, color: primaryColor }} />
+                <button className='client-full-product-add-to-cart-plus' style={{ backgroundColor: secondaryColor, color: primaryColor }} onClick={plusQuantity}>+</button>
             </div>
         </section>
     )

@@ -11,6 +11,8 @@ import { ClientProducts } from "./ClientProducts.jsx"
 import { ClientFullProduct } from "./ClientFullProduct.jsx"
 
 export function Client() {
+    const [cart, setCart] = useState([])
+
     const { tag } = useParams()
     const [loaded, setLoaded] = useState(false)
     const [template, setTemplate] = useState({})
@@ -61,7 +63,7 @@ export function Client() {
                 <Routes>
                     <Route path='/categories' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
                     <Route path='/c/:categoryId' element={<ClientProducts categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} />} />
-                    <Route path='/c/:categoryId/p/:productId' element={<ClientFullProduct categories={template.categories} secondaryColor={secondaryColor} />} />
+                    <Route path='/c/:categoryId/p/:productId' element={<ClientFullProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
 
                 </Routes>

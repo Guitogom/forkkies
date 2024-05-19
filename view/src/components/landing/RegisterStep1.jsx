@@ -101,6 +101,14 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
         }
     }, [tagProvisional])
 
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleRegister()
+        }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+
     return (
         <div className={`register-form ${divHeight}`}>
             <input type="text" placeholder='business name' onInput={handleNameChange} className={`register-input ${nameMistake !== '' ? 'wrong' : ''}`} value={businessName} />

@@ -66,6 +66,14 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
         }
     }, [passwordProvisional, repeatPassword])
 
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleCheckRegister()
+        }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+
     return (
         <div className={`register-form ${divHeight}`}>
             <button className='register-back' onClick={handleGoBack}>Go Back</button>

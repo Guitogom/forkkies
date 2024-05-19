@@ -15,6 +15,7 @@ export function ProductPanel() {
     const { c_id } = useParams()
     const { p_id } = useParams()
     const [edit, setEdit] = useState(false)
+    const [imageError, setImageError] = useState(false)
     const [product, setProduct] = useState({
         id: '',
         name: '',
@@ -60,6 +61,7 @@ export function ProductPanel() {
     const [backgroundSize, setBackgroundSize] = useState('60px')
 
     const handleImageChange = (e) => {
+        setImageError(false)
         const file = e.target.files[0]
         if (file) {
             const reader = new FileReader()
@@ -81,6 +83,14 @@ export function ProductPanel() {
     }
 
     const handleProductPriceChange = (value) => {
+        if (isNaN(value)) {
+            value = value.slice(0, value.length - 1)
+        }
+
+        if (value.indexOf('€') !== -1) {
+            value = value.slice(0, value.length - 1)
+        }
+
         if (value.indexOf(',') !== -1) {
             value = value.replace(',', '.')
         }
@@ -179,7 +189,6 @@ export function ProductPanel() {
 
     const saveProduct = () => {
         const token = localStorage.getItem('session_token')
-        console.log(product)
         setLoading2(false)
         fetch(`https://api.forkkies.live/modifyproduct`, {
             method: 'POST',
@@ -199,6 +208,7 @@ export function ProductPanel() {
             })
             .catch(error => {
                 setLoading2(true)
+                setImageError(true)
                 console.error('Error:', error.message)
             })
     }
@@ -239,7 +249,7 @@ export function ProductPanel() {
             </div>
             <div className="left-product-column">
                 <div className="product-basic-info">
-                    <div className="image-input" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: `${backgroundSize}` }} >
+                    <div className={`image-input ${imageError ? 'wrong' : ''}`} style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: `${backgroundSize}` }} >
                         <label htmlFor="categoryImage"></label>
                         <input type="file" name="categoryImage" id="categoryImage" onChange={handleImageChange} />
                     </div>
