@@ -22,6 +22,8 @@ export function Client() {
     const [callToActionColor, setCallToActionColor] = useState("#D9D9D9")
     const [themeColor, setThemeColor] = useState("#F9FBFD")
 
+    const [orderPrice, setOrderPrice] = useState(0)
+
     useEffect(() => {
         fetch(`https://api.forkkies.live/loadbusiness?tag=${tag}`, {
             method: 'GET',
@@ -55,9 +57,9 @@ export function Client() {
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart))
         console.log('Cart updated:', cart)
+        const total = cart.reduce((acc, item) => acc + item.totalPrice, 0)
+        setOrderPrice(total)
     }, [cart])
-
-    const clientHeight = window.innerHeight - 140
 
     if (!loaded) return <ClientLoading />
 
@@ -73,7 +75,7 @@ export function Client() {
 
                 </Routes>
             </div>
-            <ClientFooter primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} />
+            <ClientFooter primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} orderPrice={orderPrice} />
         </main>
     )
 }

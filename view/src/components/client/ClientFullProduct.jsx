@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 export function ClientFullProduct({ cart, setCart, categories, secondaryColor, primaryColor }) {
-    const { categoryId, productId } = useParams()
+    const { tag, categoryId, productId } = useParams()
     const category = categories.find(cat => cat.id === parseInt(categoryId))
     const product = category ? category.products.find(pro => pro.id === parseInt(productId)) : null
     const [innerCart, setInnerCart] = useState({
@@ -81,9 +81,15 @@ export function ClientFullProduct({ cart, setCart, categories, secondaryColor, p
         if (index === -1) {
             newCart.push(innerCart)
         } else {
-            newCart[index] = innerCart
+            newCart[index] = {
+                ...newCart[index],
+                quantity: newCart[index].quantity + innerCart.quantity,
+                totalPrice: (newCart[index].quantity + innerCart.quantity) * newCart[index].individualPrice
+            }
         }
         setCart(newCart)
+        // window.location.href = `/b/${tag}/c/${categoryId}`
+        // No va, fixear
     }
 
     return (
