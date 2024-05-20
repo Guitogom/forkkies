@@ -1,9 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from "react-router-dom"
 
 export function ClientHeader({ display, setDisplay, name, primaryColor, secondaryColor, callToActionColor, themeColor }) {
+    const { tag } = useParams()
+    const navigate = useNavigate()
 
     const toggleDisplay = () => {
         setDisplay(!display)
+    }
+
+    const mainMenu = () => {
+        navigate(`/b/${tag}/categories`)
     }
 
     return (
@@ -19,7 +25,7 @@ export function ClientHeader({ display, setDisplay, name, primaryColor, secondar
                 }
             </div>
             <div className="client-title">
-                <h1 style={{ color: themeColor }}>{name}</h1>
+                <h1 style={{ color: themeColor }} onClick={mainMenu}>{name}</h1>
             </div>
         </header>
     )

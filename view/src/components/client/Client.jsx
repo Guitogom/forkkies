@@ -9,6 +9,7 @@ import { ClientLoading } from "./ClientLoading.jsx"
 import { ClientCategories } from "./ClientCategories.jsx"
 import { ClientProducts } from "./ClientProducts.jsx"
 import { ClientFullProduct } from "./ClientFullProduct.jsx"
+import { ClientStepProduct } from "./ClientStepProduct.jsx"
 import { ClientDisplayMenu } from "./ClientDisplayMenu.jsx"
 import { ClientOrder } from "./ClientOrder.jsx"
 
@@ -58,7 +59,6 @@ export function Client() {
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart))
-        console.log('Cart updated:', cart)
         const total = cart.reduce((acc, item) => acc + item.totalPrice, 0)
         setOrderPrice(total)
     }, [cart])
@@ -74,11 +74,12 @@ export function Client() {
                 <Routes>
                     <Route path='/categories' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
                     <Route path='/c/:categoryId' element={<ClientProducts categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} />} />
-                    <Route path='/c/:categoryId/p/:productId' element={<ClientFullProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} />} />
+                    <Route path='/c/:categoryId/p/:productId' element={<ClientFullProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} themeColor={themeColor} />} />
+                    <Route path='/c/:categoryId/sp/:productId' element={<ClientStepProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} themeColor={themeColor} />} />
                     <Route path='/order' element={<ClientOrder cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
                 </Routes>
-                <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} themeColor={themeColor} />
+                <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} categories={template.categories} primaryColor={primaryColor} themeColor={themeColor} />
             </div>
             <ClientFooter primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} orderPrice={orderPrice} />
         </main>
