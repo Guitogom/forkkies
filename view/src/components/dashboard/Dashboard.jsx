@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import './../../styles/Dashboard.css'
 import { Header } from './Header.jsx'
@@ -19,6 +19,8 @@ import { ProductPanel } from "./pages/templates/ProductPanel.jsx"
 export function Dashboard() {
     const [loaded, setLoaded] = useState(false)
     const [business, setBusiness] = useState({})
+
+    const navigate = useNavigate();
 
     const [businessName, setBusinessName] = useState(business.name)
     const [businessLocation, setBusinessLocation] = useState(business.location)
@@ -53,7 +55,7 @@ export function Dashboard() {
                 .catch(error => {
                     console.error('Error:', error.message)
                     localStorage.removeItem('session_token')
-                    window.location.href = '/'
+                    navigate('/')
                 })
 
         }

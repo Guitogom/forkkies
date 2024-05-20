@@ -10,6 +10,7 @@ import { ClientCategories } from "./ClientCategories.jsx"
 import { ClientProducts } from "./ClientProducts.jsx"
 import { ClientFullProduct } from "./ClientFullProduct.jsx"
 import { ClientDisplayMenu } from "./ClientDisplayMenu.jsx"
+import { ClientOrder } from "./ClientOrder.jsx"
 
 export function Client() {
     const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [])
@@ -70,14 +71,14 @@ export function Client() {
         <main className="client-app" style={{ backgroundColor: themeColor }}>
             <ClientHeader display={displayNav} setDisplay={setDisplayNav} name={template.name} primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} />
             <div className="client-screen" >
-                <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} themeColor={themeColor} />
                 <Routes>
                     <Route path='/categories' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
                     <Route path='/c/:categoryId' element={<ClientProducts categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} />} />
                     <Route path='/c/:categoryId/p/:productId' element={<ClientFullProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} />} />
+                    <Route path='/order' element={<ClientOrder cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
-
                 </Routes>
+                <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} themeColor={themeColor} />
             </div>
             <ClientFooter primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} orderPrice={orderPrice} />
         </main>
