@@ -5,7 +5,7 @@ import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, lo
 const app = express();
 
 // Middleware para analizar los cuerpos de las solicitudes JSON con límite de tamaño
-app.use(express.json({ limit: '200mb' }));
+app.use(express.json({ limit: '10000mb' }));
 
 // Middleware para analizar los cuerpos de las solicitudes URL codificadas con límite de tamaño
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
