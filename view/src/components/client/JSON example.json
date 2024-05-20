@@ -1,0 +1,211 @@
+[
+    {
+        "id": 1,
+        "name": "Pizzas",
+        "img": "",
+        "template_id": 1,
+        "products": [
+            {
+                "id": 1,
+                "name": "Mamma miaaa",
+                "desc": "",
+                "img": "",
+                "price": 13,
+                "steps": []
+            },
+            {
+                "id": 2,
+                "name": "Napolitana",
+                "desc": "",
+                "img": "",
+                "price": 13,
+                "steps": []
+            },
+            {
+                "id": 3,
+                "name": "Barbacoa",
+                "desc": "",
+                "img": "",
+                "price": 14,
+                "steps": []
+            },
+            {
+                "id": 4,
+                "name": "Hawaiana",
+                "desc": "",
+                "img": "",
+                "price": 12,
+                "steps": []
+            },
+            {
+                "id": 5,
+                "name": "Peperoni",
+                "desc": "",
+                "img": "",
+                "price": 12,
+                "steps": []
+            },
+            {
+                "id": 6,
+                "name": "Margarita",
+                "desc": "",
+                "img": "",
+                "price": 13,
+                "steps": []
+            },
+            {
+                "id": 8,
+                "name": "4 Quesos",
+                "desc": "",
+                "img": "",
+                "price": 15,
+                "steps": []
+            },
+            {
+                "id": 9,
+                "name": "4 Quesos Especial Navidad",
+                "desc": "",
+                "img": "",
+                "price": 17,
+                "steps": []
+            },
+            {
+                "id": 10,
+                "name": "Margarita Edicion Especial 2023",
+                "desc": "Margarita edicion especial",
+                "img": "",
+                "price": 24.99,
+                "steps": []
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Hot Dogs",
+        "img": "",
+        "template_id": 1,
+        "products": [
+            {
+                "id": 7,
+                "name": "Mc Frankfurt XXL",
+                "desc": "",
+                "img": "",
+                "price": 22,
+                "steps": []
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Bravas",
+        "img": "",
+        "template_id": 1,
+        "products": []
+    },
+    {
+        "id": 4,
+        "name": "Menus Completos",
+        "img": "",
+        "template_id": 1,
+        "products": [
+            {
+                "id": 16,
+                "name": "Menu Happy Pau",
+                "desc": "Un menu para que estes muy feliz",
+                "img": "",
+                "price": 9.98,
+                "steps": [
+                    {
+                        "id": 2,
+                        "title": "Que hamburguesa quieres?",
+                        "type": "1",
+                        "product_id": 16,
+                        "specials": [
+                            {
+                                "id": 2,
+                                "name": "Hamburguesa de carne",
+                                "price_changer": 0.5,
+                                "img": "",
+                                "step_id": 2
+                            },
+                            {
+                                "id": 3,
+                                "name": "Hamburguesa vegana",
+                                "price_changer": 1,
+                                "img": "",
+                                "step_id": 2
+                            },
+                            {
+                                "id": 4,
+                                "name": "Crispy",
+                                "price_changer": 0.5,
+                                "img": "",
+                                "step_id": 2
+                            },
+                            {
+                                "id": 5,
+                                "name": "Integral",
+                                "price_changer": 0.5,
+                                "img": "",
+                                "step_id": 2
+                            }
+                        ]
+                    },
+                    {
+                        "id": 3,
+                        "title": "Quieres quitar las patatas?",
+                        "type": "2",
+                        "product_id": 16,
+                        "specials": [
+                            {
+                                "id": 6,
+                                "name": "Patatas fritas",
+                                "price_changer": -0.2,
+                                "img": "",
+                                "step_id": 3
+                            }
+                        ]
+                    },
+                    {
+                        "id": 4,
+                        "title": "Quieres añadir algo para picar?",
+                        "type": "3",
+                        "product_id": 16,
+                        "specials": [
+                            {
+                                "id": 7,
+                                "name": "Mini frankfurts",
+                                "price_changer": 0.7,
+                                "img": "",
+                                "step_id": 4
+                            },
+                            {
+                                "id": 8,
+                                "name": "Nachos",
+                                "price_changer": 0.8,
+                                "img": "",
+                                "step_id": 4
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Bocadillos",
+        "img": "",
+        "template_id": 1,
+        "products": [
+            {
+                "id": 15,
+                "name": "Bocadillo de atún",
+                "desc": "Bocadillon",
+                "img": "",
+                "price": 4,
+                "steps": []
+            }
+        ]
+    }
+]

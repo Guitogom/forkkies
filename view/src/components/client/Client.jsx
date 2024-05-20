@@ -12,6 +12,7 @@ import { ClientFullProduct } from "./ClientFullProduct.jsx"
 import { ClientStepProduct } from "./ClientStepProduct.jsx"
 import { ClientDisplayMenu } from "./ClientDisplayMenu.jsx"
 import { ClientOrder } from "./ClientOrder.jsx"
+import { ClientStepHandler } from "./ClientStepHandler.jsx"
 
 export function Client() {
     const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [])
@@ -76,7 +77,8 @@ export function Client() {
                     <Route path='/c/:categoryId' element={<ClientProducts categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} />} />
                     <Route path='/c/:categoryId/p/:productId' element={<ClientFullProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} themeColor={themeColor} />} />
                     <Route path='/c/:categoryId/sp/:productId' element={<ClientStepProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} themeColor={themeColor} />} />
-                    <Route path='/order' element={<ClientOrder cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} />} />
+                    <Route path='/c/:categoryId/sp/:productId/s/:stepIndex' element={<ClientStepHandler categories={template.categories} />} />
+                    <Route path='/order' element={<ClientOrder cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
                 </Routes>
                 <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} categories={template.categories} primaryColor={primaryColor} themeColor={themeColor} />

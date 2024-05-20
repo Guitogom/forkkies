@@ -415,10 +415,41 @@
     overflow-y: scroll;
 }
 
+.client-cart h2 {
+    font-size: 30px;
+    font-weight: 900;
+    font-family: var(--secondary-font);
+    text-align: center;
+}
+
 .client-product-in-order {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.212);
+    height: 100px;
+    width: 100%;
+}
+
+.client-product-in-order img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+}
+
+.client-product-in-order-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.client-product-in-order-info h3 {
+    width: 60%;
+    overflow-x: scroll;
+    text-wrap: nowrap;
+    font-size: 18px;
+    text-align: center;
 }

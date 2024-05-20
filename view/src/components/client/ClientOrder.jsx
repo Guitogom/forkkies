@@ -1,15 +1,18 @@
 import { ClientOrderProduct } from './props/ClientOrderProduct.jsx'
 
-export function ClientOrder({ cart, setCart, secondaryColor, primaryColor }) {
+export function ClientOrder({ cart, setCart, secondaryColor, primaryColor, themeColor }) {
 
     return (
-        <section>
+        <section className="client-cart">
             <h2>Your Order</h2>
-            <div className="client-cart">
-                {cart.map((cartProduct, index) => (
-                    <ClientOrderProduct key={index} cartProduct={cartProduct} cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} />
-                ))}
-            </div>
+            {cart.map((cartProduct, index) => (
+                <ClientOrderProduct key={index} cartProduct={cartProduct} cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} />
+            ))}
+            {
+                cart.length > 0 && (
+                    <p>You can pay with the right lower button.</p>
+                )
+            }
         </section>
     )
 }

@@ -1,9 +1,23 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export function ClientOrderProduct({ cartProduct, cart, setCart, secondaryColor, primaryColor }) {
+export function ClientOrderProduct({ cartProduct, cart, setCart, secondaryColor, primaryColor, themeColor }) {
     var imagenDisplay = `data:image/jpeg;base64,${cartProduct.img}`
 
     const [innerCart, setInnerCart] = useState(cartProduct)
+
+    const updateCart = () => {
+        const newCart = cart.map(product => {
+            if (product.product === innerCart.product) {
+                return innerCart
+            }
+            return product
+        })
+        setCart(newCart)
+    }
+
+    useEffect(() => {
+        updateCart()
+    }, [innerCart])
 
     const lessQuantity = () => {
         if (innerCart.quantity > 1) {
@@ -43,13 +57,13 @@ export function ClientOrderProduct({ cartProduct, cart, setCart, secondaryColor,
     return (
         <div className="client-product-in-order">
             <img src={imagenDisplay} alt={cartProduct.name} />
-            <div>
+            <div className="client-product-in-order-info">
                 <h3>{cartProduct.name}</h3>
                 <p>{cartProduct.price}</p>
                 <div className='client-full-product-quantity-handler'>
-                    <button className='client-full-product-add-to-cart-less' style={{ backgroundColor: secondaryColor, color: primaryColor }} onClick={lessQuantity}>-</button>
-                    <input type="number" value={innerCart.quantity} className='client-full-product-add-to-cart-input' style={{ backgroundColor: secondaryColor, color: primaryColor }} onChange={placeQuantity} />
-                    <button className='client-full-product-add-to-cart-plus' style={{ backgroundColor: secondaryColor, color: primaryColor }} onClick={plusQuantity}>+</button>
+                    <button className='client-full-product-add-to-cart-less' style={{ backgroundColor: secondaryColor, color: themeColor }} onClick={lessQuantity}>-</button>
+                    <input type="number" value={innerCart.quantity} className='client-full-product-add-to-cart-input' style={{ backgroundColor: secondaryColor, color: themeColor }} onChange={placeQuantity} />
+                    <button className='client-full-product-add-to-cart-plus' style={{ backgroundColor: secondaryColor, color: themeColor }} onClick={plusQuantity}>+</button>
                 </div>
             </div>
         </div>
