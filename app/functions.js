@@ -925,7 +925,7 @@ async function fetchCategoriesForTemplate(active_template) {
 
 async function fetchProductsForCategory(category_id) {
     const result = await db.execute({
-        sql: 'SELECT id, name, img, price FROM product WHERE id IN (SELECT product_id FROM cat_product WHERE category_id = :category_id) AND name != "deleted"',
+        sql: 'SELECT id, name, desc, img, price FROM product WHERE id IN (SELECT product_id FROM cat_product WHERE category_id = :category_id) AND name != "deleted"',
         args: { category_id }
     });
 
