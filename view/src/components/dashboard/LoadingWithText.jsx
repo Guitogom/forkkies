@@ -4,18 +4,18 @@ import { useEffect, useState } from "react"
 export function LoadingWithText() {
     const [consejo, setConsejo] = useState('')
     const consejos = [
-        'No te preocupes, todo estará bien.',
-        'Recuerda que todo es temporal.',
-        'No te preocupes por lo que no puedes controlar.',
-        'No te preocupes por lo que no puedes cambiar.',
-        'No te preocupes por lo que no puedes predecir'
+        'Estamos trabajando en ello...',
+        'No te preocupes, ya casi terminamos...',
+        'Cargando la información...',
+        'Preparando todo para ti...',
+        'Contactando con el servidor...'
     ]
 
     useEffect(() => {
         setTimeout(() => {
             const randomConsejo = consejos[Math.floor(Math.random() * consejos.length)]
             setConsejo(randomConsejo)
-        }, 2000)
+        }, 5000)
     }, [consejo])
 
     return (

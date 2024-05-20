@@ -9,6 +9,7 @@ import { ClientLoading } from "./ClientLoading.jsx"
 import { ClientCategories } from "./ClientCategories.jsx"
 import { ClientProducts } from "./ClientProducts.jsx"
 import { ClientFullProduct } from "./ClientFullProduct.jsx"
+import { ClientDisplayMenu } from "./ClientDisplayMenu.jsx"
 
 export function Client() {
     const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [])
@@ -61,12 +62,15 @@ export function Client() {
         setOrderPrice(total)
     }, [cart])
 
+    const [displayNav, setDisplayNav] = useState(false)
+
     if (!loaded) return <ClientLoading />
 
     return (
         <main className="client-app" style={{ backgroundColor: themeColor }}>
-            <ClientHeader name={template.name} primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} />
+            <ClientHeader display={displayNav} setDisplay={setDisplayNav} name={template.name} primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} />
             <div className="client-screen" >
+                <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} themeColor={themeColor} />
                 <Routes>
                     <Route path='/categories' element={<ClientCategories categories={template.categories} secondaryColor={secondaryColor} />} />
                     <Route path='/c/:categoryId' element={<ClientProducts categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} />} />

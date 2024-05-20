@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 
-export function ClientHeader({ name, primaryColor, secondaryColor, callToActionColor, themeColor }) {
-
-    const [display, setDisplay] = useState(false)
+export function ClientHeader({ display, setDisplay, name, primaryColor, secondaryColor, callToActionColor, themeColor }) {
 
     const toggleDisplay = () => {
-        setDisplay(prevDisplay => !prevDisplay)
+        setDisplay(!display)
     }
 
     return (
-        <header className='client-header' style={{ backgroundColor: secondaryColor }}>
+        <header className='client-header' style={{
+            background: `linear-gradient(90deg, ${secondaryColor} 0%, ${secondaryColor} 44%, ${primaryColor} 98%)`
+        }}>
             <div className="client-nav" onClick={toggleDisplay}>
                 {
                     display ?

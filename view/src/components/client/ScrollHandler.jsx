@@ -10,7 +10,7 @@ function ScrollHandler({ divHeight, setDivHeight, targetRef }) {
             return
         }
 
-        if (currentY > startY) {
+        if (currentY > startY + 200) {
             if (divHeight === '150px') return
             setDivHeight('150px')
         } else {

@@ -1,5 +1,6 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { CartSVG } from '../../assets/svg/CartSVG.jsx'
 
 export function ClientFullProduct({ cart, setCart, categories, secondaryColor, primaryColor }) {
     const { tag, categoryId, productId } = useParams()
@@ -14,6 +15,8 @@ export function ClientFullProduct({ cart, setCart, categories, secondaryColor, p
         individualPrice: product ? product.price : 0,
         totalPrice: product ? product.price : 0
     })
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (product) {
@@ -36,6 +39,7 @@ export function ClientFullProduct({ cart, setCart, categories, secondaryColor, p
     var imagenDisplay = `data:image/jpeg;base64,${product.img}`
 
     const formatPrice = (price) => {
+        if (!price) return '0.00'
         price = price.toFixed(2)
         return price
     }
@@ -88,8 +92,7 @@ export function ClientFullProduct({ cart, setCart, categories, secondaryColor, p
             }
         }
         setCart(newCart)
-        // window.location.href = `/b/${tag}/c/${categoryId}`
-        // No va, fixear
+        navigate(`/b/${tag}/c/${categoryId}`)
     }
 
     return (
@@ -97,8 +100,8 @@ export function ClientFullProduct({ cart, setCart, categories, secondaryColor, p
             <div className="client-full-product-info">
                 <img src={imagenDisplay} alt={`${product.name} Image`} className='client-full-product-image' style={{ filter: `drop-shadow(0px 0px 8px ${secondaryColor})` }} />
                 <h2 className="client-full-product-name" style={{ color: secondaryColor }}>{product.name}</h2>
-                <p className="client-full-product-description" style={{ color: secondaryColor }}>{product.description}</p>
                 <p className="client-full-product-price" style={{ color: secondaryColor }}>{formatPrice(product.price)}€</p>
+                <p className="client-full-product-description" style={{ color: secondaryColor }}>{product.description || 'Descripción del producto medianamente larga'}</p>
             </div>
             <div className="client-full-product-add-to-cart">
                 <div className='client-full-product-quantity-handler'>
@@ -106,9 +109,9 @@ export function ClientFullProduct({ cart, setCart, categories, secondaryColor, p
                     <input type="number" value={innerCart.quantity} className='client-full-product-add-to-cart-input' style={{ backgroundColor: secondaryColor, color: primaryColor }} onChange={placeQuantity} />
                     <button className='client-full-product-add-to-cart-plus' style={{ backgroundColor: secondaryColor, color: primaryColor }} onClick={plusQuantity}>+</button>
                 </div>
-                <p style={{ color: secondaryColor }}>Total Price:</p>
+                <p style={{ color: secondaryColor }} className='client-full-product-total-price-text'>Total Price:</p>
                 <p className="client-full-product-total-price" style={{ color: secondaryColor }}>{formatPrice(innerCart.totalPrice)}€</p>
-                <button className='client-full-product-add-to-cart-button' style={{ backgroundColor: secondaryColor, color: primaryColor }} onClick={addToCart}>Add to Cart</button>
+                <button className='client-full-product-add-to-cart-button' style={{ backgroundColor: secondaryColor, color: primaryColor }} onClick={addToCart}><CartSVG fill={primaryColor} />Add to Cart</button>
             </div>
         </section>
     )

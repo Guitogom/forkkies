@@ -51,6 +51,20 @@
     padding-top: 60px;
 }
 
+.client-display-menu {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    z-index: 20;
+    transition: all 0.4s ease;
+}
+
 .client-footer {
     width: 100%;
     display: flex;
@@ -234,6 +248,18 @@
     text-align: center;
 }
 
+.client-full-product-price {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.client-full-product-description {
+    width: 80%;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+}
+
 .client-full-product-add-to-cart {
     display: flex;
     align-items: center;
@@ -297,6 +323,40 @@
 
 .client-full-product-add-to-cart-plus:active,
 .client-full-product-add-to-cart-less:active {
+    box-shadow: inset 0 2px 5px rgb(14, 14, 14);
+    transform: translateY(1px);
+}
+
+.client-full-product-total-price-text {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.client-full-product-total-price {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.client-full-product-add-to-cart-button {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.client-full-product-add-to-cart-button svg {
+    width: 32px;
+}
+
+.client-full-product-add-to-cart-button:active {
     box-shadow: inset 0 2px 5px rgb(14, 14, 14);
     transform: translateY(1px);
 }

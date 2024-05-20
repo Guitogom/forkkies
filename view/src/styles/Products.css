@@ -553,6 +553,15 @@
     animation: wrongField 0.5s;
 }
 
+.mistake-error {
+    min-height: 20px;
+    color: #fd3e3ee8;
+    font-size: 1rem;
+    font-family: var(--secondary-font);
+    margin: 2px 10px;
+    align-self: start;
+}
+
 @keyframes wrongField {
     0% {
         transform: translateX(0px);

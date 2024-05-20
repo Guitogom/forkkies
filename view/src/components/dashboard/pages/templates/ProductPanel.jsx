@@ -15,7 +15,11 @@ export function ProductPanel() {
     const { c_id } = useParams()
     const { p_id } = useParams()
     const [edit, setEdit] = useState(false)
+
     const [imageError, setImageError] = useState(false)
+    const [nameError, setNameError] = useState('')
+    const [priceError, setPriceError] = useState('')
+
     const [product, setProduct] = useState({
         id: '',
         name: '',
@@ -24,6 +28,8 @@ export function ProductPanel() {
         img: '',
         steps: []
     })
+
+    const [lastPrice, setLastPrice] = useState(0)
 
     useEffect(() => {
         if (p_id !== 'new' && !loaded) {
@@ -75,6 +81,7 @@ export function ProductPanel() {
     }
 
     const handleProductNameChange = (value) => {
+        setNameError('')
         setProduct({ ...product, name: value });
     }
 
@@ -82,21 +89,33 @@ export function ProductPanel() {
         setProduct({ ...product, desc: value });
     }
 
+    // Cambiar
     const handleProductPriceChange = (value) => {
-        if (isNaN(value)) {
-            value = value.slice(0, value.length - 1)
+        setPriceError('')
+        value = value.replace(/[^\d.,]/g, '')
+        value = value.replace(',', '.')
+
+        const dotCount = value.split('.').length - 1
+
+        if (dotCount > 1 || (dotCount === 1 && value.indexOf('.') === 0)) {
+            value = value.substring(1)
         }
 
-        if (value.indexOf('€') !== -1) {
-            value = value.slice(0, value.length - 1)
+        let numericValue = 0
+        if (value !== '') {
+            numericValue = Number(value)
         }
 
-        if (value.indexOf(',') !== -1) {
-            value = value.replace(',', '.')
+        if (!isFinite(numericValue) || isNaN(numericValue) || numericValue < 0) {
+            numericValue = 0
         }
 
-        setProduct({ ...product, price: value });
+        setLastPrice(numericValue)
+        setProduct({ ...product, price: numericValue })
     }
+
+
+
 
     const handleStepTypeChange = (stepIndex, newType) => {
         const updatedSteps = [...product.steps]
@@ -188,6 +207,18 @@ export function ProductPanel() {
     }
 
     const saveProduct = () => {
+        if (!product.name) {
+            setNameError('Product name is required')
+            return
+        }
+
+        if (!product.price) {
+            setPriceError('Product price is required')
+            return
+        }
+
+        console.log('Producto: ', product)
+
         const token = localStorage.getItem('session_token')
         setLoading2(false)
         fetch(`https://api.forkkies.live/modifyproduct`, {
@@ -255,7 +286,8 @@ export function ProductPanel() {
                     </div>
                     <div className="product-basic-info-2">
                         <label htmlFor="name" className='product-name-label'>Product Name:</label>
-                        <input type="text" name='name' placeholder='Product Name' value={product.name} onChange={(e) => handleProductNameChange(e.target.value)} className='product-name-input' />
+                        <input type="text" name='name' placeholder='Product Name' value={product.name} onChange={(e) => handleProductNameChange(e.target.value)} className={`product-name-input ${nameError ? 'wrong' : ''}`} />
+                        <p className="mistake-error">{nameError}</p>
                         <div className="product-propierties">
                             <PlusSVG />
                         </div>
@@ -264,7 +296,8 @@ export function ProductPanel() {
                 <label htmlFor="desc">Product Description:</label>
                 <textarea onChange={(e) => handleProductDescriptionChange(e.target.value)} value={product.desc} className='product-desc-input' name='desc' rows={5}></textarea>
                 <label htmlFor="price">Product Price:</label>
-                <input type="text" name='price' placeholder='00.00€' value={product.price} onChange={(e) => handleProductPriceChange(e.target.value)} className='product-price-input' />
+                <input type="text" name='price' placeholder='00.00€' value={product.price} onChange={(e) => handleProductPriceChange(e.target.value)} className={`product-price-input ${priceError ? 'wrong' : ''}`} />
+                <p className="mistake-error">{priceError}</p>
             </div>
             <div className="right-product-column">
                 <div className="steps-panel">
