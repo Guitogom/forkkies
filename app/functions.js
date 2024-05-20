@@ -554,18 +554,18 @@ export async function modifyCategory(tag, body) {
             //Borramos los registros de cat_product
             await db.execute({
                 sql: 'DELETE FROM cat_product WHERE category_id = :id',
-                args: category.id
+                args: { id: category.id }
             });
 
             //Borramos la categoría
             await db.execute({
                 sql: 'DELETE FROM category WHERE id = :id',
-                args: category.id
+                args: { id: category.id }
             });
 
         } catch (error) {
-            console.error('Error en la base de datos:', error.message);
-            throw new Error('Error en la base de datos: ' + error.message);
+            console.error('Error al borrar categoria:', error.message);
+            throw new Error('Error al borrar categoria: ' + error.message);
         }
     } else {
         //Modificamos la categoria con su nombre, imagen y el template al que pertenece
@@ -575,8 +575,8 @@ export async function modifyCategory(tag, body) {
                 args: category
             });
         } catch (error) {
-            console.error('Error en la base de datos:', error.message);
-            throw new Error('Error en la base de datos: ' + error.message);
+            console.error('Error al modificar categoria:', error.message);
+            throw new Error('Error al modificar categoria: ' + error.message);
         }
     }
 }
