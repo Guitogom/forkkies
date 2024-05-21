@@ -50,7 +50,7 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
         }
 
         if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(passwordProvisional)) {
-            setPasswordMistake("Password must have 8 digits and at least ")
+            setPasswordMistake("Password must have 8 digits, one number and one letter")
             hasError = true
         }
 
