@@ -1,42 +1,59 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 
-//Steps
+// Steps
 import { OptionStep } from './props/OptionStep.jsx'
 import { DeletableStep } from './props/DeletableStep.jsx'
 import { ExtraStep } from './props/ExtraStep.jsx'
 
-export function ClientStepHandler({ categories, secondaryColor }) {
+export function ClientStepHandler({ categories, secondaryColor, themeColor, primaryColor }) {
     const { tag, categoryId, productId } = useParams()
     const category = categories.find(cat => cat.id === parseInt(categoryId))
     const product = category ? category.products.find(pro => pro.id === parseInt(productId)) : null
     const steps = product ? product.steps : []
-    console.log(steps)
 
-    const [stepTitle, setStepTitle] = useState('')
-    const [stepNumer, setStepNumber] = useState(0)
+    const navigate = useNavigate()
+
+    const [stepNumber, setStepNumber] = useState(0)
+    const [stepTitle, setStepTitle] = useState(steps[0]?.title || '')
+
+    useEffect(() => {
+        if (steps[stepNumber]) {
+            setStepTitle(steps[stepNumber].title)
+        } else {
+            setStepTitle('Comfirmation')
+        }
+    }, [stepNumber, steps])
+
+    const currentStep = steps[stepNumber]
+
+    const renderStep = (step) => {
+        switch (step.type) {
+            case '1':
+                return <OptionStep key={step.id} step={step} setStepTitle={setStepTitle} setStepNumber={setStepNumber} />
+            case '2':
+                return <DeletableStep key={step.id} step={step} setStepTitle={setStepTitle} setStepNumber={setStepNumber} />
+            case '3':
+                return <ExtraStep key={step.id} step={step} setStepTitle={setStepTitle} setStepNumber={setStepNumber} />
+            default:
+                return <p key={step.id}>Step not found</p>
+        }
+    }
 
     return (
         <section className='client-step-handler'>
             <div className='client-step-progress-bar'>
-                <div className='client-step-progress-bar-inner' style={{ width: `${(stepNumer) * 100 / steps.length}%`, backgroundColor: `${secondaryColor}` }}></div>
+                <div className='client-step-progress-bar-inner' style={{ width: `${(stepNumber) * 100 / steps.length}%`, backgroundColor: `${secondaryColor}` }}></div>
             </div>
             <h3 style={{ color: secondaryColor }}>{stepTitle}</h3>
-            {steps.map((step, index) => {
-                switch (step.type) {
-                    case '1':
-                        return <OptionStep key={index} step={step} setStepTitle={setStepTitle} setStepNumber={setStepNumber} />
-                    case '2':
-                        return <DeletableStep key={index} step={step} setStepTitle={setStepTitle} setStepNumber={setStepNumber} />
-                    case '3':
-                        return <ExtraStep key={index} step={step} setStepTitle={setStepTitle} setStepNumber={setStepNumber} />
-                    default:
-                        return <p key={index}>Step not found</p>
-                }
-            })}
+            {currentStep && renderStep(currentStep)}
             <div className="step-controller">
-                <button onClick={() => setStepNumber(prevState => prevState - 1)} disabled={stepNumer === 0}>Back</button>
-                <button onClick={() => setStepNumber(prevState => prevState + 1)} disabled={stepNumer === steps.length}>Next</button>
+                {stepNumber === 0 ?
+                    <button onClick={() => navigate(`/b/${tag}/c/${categoryId}/sp/${productId}`)} className='step-button step-back-button' style={{ color: themeColor, backgroundColor: primaryColor, borderRight: `1px solid ${themeColor}` }}><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 4V20M8 12H20M8 12L12 8M8 12L12 16" stroke={themeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg> Exit</button> :
+                    <button onClick={() => setStepNumber(prev => Math.max(prev - 1, 0))} className='step-button step-back-button' style={{ color: themeColor, backgroundColor: primaryColor, borderRight: `1px solid ${themeColor}` }}><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke={themeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg> Back</button>}
+                {stepNumber === steps.length ?
+                    <button onClick={() => navigate(`/b/${tag}/c/${categoryId}/sp/${productId}`)} className='step-button step-next-button' style={{ color: themeColor, backgroundColor: primaryColor, borderLeft: `1px solid ${themeColor}` }}>Finish <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 4V20M4 12H16M16 12L12 8M16 12L12 16" stroke={themeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg></button> :
+                    <button onClick={() => setStepNumber(prev => Math.min(prev + 1, steps.length))} className='step-button step-next-button' style={{ color: themeColor, backgroundColor: primaryColor, borderLeft: `1px solid ${themeColor}` }}>Next <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke={themeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg></button>}
             </div>
         </section>
     )

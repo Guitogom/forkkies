@@ -467,7 +467,7 @@
 
 .client-step-progress-bar {
     width: 90%;
-    height: 60px;
+    height: 40px;
     background-color: var(--forth-color);
     overflow: hidden;
     border-radius: 15px;
@@ -481,4 +481,40 @@
     top: 0;
     left: 0;
     height: 60px;
+}
+
+.step-button {
+    position: fixed;
+    bottom: 70px;
+    display: flex;
+    gap: 10px;
+    height: 50px;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.212);
+    z-index: 101;
+    transition: all 0.2s ease;
+}
+
+.step-button:active {
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.212);
+    transform: translateY(1px);
+}
+
+.step-back-button {
+    left: 0;
+}
+
+.step-back-button svg {
+    width: 40px;
+}
+
+.step-next-button {
+    right: 0;
+}
+
+.step-next-button svg {
+    width: 40px;
 }

@@ -16,7 +16,7 @@ export function ClientOrderProduct({ cartProduct, cart, setCart, secondaryColor,
             setCart(newCart)
         }
         updateCart()
-    }, [innerCart, cart, setCart])
+    }, [innerCart])
 
     const lessQuantity = () => {
         setInnerCart(prevState => {
