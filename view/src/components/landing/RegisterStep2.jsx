@@ -34,6 +34,11 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
     const handleCheckRegister = () => {
         let hasError = false
 
+        if (!passwordMatch) {
+            setPasswordMistake("Passwords don't match")
+            hasError = true
+        }
+
         if (passwordProvisional === '') {
             setPasswordMistake("Password can't be empty")
             hasError = true
@@ -44,8 +49,8 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
             hasError = true
         }
 
-        if (!passwordMatch) {
-            setRepeatMistake("Passwords don't match")
+        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(passwordProvisional)) {
+            setPasswordMistake("Password must have 8 digits and at least ")
             hasError = true
         }
 
@@ -77,11 +82,10 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
     return (
         <div className={`register-form ${divHeight}`}>
             <button className='register-back' onClick={handleGoBack}>Go Back</button>
-            <p className='register-password-text'>Password must have 8 digits</p>
+            <p className='register-password-text'>Password must have 8 digits and at least one number and one letter</p>
             <input type="password" name="" id="password" placeholder='create a business password...' className={`register-input ${passwordMistake !== '' ? 'wrong' : ''}`} onInput={handlePassword} />
-            <p className="mistake-error">{passwordMistake}</p>
             <input type="password" name="" id="repeat-password" placeholder='repeat the business password...' className={`register-input ${repeatMistake !== '' ? 'wrong' : ''}`} onInput={handleRepeatPassword} />
-            <p className="mistake-error">{repeatMistake}</p>
+            <p className="mistake-error">{passwordMistake}</p>
             <div className="password-feedback">{passwordMatch ? <CheckSVG /> : <WarnSVG />}</div>
             <button className='register-button' onClick={handleCheckRegister}>Next</button>
         </div>

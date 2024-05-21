@@ -24,7 +24,7 @@ export function Home({ business, setBusiness }) {
                     <p className="uppertext">Here is your preview</p>
                     <img src={businessQR} alt="QR Code" />
                     <p className="undertext">Scan to preview</p>
-                    <button>Download</button>
+                    {/* <button>Download</button> */}
                 </aside>
             </div>
         </section>

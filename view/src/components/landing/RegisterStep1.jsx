@@ -56,6 +56,11 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
             hasError = true
         }
 
+        if (phoneNumber.length < 6 || phoneNumber.length > 10) {
+            setPhoneMistake("Phone number must be between 6 and 10 digits")
+            hasError = true
+        }
+
         if (businessLocation.trim() === '') {
             setLocationMistake("Business location can't be empty")
             hasError = true
