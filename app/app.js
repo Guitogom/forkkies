@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json({ limit: '200mb' }));
 
 // Middleware para analizar los cuerpos de las solicitudes URL codificadas con límite de tamaño
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '200mb' }));
 const corsOptions = {
     origin: ['https://forkkies.live', 'https://www.forkkies.live'],
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204

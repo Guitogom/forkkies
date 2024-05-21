@@ -1,0 +1,25 @@
+business: id, location, tag, password, name, tel, email, logo, landing_img, color1, color2, color3, IBAN, active_template.
+
+users: id, manager, username, password, business_id.
+
+properties: id, name, img, business_id.
+
+product: id, name, desc, price, img.
+
+product_properties: product_id, properties_id.
+
+step: id, tittle, type, product_id.
+
+special: id, name, price_changer, img, step_id.
+
+template: id, name, business_id.
+
+category: id, name, img, template_id.
+
+cat_product: category_id, product_id.
+
+order: id, status, name, date.
+
+order_product: order_id, product_id, unit_price, quantity.
+
+order_special: order_product_id, special_id.
