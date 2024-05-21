@@ -24,7 +24,7 @@ app.use((req, res, next) => {
   });
   
   // Ruta para Swagger UI
-  app.use('/swagger', swaggerDocs);
+  app.use('/api-docs', swaggerDocs);
 /**
 * @swagger
 * /verifytag:
