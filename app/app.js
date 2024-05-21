@@ -17,14 +17,8 @@ const corsOptions = {
 
 app.use(cors());
 
-// Middleware de prueba para verificar la ruta
-app.use((req, res, next) => {
-    console.log(`Request URL: ${req.url}`);
-    next();
-  });
-  
-  // Ruta para Swagger UI
-  app.use('/api-docs', swaggerDocs);
+swaggerDocs(app);
+
 /**
 * @swagger
 * /verifytag:
