@@ -24,6 +24,9 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
+// Añadir log para verificar la generación de swaggerDocs
+console.log('Swagger Docs generated:', specs);
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 export default app;

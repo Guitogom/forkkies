@@ -17,7 +17,14 @@ const corsOptions = {
 
 app.use(cors());
 
-app.use('/swagger', swaggerDocs);
+// Middleware de prueba para verificar la ruta
+app.use((req, res, next) => {
+    console.log(`Request URL: ${req.url}`);
+    next();
+  });
+  
+  // Ruta para Swagger UI
+  app.use('/swagger', swaggerDocs);
 /**
 * @swagger
 * /verifytag:
@@ -522,3 +529,5 @@ app.listen(3000, () => {
     console.log('Server is running on https://api.forkkies.live');
 }
 );
+
+export default app;
