@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
 import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness } from './functions.js';
+import swaggerDocs from './swagger.js';
 
 const app = express();
 
@@ -17,16 +17,30 @@ const corsOptions = {
 
 app.use(cors());
 
-// Cargar la documentación de Swagger generada
-let swaggerDocument;
-try {
-    swaggerDocument = await import('./swagger-output.json', { assert: { type: 'json' } });
-} catch (err) {
-    console.error('Error al cargar swagger-output.json:', err);
-}
+app.use('/', swaggerDocs);
 
-// Usar Swagger UI para servir la documentación
-app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+/**
+ * @swagger
+ * /verifytag:
+ *  get:
+ *   description: Verifica si el tag de un negocio ya existe
+ *  parameters:
+ *   - in: query
+ *    name: tag
+ *   required: true
+ *  schema:
+ *  type: string
+ * responses:
+ * 200:
+ * description: Tag existe
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * exists:
+ * type: boolean
+ */
 
 //Business
 app.get('/verifytag', async (req, res) => {
@@ -39,6 +53,45 @@ app.get('/verifytag', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+/**
+ * @swagger
+ * /newbusiness:
+ * post:
+ * description: Crea un nuevo negocio
+ * requestBody:
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * tag:
+ * type: string
+ * name:
+ * type: string
+ * location:
+ * type: string
+ * phone:
+ * type: string
+ * password:
+ * type: string
+ * required:
+ * - tag
+ * - name
+ * - location
+ * - phone
+ * - password
+ * responses:
+ * 200:
+ * description: Token generado
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * token:
+ * type: string
+ */
 
 app.post('/newbusiness', async (req, res) => {
     try {

@@ -1,15 +1,29 @@
-import swaggerAutogen from 'swagger-autogen';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import express from 'express';
 
-const doc = {
-  info: {
-    title: 'API Forkkies',
-    description: 'Documentación de la API de Forkkies',
+const app = express();
+
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Forkkies API',
+      version: '1.0.0',
+      description: 'API documentation for Forkkies',
+    },
+    servers: [
+      {
+        url: 'https://api.forkkies.live',
+        description: 'Production server',
+      },
+    ],
   },
-  host: 'api.forkkies.live',
-  schemes: ['https'],
+  apis: ['./app.js'], // Aquí especificas dónde están las rutas de tu API
 };
 
-const outputFile = './swagger-output.json';
-const endpointsFiles = ['./app.js']; // El archivo principal donde están definidas tus rutas
+const specs = swaggerJsdoc(options);
 
-swaggerAutogen()(outputFile, endpointsFiles, doc);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+export default app;
