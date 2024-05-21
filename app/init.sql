@@ -114,12 +114,13 @@ CREATE TABLE IF NOT EXISTS cat_product (
     PRIMARY KEY(category_id, product_id)
 );
 
--- Tabla 'order_table'
-CREATE TABLE IF NOT EXISTS order_table (
+-- Tabla 'order'
+CREATE TABLE IF NOT EXISTS order (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     status TEXT,
     name TEXT,
-    date TEXT
+    date TEXT,
+    FOREIGN KEY(business_id) REFERENCES business(id)
 );
 
 -- Tabla 'order_product'
@@ -128,7 +129,7 @@ CREATE TABLE IF NOT EXISTS order_product (
     product_id INTEGER,
     unit_price REAL,
     quantity INTEGER,
-    FOREIGN KEY(order_id) REFERENCES order_table(id),
+    FOREIGN KEY(order_id) REFERENCES order(id),
     FOREIGN KEY(product_id) REFERENCES product(id),
     PRIMARY KEY(order_id, product_id)
 );

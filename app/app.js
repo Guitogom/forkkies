@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
 import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness } from './functions.js';
 
 const app = express();
@@ -18,9 +19,20 @@ app.use(cors());
 
 //Rutas
 app.get('/', (res) => {
-    res.sendStatus(200).json({ message: `Hey, this is the backend!` });
+    res.send('API Forkkies');
 }
 );
+
+// Cargar la documentación de Swagger generada
+let swaggerDocument;
+try {
+    swaggerDocument = await import('./swagger-output.json', { assert: { type: 'json' } });
+} catch (err) {
+    console.error('Error al cargar swagger-output.json:', err);
+}
+
+// Usar Swagger UI para servir la documentación
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //Business
 app.get('/verifytag', async (req, res) => {
