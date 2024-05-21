@@ -79,7 +79,7 @@ export function ClientStepProduct({ cart, setCart, categories, secondaryColor, p
     }
 
     const beginSteps = () => {
-        navigate(`/b/${tag}/c/${category.id}/sp/${product.id}/s/1`)
+        navigate(`/b/${tag}/c/${category.id}/sp/${product.id}/s`)
     }
 
     return (

@@ -454,3 +454,31 @@
     font-size: 18px;
     text-align: center;
 }
+
+.client-step-handler {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 0px;
+    flex-direction: column;
+}
+
+.client-step-progress-bar {
+    width: 90%;
+    height: 60px;
+    background-color: var(--forth-color);
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+}
+
+.client-step-progress-bar-inner {
+    transition: all 0.5s ease;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 60px;
+}
