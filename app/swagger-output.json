@@ -1,6 +1,6 @@
 {
-  "openapi": "3.0.0",
-    "info": {
+  "swagger": "2.0",
+  "info": {
     "title": "API Forkkies",
     "description": "Documentación de la API de Forkkies",
     "version": "1.0.0"
@@ -11,16 +11,6 @@
     "https"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/verifytag": {
       "get": {
         "description": "",

@@ -47,7 +47,7 @@ export async function newBusiness(business) {
         incorrect_field.push("location");
     }
     if (!business.tel) {
-        incorrect_field.push("phone");
+        incorrect_field.push("tel");
     }
     if (!business.password) {
         incorrect_field.push("password");
@@ -226,7 +226,7 @@ export async function getBusiness(tag) {
     try {
         var result = await db.execute(
             {
-                sql: 'SELECT * FROM business WHERE tag = :tag',
+                sql: 'SELECT id, tag, name, location, tel, color1, color2, color3, color4, landing_img, active_template FROM business WHERE tag = :tag',
                 args: { tag }
             }
         );
@@ -958,4 +958,5 @@ export async function newOrder(body){
     var products = order.products;
 
     //Creamos el order con 
+    
 }
