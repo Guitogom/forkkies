@@ -17,12 +17,6 @@ const corsOptions = {
 
 app.use(cors());
 
-//Rutas
-app.get('/', (res) => {
-    res.send('API Forkkies');
-}
-);
-
 // Cargar la documentación de Swagger generada
 let swaggerDocument;
 try {
@@ -32,7 +26,7 @@ try {
 }
 
 // Usar Swagger UI para servir la documentación
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //Business
 app.get('/verifytag', async (req, res) => {
