@@ -6,7 +6,7 @@ import { OptionStep } from './props/OptionStep.jsx'
 import { DeletableStep } from './props/DeletableStep.jsx'
 import { ExtraStep } from './props/ExtraStep.jsx'
 
-export function ClientStepHandler({ categories, secondaryColor, themeColor, primaryColor }) {
+export function ClientStepHandler({ categories, secondaryColor, themeColor, primaryColor, cart, setCart }) {
     const { tag, categoryId, productId } = useParams()
     const category = categories.find(cat => cat.id === parseInt(categoryId))
     const product = category ? category.products.find(pro => pro.id === parseInt(productId)) : null
@@ -16,6 +16,8 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
 
     const [stepNumber, setStepNumber] = useState(0)
     const [stepTitle, setStepTitle] = useState(steps[0]?.title || '')
+    const [specials, setSpecials] = useState([])
+    const [actualSpecial, setActualSpecial] = useState([])
 
     useEffect(() => {
         if (steps[stepNumber]) {
@@ -30,14 +32,30 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
     const renderStep = (step) => {
         switch (step.type) {
             case '1':
-                return <OptionStep key={step.id} step={step} setStepTitle={setStepTitle} setStepNumber={setStepNumber} />
+                return <OptionStep key={step.id} step={step} primaryColor={primaryColor} actualSpecial={actualSpecial} setActualSpecial={setActualSpecial} />
             case '2':
-                return <DeletableStep key={step.id} step={step} setStepTitle={setStepTitle} setStepNumber={setStepNumber} />
+                return <DeletableStep key={step.id} step={step} primaryColor={primaryColor} actualSpecial={actualSpecial} setActualSpecial={setActualSpecial} />
             case '3':
-                return <ExtraStep key={step.id} step={step} setStepTitle={setStepTitle} setStepNumber={setStepNumber} />
+                return <ExtraStep key={step.id} step={step} primaryColor={primaryColor} actualSpecial={actualSpecial} setActualSpecial={setActualSpecial} />
             default:
                 return <p key={step.id}>Step not found</p>
         }
+    }
+
+    const handleNext = () => {
+        setStepNumber(prev => Math.min(prev + 1, steps.length))
+        if (actualSpecial.length > 0) {
+            setSpecials(prev => [...prev, actualSpecial[0]])
+        }
+        console.log(specials)
+    }
+
+    const handleBack = () => {
+        setStepNumber(prev => Math.max(prev - 1, 0))
+        if (specials.length > 0) {
+            setSpecials(prev => prev.slice(0, prev.length - 1))
+        }
+        console.log(specials)
     }
 
     return (
@@ -50,10 +68,10 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
             <div className="step-controller">
                 {stepNumber === 0 ?
                     <button onClick={() => navigate(`/b/${tag}/c/${categoryId}/sp/${productId}`)} className='step-button step-back-button' style={{ color: themeColor, backgroundColor: primaryColor, borderRight: `1px solid ${themeColor}` }}><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 4V20M8 12H20M8 12L12 8M8 12L12 16" stroke={themeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg> Exit</button> :
-                    <button onClick={() => setStepNumber(prev => Math.max(prev - 1, 0))} className='step-button step-back-button' style={{ color: themeColor, backgroundColor: primaryColor, borderRight: `1px solid ${themeColor}` }}><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke={themeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg> Back</button>}
+                    <button onClick={handleBack} className='step-button step-back-button' style={{ color: themeColor, backgroundColor: primaryColor, borderRight: `1px solid ${themeColor}` }}><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke={themeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg> Back</button>}
                 {stepNumber === steps.length ?
                     <button onClick={() => navigate(`/b/${tag}/c/${categoryId}/sp/${productId}`)} className='step-button step-next-button' style={{ color: themeColor, backgroundColor: primaryColor, borderLeft: `1px solid ${themeColor}` }}>Finish <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 4V20M4 12H16M16 12L12 8M16 12L12 16" stroke={themeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg></button> :
-                    <button onClick={() => setStepNumber(prev => Math.min(prev + 1, steps.length))} className='step-button step-next-button' style={{ color: themeColor, backgroundColor: primaryColor, borderLeft: `1px solid ${themeColor}` }}>Next <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke={themeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg></button>}
+                    <button onClick={handleNext} className='step-button step-next-button' style={{ color: themeColor, backgroundColor: primaryColor, borderLeft: `1px solid ${themeColor}` }}>Next <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke={themeColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg></button>}
             </div>
         </section>
     )
