@@ -6,6 +6,20 @@
     gap: 1rem;
 }
 
+.management-flex input {
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    background-color: transparent;
+    font-family: var(--secondary-font);
+
+}
+
 .management-inner {
     width: 45%;
     display: flex;
@@ -83,10 +97,35 @@
     opacity: 0;
     position: absolute;
     left: 0px;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 968px) {
     .management-inner {
         width: 90%;
     }
+}
+
+.management-log-out-button {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    width: 200px;
+    font-size: 20px;
+    color: red;
+    border: 0;
+    background-color: transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: var(--secondary-font);
+}
+
+.management-log-out-button svg {
+    width: 30px;
+    transition: all 0.2s ease;
+}
+
+.management-log-out-button:hover svg {
+    transform: translateX(4px);
 }

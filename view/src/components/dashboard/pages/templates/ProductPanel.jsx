@@ -114,13 +114,37 @@ export function ProductPanel() {
         setProduct({ ...product, price: numericValue })
     }
 
-
-
-
     const handleStepTypeChange = (stepIndex, newType) => {
         const updatedSteps = [...product.steps]
         updatedSteps[stepIndex].type = newType
         setProduct({ ...product, steps: updatedSteps })
+    }
+
+    const addNewStep = () => {
+        const updatedSteps = [...product.steps]
+        const newStepId = `step_${Date.now()}`;
+        updatedSteps.push({
+            id: newStepId,
+            title: 'New Step',
+            type: '1',
+            specials: []
+        })
+        setProduct({ ...product, steps: updatedSteps })
+    }
+
+    const addStepItem = () => {
+        const updatedSteps = [...product.steps]
+        const index = updatedSteps.findIndex((step) => step === editStep)
+        if (index !== -1) {
+            updatedSteps[index].specials.push({
+                id: `item_${Date.now()}`,
+                name: 'New Item',
+                price_changer: '',
+                img: ''
+            })
+            setProduct({ ...product, steps: updatedSteps })
+        }
+        console.log(product.steps)
     }
 
     const handleStepDelete = (stepIndex) => {
@@ -129,11 +153,33 @@ export function ProductPanel() {
         setProduct({ ...product, steps: updatedSteps })
     }
 
-    const handleSpecialDelete = (specialID) => {
-        const updatedSteps = [...product.steps]
-        updatedSteps[stepIndex].specials.splice(specialIndex, 1)
-        setProduct({ ...product, steps: updatedSteps })
-    }
+    const handleSpecialDelete = (stepId, specialId) => {
+        // Eliminar el especial del estado del producto
+        const updatedSteps = product.steps.map(step => {
+            if (step.id === stepId) {
+                return {
+                    ...step,
+                    specials: step.specials.filter(special => special.id !== specialId)
+                }
+            }
+            return step
+        });
+
+        // Actualizar el estado del producto sin el especial
+        setProduct({ ...product, steps: updatedSteps });
+
+        // Verificar si editStep necesita actualizarse
+        if (editStep && editStep.id === stepId) {
+            // Filtrar el especial eliminado de editStep si corresponde
+            const updatedEditStep = {
+                ...editStep,
+                specials: editStep.specials.filter(special => special.id !== specialId)
+            };
+            // Actualizar editStep
+            setEditStep(updatedEditStep);
+        }
+    };
+
 
     const [editStep, setEditStep] = useState({})
 
@@ -156,30 +202,7 @@ export function ProductPanel() {
         }
     }
 
-    const addNewStep = () => {
-        const updatedSteps = [...product.steps]
-        updatedSteps.push({
-            id: '',
-            title: 'New Step',
-            type: '1',
-            specials: []
-        })
-        setProduct({ ...product, steps: updatedSteps })
-    }
 
-    const addStepItem = () => {
-        const updatedSteps = [...product.steps]
-        const index = updatedSteps.findIndex((step) => step === editStep)
-        if (index !== -1) {
-            updatedSteps[index].specials.push({
-                id: '',
-                name: 'New Item',
-                price_changer: '',
-                img: ''
-            })
-            setProduct({ ...product, steps: updatedSteps })
-        }
-    }
 
     const handleDeleteProduct = () => {
         const token = localStorage.getItem('session_token')
@@ -261,8 +284,12 @@ export function ProductPanel() {
                     </div>
                     <div className="edit-step-lower">
                         {editStep && editStep.specials && editStep.specials.length > 0 ? (
-                            editStep.specials.map((special, index) => (
-                                <SpecialDisplay special={special} key={index} />
+                            editStep.specials.map((special) => (
+                                <SpecialDisplay
+                                    special={special}
+                                    key={special.id}
+                                    onDelete={() => handleSpecialDelete(editStep.id, special.id)}
+                                />
                             ))
                         ) : (
                             <div className='empty-steps'></div>
@@ -306,7 +333,7 @@ export function ProductPanel() {
                             product.steps.length === 0 ? <div className='empty-steps'><p>This product is currently an individual item.</p></div> :
                                 product.steps.map((step, index) => {
                                     return (
-                                        <StepDisplay className={`step ${index % 2 === 0 ? 'step-even' : 'step-odd'}`} step={step} key={index} setStepType={(newType) => handleStepTypeChange(index, newType)} handleDeleteStep={() => handleStepDelete(index)} handleEdit={() => handleEdit(step)} />
+                                        <StepDisplay className={`step ${index % 2 === 0 ? 'step-even' : 'step-odd'}`} step={step} key={step.id} setStepType={(newType) => handleStepTypeChange(index, newType)} handleDeleteStep={() => handleStepDelete(index)} handleEdit={() => handleEdit(step)} />
                                     )
                                 })
                         }

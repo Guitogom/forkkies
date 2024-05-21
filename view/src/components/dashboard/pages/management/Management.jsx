@@ -132,10 +132,10 @@ export function Management({ business, businessName, setBusinessName }) {
                             <label htmlFor="change-secondary-color">Secondary Color</label>
                             <input type="color" name="change-secondary-color" id="change-secondary-color" value={secondary} onChange={(e) => setSecondary(e.target.value)} />
                         </div>
-                        <div style={{ backgroundColor: action }}>
-                            <label htmlFor="change-call-to-action-color">Call to Action Color</label>
+                        {/* <div style={{ backgroundColor: action }}>
+                            <label htmlFor="change-call-to-action-color">Text Color</label>
                             <input type="color" name="change-call-to-action-color" id="change-call-to-action-color" value={action} onChange={(e) => setAction(e.target.value)} />
-                        </div>
+                        </div> */}
                         <div style={{ backgroundColor: theme }}>
                             <label htmlFor="change-theme-color">Theme Color</label>
                             <input type="color" name="change-theme-color" id="change-theme-color" value={theme} onChange={(e) => setTheme(e.target.value)} />
@@ -143,7 +143,7 @@ export function Management({ business, businessName, setBusinessName }) {
                     </div>
                     <h3>Payment</h3>
                     <h3>Business</h3>
-                    <button onClick={handleLogOut}>Log out</button>
+                    <button onClick={handleLogOut} className="management-log-out-button">Log out <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 7.63636L14 4.5C14 4.22386 13.7761 4 13.5 4L4.5 4C4.22386 4 4 4.22386 4 4.5L4 19.5C4 19.7761 4.22386 20 4.5 20L13.5 20C13.7761 20 14 19.7761 14 19.5L14 16.3636" stroke="red" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M10 12L21 12M21 12L18.0004 8.5M21 12L18 15.5" stroke="red" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg></button>
                 </div>
                 <div className="management-inner">
                     <h2>Credentials</h2>

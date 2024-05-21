@@ -5,8 +5,16 @@ export function ClientOrder({ cart, setCart, secondaryColor, primaryColor, theme
     return (
         <section className="client-cart">
             <h2>Your Order</h2>
-            {cart.map((cartProduct, index) => (
-                <ClientOrderProduct key={index} cartProduct={cartProduct} cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} />
+            {cart.map((cartProduct) => (
+                <ClientOrderProduct
+                    key={cartProduct.product}
+                    cartProduct={cartProduct}
+                    cart={cart}
+                    setCart={setCart}
+                    secondaryColor={secondaryColor}
+                    primaryColor={primaryColor}
+                    themeColor={themeColor}
+                />
             ))}
             {
                 cart.length > 0 && (

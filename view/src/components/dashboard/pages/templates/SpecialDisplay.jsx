@@ -9,7 +9,7 @@ export function SpecialDisplay({ special, onDelete }) {
             setBackgroundImage(`data:image/jpeg;base64,${special.img}`)
             setBackgroundSize('cover')
         }
-    })
+    }, [special.img])
 
     const handleSpecialImageChange = (e) => {
         const file = e.target.files[0]
@@ -19,11 +19,10 @@ export function SpecialDisplay({ special, onDelete }) {
                 setBackgroundImage(reader.result)
                 setBackgroundSize('cover')
                 special.img = reader.result.split(',')[1]
-                console.log("imagen actualizada: ", special.img)
             }
             reader.readAsDataURL(file)
         }
-    };
+    }
 
     const changeSpecialName = (e) => {
         special.name = e.target.value
@@ -31,10 +30,6 @@ export function SpecialDisplay({ special, onDelete }) {
 
     const changeSpecialPriceChanger = (e) => {
         special.price_changer = e.target.value
-    }
-
-    const deleteSpecial = () => {
-        onDelete(special.id)
     }
 
     return (
@@ -45,7 +40,7 @@ export function SpecialDisplay({ special, onDelete }) {
             </div>
             <input type="text" placeholder="Item Name" defaultValue={special.name} onChange={changeSpecialName} className='special-name-input' />
             <input type="text" placeholder="Price difference (+ or -)" defaultValue={special.price_changer} onChange={changeSpecialPriceChanger} className='special-price-input' />
-            <button className='special-delete' onClick={deleteSpecial}>Delete</button>
+            <button className='special-delete' onClick={onDelete}>Delete</button>
         </div>
     )
 }
