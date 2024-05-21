@@ -949,3 +949,13 @@ async function fetchSpecialsForStep(step_id) {
 
     return result.rows;
 }
+
+//Orders
+
+export async function newOrder(body){
+    var order = body.order;
+    var business_id = order.business_id;
+    var products = order.products;
+
+    //Creamos el order con 
+}
