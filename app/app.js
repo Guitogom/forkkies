@@ -17,30 +17,38 @@ const corsOptions = {
 
 app.use(cors());
 
-app.use('/', swaggerDocs);
-
+app.use('/swagger', swaggerDocs);
 /**
- * @swagger
- * /verifytag:
- *  get:
- *   description: Verifica si el tag de un negocio ya existe
- *  parameters:
- *   - in: query
- *    name: tag
- *   required: true
- *  schema:
- *  type: string
- * responses:
- * 200:
- * description: Tag existe
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * exists:
- * type: boolean
- */
+* @swagger
+* /verifytag:
+*   get:
+*     summary: Verify if a business tag exists
+*     parameters:
+*       - name: tag
+*         in: query
+*         required: true
+*         schema:
+*           type: string
+*     responses:
+*       200:
+*         description: Tag verification result
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 exists:
+*                   type: boolean
+*       500:
+*         description: Internal server error
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 error:
+*                   type: string
+*/
 
 //Business
 app.get('/verifytag', async (req, res) => {
@@ -71,7 +79,7 @@ app.get('/verifytag', async (req, res) => {
  * type: string
  * location:
  * type: string
- * phone:
+ * tel:
  * type: string
  * password:
  * type: string
@@ -91,6 +99,15 @@ app.get('/verifytag', async (req, res) => {
  * properties:
  * token:
  * type: string
+ * 500:
+ * description: Error interno al crear negocio
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * error:
+ * type: string
  */
 
 app.post('/newbusiness', async (req, res) => {
@@ -103,6 +120,56 @@ app.post('/newbusiness', async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /modifybusiness:
+ * post:
+ * description: Modifica un negocio
+ * requestBody:
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * name:
+ * type: string
+ * tel:
+ * type: string
+ * password:
+ * type: string
+ * delete:
+ * type: boolean
+ * color1:
+ * type: string
+ * color2:
+ * type: string
+ * color3:
+ * type: string
+ * iban:
+ * type: string
+ * landing_img:
+ * type: string
+ * responses:
+ * 200:
+ * description: Resultado de la modificación
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * result:
+ * type: string
+ * 500:
+ * description: Error interno al modificar negocio
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * error:
+ * type: string
+ */
+
 app.post('/modifybusiness', verificarToken, async (req, res) => {
     try {
         var tag = req.tag;
@@ -114,6 +181,38 @@ app.post('/modifybusiness', verificarToken, async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /logbusiness:
+ * get:
+ * description: Loguea un negocio
+ * parameters:
+ * - in: query
+ * name: tag
+ * required: true
+ * schema:
+ * type: string
+ * responses:
+ * 200:
+ * description: Token generado
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * token:
+ * type: string
+ * 500:
+ * description: Error interno al loguear negocio
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * error:
+ * type: string
+ */
+
 app.get('/logbusiness', async (req, res) => {
     try {
         var token = await logBusiness(req.query);
@@ -123,6 +222,50 @@ app.get('/logbusiness', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+/**
+ * @swagger
+ * /getbusiness:
+ * get:
+ * description: Obtiene un negocio
+ * responses:
+ * 200:
+ * description: Negocio obtenido
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * id:
+ * type: string
+ * tag:
+ * type: string
+ * name:
+ * type: string
+ * location:
+ * type: string
+ * tel:
+ * type: string
+ * color1:
+ * type: string
+ * color2:
+ * type: string
+ * color3:
+ * type: string
+ * iban:
+ * type: string
+ * landing_img:
+ * type: string
+ * 500:
+ * description: Error interno al obtener negocio
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * error:
+ * type: string
+ */
 
 app.get('/getbusiness', verificarToken, (req, res) => {
     const tag = req.tag;
@@ -138,6 +281,59 @@ app.get('/getbusiness', verificarToken, (req, res) => {
 });
 
 //Templates
+
+/**
+ * @swaggerer
+ * /getalltemplates:
+ *   get:
+ *     description: Obtiene todos los templates de un negocio
+  *     responses:
+ *       200:
+ *         description: Templates obtenidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 templates:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       active:
+ *                         type: boolean
+ *                 active_template:
+ *                   type: string
+ ay
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       active:
+ *                         type: boolean
+ *                 active_template:
+ *                   type: string
+ *       500:
+ *         description: Error interno al obtener templates
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
 
 app.get('/getalltemplates', verificarToken, async (req, res) => {
     try {
