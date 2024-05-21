@@ -1,6 +1,6 @@
 {
   "openapi": "3.0.0",
-  "info": {
+    "info": {
     "title": "API Forkkies",
     "description": "Documentación de la API de Forkkies",
     "version": "1.0.0"
