@@ -804,7 +804,6 @@ export async function modifyProduct(tag, body) {
     }
 }
 
-//Products
 export async function getProduct(tag, product_id) {
     //Obtenemos el id_template de la categoria
     try {
