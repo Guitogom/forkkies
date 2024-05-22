@@ -16,8 +16,17 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
 
     const [stepNumber, setStepNumber] = useState(0)
     const [stepTitle, setStepTitle] = useState(steps[0]?.title || '')
-    const [specials, setSpecials] = useState([])
+    const [optionSpecials, setOptionSpecials] = useState({})
+    const [deletableSpecials, setDeletableSpecials] = useState({})
+    const [extraSpecials, setExtraSpecials] = useState({})
     const [actualSpecial, setActualSpecial] = useState([])
+
+    useEffect(() => {
+        console.clear()
+        console.log('Option Specials:', optionSpecials)
+        console.log('Deletable Specials:', deletableSpecials)
+        console.log('Extra Specials:', extraSpecials)
+    }, [optionSpecials, deletableSpecials, extraSpecials])
 
     useEffect(() => {
         if (steps[stepNumber]) {
@@ -43,19 +52,67 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
     }
 
     const handleNext = () => {
-        setStepNumber(prev => Math.min(prev + 1, steps.length))
         if (actualSpecial.length > 0) {
-            setSpecials(prev => [...prev, actualSpecial[0]])
+            switch (currentStep.type) {
+                case '1':
+                    setOptionSpecials(prev => {
+                        const updatedSpecials = { ...prev }
+                        updatedSpecials[currentStep.id] = [...(updatedSpecials[currentStep.id] || []), ...actualSpecial]
+                        return updatedSpecials
+                    })
+                    break
+                case '2':
+                    setDeletableSpecials(prev => {
+                        const updatedSpecials = { ...prev }
+                        updatedSpecials[currentStep.id] = [...(updatedSpecials[currentStep.id] || []), ...actualSpecial]
+                        return updatedSpecials
+                    })
+                    break
+                case '3':
+                    setExtraSpecials(prev => {
+                        const updatedSpecials = { ...prev }
+                        updatedSpecials[currentStep.id] = [...(updatedSpecials[currentStep.id] || []), ...actualSpecial]
+                        return updatedSpecials
+                    })
+                    break
+                default:
+                    break
+            }
         }
-        console.log(specials)
+        setStepNumber(prev => Math.min(prev + 1, steps.length))
+        setActualSpecial([])
     }
 
     const handleBack = () => {
-        setStepNumber(prev => Math.max(prev - 1, 0))
-        if (specials.length > 0) {
-            setSpecials(prev => prev.slice(0, prev.length - 1))
+        if (stepNumber > 0) {
+            const previousStep = steps[stepNumber - 1]
+            switch (previousStep.type) {
+                case '1':
+                    setOptionSpecials(prev => {
+                        const updatedSpecials = { ...prev }
+                        delete updatedSpecials[previousStep.id]
+                        return updatedSpecials
+                    })
+                    break
+                case '2':
+                    setDeletableSpecials(prev => {
+                        const updatedSpecials = { ...prev }
+                        delete updatedSpecials[previousStep.id]
+                        return updatedSpecials
+                    })
+                    break
+                case '3':
+                    setExtraSpecials(prev => {
+                        const updatedSpecials = { ...prev }
+                        delete updatedSpecials[previousStep.id]
+                        return updatedSpecials
+                    })
+                    break
+                default:
+                    break
+            }
         }
-        console.log(specials)
+        setStepNumber(prev => Math.max(prev - 1, 0))
     }
 
     return (
