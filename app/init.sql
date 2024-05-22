@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS cat_product (
 -- Tabla 'order_table'
 CREATE TABLE IF NOT EXISTS order_table (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    status TEXT,
+    status INTEGER,
     name TEXT,
     date TEXT,
     business_id INTEGER,
