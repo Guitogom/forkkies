@@ -750,15 +750,25 @@ export async function modifyProduct(tag, body) {
                             throw new Error('Error en la base de datos: ' + error.message);
                         }
 
-                        //Eliminamos los steps y los specials del producto
+                        //Eliminamos specials que tengan un step que esté en el producto
+                        try {
+                            await db.execute({
+                                sql: 'DELETE FROM special WHERE step_id IN (SELECT id FROM step WHERE product_id = :product_id)',
+                                args: { product_id }
+                            });
+                        } catch (error) {
+                            console.error('4Error en la base de datos:', error.message);
+                            throw new Error('4Error en la base de datos: ' + error.message);
+                        }
+                        //Eliminamos steps que estén en el producto
                         try {
                             await db.execute({
                                 sql: 'DELETE FROM step WHERE product_id = :product_id',
                                 args: { product_id }
                             });
                         } catch (error) {
-                            console.error('4Error en la base de datos:', error.message);
-                            throw new Error('4Error en la base de datos: ' + error.message);
+                            console.error('5Error en la base de datos:', error.message);
+                            throw new Error('5Error en la base de datos: ' + error.message);
                         }
 
                         //Recorremos los steps

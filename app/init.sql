@@ -1,28 +1,16 @@
 -- Eliminar todas las tablas si existen
 DROP TABLE IF EXISTS order_special;
-
 DROP TABLE IF EXISTS order_product;
-
 DROP TABLE IF EXISTS order_table;
-
 DROP TABLE IF EXISTS cat_product;
-
 DROP TABLE IF EXISTS category;
-
 DROP TABLE IF EXISTS template;
-
 DROP TABLE IF EXISTS special;
-
 DROP TABLE IF EXISTS step;
-
 DROP TABLE IF EXISTS product_properties;
-
 DROP TABLE IF EXISTS product;
-
 DROP TABLE IF EXISTS properties;
-
 DROP TABLE IF EXISTS users;
-
 DROP TABLE IF EXISTS business;
 
 -- Tabla 'business'
@@ -126,8 +114,8 @@ CREATE TABLE IF NOT EXISTS cat_product (
     PRIMARY KEY(category_id, product_id)
 );
 
--- Tabla 'order'
-CREATE TABLE IF NOT EXISTS order (
+-- Tabla 'order_table'
+CREATE TABLE IF NOT EXISTS order_table (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     status TEXT,
     name TEXT,
@@ -143,9 +131,9 @@ CREATE TABLE IF NOT EXISTS order_product (
     product_id INTEGER,
     unit_price REAL,
     quantity INTEGER,
-    FOREIGN KEY(order_id) REFERENCES order(id),
+    FOREIGN KEY(order_id) REFERENCES order_table(id),
     FOREIGN KEY(product_id) REFERENCES product(id),
-    PRIMARY KEY(order_id, product_id),
+    PRIMARY KEY(order_id, product_id)
 );
 
 -- Tabla 'order_special'
@@ -157,16 +145,3 @@ CREATE TABLE IF NOT EXISTS order_special (
     FOREIGN KEY(special_id) REFERENCES special(id),
     PRIMARY KEY(order_id, product_id, special_id)
 );
-
--- Eliminar triggers actuales
-DROP TRIGGER IF EXISTS delete_business_dependencies;
-
-DROP TRIGGER IF EXISTS delete_template_dependencies;
-
-DROP TRIGGER IF EXISTS delete_category_dependencies;
-
-DROP TRIGGER IF EXISTS delete_product_dependencies;
-
-DROP TRIGGER IF EXISTS delete_step_dependencies;
-
-DROP TRIGGER IF EXISTS delete_order_product_dependencies;
