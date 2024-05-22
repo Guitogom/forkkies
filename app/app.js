@@ -1325,42 +1325,145 @@ app.get('/getproduct', verificarToken, async (req, res) => {
 /**
  * @swagger
  * tags:
- *   name: Client
+ *   name: Clients
  *   description: Client related endpoints
  */
 
-app.get('/clienttemplate', async (req, res) => {
-    try {
-        var tag = req.query.tag;
-        var result = await getTemplate(tag, "active");
-        res.status(200).json({ result });
-    } catch (error) {
-        console.error('Error al obtener negocio:', error.message);
-        res.status(500).json({ error: 'Error al obtener negocio' });
-    }
-});
+/**
+ * @swagger
+ * /loadbusiness:
+ *   get:
+ *     summary: Obtiene todos los detalles de un negocio, incluidas categorías, productos y pasos especiales.
+ *     tags: [Clients]
+ *     parameters:
+ *       - in: query
+ *         name: tag
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: El tag del negocio del que se desean obtener los detalles.
+ *     responses:
+ *       200:
+ *         description: Detalles del negocio obtenidos exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 business:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       description: ID del negocio.
+ *                     name:
+ *                       type: string
+ *                       description: Nombre del negocio.
+ *                     color1:
+ *                       type: string
+ *                       description: Color 1 del negocio.
+ *                     color2:
+ *                       type: string
+ *                       description: Color 2 del negocio.
+ *                     color3:
+ *                       type: string
+ *                       description: Color 3 del negocio.
+ *                     color4:
+ *                       type: string
+ *                       description: Color 4 del negocio.
+ *                     landing_img:
+ *                       type: string
+ *                       description: Imagen de aterrizaje del negocio.
+ *                     active_template:
+ *                       type: integer
+ *                       description: ID de la plantilla activa del negocio.
+ *                     categories:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                             description: ID de la categoría.
+ *                           name:
+ *                             type: string
+ *                             description: Nombre de la categoría.
+ *                           img:
+ *                             type: string
+ *                             description: URL de la imagen de la categoría.
+ *                           products:
+ *                             type: array
+ *                             items:
+ *                               type: object
+ *                               properties:
+ *                                 id:
+ *                                   type: integer
+ *                                   description: ID del producto.
+ *                                 name:
+ *                                   type: string
+ *                                   description: Nombre del producto.
+ *                                 desc:
+ *                                   type: string
+ *                                   description: Descripción del producto.
+ *                                 img:
+ *                                   type: string
+ *                                   description: URL de la imagen del producto.
+ *                                 price:
+ *                                   type: number
+ *                                   description: Precio del producto.
+ *                                 steps:
+ *                                   type: array
+ *                                   items:
+ *                                     type: object
+ *                                     properties:
+ *                                       id:
+ *                                         type: integer
+ *                                         description: ID del paso.
+ *                                       title:
+ *                                         type: string
+ *                                         description: Título del paso.
+ *                                       type:
+ *                                         type: string
+ *                                         description: Tipo de paso.
+ *                                       specials:
+ *                                         type: array
+ *                                         items:
+ *                                           type: object
+ *                                           properties:
+ *                                             id:
+ *                                               type: integer
+ *                                               description: ID del especial.
+ *                                             name:
+ *                                               type: string
+ *                                               description: Nombre del especial.
+ *                                             price_changer:
+ *                                               type: number
+ *                                               description: Cambio de precio asociado al especial.
+ *                                             img:
+ *                                               type: string
+ *                                               description: URL de la imagen del especial.
+ *       400:
+ *         description: Error en la solicitud.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Mensaje de error.
+ *       500:
+ *         description: Error en la base de datos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Mensaje de error.
+ */
 
-app.get('/clientcategory', async (req, res) => {
-    try {
-        var tag = req.query.tag;
-        var result = await getCategory(tag, req.query.id);
-        res.status(200).json({ result });
-    } catch (error) {
-        console.error('Error al obtener negocio:', error.message);
-        res.status(500).json({ error: 'Error al obtener negocio' });
-    }
-});
-
-app.get('/clientproduct', async (req, res) => {
-    try {
-        var tag = req.query.tag;
-        var result = await getProduct(tag, req.query.id);
-        res.status(200).json({ result });
-    } catch (error) {
-        console.error('Error al obtener negocio:', error.message);
-        res.status(500).json({ error: 'Error al obtener negocio' });
-    }
-});
 
 app.get('/loadbusiness', async (req, res) => {
     try {
@@ -1378,6 +1481,63 @@ app.get('/loadbusiness', async (req, res) => {
  *   name: Orders
  *   description: Order related endpoints
  */
+
+/**
+ * @swagger
+ * /neworder:
+ *   post:
+ *     summary: Crea un nuevo pedido.
+ *     description: Inserta un nuevo pedido en la base de datos junto con sus productos y especiales.
+ *     tags: [Orders]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               business_id:
+ *                 type: integer
+ *                 description: ID del negocio al que pertenece el pedido.
+ *               total:
+ *                 type: number
+ *                 description: Total del pedido.
+ *               name:
+ *                 type: string
+ *                 description: Nombre del pedido.
+ *               date:
+ *                 type: string
+ *                 format: date
+ *                 description: Fecha del pedido en formato YYYY-MM-DD.
+ *               products:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                       description: ID del producto.
+ *                     unit_price:
+ *                       type: number
+ *                       description: Precio unitario del producto.
+ *                     quantity:
+ *                       type: integer
+ *                       description: Cantidad del producto.
+ *                     specials:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                             description: ID del especial.
+ *     responses:
+ *       200:
+ *         description: Pedido creado exitosamente.
+ *       500:
+ *         description: Error al añadir orden.
+ */
+
 
 app.post('/neworder', async (req, res) => {
     try {
