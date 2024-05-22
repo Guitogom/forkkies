@@ -1524,13 +1524,8 @@ app.get('/loadbusiness', async (req, res) => {
  *                       type: integer
  *                       description: Cantidad del producto.
  *                     specials:
- *                       type: array
- *                       items:
- *                         type: object
- *                         properties:
- *                           id:
- *                             type: integer
- *                             description: ID del especial.
+ *                       type:string
+ *                       description: Especiales seleccionados para el producto.
  *     responses:
  *       200:
  *         description: Pedido creado exitosamente.
@@ -1546,6 +1541,98 @@ app.post('/neworder', async (req, res) => {
     } catch (error) {
         console.error('Error al añadir orden:', error.message);
         res.status(500).json({ error: 'Error al añadir orden' });
+    }
+});
+
+/**
+ * @swagger
+ * /getorders:
+ *   get:
+ *     summary: Obtener pedidos.
+ *     tags: [Orders]
+ *     description: Obtiene los pedidos activos del negocio actual.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Pedidos obtenidos exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: object
+ *                   description: Detalles de los pedidos obtenidos.
+ *                   properties:
+ *                     orders:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           id:
+ *                             type: integer
+ *                             description: ID del pedido.
+ *                           business_id:
+ *                             type: integer
+ *                             description: ID del negocio al que pertenece el pedido.
+ *                           total:
+ *                             type: number
+ *                             description: Total del pedido.
+ *                           name:
+ *                             type: string
+ *                             description: Nombre del pedido.
+ *                           date:
+ *                             type: string
+ *                             format: date
+ *                             description: Fecha del pedido en formato YYYY-MM-DD.
+ *                           products:
+ *                             type: array
+ *                             items:
+ *                               type: object
+ *                               properties:
+ *                                 name:
+ *                                   type: string
+ *                                   description: Nombre del producto.
+ *                                 img:
+ *                                   type: string
+ *                                   description: URL de la imagen del producto.
+ *                                 unit_price:
+ *                                   type: number
+ *                                   description: Precio unitario del producto.
+ *                                 quantity:
+ *                                   type: integer
+ *                                   description: Cantidad del producto.
+ *                                 options:
+ *                                   type: array
+ *                                   items:
+ *                                     type: string
+ *                                     description: Opciones especiales del producto.
+ *                                 deletables:
+ *                                   type: array
+ *                                   items:
+ *                                     type: string
+ *                                     description: Extras que se pueden eliminar del producto.
+ *                                 extras:
+ *                                   type: array
+ *                                   items:
+ *                                     type: string
+ *                                     description: Extras disponibles para agregar al producto.
+ *       401:
+ *         description: Token de autenticación no proporcionado o inválido.
+ *       500:
+ *         description: Error al obtener pedidos.
+ */
+
+
+app.get('/getorders', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await getOrders(tag);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al obtener ordenes:', error.message);
+        res.status(500).json({ error: 'Error al obtener ordenes' });
     }
 });
 

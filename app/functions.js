@@ -239,8 +239,20 @@ export async function getBusiness(tag) {
 
 }
 
-//Templates
+async function getBusinessId(tag) {
+    try {
+        const result = await db.execute({
+            sql: 'SELECT id FROM business WHERE tag = :tag',
+            args: { tag }
+        });
+        return result.rows[0].id;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
 
+//Templates
 export async function getallTemplates(tag) {
     try {
         var result = await db.execute(
@@ -273,18 +285,7 @@ export async function getallTemplates(tag) {
 }
 
 export async function newTemplate(tag) {
-    try {
-        var result = await db.execute(
-            {
-                sql: 'SELECT id FROM business WHERE tag = :tag',
-                args: { tag }
-            }
-        );
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
-    var id = result.rows[0].id;
+    var id = await getBusinessId(tag);
 
     try {
         await db.execute(
@@ -301,13 +302,8 @@ export async function newTemplate(tag) {
 }
 
 async function checkTemplateOwnership(tag, template_id) {
+    var business_id = await getBusinessId(tag);
     try {
-        var businessResult = await db.execute({
-            sql: 'SELECT id FROM business WHERE tag = :tag',
-            args: { tag }
-        });
-        var business_id = businessResult.rows[0].id;
-
         var templateResult = await db.execute({
             sql: 'SELECT * FROM template WHERE id = :template_id AND business_id = :business_id',
             args: { template_id, business_id }
@@ -445,16 +441,7 @@ export async function getTemplate(tag, template_id) {
 //Properties
 export async function newProperty(tag, property) {
     //Obtenemos la id del business
-    try {
-        var result = await db.execute({
-            sql: 'SELECT id FROM business WHERE tag = :tag',
-            args: { tag }
-        });
-        var business_id = result.rows[0].id;
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
+    var business_id = await getBusinessId(tag);
     //Añadimos la propiedad con su nombre y el negocio al que pertenece
     try {
         await db.execute({
@@ -469,16 +456,7 @@ export async function newProperty(tag, property) {
 
 export async function deleteProperty(tag, property) {
     //Obtenemos la id del business
-    try {
-        var result = await db.execute({
-            sql: 'SELECT id FROM business WHERE tag = :tag',
-            args: { tag }
-        });
-        var business_id = result.rows[0].id;
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
+    var business_id = await getBusinessId(tag);
     //Eliminamos la propiedad
     try {
         await db.execute({
@@ -493,16 +471,7 @@ export async function deleteProperty(tag, property) {
 
 export async function getProperties(tag, property) {
     //Obtenemos la id del business
-    try {
-        var result = await db.execute({
-            sql: 'SELECT id FROM business WHERE tag = :tag',
-            args: { tag }
-        });
-        var business_id = result.rows[0].id;
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
+    var business_id = await getBusinessId(tag);
     //Obtenemos las propiedades del negocio
     try {
         var result = await db.execute({
@@ -962,6 +931,7 @@ async function fetchSpecialsForStep(step_id) {
 //Orders
 export async function newOrder(order) {
     //Creamos el order
+    order.date = new Date();
     try {
         var result = await db.execute({
             sql: 'INSERT INTO orders (business_id, total, name, date) VALUES (:business_id, :total, :name, :date) RETURNING id',
@@ -979,27 +949,105 @@ export async function newOrder(order) {
         //Si el product no tiene id, lo añadimos
         try {
             var result = await db.execute({
-                sql: 'INSERT INTO order_product (order_id, product_id, unit_price, quantity) VALUES (:order_id, :product_id, :unit_price, :quantity)',
-                args: { order_id, product_id: product.id, unit_price: product.unit_price, quantity: product.quantity }
+                sql: 'INSERT INTO order_product (order_id, product_id, unit_price, quantity, specials) VALUES (:order_id, :product_id, :unit_price, :quantity, :specials)',
+                args: { order_id, product_id: product.id, unit_price: product.unit_price, quantity: product.quantity, specials: product.specials }
             });
         } catch (error) {
             console.error('Error al insertar el product:', error.message);
             throw new Error('Error al insertar el product: ' + error.message);
         }
+    }
+}
 
-        //Recorremos los specials que tiene el producto
-        for (var j = 0; j < product.specials.length; j++) {
-            var special = product.specials[j];
-            //Si el special no tiene id, lo añadimos
-            try {
-                await db.execute({
-                    sql: 'INSERT INTO order_special (order_id, product_id, special_id) VALUES (:order_id, :product_id, :special_id)',
-                    args: { order_id, product_id: product.id, special_id: special.id }
-                });
-            } catch (error) {
-                console.error('Error al insertar el special:', error.message);
-                throw new Error('Error al insertar el special: ' + error.message);
+async function getOrdersByBusinessId(businessId, today) {
+    try {
+        const result = await db.execute({
+            sql: 'SELECT * FROM orders WHERE business_id = :businessId AND date > :today',
+            args: { businessId, today }
+        });
+        return result.rows;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
+async function getProductsForOrder(orderId) {
+    try {
+        const result = await db.execute({
+            sql: 'SELECT product_id, unit_price, quantity, specials FROM order_product WHERE order_id = :orderId',
+            args: { orderId }
+        });
+        return result.rows;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
+async function getProductDetails(productId) {
+    try {
+        const result = await db.execute({
+            sql: 'SELECT name, img FROM product WHERE id = :productId',
+            args: { productId }
+        });
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
+async function getSpecialsForProduct(specialIds) {
+    try {
+        const result = await db.execute({
+            sql: 'SELECT name, type FROM special WHERE id IN (:specialIds)',
+            args: { specialIds }
+        });
+        return result.rows;
+    } catch (error) {
+        console.error('Error en la base de datos:', error.message);
+        throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
+export async function getOrders(tag) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const businessId = await getBusinessId(tag);
+    const orders = await getOrdersByBusinessId(businessId, today);
+
+    for (let order of orders) {
+        const products = await getProductsForOrder(order.id);
+        order.products = [];
+
+        for (let product of products) {
+            const productDetails = await getProductDetails(product.product_id);
+            productDetails.unit_price = product.unit_price;
+            productDetails.quantity = product.quantity;
+            productDetails.specials = product.specials;
+
+            const specialIds = product.specials.split(',');
+            const specials = await getSpecialsForProduct(specialIds);
+
+            productDetails.options = [];
+            productDetails.deletables = [];
+            productDetails.extras = [];
+
+            for (let special of specials) {
+                if (special.type === 1) {
+                    productDetails.options.push(special.name);
+                } else if (special.type === 2) {
+                    productDetails.deletables.push(special.name);
+                } else if (special.type === 3) {
+                    productDetails.extras.push(special.name);
+                }
             }
+
+            order.products.push(productDetails);
         }
     }
+
+    return { orders };
 }
