@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Route, Routes, Navigate, useParams, Link } from "react-router-dom"
+import { Route, Routes, Navigate, useNavigate, useParams, Link } from "react-router-dom"
 import '../../styles/Client.css'
 
 // Componentes
@@ -12,6 +12,7 @@ import { ClientFullProduct } from "./ClientFullProduct.jsx"
 import { ClientStepProduct } from "./ClientStepProduct.jsx"
 import { ClientDisplayMenu } from "./ClientDisplayMenu.jsx"
 import { ClientOrder } from "./ClientOrder.jsx"
+import { ClientPayment } from "./ClientPayment.jsx"
 import { ClientStepHandler } from "./ClientStepHandler.jsx"
 
 export function Client() {
@@ -28,6 +29,8 @@ export function Client() {
 
     const [orderPrice, setOrderPrice] = useState(0)
 
+    const navigate = useNavigate()
+
     useEffect(() => {
         fetch(`https://api.forkkies.live/loadbusiness?tag=${tag}`, {
             method: 'GET',
@@ -38,7 +41,7 @@ export function Client() {
             .then(response => {
                 if (!response.ok) {
                     console.error('Error:', response.statusText)
-                    window.location.href = '/'
+                    navigate('/')
                 }
                 return response.json()
             })
@@ -53,7 +56,7 @@ export function Client() {
             })
             .catch(error => {
                 console.error('Error:', error.message)
-                window.location.href = '/'
+                navigate('/')
             })
 
     }, [])
@@ -79,6 +82,7 @@ export function Client() {
                     <Route path='/c/:categoryId/sp/:productId' element={<ClientStepProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} themeColor={themeColor} />} />
                     <Route path='/c/:categoryId/sp/:productId/s' element={<ClientStepHandler categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} primaryColor={primaryColor} cart={cart} setCart={setCart} />} />
                     <Route path='/order' element={<ClientOrder cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} />} />
+                    <Route path='/pay' element={<ClientPayment cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
                 </Routes>
                 <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} categories={template.categories} primaryColor={primaryColor} themeColor={themeColor} />

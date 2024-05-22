@@ -19,7 +19,7 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
     }
 
     const handleRepeatPassword = (e) => {
-        setRepeatMistake('')
+        setPasswordMistake('')
         setRepeatPassword(e.target.value)
     }
 
@@ -32,6 +32,7 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
     }
 
     const handleCheckRegister = () => {
+        setPasswordMistake('')
         let hasError = false
 
         if (!passwordMatch) {
@@ -45,7 +46,7 @@ export function RegisterStep2({ setCurrentStep, setDivHeight, divHeight, setPass
         }
 
         if (repeatPassword === '') {
-            setRepeatMistake("Repeat password can't be empty")
+            setPasswordMistake("Repeat password can't be empty")
             hasError = true
         }
 

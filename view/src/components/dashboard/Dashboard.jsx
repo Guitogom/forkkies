@@ -20,7 +20,13 @@ export function Dashboard() {
     const [loaded, setLoaded] = useState(false)
     const [business, setBusiness] = useState({})
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!localStorage.getItem('session_token')) {
+            navigate('/')
+        }
+    }, [])
 
     const [businessName, setBusinessName] = useState(business.name)
     const [businessLocation, setBusinessLocation] = useState(business.location)
@@ -40,7 +46,7 @@ export function Dashboard() {
                     if (!response.ok) {
                         localStorage.removeItem('session_token')
                         setTimeout(() => {
-                            window.location.href = '/error'
+                            navigate('/error')
                         }, 1000)
                     }
                     return response.json()

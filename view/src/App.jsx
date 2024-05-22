@@ -5,11 +5,12 @@ import { Login } from './components/landing/Login.jsx'
 import { Register } from './components/landing/Register.jsx'
 import { Dashboard } from './components/dashboard/Dashboard.jsx'
 import { Error } from './components/Error.jsx'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom'
 import { Client } from './components/client/Client.jsx'
 import { LoadingWithText } from './components/dashboard/LoadingWithText.jsx'
 
 function App() {
+
 
   return (
     <Router>

@@ -92,22 +92,11 @@ export function ProductPanel() {
     // Cambiar
     const handleProductPriceChange = (value) => {
         setPriceError('')
-        value = value.replace(/[^\d.,]/g, '')
-        value = value.replace(',', '.')
 
-        const dotCount = value.split('.').length - 1
+        const numericValue = value.replace(/[^0-9.]/g, '')
 
-        if (dotCount > 1 || (dotCount === 1 && value.indexOf('.') === 0)) {
-            value = value.substring(1)
-        }
-
-        let numericValue = 0
-        if (value !== '') {
-            numericValue = Number(value)
-        }
-
-        if (!isFinite(numericValue) || isNaN(numericValue) || numericValue < 0) {
-            numericValue = 0
+        if (numericValue.includes(',')) {
+            numericValue.replace(',', '.')
         }
 
         setLastPrice(numericValue)
@@ -144,7 +133,6 @@ export function ProductPanel() {
             })
             setProduct({ ...product, steps: updatedSteps })
         }
-        console.log(product.steps)
     }
 
     const handleStepDelete = (stepIndex) => {
@@ -154,7 +142,6 @@ export function ProductPanel() {
     }
 
     const handleSpecialDelete = (stepId, specialId) => {
-        // Eliminar el especial del estado del producto
         const updatedSteps = product.steps.map(step => {
             if (step.id === stepId) {
                 return {
@@ -163,22 +150,18 @@ export function ProductPanel() {
                 }
             }
             return step
-        });
+        })
 
-        // Actualizar el estado del producto sin el especial
-        setProduct({ ...product, steps: updatedSteps });
+        setProduct({ ...product, steps: updatedSteps })
 
-        // Verificar si editStep necesita actualizarse
         if (editStep && editStep.id === stepId) {
-            // Filtrar el especial eliminado de editStep si corresponde
             const updatedEditStep = {
                 ...editStep,
                 specials: editStep.specials.filter(special => special.id !== specialId)
-            };
-            // Actualizar editStep
-            setEditStep(updatedEditStep);
+            }
+            setEditStep(updatedEditStep)
         }
-    };
+    }
 
 
     const [editStep, setEditStep] = useState({})
@@ -237,6 +220,11 @@ export function ProductPanel() {
 
         if (!product.price) {
             setPriceError('Product price is required')
+            return
+        }
+
+        if (product.price.split('.').length > 2 || product.price.split('.').length === 2 && product.price.split('.')[1].length > 2) {
+            setPriceError('Product price is not correctly formatted')
             return
         }
 
