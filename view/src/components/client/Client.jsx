@@ -82,7 +82,7 @@ export function Client() {
                     <Route path='/c/:categoryId/sp/:productId' element={<ClientStepProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} themeColor={themeColor} />} />
                     <Route path='/c/:categoryId/sp/:productId/s' element={<ClientStepHandler categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} primaryColor={primaryColor} cart={cart} setCart={setCart} />} />
                     <Route path='/order' element={<ClientOrder cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} />} />
-                    <Route path='/pay' element={<ClientPayment cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} />} />
+                    <Route path='/pay' element={<ClientPayment cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} template={template} orderPrice={orderPrice} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
                 </Routes>
                 <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} categories={template.categories} primaryColor={primaryColor} themeColor={themeColor} />

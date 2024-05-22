@@ -7,6 +7,7 @@ export function ExtraStep({ step, primaryColor, actualSpecial, setActualSpecial 
         const selectedSpecials = selectedOptions.map(id => step.specials.find(special => special.id === id))
         setActualSpecial(selectedSpecials)
     }, [selectedOptions, step.specials, setActualSpecial])
+    console.log(step.specials)
 
     const handleOptionToggle = (option) => {
         setSelectedOptions((prevSelectedOptions) => {
@@ -29,6 +30,7 @@ export function ExtraStep({ step, primaryColor, actualSpecial, setActualSpecial 
                 >
                     <p style={{ color: primaryColor }}>{option.name}</p>
                     <img src={`data:image/jpeg;base64,${option.img}`} alt={option.name} />
+                    <p>{option.price_changer}</p>
                 </div>
             ))}
         </div>

@@ -223,7 +223,9 @@ export function ProductPanel() {
             return
         }
 
-        if (product.price.split('.').length > 2 || product.price.split('.').length === 2 && product.price.split('.')[1].length > 2) {
+        const priceString = product.price.toString()
+
+        if (priceString.split('.').length > 2 || priceString.split('.').length === 2 && priceString.split('.')[1].length > 2) {
             setPriceError('Product price is not correctly formatted')
             return
         }

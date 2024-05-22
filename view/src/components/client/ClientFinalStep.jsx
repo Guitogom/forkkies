@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { CartSVG } from '../../assets/svg/CartSVG.jsx'
 
 export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecials, primaryColor, secondaryColor, themeColor, cart, setCart, product }) {
-
     const [innerCart, setInnerCart] = useState({
         quantity: 1,
         totalPrice: product.price
     })
+
+    console.log('Product: ', product)
 
     const formatPrice = (price) => {
         return price.toFixed(2)
@@ -31,7 +32,7 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
     }
 
     const placeQuantity = (e) => {
-        const quantity = parseInt(e.target.value)
+        const quantity = parseInt(e.target.value);
         if (!isNaN(quantity) && quantity >= 1) {
             setInnerCart({
                 ...innerCart,
@@ -41,21 +42,43 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
         }
     }
 
+    const calculateSpecialsPrice = (specials) => {
+        if (!Array.isArray(specials)) {
+            console.error("Specials is not an array:", specials)
+            return 0
+        }
+
+        let totalPriceChange = 0
+        specials.forEach(special => {
+            totalPriceChange += parseFloat(special.price_changer)
+        })
+        return totalPriceChange
+    }
+
+
     const addToCart = () => {
+        let totalPriceChange = calculateSpecialsPrice(optionSpecials) + calculateSpecialsPrice(deletableSpecials) + calculateSpecialsPrice(extraSpecials)
+
+        const totalPrice = (product.price + totalPriceChange) * innerCart.quantity
+
         const newItem = {
-            id: product.id,
+            category: product.category,
+            product: product.id,
             name: product.name,
+            img: product.img,
             quantity: innerCart.quantity,
-            price: product.price,
-            totalPrice: innerCart.totalPrice,
+            individualPrice: product.price,
+            totalPrice: totalPrice,
             steps: {
                 optionSpecials: optionSpecials,
                 deletableSpecials: deletableSpecials,
                 extraSpecials: extraSpecials
             }
         }
+
         setCart([...cart, newItem])
     }
+
 
     var imagenDisplay = `data:image/jpeg;base64,${product.img}`
 
