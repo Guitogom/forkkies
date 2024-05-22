@@ -1,11 +1,12 @@
 import { useState } from 'react'
+import { PayCard } from '../../assets/svg/PayCard.jsx'
 
 export function ClientPayment({ cart, setCart, primartyColor, secondaryColor, themeColor, template, orderPrice }) {
     console.log(cart)
 
     const [clientName, setClientName] = useState('')
 
-    const pay = () => {
+    const payCash = () => {
         const requestBody = {
             business_id: template.id,
             total: orderPrice,
@@ -60,7 +61,8 @@ export function ClientPayment({ cart, setCart, primartyColor, secondaryColor, th
                 return response.json()
             })
             .then(response => {
-                console.log(response)
+                localStorage.removeItem('cart')
+                setCart([])
             })
             .catch(error => {
                 console.error('Error:', error.message)
@@ -69,8 +71,15 @@ export function ClientPayment({ cart, setCart, primartyColor, secondaryColor, th
 
 
     return (
-        <div>
-            <button onClick={pay}>Pagar</button>
+        <div className='client-payment'>
+            <h3>Payment</h3>
+            <input type="text" placeholder='Name' className='client-payment-name-input' />
+            <div className="client-payment-methods">
+                <button onClick={payCash}>Cash</button>
+                <button><PayCard />
+                </button>
+                <button>PayPal</button>
+            </div>
         </div>
     )
 }

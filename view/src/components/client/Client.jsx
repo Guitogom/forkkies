@@ -62,9 +62,10 @@ export function Client() {
     }, [])
 
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart))
+        // localStorage.setItem('cart', JSON.stringify(cart))
         const total = cart.reduce((acc, item) => acc + item.totalPrice, 0)
         setOrderPrice(total)
+        console.log(cart)
     }, [cart])
 
     const [displayNav, setDisplayNav] = useState(false)
@@ -81,7 +82,7 @@ export function Client() {
                     <Route path='/c/:categoryId/p/:productId' element={<ClientFullProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} themeColor={themeColor} />} />
                     <Route path='/c/:categoryId/sp/:productId' element={<ClientStepProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} themeColor={themeColor} />} />
                     <Route path='/c/:categoryId/sp/:productId/s' element={<ClientStepHandler categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} primaryColor={primaryColor} cart={cart} setCart={setCart} />} />
-                    <Route path='/order' element={<ClientOrder cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} />} />
+                    <Route path='/order' element={<ClientOrder cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} orderPrice={orderPrice} />} />
                     <Route path='/pay' element={<ClientPayment cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} template={template} orderPrice={orderPrice} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
                 </Routes>

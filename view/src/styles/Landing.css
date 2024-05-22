@@ -1,16 +1,34 @@
-.landing-base {}
-
 .header-landing {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
 }
 
 .side-landing {
-    grid-column: span 1;
+    position: fixed;
+    width: 15%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.side-landing:hover .scroll-landing{
+    animation-play-state: paused;
+}
+
+.scroll-landing{
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
-    margin: 0px 10px;
+    padding-top: 10px;
+    animation: 20s slide infinite linear;
+}
+
+@keyframes slide {
+    from {
+        transform: translateY(0);
+    }
+    to{
+        transform: translateY(-100%);
+    }
 }
 
 .left-side-landing {
@@ -18,19 +36,20 @@
 }
 
 .right-side-landing {
+    margin-left: 85%;
     align-items: end;
 }
 
 .box-landing {
-    width: 250px;
-    height: 250px;
+    width: 90%;
+    aspect-ratio: 1/1;
     background-color: #D9D9D9;
-    border-radius: 15px;
+    border-radius: 5%;
 }
 
 .box-landing-four {
-    width: 250px;
-    height: 250px;
+    width: 90%;
+    aspect-ratio: 1/1;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -39,14 +58,17 @@
 
 
 .box-landing-cube {
-    width: 120px;
-    height: 120px;
+    width: 100%;
     background-color: #D9D9D9;
-    border-radius: 15px;
+    border-radius: 5%;
 }
 
+
+
 .center-landing {
-    grid-column: span 3;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -61,6 +83,7 @@
 }
 
 .subtitle-landing {
+    text-align: center;
     font-size: 3rem;
     color: #D2D2D2;
     font-weight: 900;
@@ -95,6 +118,20 @@
     transition: all 0.3s;
 }
 
+.login-message-landing{
+    color: var(--secondary-color);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 70px;
+    margin-bottom: 90px;
+}
+
+.arrow-landing{
+    position: absolute;
+    transform: translate(10px, 15px);
+    height: 120px;
+}
+
 .get-started-landing:hover {
     background-color: var(--secondary-color);
 }
@@ -122,4 +159,39 @@
     cursor: pointer;
     transition: all 0.3s;
     text-decoration: none;
+}
+
+.message-landing{
+    text-align: center;
+    margin: 90px;
+    font-size: 4rem;
+    color: #e6e6e6;
+    font-weight: 900;
+    font-family: var(--primary-font);
+}
+
+.actions{
+    margin-bottom: 100px ;
+}
+
+.action-landing{
+    font-size: 3rem;
+    font-family: var(--primary-font);
+    font-weight: 900;
+}
+
+.action1-landing{
+    color: #34CF5F;
+}
+
+.action2-landing{
+    color: #4382E1;
+}
+
+.action3-landing{
+    color: #F19C5E;
+}
+
+.action4-landing{
+    color: #952DE7;
 }

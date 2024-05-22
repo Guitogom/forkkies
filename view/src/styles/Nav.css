@@ -4,7 +4,7 @@
     left: 0;
     padding: 20px;
     /* background-color: var(--primary-color); */
-    background: linear-gradient(90deg, var(--primary-color) 0%, #E280FF 100%);
+    background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
     height: 110px;
     width: 100%;
     display: flex;
