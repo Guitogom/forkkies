@@ -1,5 +1,4 @@
 -- Eliminar todas las tablas si existen
-DROP TABLE IF EXISTS order_special;
 DROP TABLE IF EXISTS order_product;
 DROP TABLE IF EXISTS order_table;
 DROP TABLE IF EXISTS cat_product;
@@ -131,17 +130,8 @@ CREATE TABLE IF NOT EXISTS order_product (
     product_id INTEGER,
     unit_price REAL,
     quantity INTEGER,
+    specials TEXT,
     FOREIGN KEY(order_id) REFERENCES order_table(id),
     FOREIGN KEY(product_id) REFERENCES product(id),
     PRIMARY KEY(order_id, product_id)
-);
-
--- Tabla 'order_special'
-CREATE TABLE IF NOT EXISTS order_special (
-    order_id INTEGER,
-    product_id INTEGER,
-    special_id INTEGER,
-    FOREIGN KEY(order_id, product_id) REFERENCES order_product(order_id, product_id),
-    FOREIGN KEY(special_id) REFERENCES special(id),
-    PRIMARY KEY(order_id, product_id, special_id)
 );
