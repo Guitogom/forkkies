@@ -899,7 +899,7 @@ export async function getAllBusiness(tag) {
 
 async function fetchBusiness(tag) {
     const result = await db.execute({
-        sql: 'SELECT name, color1, color2, color3, color4, landing_img, active_template FROM business WHERE tag = :tag',
+        sql: 'SELECT id, name, color1, color2, color3, color4, landing_img, active_template FROM business WHERE tag = :tag',
         args: { tag }
     });
 
@@ -951,12 +951,48 @@ async function fetchSpecialsForStep(step_id) {
 }
 
 //Orders
+export async function newOrder(order) {
+    //Creamos el order
+    try {
+        var result = await db.execute({
+            sql: 'INSERT INTO orders (business_id, total, name, date) VALUES (:business_id, :total, :name, :date) RETURNING id',
+            args: order
+        });
+        var order_id = result.rows[0].id;
+    } catch (error) {
+        console.error('Error al insertar el order:', error.message);
+        throw new Error('Error al insertar el order: ' + error.message);
+    }
 
-export async function newOrder(body){
-    var order = body.order;
-    var business_id = order.business_id;
-    var products = order.products;
+    //Recorremos los productos
+    for (var i = 0; i < order.products.length; i++) {
+        var product = order.products[i];
+        //Si el product no tiene id, lo añadimos
+        try {
+            var result = await db.execute({
+                sql: 'INSERT INTO order_product (order_id, product_id, unit_price, quantity) VALUES (:order_id, :product_id, :unit_price, :quantity)',
+                args: { order_id, product_id: product.id, unit_price: product.unit_price, quantity: product.quantity }
+            });
+        } catch (error) {
+            console.error('Error al insertar el product:', error.message);
+            throw new Error('Error al insertar el product: ' + error.message);
+        }
 
-    //Creamos el order con 
-    
+        //Recorremos los specials que tiene el producto
+        for (var j = 0; j < product.specials.length; j++) {
+            var special = product.specials[j];
+            //Si el special no tiene id, lo añadimos
+            try {
+                await db.execute({
+                    sql: 'INSERT INTO order_special (order_id, product_id, special_id) VALUES (:order_id, :product_id, :special_id)',
+                    args: { order_id, product_id: product.id, special_id: special.id }
+                });
+            } catch (error) {
+                console.error('Error al insertar el special:', error.message);
+                throw new Error('Error al insertar el special: ' + error.message);
+            }
+        }
+    }
+
+
 }

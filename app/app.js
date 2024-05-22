@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness } from './functions.js';
+import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder } from './functions.js';
 import swaggerDocs from './swagger.js';
 
 const app = express();
@@ -18,6 +18,13 @@ const corsOptions = {
 app.use(cors());
 
 swaggerDocs(app);
+
+/**
+ * @swagger
+ * tags:
+ *   name: Business
+ *   description: Business related endpoints
+ */
 
 /**
 * @swagger
@@ -66,50 +73,64 @@ app.get('/verifytag', async (req, res) => {
 /**
  * @swagger
  * /newbusiness:
- * post:
- * description: Crea un nuevo negocio
- * requestBody:
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * tag:
- * type: string
- * name:
- * type: string
- * location:
- * type: string
- * tel:
- * type: string
- * password:
- * type: string
- * required:
- * - tag
- * - name
- * - location
- * - phone
- * - password
- * responses:
- * 200:
- * description: Token generado
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * token:
- * type: string
- * 500:
- * description: Error interno al crear negocio
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * error:
- * type: string
+ *   post:
+ *     summary: Crea un nuevo negocio y genera un token.
+ *     tags: [Business]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               tag:
+ *                 type: string
+ *                 description: Tag del negocio.
+ *               name:
+ *                 type: string
+ *                 description: Nombre del negocio.
+ *               location:
+ *                 type: string
+ *                 description: Ubicación del negocio.
+ *               tel:
+ *                 type: string
+ *                 description: Teléfono del negocio.
+ *               password:
+ *                 type: string
+ *                 description: Contraseña encriptada del negocio.
+ *     responses:
+ *       200:
+ *         description: Token generado exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: Token JWT generado para el negocio.
+ *       400:
+ *         description: Campos incorrectos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Lista de campos incorrectos.
+ *       500:
+ *         description: Error en la base de datos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Mensaje de error.
  */
+
 
 app.post('/newbusiness', async (req, res) => {
     try {
@@ -123,53 +144,158 @@ app.post('/newbusiness', async (req, res) => {
 
 /**
  * @swagger
- * /modifybusiness:
- * post:
- * description: Modifica un negocio
- * requestBody:
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * name:
- * type: string
- * tel:
- * type: string
- * password:
- * type: string
- * delete:
- * type: boolean
- * color1:
- * type: string
- * color2:
- * type: string
- * color3:
- * type: string
- * iban:
- * type: string
- * landing_img:
- * type: string
- * responses:
- * 200:
- * description: Resultado de la modificación
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * result:
- * type: string
- * 500:
- * description: Error interno al modificar negocio
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * error:
- * type: string
+ * /logbusiness:
+ *   get:
+ *     summary: Autentica un negocio y genera un token.
+ *     tags: [Business]
+ *     parameters:
+ *       - in: query
+ *         name: tag
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: El tag del negocio.
+ *       - in: query
+ *         name: password
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: La contraseña del negocio.
+ *     responses:
+ *       200:
+ *         description: Token generado exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: Token JWT generado para el negocio.
+ *       400:
+ *         description: Usuario o contraseña incorrectos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Mensaje de error.
+ *       500:
+ *         description: Error en la base de datos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Mensaje de error.
  */
+
+
+app.get('/logbusiness', async (req, res) => {
+    try {
+        var token = await logBusiness(req.query);
+        console.log('Token generado:', token)
+        res.status(200).json({ token: token });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   responses:
+ *     UnauthorizedError:
+ *       description: Token no proporcionado o inválido
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               mensaje:
+ *                 type: string
+ *                 example: 'Token no proporcionado' | 'Token inválido'
+ */
+
+/**
+ * @swagger
+ * /modifybusiness:
+ *   post:
+ *     summary: Modifica los detalles de un negocio existente.
+ *     tags: [Business]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Nuevo nombre del negocio.
+ *               tel:
+ *                 type: string
+ *                 description: Nuevo teléfono del negocio.
+ *               password:
+ *                 type: string
+ *                 description: Nueva contraseña del negocio.
+ *               delete:
+ *                 type: boolean
+ *                 description: Marca para eliminar el negocio.
+ *               color1:
+ *                 type: string
+ *                 description: Nuevo color 1 del negocio.
+ *               color2:
+ *                 type: string
+ *                 description: Nuevo color 2 del negocio.
+ *               color3:
+ *                 type: string
+ *                 description: Nuevo color 3 del negocio.
+ *               color4:
+ *                 type: string
+ *                 description: Nuevo color 4 del negocio.
+ *               iban:
+ *                 type: string
+ *                 description: Nuevo IBAN del negocio.
+ *               landing_img:
+ *                 type: string
+ *                 description: Nueva imagen de landing del negocio.
+ *     responses:
+ *       200:
+ *         description: Modificación exitosa.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: string
+ *                   description: Resultado de la modificación.
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       500:
+ *         description: Error en la base de datos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Mensaje de error.
+ */
+
 
 app.post('/modifybusiness', verificarToken, async (req, res) => {
     try {
@@ -184,89 +310,67 @@ app.post('/modifybusiness', verificarToken, async (req, res) => {
 
 /**
  * @swagger
- * /logbusiness:
- * get:
- * description: Loguea un negocio
- * parameters:
- * - in: query
- * name: tag
- * required: true
- * schema:
- * type: string
- * responses:
- * 200:
- * description: Token generado
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * token:
- * type: string
- * 500:
- * description: Error interno al loguear negocio
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * error:
- * type: string
- */
-
-app.get('/logbusiness', async (req, res) => {
-    try {
-        var token = await logBusiness(req.query);
-        console.log('Token generado:', token)
-        res.status(200).json({ token: token });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-/**
- * @swagger
  * /getbusiness:
- * get:
- * description: Obtiene un negocio
- * responses:
- * 200:
- * description: Negocio obtenido
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * id:
- * type: string
- * tag:
- * type: string
- * name:
- * type: string
- * location:
- * type: string
- * tel:
- * type: string
- * color1:
- * type: string
- * color2:
- * type: string
- * color3:
- * type: string
- * iban:
- * type: string
- * landing_img:
- * type: string
- * 500:
- * description: Error interno al obtener negocio
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * error:
- * type: string
+ *   get:
+ *     summary: Obtiene la información de un negocio por su tag.
+ *     tags: [Business]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Información del negocio obtenida exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: ID del negocio.
+ *                 tag:
+ *                   type: string
+ *                   description: Tag del negocio.
+ *                 name:
+ *                   type: string
+ *                   description: Nombre del negocio.
+ *                 location:
+ *                   type: string
+ *                   description: Ubicación del negocio.
+ *                 tel:
+ *                   type: string
+ *                   description: Teléfono del negocio.
+ *                 color1:
+ *                   type: string
+ *                   description: Color 1 del negocio.
+ *                 color2:
+ *                   type: string
+ *                   description: Color 2 del negocio.
+ *                 color3:
+ *                   type: string
+ *                   description: Color 3 del negocio.
+ *                 color4:
+ *                   type: string
+ *                   description: Color 4 del negocio.
+ *                 landing_img:
+ *                   type: string
+ *                   description: Imagen de landing del negocio.
+ *                 active_template:
+ *                   type: string
+ *                   description: Template activo del negocio.
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       500:
+ *         description: Error en la base de datos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Mensaje de error.
  */
+
 
 app.get('/getbusiness', verificarToken, (req, res) => {
     const tag = req.tag;
@@ -284,13 +388,30 @@ app.get('/getbusiness', verificarToken, (req, res) => {
 //Templates
 
 /**
- * @swaggerer
+ * @swagger
+ * tags:
+ *   name: Business
+ *   description: Business related endpoints
+ */
+
+/**
+ * @swagger
  * /getalltemplates:
  *   get:
- *     description: Obtiene todos los templates de un negocio
-  *     responses:
+ *     summary: Obtiene todos los templates de un negocio por su tag.
+ *     tags: [Templates]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: tag
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: El tag del negocio.
+ *     responses:
  *       200:
- *         description: Templates obtenidos
+ *         description: Templates obtenidos exitosamente.
  *         content:
  *           application/json:
  *             schema:
@@ -302,31 +423,21 @@ app.get('/getbusiness', verificarToken, (req, res) => {
  *                     type: object
  *                     properties:
  *                       id:
- *                         type: string
+ *                         type: integer
+ *                         description: ID del template.
  *                       name:
  *                         type: string
- *                       description:
+ *                         description: Nombre del template.
+ *                       content:
  *                         type: string
- *                       active:
- *                         type: boolean
+ *                         description: Contenido del template.
  *                 active_template:
  *                   type: string
- ay
- *                   items:
- *                     type: object
- *                     properties:
- *                       id:
- *                         type: string
- *                       name:
- *                         type: string
- *                       description:
- *                         type: string
- *                       active:
- *                         type: boolean
- *                 active_template:
- *                   type: string
+ *                   description: Nombre del template activo.
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
  *       500:
- *         description: Error interno al obtener templates
+ *         description: Error en la base de datos.
  *         content:
  *           application/json:
  *             schema:
@@ -334,7 +445,9 @@ app.get('/getbusiness', verificarToken, (req, res) => {
  *               properties:
  *                 error:
  *                   type: string
+ *                   description: Mensaje de error.
  */
+
 
 app.get('/getalltemplates', verificarToken, async (req, res) => {
     try {
@@ -516,6 +629,17 @@ app.get('/loadbusiness', async (req, res) => {
     } catch (error) {
         console.error('Error al obtener negocio:', error.message);
         res.status(500).json({ error: 'Error al obtener negocio' });
+    }
+});
+
+//Orders
+app.post('/neworder', async (req, res) => {
+    try {
+        var result = await newOrder(req.body);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al añadir orden:', error.message);
+        res.status(500).json({ error: 'Error al añadir orden' });
     }
 });
 
