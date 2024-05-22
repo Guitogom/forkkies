@@ -7,7 +7,7 @@ export function ClientPayment({ cart, setCart, primartyColor, secondaryColor, th
 
     const pay = () => {
         const requestBody = {
-            business_id: 0,
+            business_id: template.id,
             total: orderPrice,
             name: clientName,
             products: cart.map(item => {
@@ -45,8 +45,6 @@ export function ClientPayment({ cart, setCart, primartyColor, secondaryColor, th
                 }
             })
         }
-
-        console.log('Request body: ', requestBody)
 
         fetch('https://api.forkkies.live/neworder', {
             method: 'POST',
