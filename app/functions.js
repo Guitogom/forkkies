@@ -935,7 +935,7 @@ export async function newOrder(order) {
     try {
         var result = await db.execute({
             sql: 'INSERT INTO order_table (business_id, total, name, date) VALUES (:business_id, :total, :name, :date) RETURNING id',
-            args: order
+            args: { business_id: order.business_id, total: order.total, name: order.name, date: order.date }
         });
         var order_id = result.rows[0].id;
     } catch (error) {
