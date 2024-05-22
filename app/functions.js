@@ -992,6 +992,4 @@ export async function newOrder(order) {
             }
         }
     }
-
-
 }
