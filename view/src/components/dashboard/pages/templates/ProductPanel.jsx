@@ -1,12 +1,13 @@
-import '../../../../styles/Products.css';
-import { PlusSVG } from '../../../../assets/svg/PlusSVG';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Loading } from '../../Loading.jsx';
-import { StepDisplay } from './StepDisplay.jsx';
-import { DeleteSVG } from '../../../../assets/svg/DeleteSVG.jsx';
-import { SpecialDisplay } from './SpecialDisplay.jsx';
-import { LoadingWithText } from '../../LoadingWithText.jsx';
+import '../../../../styles/Products.css'
+import { PlusSVG } from '../../../../assets/svg/PlusSVG'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { Loading } from '../../Loading.jsx'
+import { StepDisplay } from './StepDisplay.jsx'
+import { DeleteSVG } from '../../../../assets/svg/DeleteSVG.jsx'
+import { SpecialDisplay } from './SpecialDisplay.jsx'
+import { LoadingWithText } from '../../LoadingWithText.jsx'
+import cameraImage from '/src/assets/media/camera.webp'
 
 export function ProductPanel() {
     const [loaded, setLoaded] = useState(false)
@@ -63,7 +64,7 @@ export function ProductPanel() {
         }
     }, [])
 
-    const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
+    const [backgroundImage, setBackgroundImage] = useState(cameraImage)
     const [backgroundSize, setBackgroundSize] = useState('60px')
 
     const handleImageChange = (e) => {
