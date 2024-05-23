@@ -1,12 +1,13 @@
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import cameraImage from '/src/assets/media/camera.webp'
 
 export function ProductDisplay({ product }) {
     const { id } = useParams()
     const { c_id } = useParams()
     var imagenDisplay = `data:image/jpeg;base64,${product.img}`
     if (product.img === '') {
-        imagenDisplay = '/src/assets/media/camera.webp'
+        imagenDisplay = cameraImage
     }
 
     const formatPrice = (price) => {
