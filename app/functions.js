@@ -1046,6 +1046,7 @@ export async function getOrders(tag) {
             productDetails.specials = product.specials;
 
             const specialIds = product.specials.split(',');
+            console.log(specialIds);
             const specials = await getSpecialsForProduct(specialIds);
 
             productDetails.options = [];
