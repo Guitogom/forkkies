@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders } from './functions.js';
+import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
 import swaggerDocs from './swagger.js';
 
 const app = express();
@@ -1657,6 +1657,65 @@ app.get('/getorders', verificarToken, async (req, res) => {
     } catch (error) {
         console.error('Error al obtener ordenes:', error.message);
         res.status(500).json({ error: 'Error al obtener ordenes' });
+    }
+});
+
+/**
+ * @swagger
+ * /modifyorderstatus:
+ *   post:
+ *     summary: Modificar el estado de un pedido.
+ *     description: Modifica el estado de un pedido específico asociado a un negocio. El `tag` del negocio se obtiene del token de seguridad.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 description: ID del pedido.
+ *                 example: 1
+ *               status:
+ *                 type: integer
+ *                 description: Nuevo estado del pedido.
+ *                 example: 2
+ *     responses:
+ *       200:
+ *         description: Estado del pedido modificado exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   description: Nuevo estado del pedido.
+ *                   example: 2
+ *       500:
+ *         description: Error al modificar el estado del pedido.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Error al modificar el estado del pedido: [detalles del error]
+ */
+
+
+app.post('/modifyorderstatus', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await modifyOrderStatus(tag, req.body);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al modificar estado de orden:', error.message);
+        res.status(500).json({ error: 'Error al modificar estado de orden' });
     }
 });
 

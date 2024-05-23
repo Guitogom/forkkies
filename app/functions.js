@@ -1074,3 +1074,17 @@ export async function getOrders(tag) {
 
     return { orders };
 }
+
+export async function modifyOrderStatus(tag, order) {
+    var businessId = await getBusinessId(tag);
+    try {
+        await db.execute({
+            sql: 'UPDATE order_table SET status = :status WHERE id = :id AND business_id = :businessId',
+            args: { status: order.status, id: order.id, businessId }
+        });
+        return order.status;
+    } catch (error) {
+        console.error('Error al modificar el estado del pedido:', error.message);
+        throw new Error('Error al modificar el estado del pedido: ' + error.message);
+    }
+}
