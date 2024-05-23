@@ -1000,30 +1000,34 @@ async function getProductDetails(productId) {
 }
 
 async function getSpecialsForProduct(specialIds) {
-    try {
-        const result = await db.execute({
-            sql: 'SELECT step_id, name FROM special WHERE id IN (:specialIds)',
-            args: { specialIds }
-        });
-        var specials = result.rows;
-    } catch (error) {
-        console.error('Error al obtener los specials del producto:', error.message);
-        throw new Error('Error al obtener los specials del producto: ' + error.message);
-    }
-    console.log(specialIds+":"+specials);
-
-    //Obtenemos el type del step
-    for (var i = 0; i < specials.length; i++) {
+    console.log(specialIds);
+    const specials = [];
+    //Recorremos los specialIds
+    for (let specialId of specialIds) {
         try {
-            var result = await db.execute({
-                sql: 'SELECT type FROM step WHERE id = :step_id',
-                args: { step_id: specials[i].step_id }
+            const result = await db.execute({
+                sql: 'SELECT name, step_id FROM special WHERE id = :specialId',
+                args: { specialId }
             });
-            specials[i].type = result.rows[0].type;
+            var name = result.rows[0].name;
+            var stepId = result.rows[0].step_id;
         } catch (error) {
-            console.error('Error al obtener el type del step:', error.message);
-            throw new Error('Error al obtener el type del step: ' + error.message);
+            console.error('Error al obtener los specials del producto:', error.message);
+            throw new Error('Error al obtener los specials del producto: ' + error.message);
         }
+        //Obtenemos el type del step
+        try {
+            const result = await db.execute({
+                sql: 'SELECT type FROM step WHERE id = :stepId',
+                args: { stepId }
+            });
+            var type = result.rows[0].type;
+        } catch (error) {
+            console.error('Error al obtener los type del step:', error.message);
+            throw new Error('Error al obtener los type del step: ' + error.message);
+        }
+        //Añadimos el special al array
+        specials.push({ name, type });
     }
     return specials;
 }
@@ -1046,7 +1050,6 @@ export async function getOrders(tag) {
             productDetails.specials = product.specials;
 
             const specialIds = product.specials.split(',');
-            console.log(specialIds);
             const specials = await getSpecialsForProduct(specialIds);
 
             productDetails.options = [];
