@@ -1002,14 +1002,28 @@ async function getProductDetails(productId) {
 async function getSpecialsForProduct(specialIds) {
     try {
         const result = await db.execute({
-            sql: 'SELECT name, type FROM special WHERE id IN (:specialIds)',
+            sql: 'SELECT step_id, name FROM special WHERE id IN (:specialIds)',
             args: { specialIds }
         });
-        return result.rows;
+        var specials = result.rows;
     } catch (error) {
         console.error('Error al obtener los specials del producto:', error.message);
         throw new Error('Error al obtener los specials del producto: ' + error.message);
     }
+    //Obtenemos el type del step
+    for (var i = 0; i < specials.length; i++) {
+        try {
+            var result = await db.execute({
+                sql: 'SELECT type FROM step WHERE id = :step_id',
+                args: { step_id: specials[i].step_id }
+            });
+            specials[i].type = result.rows[0].type;
+        } catch (error) {
+            console.error('Error al obtener el type del step:', error.message);
+            throw new Error('Error al obtener el type del step: ' + error.message);
+        }
+    }
+    return specials;
 }
 
 export async function getOrders(tag) {
