@@ -1000,8 +1000,6 @@ async function getProductDetails(productId) {
 }
 
 async function getSpecialsForProduct(specialIds) {
-    const specialIds = specialIds.split(',');
-    console.log("specialIds:" + specialIds[0]);
     const specials = [];
     //Recorremos los specialIds
     for (let specialId of specialIds) {
@@ -1042,18 +1040,18 @@ async function getSpecialsForProduct(specialIds) {
 }
 
 export async function getOrders(tag) {
-    const today = new Date();
+    var today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const businessId = await getBusinessId(tag);
-    const orders = await getOrdersByBusinessId(businessId, today);
+    var businessId = await getBusinessId(tag);
+    var orders = await getOrdersByBusinessId(businessId, today);
 
     for (let order of orders) {
-        const products = await getProductsForOrder(order.id);
+        var products = await getProductsForOrder(order.id);
         order.products = [];
 
         for (let product of products) {
-            const productDetails = await getProductDetails(product.product_id);
+            var productDetails = await getProductDetails(product.product_id);
             productDetails.unit_price = product.unit_price;
             productDetails.quantity = product.quantity;
             productDetails.specials = product.specials;
@@ -1062,7 +1060,9 @@ export async function getOrders(tag) {
             productDetails.extras = [];
 
             if (product.specials) {
-                const specials = await getSpecialsForProduct(product.specials);
+                var specialIds = product.specials.split(',');
+                console.log("specialIds1:" + specialIds[1]);
+                var specials = await getSpecialsForProduct(specialIds);
 
                 for (let special of specials) {
                     if (special.stype == 1) {
