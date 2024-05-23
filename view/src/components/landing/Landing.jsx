@@ -3,6 +3,7 @@ import '../../styles/Landing.css'
 import { BackArrow } from '../../assets/svg/BackArrow.jsx'
 import { useEffect } from 'react'
 import arrow from '/src/assets/media/arrow.svg';
+import i1 from '/src/assets/media/c_img/1.jpg';
 
 export function Landing() {
     useEffect(() => {
@@ -16,7 +17,7 @@ export function Landing() {
             <div className="header-landing">
                 <div className='side-landing left-side-landing'>
                     <div className='scroll-landing'>
-                        <div className="box-landing"></div>
+                        <img className="box-landing" src={i1}></img>
                         <div className="box-landing"></div>
                         <div className="box-landing-four">
                             <div className="box-landing-cube"></div>
