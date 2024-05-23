@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Title } from "../../Title.jsx"
-import { Properties } from "../Properties.jsx"
+import { Properties } from "./Properties.jsx"
 import '../../../../styles/Templates.css'
 import { TemplateDisplay } from "./TemplateDisplay.jsx"
 import { Loading } from '../../Loading.jsx'
@@ -25,9 +25,6 @@ export function Templates({ business, setBusiness }) {
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                setCurrentPage('error')
-            }, 8000)
             fetch('https://api.forkkies.live/getalltemplates', {
                 method: 'GET',
                 headers: {
@@ -36,7 +33,6 @@ export function Templates({ business, setBusiness }) {
                 },
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
                         window.location.href = '/error'
                     }
@@ -49,7 +45,6 @@ export function Templates({ business, setBusiness }) {
                     setLoaded(true)
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
                     console.error('Error:', error.message)
                     window.location.href = '/error'
                 })

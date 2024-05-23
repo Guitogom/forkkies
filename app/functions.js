@@ -440,6 +440,7 @@ export async function getTemplate(tag, template_id) {
 
 //Properties
 export async function newProperty(tag, property) {
+    console.log(property);
     //Obtenemos la id del business
     var business_id = await getBusinessId(tag);
     //Añadimos la propiedad con su nombre y el negocio al que pertenece
