@@ -46,6 +46,8 @@ export function Orders({ business, orders, setOrders }) {
         // return () => clearInterval(interval)
     }, [])
 
+    console.log(orders)
+
     return (
         <section>
             <Title title="Orders" text="Orders" />

@@ -12,13 +12,13 @@ export function OrderDetailsProp({ product }) {
             </div>
             <div className="order-prop-details-item-specials">
                 <div className="order-prop-details-item-specials-options">
-                    <p>?</p>
+                    <p style={{ color: '#4440E0', fontWeight: 'bold', fontFamily: 'var(--secondary-font)' }}>?</p>
                 </div>
                 <div className="order-prop-details-item-specials-deletables">
-                    <p>-</p>
+                    <p style={{ color: '#F24141', fontWeight: 'bold', fontFamily: 'var(--secondary-font)' }}>-</p>
                 </div>
                 <div className="order-prop-details-item-specials-extras">
-                    <p>+</p>
+                    <p style={{ color: '#42E73E', fontWeight: 'bold', fontFamily: 'var(--secondary-font)' }}>+</p>
                 </div>
             </div>
             <div className="order-prop-details-item-prices">

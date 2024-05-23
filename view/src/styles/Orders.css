@@ -56,7 +56,25 @@
     flex-direction: column;
     justify-content: center;
     height: 180px;
-    gap: 10px;
+    gap: 20px;
+    padding: 5px;
+    font-size: 1.8rem;
+    font-weight: 200;
+    grid-column: span 2;
+}
+
+.order-prop-details-item-info p {
+    width: 100%;
+    overflow-x: scroll;
+    text-wrap: nowrap;
+}
+
+.order-prop-details-item-specials {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 180px;
+    gap: 20px;
     padding: 5px;
     font-size: 1.8rem;
     font-weight: 200;
