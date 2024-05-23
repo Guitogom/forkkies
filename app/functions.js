@@ -1000,7 +1000,8 @@ async function getProductDetails(productId) {
 }
 
 async function getSpecialsForProduct(specialIds) {
-    console.log("sepcial ids: "+specialIds);
+    specialIds = specialIds.split(',')
+    console.log("sepcial ids: "+ specialIds);
     const specials = [];
     //Recorremos los specialIds
     for (let specialId of specialIds) {
@@ -1027,13 +1028,13 @@ async function getSpecialsForProduct(specialIds) {
                 sql: 'SELECT type FROM step WHERE id = :stepId',
                 args: { stepId }
             });
-            var type = result.rows[0].type;
+            var stype = result.rows[0].type;
         } catch (error) {
             console.error('Error al obtener los type del step:', error.message);
             throw new Error('Error al obtener los type del step: ' + error.message);
         }
         //Añadimos el special al array
-        specials.push({ name, type });
+        specials.push({ name, stype });
     }
     return specials;
 }
@@ -1055,7 +1056,7 @@ export async function getOrders(tag) {
             productDetails.quantity = product.quantity;
             productDetails.specials = product.specials;
 
-            const specialIds = product.specials.split(',');
+            const specialIds = product.specials;
             const specials = await getSpecialsForProduct(specialIds);
 
             productDetails.options = [];
@@ -1063,11 +1064,11 @@ export async function getOrders(tag) {
             productDetails.extras = [];
 
             for (let special of specials) {
-                if (special.type == 1) {
+                if (special.stype == 1) {
                     productDetails.options.push(special.name);
-                } else if (special.type == 2) {
+                } else if (special.stype == 2) {
                     productDetails.deletables.push(special.name);
-                } else if (special.type == 3) {
+                } else if (special.stype == 3) {
                     productDetails.extras.push(special.name);
                 }
             }
