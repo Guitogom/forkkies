@@ -168,6 +168,10 @@
     text-decoration: none;
 }
 
+.log-in-landing:hover {
+    background-color: var(--secondary-color);
+}
+
 .message-landing {
     text-align: center;
     margin: 90px;
