@@ -10,10 +10,6 @@ export function Properties() {
         const reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onload = () => {
-            const data = {
-                name: file.name.split('.')[0],
-                img: reader.result.split(',')[1]
-            };
             if (localStorage.getItem('session_token') !== null) {
                 const token = localStorage.getItem('session_token')
                 fetch('https://api.forkkies.live/newproperty', {
@@ -22,7 +18,10 @@ export function Properties() {
                         'Authorization': `${token}`,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ data })
+                    body: JSON.stringify({
+                        name: file.name.split('.')[0],
+                        img: reader.result.split(',')[1]
+                    })
                 })
                     .then(response => {
                         if (!response.ok) {
