@@ -1488,6 +1488,7 @@ app.get('/loadbusiness', async (req, res) => {
  * /neworder:
  *   post:
  *     summary: Crear un nuevo pedido.
+ *     tags: [Orders]
  *     description: Crea un nuevo pedido con los productos y opciones seleccionadas.
  *     requestBody:
  *       required: true
@@ -1570,7 +1571,7 @@ app.post('/neworder', async (req, res) => {
 
 /**
  * @swagger
- * /getordersssss:
+ * /getorders:
  *   get:
  *     summary: Obtener pedidos.
  *     tags: [Orders]
@@ -1665,6 +1666,7 @@ app.get('/getorders', verificarToken, async (req, res) => {
  * /modifyorderstatus:
  *   post:
  *     summary: Modificar el estado de un pedido.
+ *     tags: [Orders]  
  *     description: Modifica el estado de un pedido específico asociado a un negocio. El `tag` del negocio se obtiene del token de seguridad.
  *     security:
  *       - bearerAuth: []
