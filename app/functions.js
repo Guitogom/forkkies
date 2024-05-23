@@ -1000,8 +1000,7 @@ async function getProductDetails(productId) {
 }
 
 async function getSpecialsForProduct(specialIds) {
-    specialIds = specialIds.split(',')
-    console.log("sepcial ids: "+ specialIds);
+    console.log("sepcial ids: " + specialIds);
     const specials = [];
     //Recorremos los specialIds
     for (let specialId of specialIds) {
@@ -1055,21 +1054,22 @@ export async function getOrders(tag) {
             productDetails.unit_price = product.unit_price;
             productDetails.quantity = product.quantity;
             productDetails.specials = product.specials;
-
-            const specialIds = product.specials;
-            const specials = await getSpecialsForProduct(specialIds);
-
             productDetails.options = [];
             productDetails.deletables = [];
             productDetails.extras = [];
 
-            for (let special of specials) {
-                if (special.stype == 1) {
-                    productDetails.options.push(special.name);
-                } else if (special.stype == 2) {
-                    productDetails.deletables.push(special.name);
-                } else if (special.stype == 3) {
-                    productDetails.extras.push(special.name);
+            if (product.specials != null) {
+                const specialIds = product.specials.split(',');
+                const specials = await getSpecialsForProduct(specialIds);
+
+                for (let special of specials) {
+                    if (special.stype == 1) {
+                        productDetails.options.push(special.name);
+                    } else if (special.stype == 2) {
+                        productDetails.deletables.push(special.name);
+                    } else if (special.stype == 3) {
+                        productDetails.extras.push(special.name);
+                    }
                 }
             }
             order.products.push(productDetails);
