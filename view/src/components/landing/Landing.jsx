@@ -14,6 +14,9 @@ import i8 from '/src/assets/media/c_img/i8.jpeg';
 import i9 from '/src/assets/media/c_img/i9.jpeg';
 import i10 from '/src/assets/media/c_img/i10.jpeg';
 import i11 from '/src/assets/media/c_img/i11.jpeg';
+import i12 from '/src/assets/media/c_img/i12.jpeg';
+import i13 from '/src/assets/media/c_img/i13.jpeg';
+import i14 from '/src/assets/media/c_img/i14.jpeg';
 import tick from '/src/assets/media/tick.svg';
 
 export function Landing() {
@@ -33,7 +36,7 @@ export function Landing() {
                         <div className="box-landing-four">
                             <div className="box-landing-cube"><img src={i1} alt="" /></div>
                             <div className="box-landing-cube"><img src={i1} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i1} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i14} alt="" /></div>
                             <div className="box-landing-cube"><img src={i1} alt="" /></div>
                         </div>
                         <div className="box-landing"><img src={i5} alt='' /></div>
@@ -46,7 +49,7 @@ export function Landing() {
                         <div className="box-landing-four">
                             <div className="box-landing-cube"><img src={i1} alt="" /></div>
                             <div className="box-landing-cube"><img src={i1} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i1} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i14} alt="" /></div>
                             <div className="box-landing-cube"><img src={i1} alt="" /></div>
                         </div>
                         <div className="box-landing"><img src={i5} alt='' /></div>
@@ -76,27 +79,27 @@ export function Landing() {
                         <div className="box-landing"><img src={i10} alt='' /></div>
                         <div className="box-landing"><img src={i8} alt='' /></div>
                         <div className="box-landing-four">
-                            <div className="box-landing-cube"><img src={i9} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i9} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i9} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i14} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i2} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i13} alt="" /></div>
                             <div className="box-landing-cube"><img src={i9} alt="" /></div>
                         </div>
                         <div className="box-landing"><img src={i1} alt='' /></div>
                         <div className="box-landing"><img src={i7} alt='' /></div>
-                        <div className="box-landing"><img src={i11} alt='' /></div>
+                        <div className="box-landing"><img src={i12} alt='' /></div>
                     </div>
                     <div className='scroll-landing'>
                         <div className="box-landing"><img src={i10} alt='' /></div>
                         <div className="box-landing"><img src={i8} alt='' /></div>
                         <div className="box-landing-four">
-                            <div className="box-landing-cube"><img src={i9} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i9} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i9} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i9} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i14} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i12} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i13} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i3} alt="" /></div>
                         </div>
                         <div className="box-landing"><img src={i1} alt='' /></div>
                         <div className="box-landing"><img src={i7} alt='' /></div>
-                        <div className="box-landing"><img src={i11} alt='' /></div>
+                        <div className="box-landing"><img src={i12} alt='' /></div>
                     </div>
                 </div>
             </div>

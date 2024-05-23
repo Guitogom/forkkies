@@ -106,16 +106,29 @@
     flex-direction: column;
 }
 
+@keyframes gradient-move {
+    0% {
+        background-position: 200% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 .title-landing {
     font-size: 10rem;
     font-weight: bold;
-    /* color: #3C3C3C; */
-    background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
+    background: linear-gradient(90deg, #5665c7, #E280FF, #5665c7);
+    background-size: 200% 200%;
     background-clip: text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: gradient-move 7s infinite linear;
     font-family: var(--primary-font);
     padding: 80px 0px;
 }
+
+
 
 .title-landing::selection {
     background: none;
@@ -133,7 +146,6 @@
 .get-started-landing {
     padding: 15px 25px;
     background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
-    ;
     border-radius: 15px;
     border: none;
     font-size: 2rem;
