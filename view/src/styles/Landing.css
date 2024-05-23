@@ -289,7 +289,7 @@
 
 .features-landing-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(3, auto);
     gap: 20px;
     width: 100%;
@@ -316,7 +316,7 @@
 }
 
 .feature-landing p {
-    grid-column: span 2;
+    grid-column: span 3;
     font-size: 2rem;
     font-weight: 900;
     font-family: var(--primary-font);
