@@ -20,17 +20,6 @@
     align-items: center;
     gap: 10px;
     padding-top: 10px;
-    animation: 20s slide infinite linear;
-}
-
-@keyframes slide {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(-100%);
-    }
 }
 
 .left-side-landing {
@@ -42,6 +31,34 @@
     align-items: end;
 }
 
+.left-side-landing .scroll-landing {
+    animation: slide-up 20s linear infinite;
+}
+
+.right-side-landing .scroll-landing {
+    animation: slide-down 20s linear infinite;
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
 .box-landing {
     width: 90%;
     aspect-ratio: 1/1;
@@ -50,7 +67,7 @@
     overflow: hidden;
 }
 
-.box-landing img{
+.box-landing img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -74,7 +91,7 @@
     overflow: hidden;
 }
 
-.box-landing-cube img{
+.box-landing-cube img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -113,7 +130,7 @@
 
 .get-started-landing {
     padding: 15px 25px;
-    background-color: var(--primary-color);
+    background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);;
     border-radius: 15px;
     border: none;
     font-size: 2rem;
@@ -168,9 +185,7 @@
     text-align: center;
     font-size: 1.7rem;
     font-weight: bold;
-    /* background-color: var(--secondary-color); */
-    background-color: #E280FF;
-    /* color: #D9D9D9; */
+    background-color: var(--secondary-color);
     color: #fff;
     border: none;
     border-radius: 15px;
@@ -181,7 +196,8 @@
 }
 
 .log-in-landing:hover {
-    background-color: var(--secondary-color);
+    transform: scale(1.1);
+    background-color: #45e07b;
 }
 
 .message-landing {
@@ -193,8 +209,26 @@
     font-family: var(--primary-font);
 }
 
+.advise-landing {
+    position: relative;
+    width: 80%;
+    border-radius: 10px;
+    padding-bottom: 45%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.advise-landing iframe{
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .actions {
-    margin-bottom: 100px;
+    margin: 100px;
 }
 
 .action-landing {
