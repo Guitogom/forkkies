@@ -163,6 +163,24 @@
     font-size: 1.1rem;
     margin-top: 70px;
     margin-bottom: 90px;
+    position: relative;
+    display: inline-block;
+}
+
+.login-message-landing::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: var(--secondary-color);
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    transition: width 0.5s ease;
+}
+
+.login-message-landing:hover::after {
+    width: 100%;
 }
 
 .arrow-landing {
