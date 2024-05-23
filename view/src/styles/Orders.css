@@ -26,6 +26,10 @@
     justify-content: center;
 }
 
+.order-prop button {
+    text-transform: capitalize;
+}
+
 .order-prop button svg {
     width: 100px;
     transition: all 0.2s linear;

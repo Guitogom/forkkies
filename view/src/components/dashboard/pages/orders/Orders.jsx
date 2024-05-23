@@ -11,7 +11,6 @@ export function Orders({ business, orders, setOrders }) {
 
     useEffect(() => {
         const fetchOrders = () => {
-            console.log('Fetching orders')
             if (localStorage.getItem('session_token') !== null) {
                 const token = localStorage.getItem('session_token')
                 fetch('https://api.forkkies.live/getorders', {

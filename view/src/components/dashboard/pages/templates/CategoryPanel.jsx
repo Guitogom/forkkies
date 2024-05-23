@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Loading } from '../../Loading.jsx'
 import { LoadingWithText } from '../../LoadingWithText.jsx';
+import cameraImage from '/src/assets/media/camera.webp'
 
 export function CategoryPanel() {
     const [loaded, setLoaded] = useState(false)
     const [loading2, setLoading2] = useState(true)
     const [categoryName, setCategoryName] = useState('')
-    const [backgroundImage, setBackgroundImage] = useState('/src/assets/media/camera.webp')
+    const [backgroundImage, setBackgroundImage] = useState(cameraImage)
     const [backgroundSize, setBackgroundSize] = useState('60px')
     const [inputBackground, setInputBackground] = useState('none')
     const [imagenAEnviar, setImageAEnviar] = useState('')
