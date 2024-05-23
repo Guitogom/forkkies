@@ -32,7 +32,8 @@
 .box:hover {
     box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25);
     /* background: linear-gradient(90deg, var(--primary-color) 0%, #E280FF 100%); */
-    animation: gradientTransition 1s forwards;
+    /* animation: gradientTransition 1s forwards; */
+    background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
 }
 
 @keyframes gradientTransition {
@@ -52,7 +53,7 @@
 .box svg {
     scale: 5;
     fill: var(--secondary-color);
-    transition: all 0.2s linear;
+    /* transition: all 0.2s linear; */
 }
 
 .box:hover svg {
@@ -61,7 +62,7 @@
 
 .box h2 {
     color: var(--secondary-color);
-    transition: all 0.2s linear;
+    /* transition: all 0.2s linear; */
 }
 
 .box:hover h2 {
