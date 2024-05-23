@@ -1000,6 +1000,7 @@ async function getProductDetails(productId) {
 }
 
 async function getSpecialsForProduct(specialIds) {
+    console.log("specialIds:" + specialIds);
     const specials = [];
     //Recorremos los specialIds
     for (let specialId of specialIds) {
@@ -1016,6 +1017,8 @@ async function getSpecialsForProduct(specialIds) {
             if (result.rows.step_id) {
                 stepId = result.rows[0].step_id;
             }
+            console.log("name:" + name);
+            console.log("stepId:" + stepId);
         } catch (error) {
             console.error('Error al obtener los specials del producto:', error.message);
             throw new Error('Error al obtener los specials del producto: ' + error.message);
@@ -1058,9 +1061,7 @@ export async function getOrders(tag) {
             productDetails.extras = [];
 
             if (product.specials) {
-                console.log("product.specials: " + product.specials);
                 const specialIds = product.specials.split(',');
-                console.log("sepcial ids: " + specialIds);
                 const specials = await getSpecialsForProduct(specialIds);
 
                 for (let special of specials) {
