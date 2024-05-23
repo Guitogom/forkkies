@@ -1010,6 +1010,8 @@ async function getSpecialsForProduct(specialIds) {
         console.error('Error al obtener los specials del producto:', error.message);
         throw new Error('Error al obtener los specials del producto: ' + error.message);
     }
+    console.log(specialIds+":"+specials);
+
     //Obtenemos el type del step
     for (var i = 0; i < specials.length; i++) {
         try {
@@ -1023,7 +1025,6 @@ async function getSpecialsForProduct(specialIds) {
             throw new Error('Error al obtener el type del step: ' + error.message);
         }
     }
-    console.log(specials);
     return specials;
 }
 
