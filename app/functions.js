@@ -1000,11 +1000,12 @@ async function getProductDetails(productId) {
 }
 
 async function getSpecialsForProduct(specialIds) {
-    const specials = [];
+    console.log("specialIds:" + specialIds);
+    var specials = [];
     //Recorremos los specialIds
     for (let specialId of specialIds) {
         try {
-            const result = await db.execute({
+            var result = await db.execute({
                 sql: 'SELECT name, step_id FROM special WHERE id = :specialId',
                 args: { specialId }
             });
@@ -1024,7 +1025,7 @@ async function getSpecialsForProduct(specialIds) {
         }
         //Obtenemos el type del step            var name = "";
         try {
-            const result = await db.execute({
+            var result = await db.execute({
                 sql: 'SELECT type FROM step WHERE id = :stepId',
                 args: { stepId }
             });
@@ -1061,7 +1062,6 @@ export async function getOrders(tag) {
 
             if (product.specials) {
                 var specialIds = product.specials.split(',');
-                console.log("specialIds1:" + specialIds[1]);
                 var specials = await getSpecialsForProduct(specialIds);
 
                 for (let special of specials) {
