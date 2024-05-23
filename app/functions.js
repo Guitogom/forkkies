@@ -960,47 +960,6 @@ export async function newOrder(order) {
     }
 }
 
-export async function getOrders(tag) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const businessId = await getBusinessId(tag);
-    const orders = await getOrdersByBusinessId(businessId, today);
-
-    for (let order of orders) {
-        const products = await getProductsForOrder(order.id);
-        order.products = [];
-
-        for (let product of products) {
-            const productDetails = await getProductDetails(product.product_id);
-            productDetails.unit_price = product.unit_price;
-            productDetails.quantity = product.quantity;
-            productDetails.specials = product.specials;
-
-            const specialIds = product.specials.split(',');
-            const specials = await getSpecialsForProduct(specialIds);
-
-            productDetails.options = [];
-            productDetails.deletables = [];
-            productDetails.extras = [];
-
-            for (let special of specials) {
-                if (special.type === 1) {
-                    productDetails.options.push(special.name);
-                } else if (special.type === 2) {
-                    productDetails.deletables.push(special.name);
-                } else if (special.type === 3) {
-                    productDetails.extras.push(special.name);
-                }
-            }
-
-            order.products.push(productDetails);
-        }
-    }
-
-    return { orders };
-}
-
 async function getOrdersByBusinessId(businessId, today) {
     try {
         const result = await db.execute({
@@ -1051,4 +1010,45 @@ async function getSpecialsForProduct(specialIds) {
         console.error('Error al obtener los specials del producto:', error.message);
         throw new Error('Error al obtener los specials del producto: ' + error.message);
     }
+}
+
+export async function getOrders(tag) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const businessId = await getBusinessId(tag);
+    const orders = await getOrdersByBusinessId(businessId, today);
+
+    for (let order of orders) {
+        const products = await getProductsForOrder(order.id);
+        order.products = [];
+
+        for (let product of products) {
+            const productDetails = await getProductDetails(product.product_id);
+            productDetails.unit_price = product.unit_price;
+            productDetails.quantity = product.quantity;
+            productDetails.specials = product.specials;
+
+            const specialIds = product.specials.split(',');
+            const specials = await getSpecialsForProduct(specialIds);
+
+            productDetails.options = [];
+            productDetails.deletables = [];
+            productDetails.extras = [];
+
+            for (let special of specials) {
+                if (special.type === 1) {
+                    productDetails.options.push(special.name);
+                } else if (special.type === 2) {
+                    productDetails.deletables.push(special.name);
+                } else if (special.type === 3) {
+                    productDetails.extras.push(special.name);
+                }
+            }
+
+            order.products.push(productDetails);
+        }
+    }
+
+    return { orders };
 }
