@@ -1009,7 +1009,10 @@ async function getSpecialsForProduct(specialIds) {
                 sql: 'SELECT name, step_id FROM special WHERE id = :specialId',
                 args: { specialId }
             });
-            var name = result.rows[0].name;
+            var name = "";
+            if (result.rows.name) {
+                name = result.rows[0].name;
+            }
             var stepId = result.rows[0].step_id;
         } catch (error) {
             console.error('Error al obtener los specials del producto:', error.message);
