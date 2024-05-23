@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import '../../styles/Landing.css'
 import { BackArrow } from '../../assets/svg/BackArrow.jsx'
 import { useEffect } from 'react'
+import arrow from '/src/assets/media/arrow.svg';
 
 export function Landing() {
     useEffect(() => {
@@ -45,7 +46,7 @@ export function Landing() {
                     <h1 className='title-landing'>FORKKIES</h1>
                     <h3 className='subtitle-landing'>Self-service online orders</h3>
                     <Link to='/register' className='get-started-landing'>Get Started <BackArrow /></Link>
-                    <div className='login-message-landing'>You already have an account?<img className='arrow-landing' src="/src/assets/media/arrow.svg" alt="uwu" /></div>
+                    <div className='login-message-landing'>You already have an account?<img className='arrow-landing' src={arrow} alt="uwu" /></div>
                     <Link to='/login' className='log-in-landing'>Log In</Link>
                     <h3 className='message-landing'>START NOW FOR FREE</h3>
                     <div className='actions'>
