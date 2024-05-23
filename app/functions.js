@@ -960,58 +960,6 @@ export async function newOrder(order) {
     }
 }
 
-async function getOrdersByBusinessId(businessId, today) {
-    try {
-        const result = await db.execute({
-            sql: 'SELECT * FROM order_table WHERE business_id = :businessId AND date > :today',
-            args: { businessId, today }
-        });
-        return result.rows;
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
-}
-
-async function getProductsForOrder(orderId) {
-    try {
-        const result = await db.execute({
-            sql: 'SELECT product_id, unit_price, quantity, specials FROM order_product WHERE order_id = :orderId',
-            args: { orderId }
-        });
-        return result.rows;
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
-}
-
-async function getProductDetails(productId) {
-    try {
-        const result = await db.execute({
-            sql: 'SELECT name, img FROM product WHERE id = :productId',
-            args: { productId }
-        });
-        return result.rows[0];
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
-}
-
-async function getSpecialsForProduct(specialIds) {
-    try {
-        const result = await db.execute({
-            sql: 'SELECT name, type FROM special WHERE id IN (:specialIds)',
-            args: { specialIds }
-        });
-        return result.rows;
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
-    }
-}
-
 export async function getOrders(tag) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -1051,4 +999,56 @@ export async function getOrders(tag) {
     }
 
     return { orders };
+}
+
+async function getOrdersByBusinessId(businessId, today) {
+    try {
+        const result = await db.execute({
+            sql: 'SELECT * FROM order_table WHERE business_id = :businessId AND date > :today',
+            args: { businessId, today }
+        });
+        return result.rows;
+    } catch (error) {
+        console.error('Error al obtener los orders:', error.message);
+        throw new Error('Error al obtener los orders: ' + error.message);
+    }
+}
+
+async function getProductsForOrder(orderId) {
+    try {
+        const result = await db.execute({
+            sql: 'SELECT product_id, unit_price, quantity, specials FROM order_product WHERE order_id = :orderId',
+            args: { orderId }
+        });
+        return result.rows;
+    } catch (error) {
+        console.error('Error al obtener los products de un order:', error.message);
+        throw new Error('Error al obtener los products de un order: ' + error.message);
+    }
+}
+
+async function getProductDetails(productId) {
+    try {
+        const result = await db.execute({
+            sql: 'SELECT name, img FROM product WHERE id = :productId',
+            args: { productId }
+        });
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error al obtener los detalles del producto:', error.message);
+        throw new Error('Error al obtener los detalles del producto: ' + error.message);
+    }
+}
+
+async function getSpecialsForProduct(specialIds) {
+    try {
+        const result = await db.execute({
+            sql: 'SELECT name, type FROM special WHERE id IN (:specialIds)',
+            args: { specialIds }
+        });
+        return result.rows;
+    } catch (error) {
+        console.error('Error al obtener los specials del producto:', error.message);
+        throw new Error('Error al obtener los specials del producto: ' + error.message);
+    }
 }

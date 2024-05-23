@@ -1482,13 +1482,13 @@ app.get('/loadbusiness', async (req, res) => {
  *   description: Order related endpoints
  */
 
+
 /**
  * @swagger
  * /neworder:
  *   post:
- *     summary: Crea un nuevo pedido.
- *     description: Inserta un nuevo pedido en la base de datos junto con sus productos y especiales.
- *     tags: [Orders]
+ *     summary: Crear un nuevo pedido.
+ *     description: Crea un nuevo pedido con los productos y opciones seleccionadas.
  *     requestBody:
  *       required: true
  *       content:
@@ -1498,17 +1498,16 @@ app.get('/loadbusiness', async (req, res) => {
  *             properties:
  *               business_id:
  *                 type: integer
- *                 description: ID del negocio al que pertenece el pedido.
+ *                 description: ID del negocio.
+ *                 example: 1
  *               total:
  *                 type: number
  *                 description: Total del pedido.
+ *                 example: 100.50
  *               name:
  *                 type: string
- *                 description: Nombre del pedido.
- *               date:
- *                 type: string
- *                 format: date
- *                 description: Fecha del pedido en formato YYYY-MM-DD.
+ *                 description: Nombre del cliente.
+ *                 example: John Doe
  *               products:
  *                 type: array
  *                 items:
@@ -1517,21 +1516,46 @@ app.get('/loadbusiness', async (req, res) => {
  *                     id:
  *                       type: integer
  *                       description: ID del producto.
+ *                       example: 1
  *                     unit_price:
  *                       type: number
  *                       description: Precio unitario del producto.
+ *                       example: 25.00
  *                     quantity:
  *                       type: integer
  *                       description: Cantidad del producto.
+ *                       example: 2
  *                     specials:
- *                       type:string
- *                       description: Especiales seleccionados para el producto.
+ *                       type: string
+ *                       description: Combinación de opciones especiales del producto.
+ *                       example: "1,2,3"
  *     responses:
  *       200:
  *         description: Pedido creado exitosamente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: object
+ *                   properties:
+ *                     order_id:
+ *                       type: integer
+ *                       description: ID del pedido creado.
+ *                       example: 1
  *       500:
- *         description: Error al añadir orden.
+ *         description: Error al crear el pedido.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Error al insertar el pedido: [detalles del error]
  */
+
 
 
 app.post('/neworder', async (req, res) => {
