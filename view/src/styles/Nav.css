@@ -5,7 +5,8 @@
     padding: 20px;
     /* background-color: var(--primary-color); */
     background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
-    height: 110px;
+    /* height: 110px; */
+    height: 90px;
     width: 100%;
     display: flex;
     justify-content: center;

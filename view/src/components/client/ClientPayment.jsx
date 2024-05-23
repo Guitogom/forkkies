@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { PayCard } from '../../assets/svg/PayCard.jsx'
 
-export function ClientPayment({ cart, setCart, primartyColor, secondaryColor, themeColor, template, orderPrice }) {
+export function ClientPayment({ cart, setCart, primaryColor, secondaryColor, themeColor, template, orderPrice }) {
     console.log(cart)
 
     const [clientName, setClientName] = useState('')
@@ -72,8 +72,10 @@ export function ClientPayment({ cart, setCart, primartyColor, secondaryColor, th
 
     return (
         <div className='client-payment'>
-            <h3>Payment</h3>
-            <input type="text" placeholder='Name' className='client-payment-name-input' />
+            <h3 style={{ color: secondaryColor }}>Payment</h3>
+            <p style={{ color: secondaryColor }}>How do we address to you?</p>
+            <input type="text" placeholder='Name' className='client-payment-name-input' onChange={(e) => setClientName(e.target.value)} style={{ backgroundColor: themeColor, color: secondaryColor, border: `1px solid ${secondaryColor}` }} />
+            <p style={{ color: secondaryColor }}>Choose your payment method</p>
             <div className="client-payment-methods">
                 <button onClick={payCash}>Cash</button>
                 <button><PayCard />

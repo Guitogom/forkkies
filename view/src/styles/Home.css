@@ -31,7 +31,22 @@
 
 .box:hover {
     box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25);
-    background: linear-gradient(90deg, var(--primary-color) 0%, #E280FF 100%);
+    /* background: linear-gradient(90deg, var(--primary-color) 0%, #E280FF 100%); */
+    animation: gradientTransition 1s forwards;
+}
+
+@keyframes gradientTransition {
+    0% {
+        background: #f1f1f1;
+    }
+
+    80% {
+        background-color: #5665c7;
+    }
+
+    100% {
+        background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
+    }
 }
 
 .box svg {

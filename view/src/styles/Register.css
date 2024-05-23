@@ -93,7 +93,8 @@
     border: 0;
     border-radius: 15px;
     font-size: 1.2rem;
-    background-color: #ff9900;
+    /* background-color: #ff9900; */
+    background-color: var(--primary-color);
     color: var(--white);
     font-family: var(--secondary-font);
     cursor: pointer;

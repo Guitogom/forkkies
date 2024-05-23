@@ -88,7 +88,7 @@ export function Client() {
                 </Routes>
                 <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} categories={template.categories} primaryColor={primaryColor} themeColor={themeColor} />
             </div>
-            <ClientFooter primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} orderPrice={orderPrice} />
+            <ClientFooter primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} orderPrice={orderPrice} cart={cart} />
         </main>
     )
 }

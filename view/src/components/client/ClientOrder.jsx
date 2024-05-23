@@ -22,15 +22,17 @@ export function ClientOrder({ cart, setCart, secondaryColor, primaryColor, theme
                     />
                 ))
             ) : (
-                <p>Your cart is empty.</p>
+                <p style={{ color: secondaryColor }}>Your cart is empty.</p>
             )}
             <div className='client-cart-total'>
                 <p style={{ color: secondaryColor }}>Total:</p>
                 <p style={{ color: secondaryColor }}>{formatPrice(orderPrice)}€</p>
             </div>
             {
-                cart.length > 0 && (
-                    <p>You can pay with the right lower button.</p>
+                cart.length > 0 ? (
+                    <p style={{ color: secondaryColor }}>You can pay with the right lower button.</p>
+                ) : (
+                    <p style={{ color: secondaryColor }}>You can't pay if your cart is empty.</p>
                 )
             }
         </section>
