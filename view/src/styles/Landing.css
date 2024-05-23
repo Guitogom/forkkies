@@ -47,6 +47,13 @@
     aspect-ratio: 1/1;
     background-color: #D9D9D9;
     border-radius: 5%;
+    overflow: hidden;
+}
+
+.box-landing img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .box-landing-four {
@@ -56,6 +63,7 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 10px;
+    overflow: hidden;
 }
 
 
@@ -63,6 +71,13 @@
     width: 100%;
     background-color: #D9D9D9;
     border-radius: 5%;
+    overflow: hidden;
+}
+
+.box-landing-cube img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 
@@ -97,12 +112,11 @@
 }
 
 .get-started-landing {
-    width: 250px;
-    height: 60px;
+    padding: 15px 25px;
     background-color: var(--primary-color);
     border-radius: 15px;
     border: none;
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-wrap: nowrap;
     font-weight: bold;
     color: #fff;
@@ -150,11 +164,9 @@
 }
 
 .log-in-landing {
-    width: 240px;
-    height: 50px;
-    padding: 10px;
+    padding: 10px 60px;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     font-weight: bold;
     /* background-color: var(--secondary-color); */
     background-color: #E280FF;
