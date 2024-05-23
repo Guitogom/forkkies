@@ -1000,7 +1000,7 @@ async function getProductDetails(productId) {
 }
 
 async function getSpecialsForProduct(specialIds) {
-    console.log(specialIds);
+    console.log("sepcial ids: "+specialIds);
     const specials = [];
     //Recorremos los specialIds
     for (let specialId of specialIds) {
