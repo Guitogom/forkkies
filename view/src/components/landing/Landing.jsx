@@ -102,30 +102,33 @@ export function Landing() {
             </div>
             <div className='features-landing'>
                 <h2>Why us?</h2>
-                <div className='feature-landing'>
-                    <img src={tick} alt="tick" />
-                    <p>Easy to deploy</p>
+                <div className="features-landing-grid">
+                    <div className='feature-landing'>
+                        <img src={tick} alt="tick" />
+                        <p>Easy to deploy</p>
+                    </div>
+                    <div className='feature-landing'>
+                        <img src={tick} alt="tick" />
+                        <p>High customization</p>
+                    </div>
+                    <div className='feature-landing'>
+                        <img src={tick} alt="tick" />
+                        <p>Multiple languages</p>
+                    </div>
+                    <div className='feature-landing'>
+                        <img src={tick} alt="tick" />
+                        <p>For all needs and businesses</p>
+                    </div>
+                    <div className='feature-landing'>
+                        <img src={tick} alt="tick" />
+                        <p>Tracking and analytics</p>
+                    </div>
+                    <div className='feature-landing'>
+                        <img src={tick} alt="tick" />
+                        <p>Secure and private paying options</p>
+                    </div>
                 </div>
-                <div className='feature-landing'>
-                    <img src={tick} alt="tick" />
-                    <p>High customitzation</p>
-                </div>
-                <div className='feature-landing'>
-                    <img src={tick} alt="tick" />
-                    <p>Multiple languages</p>
-                </div>
-                <div className='feature-landing'>
-                    <img src={tick} alt="tick" />
-                    <p>For all needs and businesses</p>
-                </div>
-                <div className='feature-landing'>
-                    <img src={tick} alt="tick" />
-                    <p>Tracking and analytics</p>
-                </div>
-                <div className='feature-landing'>
-                    <img src={tick} alt="tick" />
-                    <p>Secure and private paying options</p>
-                </div>
+
             </div>
         </main >
     )

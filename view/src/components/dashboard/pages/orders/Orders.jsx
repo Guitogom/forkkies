@@ -10,8 +10,6 @@ import { OrderProp } from "./OrderProp.jsx"
 export function Orders({ business, orders, setOrders }) {
     const navigate = useNavigate()
 
-    console.log(window.innerWidth)
-
     useEffect(() => {
         const fetchOrders = () => {
             if (localStorage.getItem('session_token') !== null) {
@@ -61,7 +59,7 @@ export function Orders({ business, orders, setOrders }) {
                 <div className="order-status-color"><div className="order-status-ball delivered-color"></div><p className="order-status-title">Delivered</p></div>
                 <div className="order-status-arrow"><NextArrowSVG /></div>
                 <div className="order-status-color"><div className="order-status-ball canceled-color"></div><p className="order-status-title">Canceled</p></div>
-            </div >
+            </div>
             <div className="order-table">
                 <div className="order-titles">
                     <p>ID</p>
@@ -79,6 +77,6 @@ export function Orders({ business, orders, setOrders }) {
                     <p>No orders to display</p>
                 )}
             </div>
-        </section >
+        </section>
     )
 }

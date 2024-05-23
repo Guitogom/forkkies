@@ -2,6 +2,7 @@ import { PlaySVG } from "../../../../assets/svg/PlaySVG.jsx"
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import { NextArrowSVG } from "../../../../assets/svg/NextArrowSVG.jsx"
+import { OrderDetailsProp } from "./OrderDetailsProp.jsx"
 
 export function OrderProp({ order }) {
     const date = new Date(order.date).toLocaleString()
@@ -99,13 +100,22 @@ export function OrderProp({ order }) {
     }
 
     return (
-        <div className={`order-prop ${getStatusText(status)}-color`}>
-            <p>#{order.id}</p>
-            <p>{date}</p>
-            <p>{order.name}</p>
-            <p>{formatPrice(order.total)}€</p>
-            <button onClick={handleClick} className="order-prop-status-button">{getStatusText(status)}<NextArrowSVG /></button>
-            <button onClick={() => setOpen(!open)} className="order-prop-open-button"><PlaySVG rotation={open ? '90deg' : '0deg'} /></button>
+        <div>
+            <div className={`order-prop ${getStatusText(status)}-color`}>
+                <p>#{order.id}</p>
+                <p>{date}</p>
+                <p>{order.name}</p>
+                <p>{formatPrice(order.total)}€</p>
+                <button onClick={handleClick} className="order-prop-status-button">{getStatusText(status)}<NextArrowSVG /></button>
+                <button onClick={() => setOpen(!open)} className="order-prop-open-button"><PlaySVG rotation={open ? '90deg' : '0deg'} /></button>
+            </div>
+            {order.products.length > 0 && (
+                <div className="order-prop-details" style={{ height: open ? `${200 * order.products.length}px` : '0' }}>
+                    {order.products.map(product => (
+                        <OrderDetailsProp key={product.id} product={product} />
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
