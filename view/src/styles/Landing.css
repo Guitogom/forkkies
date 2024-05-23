@@ -119,6 +119,10 @@
     padding: 80px 0px;
 }
 
+.title-landing::selection {
+    background: none;
+}
+
 .subtitle-landing {
     text-align: center;
     font-size: 3rem;
@@ -130,7 +134,8 @@
 
 .get-started-landing {
     padding: 15px 25px;
-    background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);;
+    background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
+    ;
     border-radius: 15px;
     border: none;
     font-size: 2rem;
@@ -213,12 +218,13 @@
     position: relative;
     width: 80%;
     border-radius: 10px;
-    padding-bottom: 45%; /* 16:9 Aspect Ratio */
+    padding-bottom: 45%;
+    /* 16:9 Aspect Ratio */
     height: 0;
     overflow: hidden;
 }
 
-.advise-landing iframe{
+.advise-landing iframe {
     border: none;
     position: absolute;
     top: 0;
@@ -227,8 +233,8 @@
     height: 100%;
 }
 
-.actions {
-    margin: 100px;
+.actions-landing {
+    margin: 200px;
 }
 
 .action-landing {
@@ -237,18 +243,75 @@
     font-weight: 900;
 }
 
+.action-landing::selection {
+    background: none;
+}
+
 .action1-landing {
-    color: #34CF5F;
+    background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translatex(-40%);
 }
 
 .action2-landing {
-    color: #4382E1;
+    background: linear-gradient(90deg, #3459D6 0%, #9ECBEF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translatex(-15%);
 }
 
 .action3-landing {
-    color: #F19C5E;
+    background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translatex(15%);
 }
 
 .action4-landing {
-    color: #952DE7;
+    background: linear-gradient(90deg, #3459D6 0%, #9ECBEF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translatex(80%);
+}
+
+.features-landing {
+    display: flex;
+    width: 100vw;
+    min-height: 50vh;
+    padding: 50px;
+    padding-bottom: 150px;
+    background-color: white;
+    z-index: 2;
+    position: relative;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    flex-wrap: wrap;
+}
+
+.features-landing h2 {
+    font-size: 6rem;
+    color: var(--secondary-color);
+    width: 100%;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.feature-landing {
+    width: 50%;
+    display: flex;
+    padding: 20px 0px;
+    justify-content: center;
+}
+
+.feature-landing img {
+    width: 50px;
+    height: 50px;
+}
+
+.feature-landing p {
+    font-size: 2rem;
+    font-weight: 900;
+    font-family: var(--primary-font);
+    color: #3C3C3C;
+    margin-left: 20px;
 }

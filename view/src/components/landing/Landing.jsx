@@ -14,6 +14,7 @@ import i8 from '/src/assets/media/c_img/i8.jpeg';
 import i9 from '/src/assets/media/c_img/i9.jpeg';
 import i10 from '/src/assets/media/c_img/i10.jpeg';
 import i11 from '/src/assets/media/c_img/i11.jpeg';
+import tick from '/src/assets/media/tick.svg';
 
 export function Landing() {
     useEffect(() => {
@@ -63,7 +64,7 @@ export function Landing() {
                     <div className='advise-landing'>
                         <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/V5icOAp9_RA?si=bE_1cpY5JhIYxbH9&amp;controls=0" title="Add" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
                     </div>
-                    <div className='actions'>
+                    <div className='actions-landing'>
                         <p className='action-landing action1-landing'>create</p>
                         <p className='action-landing action2-landing'>manage</p>
                         <p className='action-landing action3-landing'>customize</p>
@@ -97,6 +98,33 @@ export function Landing() {
                         <div className="box-landing"><img src={i7} alt='' /></div>
                         <div className="box-landing"><img src={i11} alt='' /></div>
                     </div>
+                </div>
+            </div>
+            <div className='features-landing'>
+                <h2>Why us?</h2>
+                <div className='feature-landing'>
+                    <img src={tick} alt="tick" />
+                    <p>Easy to deploy</p>
+                </div>
+                <div className='feature-landing'>
+                    <img src={tick} alt="tick" />
+                    <p>High customitzation</p>
+                </div>
+                <div className='feature-landing'>
+                    <img src={tick} alt="tick" />
+                    <p>Multiple languages</p>
+                </div>
+                <div className='feature-landing'>
+                    <img src={tick} alt="tick" />
+                    <p>For all needs and businesses</p>
+                </div>
+                <div className='feature-landing'>
+                    <img src={tick} alt="tick" />
+                    <p>Tracking and analytics</p>
+                </div>
+                <div className='feature-landing'>
+                    <img src={tick} alt="tick" />
+                    <p>Secure and private paying options</p>
                 </div>
             </div>
         </main >
