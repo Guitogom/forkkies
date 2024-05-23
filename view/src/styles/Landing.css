@@ -266,7 +266,8 @@
 }
 
 .action-landing {
-    font-size: 3rem;
+    font-size: 6rem;
+    /* font-size: 3rem; */
     font-family: var(--primary-font);
     font-weight: 900;
 }
