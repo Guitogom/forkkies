@@ -1009,28 +1009,31 @@ async function getSpecialsForProduct(specialIds) {
                 sql: 'SELECT name, step_id FROM special WHERE id = :specialId',
                 args: { specialId }
             });
-            var name = "";
             if (result.rows.name) {
-                name = result.rows[0].name;
+                var name = result.rows[0].name;
             }
-            var stepId = result.rows[0].step_id;
+            if (result.rows.step_id) {
+                var stepId = result.rows[0].step_id;
+            }
         } catch (error) {
             console.error('Error al obtener los specials del producto:', error.message);
             throw new Error('Error al obtener los specials del producto: ' + error.message);
         }
-        //Obtenemos el type del step
-        try {
-            const result = await db.execute({
-                sql: 'SELECT type FROM step WHERE id = :stepId',
-                args: { stepId }
-            });
-            var type = result.rows[0].type;
-        } catch (error) {
-            console.error('Error al obtener los type del step:', error.message);
-            throw new Error('Error al obtener los type del step: ' + error.message);
+        //Obtenemos el type del step            var name = "";
+        if (stepId != null && name != null) {
+            try {
+                const result = await db.execute({
+                    sql: 'SELECT type FROM step WHERE id = :stepId',
+                    args: { stepId }
+                });
+                var type = result.rows[0].type;
+            } catch (error) {
+                console.error('Error al obtener los type del step:', error.message);
+                throw new Error('Error al obtener los type del step: ' + error.message);
+            }
+            //Añadimos el special al array
+            specials.push({ name, type });
         }
-        //Añadimos el special al array
-        specials.push({ name, type });
     }
     return specials;
 }
