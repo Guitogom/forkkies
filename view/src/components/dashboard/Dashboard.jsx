@@ -19,6 +19,7 @@ import { ProductPanel } from "./pages/templates/ProductPanel.jsx"
 export function Dashboard() {
     const [loaded, setLoaded] = useState(false)
     const [business, setBusiness] = useState({})
+    const [orders, setOrders] = useState([])
 
     const navigate = useNavigate()
 
@@ -83,7 +84,7 @@ export function Dashboard() {
                     <Route path="/t/:id/:c_id" element={<Category />} />
                     <Route path="/t/:id/:c_id/pp/:p_id" element={<ProductPanel />} />
                     <Route path="/" element={<Home business={business} setBusiness={setBusiness} />} />
-                    <Route path="/orders" element={<Orders business={business} setBusiness={setBusiness} />} />
+                    <Route path="/orders" element={<Orders orders={orders} setOrders={setOrders} />} />
                     {/* <Route path="/analytics" element={<Analytics business={business} setBusiness={setBusiness} />} /> */}
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>

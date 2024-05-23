@@ -6,6 +6,10 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
     const { tag, categoryId, productId } = useParams()
     const navigate = useNavigate()
 
+    console.log(optionSpecials)
+    console.log(deletableSpecials)
+    console.log(extraSpecials)
+
     const calculateSpecialsPrice = (specials) => {
         let totalPriceChange = 0
         Object.values(specials).forEach((step) => {
@@ -71,8 +75,8 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
         const totalPrice = (product.price + totalPriceChange) * innerCart.quantity
 
         const newItem = {
-            category: product.category,
-            product: product.id,
+            category: categoryId,
+            product: productId,
             name: product.name,
             img: product.img,
             quantity: innerCart.quantity,

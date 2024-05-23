@@ -1,5 +1,6 @@
 .header-landing {
     display: flex;
+    background: linear-gradient(180deg, rgba(241, 241, 241, 0.959) 0%, #ffffff 100%);
 }
 
 .side-landing {
@@ -9,11 +10,11 @@
     overflow: hidden;
 }
 
-.side-landing:hover .scroll-landing{
+.side-landing:hover .scroll-landing {
     animation-play-state: paused;
 }
 
-.scroll-landing{
+.scroll-landing {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,7 +27,8 @@
     from {
         transform: translateY(0);
     }
-    to{
+
+    to {
         transform: translateY(-100%);
     }
 }
@@ -77,7 +79,10 @@
 .title-landing {
     font-size: 10rem;
     font-weight: bold;
-    color: #3C3C3C;
+    /* color: #3C3C3C; */
+    background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-family: var(--primary-font);
     padding: 80px 0px;
 }
@@ -118,7 +123,7 @@
     transition: all 0.3s;
 }
 
-.login-message-landing{
+.login-message-landing {
     color: var(--secondary-color);
     font-weight: 700;
     font-size: 1.1rem;
@@ -126,7 +131,7 @@
     margin-bottom: 90px;
 }
 
-.arrow-landing{
+.arrow-landing {
     position: absolute;
     transform: translate(10px, 15px);
     height: 120px;
@@ -161,7 +166,7 @@
     text-decoration: none;
 }
 
-.message-landing{
+.message-landing {
     text-align: center;
     margin: 90px;
     font-size: 4rem;
@@ -170,28 +175,28 @@
     font-family: var(--primary-font);
 }
 
-.actions{
-    margin-bottom: 100px ;
+.actions {
+    margin-bottom: 100px;
 }
 
-.action-landing{
+.action-landing {
     font-size: 3rem;
     font-family: var(--primary-font);
     font-weight: 900;
 }
 
-.action1-landing{
+.action1-landing {
     color: #34CF5F;
 }
 
-.action2-landing{
+.action2-landing {
     color: #4382E1;
 }
 
-.action3-landing{
+.action3-landing {
     color: #F19C5E;
 }
 
-.action4-landing{
+.action4-landing {
     color: #952DE7;
 }

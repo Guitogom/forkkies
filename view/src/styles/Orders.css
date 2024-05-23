@@ -1,0 +1,81 @@
+.order-titles {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    font-weight: bold;
+    color: #000;
+    border-bottom: 1px solid #000;
+    font-size: 1.5rem;
+    padding: 5px;
+    text-align: center;
+}
+
+.order-prop {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    height: 100px;
+}
+
+.order-prop p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #000;
+    font-family: var(--secondary-font);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.order-prop button svg {
+    width: 100px;
+    transition: all 0.2s linear;
+}
+
+.order-colors {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    place-content: center;
+    align-items: center;
+}
+
+.order-status-color {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.order-status-ball {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.pending-color {
+    background-color: #ED86FE;
+}
+
+.payed-color {
+    background-color: #A6F19A;
+}
+
+.ready-color {
+    background-color: #9AD7F1;
+}
+
+.delivered-color {
+    background-color: #BDC2BC;
+}
+
+.canceled-color {
+    background-color: #FD7373;
+}
+
+.order-status-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #000;
+    font-family: var(--secondary-font);
+}

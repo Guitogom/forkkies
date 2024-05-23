@@ -2,9 +2,8 @@ import { useState } from 'react'
 import { PayCard } from '../../assets/svg/PayCard.jsx'
 
 export function ClientPayment({ cart, setCart, primaryColor, secondaryColor, themeColor, template, orderPrice }) {
-    console.log(cart)
 
-    const [clientName, setClientName] = useState('')
+    const [clientName, setClientName] = useState('Anonymous')
 
     const payCash = () => {
         const requestBody = {
