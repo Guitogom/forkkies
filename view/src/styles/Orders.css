@@ -12,7 +12,9 @@
 .order-prop {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    height: 100px;
+    /* height: 100px */
+    transition: all 0.2s linear;
+    padding: 5px;
 }
 
 .order-prop p {
@@ -30,17 +32,72 @@
     text-transform: capitalize;
 }
 
-.order-prop button svg {
+.order-prop-status-button {
+    width: 90%;
+    height: 80px;
+    margin: auto;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-family: var(--secondary-font);
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+}
+
+.order-prop-status-button svg {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    right: 30px;
+    top: 16px;
+    transition: all 0.2s linear;
+    transform: translateX(0);
+    opacity: 0;
+}
+
+@media (min-width: 1930px) {
+    .order-prop-status-button svg g path {
+        stroke: white;
+    }
+
+    .order-prop-status-button:hover svg {
+        transform: translateX(20px);
+        opacity: 1;
+    }
+}
+.order-prop-open-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.order-prop-open-button svg {
     width: 100px;
     transition: all 0.2s linear;
 }
 
 .order-colors {
+    width: 90%;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     gap: 5px;
     place-content: center;
     align-items: center;
+}
+
+.order-status-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
 }
 
 .order-status-color {
@@ -49,6 +106,11 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 30px;
+}
+
+.order-colors svg {
+    width: 30px;
+    height: 30px;
 }
 
 .order-status-ball {

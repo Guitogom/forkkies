@@ -2,12 +2,15 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Title } from "../../Title"
 import '../../../../styles/Orders.css'
+import { NextArrowSVG } from "../../../../assets/svg/NextArrowSVG.jsx"
 
 // Components
 import { OrderProp } from "./OrderProp.jsx"
 
 export function Orders({ business, orders, setOrders }) {
     const navigate = useNavigate()
+
+    console.log(window.innerWidth)
 
     useEffect(() => {
         const fetchOrders = () => {
@@ -50,10 +53,14 @@ export function Orders({ business, orders, setOrders }) {
             <Title title="Orders" text="Orders" />
             <div className="order-colors">
                 <div className="order-status-color"><div className="order-status-ball pending-color"></div><p className="order-status-title">Pending</p></div>
+                <div className="order-status-arrow"><NextArrowSVG /></div>
                 <div className="order-status-color"><div className="order-status-ball payed-color"></div><p className="order-status-title">Payed</p></div>
+                <div className="order-status-arrow"><NextArrowSVG /></div>
                 <div className="order-status-color"><div className="order-status-ball ready-color"></div><p className="order-status-title">Ready</p></div>
-                <div className="order-status-color"><div className="order-status-ball delivered-color"></div><p className="order-status-title">Delivered</p></div >
-                <div className="order-status-color"><div className="order-status-ball canceled-color"></div><p className="order-status-title">Canceled</p></div >
+                <div className="order-status-arrow"><NextArrowSVG /></div>
+                <div className="order-status-color"><div className="order-status-ball delivered-color"></div><p className="order-status-title">Delivered</p></div>
+                <div className="order-status-arrow"><NextArrowSVG /></div>
+                <div className="order-status-color"><div className="order-status-ball canceled-color"></div><p className="order-status-title">Canceled</p></div>
             </div >
             <div className="order-table">
                 <div className="order-titles">
