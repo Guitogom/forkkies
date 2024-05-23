@@ -932,7 +932,7 @@ async function fetchSpecialsForStep(step_id) {
 export async function newOrder(order) {
     //Creamos el order
     order.date = new Date();
-    console.log("business_id:"+order.business_id)
+    console.log("business_id:" + order.business_id)
     try {
         var result = await db.execute({
             sql: 'INSERT INTO order_table (business_id, total, name, date, status) VALUES (:business_id, :total, :name, :date, 0) RETURNING id',
