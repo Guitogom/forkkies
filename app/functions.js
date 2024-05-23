@@ -1057,7 +1057,7 @@ export async function getOrders(tag) {
             productDetails.deletables = [];
             productDetails.extras = [];
 
-            if (product.specials != null) {
+            if (product.specials) {
                 console.log("product.specials: " + product.specials);
                 const specialIds = product.specials.split(',');
                 console.log("sepcial ids: " + specialIds);
