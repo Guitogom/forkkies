@@ -1000,7 +1000,6 @@ async function getProductDetails(productId) {
 }
 
 async function getSpecialsForProduct(specialIds) {
-    console.log("sepcial ids: " + specialIds);
     const specials = [];
     //Recorremos los specialIds
     for (let specialId of specialIds) {
@@ -1059,7 +1058,9 @@ export async function getOrders(tag) {
             productDetails.extras = [];
 
             if (product.specials != null) {
+                console.log("product.specials: " + product.specials);
                 const specialIds = product.specials.split(',');
+                console.log("sepcial ids: " + specialIds);
                 const specials = await getSpecialsForProduct(specialIds);
 
                 for (let special of specials) {
