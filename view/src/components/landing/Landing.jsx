@@ -46,7 +46,7 @@ export function Landing() {
                     <h1 className='title-landing'>FORKKIES</h1>
                     <h3 className='subtitle-landing'>Self-service online orders</h3>
                     <Link to='/register' className='get-started-landing'>Get Started <BackArrow /></Link>
-                    <div className='login-message-landing'>You already have an account?<img className='arrow-landing' src={arrow} alt="uwu" /></div>
+                    <div className='login-message-landing'>You already have an account?<img className='arrow-landing' src={arrow} alt="Arrow" /></div>
                     <Link to='/login' className='log-in-landing'>Log In</Link>
                     <h3 className='message-landing'>START NOW FOR FREE</h3>
                     <div className='actions'>
