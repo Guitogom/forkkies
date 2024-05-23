@@ -1570,7 +1570,7 @@ app.post('/neworder', async (req, res) => {
 
 /**
  * @swagger
- * /getorders:
+ * /getordersssss:
  *   get:
  *     summary: Obtener pedidos.
  *     tags: [Orders]
