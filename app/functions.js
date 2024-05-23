@@ -932,7 +932,7 @@ async function fetchSpecialsForStep(step_id) {
 export async function newOrder(order) {
     //Creamos el order
     order.date = new Date();
-    console.log("business_id:"+order.business_id)
+    console.log("business_id:" + order.business_id)
     try {
         var result = await db.execute({
             sql: 'INSERT INTO order_table (business_id, total, name, date, status) VALUES (:business_id, :total, :name, :date, 0) RETURNING id',
@@ -968,8 +968,8 @@ async function getOrdersByBusinessId(businessId, today) {
         });
         return result.rows;
     } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
+        console.error('Error al obtener los orders:', error.message);
+        throw new Error('Error al obtener los orders: ' + error.message);
     }
 }
 
@@ -981,8 +981,8 @@ async function getProductsForOrder(orderId) {
         });
         return result.rows;
     } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
+        console.error('Error al obtener los products de un order:', error.message);
+        throw new Error('Error al obtener los products de un order: ' + error.message);
     }
 }
 
@@ -994,22 +994,50 @@ async function getProductDetails(productId) {
         });
         return result.rows[0];
     } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
+        console.error('Error al obtener los detalles del producto:', error.message);
+        throw new Error('Error al obtener los detalles del producto: ' + error.message);
     }
 }
 
 async function getSpecialsForProduct(specialIds) {
-    try {
-        const result = await db.execute({
-            sql: 'SELECT name, type FROM special WHERE id IN (:specialIds)',
-            args: { specialIds }
-        });
-        return result.rows;
-    } catch (error) {
-        console.error('Error en la base de datos:', error.message);
-        throw new Error('Error en la base de datos: ' + error.message);
+    console.log("specialIds:" + specialIds);
+    const specials = [];
+    //Recorremos los specialIds
+    for (let specialId of specialIds) {
+        try {
+            const result = await db.execute({
+                sql: 'SELECT name, step_id FROM special WHERE id = :specialId',
+                args: { specialId }
+            });
+            var name = "";
+            if (result.rows.name) {
+                name = result.rows[0].name;
+            }
+            var stepId = "";
+            if (result.rows.step_id) {
+                stepId = result.rows[0].step_id;
+            }
+            console.log("name:" + name);
+            console.log("stepId:" + stepId);
+        } catch (error) {
+            console.error('Error al obtener los specials del producto:', error.message);
+            throw new Error('Error al obtener los specials del producto: ' + error.message);
+        }
+        //Obtenemos el type del step            var name = "";
+        try {
+            const result = await db.execute({
+                sql: 'SELECT type FROM step WHERE id = :stepId',
+                args: { stepId }
+            });
+            var stype = result.rows[0].type;
+        } catch (error) {
+            console.error('Error al obtener los type del step:', error.message);
+            throw new Error('Error al obtener los type del step: ' + error.message);
+        }
+        //Añadimos el special al array
+        specials.push({ name, stype });
     }
+    return specials;
 }
 
 export async function getOrders(tag) {
@@ -1028,24 +1056,24 @@ export async function getOrders(tag) {
             productDetails.unit_price = product.unit_price;
             productDetails.quantity = product.quantity;
             productDetails.specials = product.specials;
-
-            const specialIds = product.specials.split(',');
-            const specials = await getSpecialsForProduct(specialIds);
-
             productDetails.options = [];
             productDetails.deletables = [];
             productDetails.extras = [];
 
-            for (let special of specials) {
-                if (special.type === 1) {
-                    productDetails.options.push(special.name);
-                } else if (special.type === 2) {
-                    productDetails.deletables.push(special.name);
-                } else if (special.type === 3) {
-                    productDetails.extras.push(special.name);
+            if (product.specials) {
+                const specialIds = product.specials.split(',');
+                const specials = await getSpecialsForProduct(specialIds);
+
+                for (let special of specials) {
+                    if (special.stype == 1) {
+                        productDetails.options.push(special.name);
+                    } else if (special.stype == 2) {
+                        productDetails.deletables.push(special.name);
+                    } else if (special.stype == 3) {
+                        productDetails.extras.push(special.name);
+                    }
                 }
             }
-
             order.products.push(productDetails);
         }
     }
