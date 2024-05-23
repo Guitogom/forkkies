@@ -1000,23 +1000,17 @@ async function getProductDetails(productId) {
 }
 
 async function getSpecialsForProduct(specialIds) {
-    console.log("specialId1:" + specialIds[0]);
     var specials = [];
     //Recorremos los specialIds
     for (let specialId of specialIds) {
+        console.log("specialId:" + specialId);
         try {
             var result = await db.execute({
                 sql: 'SELECT name, step_id FROM special WHERE id = :specialId',
                 args: { specialId }
             });
-            var name = "";
-            if (result.rows.name) {
-                name = result.rows[0].name;
-            }
-            var stepId = "";
-            if (result.rows.step_id) {
-                stepId = result.rows[0].step_id;
-            }
+            var name = result.rows[0].name;
+            var stepId = result.rows[0].step_id;
             console.log("name:" + name);
             console.log("stepId:" + stepId);
         } catch (error) {
