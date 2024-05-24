@@ -585,18 +585,20 @@
     flex-direction: column;
     gap: 20px;
     padding: 20px;
+    text-align: center;
 }
 
 .client-full-product-specials-flex {
     display: flex;
     gap: 20px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .client-full-product-specials-flex img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
     aspect-ratio: 1/1;
     border-radius: 10px;
