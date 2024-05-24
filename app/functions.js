@@ -9,7 +9,7 @@ dotenv.config();
 // Crear el cliente de la base de datos
 const db = createClient({
     url: "libsql://forkkies-guillem.turso.io",
-    authToken: "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MTY1NzMzNjYsImlkIjoiODY2NzViNGEtOWM1NC00NjZhLTg3YjUtNTAyYTRkZjk1MGRlIn0._7hPxvrAB9l6pU-Z4wUIhDA3vrm96w104edEuFCZgY6UOyPqVhcmlVtHWDj2-3gBpCzfLbS3_O5vzw9Kip_vCQ"
+    authToken: "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTY1Njc3ODUsImlkIjoiODk4YmJmM2ItNmZiOC00ZDZkLWJiMTUtZTI2NzI1YTE3MDM4In0.AACxDVprDSNRR9r_cO_W-EELHrqSDcDQeABJeUjJfPHuKs8XtsFmHX5Y-HyfOX0bihuj87KA1ig29QLdNJ6aAQ"
 });
 
 //Business

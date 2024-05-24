@@ -29,6 +29,7 @@ export function Orders({ business, orders, setOrders }) {
                     })
                     .then(orders => {
                         setOrders(orders.result.orders)
+                        console.log(orders.result.orders)
                     })
                     .catch(error => {
                         console.error('Error:', error.message)

@@ -49,22 +49,6 @@ export function OrderProp({ order }) {
         }
     }
 
-    const getPreviousStatus = (currentStatus) => {
-        switch (currentStatus) {
-            case '0':
-                return '4'
-            case '4':
-                return '3'
-            case '3':
-                return '2'
-            case '2':
-                return '1'
-            case '1':
-                return '0'
-            default:
-                return '0'
-        }
-    }
 
     const fetchStatus = () => {
         if (localStorage.getItem('session_token') !== null) {
