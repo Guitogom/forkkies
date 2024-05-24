@@ -1,11 +1,23 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { PayCard } from '../../assets/svg/PayCard.jsx'
 
-export function ClientPayment({ cart, setCart, primaryColor, secondaryColor, themeColor, template, orderPrice }) {
-
+export function ClientPayment({ cart, setCart, primaryColor, secondaryColor, themeColor, template, orderPrice, setOrderNumber }) {
+    const { tag } = useParams()
     const [clientName, setClientName] = useState('Anonymous')
+    const [fetching, setFetching] = useState(false)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (cart.length === 0) {
+            navigate(`/b/${tag}/categories`)
+        }
+    }, [])
 
     const payCash = () => {
+        if (fetching) return
+        setFetching(true)
+
         const requestBody = {
             business_id: template.id,
             total: orderPrice,
@@ -56,15 +68,19 @@ export function ClientPayment({ cart, setCart, primaryColor, secondaryColor, the
             .then(response => {
                 if (!response.ok) {
                     console.error('Error:', response.statusText)
+                    setFetching(false)
                 }
                 return response.json()
             })
             .then(response => {
                 localStorage.removeItem('cart')
                 setCart([])
+                setOrderNumber(response.result)
+                navigate(`/b/${tag}/pay/cash`)
             })
             .catch(error => {
                 console.error('Error:', error.message)
+                setFetching(false)
             })
     }
 

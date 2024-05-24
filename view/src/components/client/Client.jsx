@@ -14,6 +14,7 @@ import { ClientDisplayMenu } from "./ClientDisplayMenu.jsx"
 import { ClientOrder } from "./ClientOrder.jsx"
 import { ClientPayment } from "./ClientPayment.jsx"
 import { ClientStepHandler } from "./ClientStepHandler.jsx"
+import { ClientPayCash } from "./ClientPayCash.jsx"
 
 export function Client() {
     const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [])
@@ -21,6 +22,7 @@ export function Client() {
     const { tag } = useParams()
     const [loaded, setLoaded] = useState(false)
     const [template, setTemplate] = useState({})
+    const [orderNumber, setOrderNumber] = useState('We are getting your order number...')
 
     const [primaryColor, setPrimaryColor] = useState("#ADD861")
     const [secondaryColor, setSecondaryColor] = useState("#4D4D4D")
@@ -83,12 +85,13 @@ export function Client() {
                     <Route path='/c/:categoryId/sp/:productId' element={<ClientStepProduct categories={template.categories} secondaryColor={secondaryColor} primaryColor={primaryColor} cart={cart} setCart={setCart} themeColor={themeColor} />} />
                     <Route path='/c/:categoryId/sp/:productId/s' element={<ClientStepHandler categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} primaryColor={primaryColor} cart={cart} setCart={setCart} />} />
                     <Route path='/order' element={<ClientOrder cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} orderPrice={orderPrice} />} />
-                    <Route path='/pay' element={<ClientPayment cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} template={template} orderPrice={orderPrice} />} />
+                    <Route path='/pay' element={<ClientPayment setOrderNumber={setOrderNumber} cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} template={template} orderPrice={orderPrice} />} />
+                    <Route path='/pay/cash' element={<ClientPayCash orderNumber={orderNumber} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
                 </Routes>
-                <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} categories={template.categories} primaryColor={primaryColor} themeColor={themeColor} />
+                {window.location.pathname !== '/pay/cash' && <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} categories={template.categories} primaryColor={primaryColor} themeColor={themeColor} />}
             </div>
-            <ClientFooter primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} orderPrice={orderPrice} cart={cart} />
+            {window.location.pathname !== '/pay/cash' && <ClientFooter primaryColor={primaryColor} secondaryColor={secondaryColor} callToActionColor={callToActionColor} themeColor={themeColor} orderPrice={orderPrice} cart={cart} />}
         </main>
     )
 }

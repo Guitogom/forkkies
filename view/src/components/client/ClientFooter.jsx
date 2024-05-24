@@ -24,6 +24,8 @@ export function ClientFooter({ primaryColor, secondaryColor, callToActionColor, 
         navigate(`/b/${tag}/order`)
     }
 
+    if (window.location.pathname.includes(`/b/${tag}/pay/`)) return null
+
     const orderButton = (
         <button className="client-order" onClick={handleOrder} style={{ backgroundColor: secondaryColor, color: themeColor }}>
             <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill={themeColor} stroke="#000000">
