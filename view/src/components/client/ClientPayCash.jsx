@@ -15,7 +15,7 @@ export function ClientPayCash({ orderNumber, primaryColor, secondaryColor, theme
             </div>
             <div className="client-cash-payment-id">
                 <p style={{ color: secondaryColor }}>Your order number:</p>
-                <h3 style={{ color: secondaryColor }}>{orderNumber}</h3>
+                <h3 style={{ color: secondaryColor, fontSize: `${orderNumber === 'You did not order anything yet.' ? '24px' : '100px'}` }}>{orderNumber}</h3>
             </div>
         </div>
     )

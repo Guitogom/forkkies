@@ -6,10 +6,6 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
     const { tag, categoryId, productId } = useParams()
     const navigate = useNavigate()
 
-    console.log(optionSpecials)
-    console.log(deletableSpecials)
-    console.log(extraSpecials)
-
     const calculateSpecialsPrice = (specials) => {
         let totalPriceChange = 0
         Object.values(specials).forEach((step) => {
@@ -105,6 +101,51 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
                 <p className="client-full-product-description" style={{ color: secondaryColor }}>{product.description || 'Descripción del producto medianamente larga'}</p>
                 <hr className='client-hr' style={{ boxShadow: `0 0 10px ${secondaryColor}`, backgroundColor: `${secondaryColor}` }} />
             </div>
+            <div>
+                <div>
+                    {Object.keys(optionSpecials).map((key) => {
+                        const step = optionSpecials[key];
+                        return (
+                            <div key={key} className='client-full-product-specials'>
+                                <h3>Your prefer:</h3>
+                                <div className='client-full-product-specials-flex'>
+                                    {step.map((special) => (
+                                        <img src={`data:image/jpeg;base64,${special.img}`} alt={special.name} />
+                                    ))}
+                                </div>
+                            </div>
+                        )
+                    })}
+                    {Object.keys(deletableSpecials).map((key) => {
+                        const step = deletableSpecials[key];
+                        return (
+                            <div key={key} className='client-full-product-specials'>
+                                <h3>You don't want:</h3>
+                                <div className='client-full-product-specials-flex'>
+                                    {step.map((special) => (
+                                        <img src={`data:image/jpeg;base64,${special.img}`} alt={special.name} />
+                                    ))}
+                                </div>
+                            </div>
+                        )
+                    })}
+                    {Object.keys(extraSpecials).map((key) => {
+                        const step = extraSpecials[key];
+                        return (
+                            <div key={key} className='client-full-product-specials'>
+                                <h3>You also want:</h3>
+                                <div className='client-full-product-specials-flex'>
+                                    {step.map((special) => (
+                                        <img src={`data:image/jpeg;base64,${special.img}`} alt={special.name} />
+                                    ))}
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+                <button onClick={() => setCart([])}>Confirm</button>
+            </div>
+
             <div className="client-full-product-add-to-cart">
                 <div className='client-full-product-quantity-handler'>
                     <button className='client-full-product-add-to-cart-less' style={{ backgroundColor: secondaryColor, color: themeColor }} onClick={lessQuantity}>-</button>
@@ -119,51 +160,4 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
     )
 }
 
-
-// <div>
-//     <h1>Confirmation</h1>
-//     <h2>Review your order</h2>
-//     <div style={{ color: 'red' }}>
-//         {Object.keys(optionSpecials).map((key) => {
-//             const step = optionSpecials[key];
-//             return (
-//                 <div key={key}>
-//                     <h3>{step[0].title}</h3>
-//                     <ul>
-//                         {step.map((special) => (
-//                             <li key={special.id}>{special.name}</li>
-//                         ))}
-//                     </ul>
-//                 </div>
-//             );
-//         })}
-//         {Object.keys(deletableSpecials).map((key) => {
-//             const step = deletableSpecials[key];
-//             return (
-//                 <div key={key}>
-//                     <h3>{step[0].title}</h3>
-//                     <ul>
-//                         {step.map((special) => (
-//                             <li key={special.id}>{special.name}</li>
-//                         ))}
-//                     </ul>
-//                 </div>
-//             );
-//         })}
-//         {Object.keys(extraSpecials).map((key) => {
-//             const step = extraSpecials[key];
-//             return (
-//                 <div key={key}>
-//                     <h3>{step[0].title}</h3>
-//                     <ul>
-//                         {step.map((special) => (
-//                             <li key={special.id}>{special.name}</li>
-//                         ))}
-//                     </ul>
-//                 </div>
-//             );
-//         })}
-//     </div>
-//     <button onClick={() => setCart([])}>Confirm</button>
-// </div>
 

@@ -17,15 +17,15 @@ export function OrderProp({ order }) {
 
     const getStatusText = (status) => {
         switch (status) {
-            case '0':
+            case 0:
                 return "pending"
-            case '1':
+            case 1:
                 return "payed"
-            case '2':
+            case 2:
                 return "ready"
-            case '3':
+            case 3:
                 return "delivered"
-            case '4':
+            case 4:
                 return "canceled"
             default:
                 return "Do not touch"
@@ -34,18 +34,18 @@ export function OrderProp({ order }) {
 
     const getNextStatus = (currentStatus) => {
         switch (currentStatus) {
-            case '0':
-                return '1'
-            case '1':
-                return '2'
-            case '2':
-                return '3'
-            case '3':
-                return '4'
-            case '4':
-                return '0'
+            case 0:
+                return 1
+            case 1:
+                return 2
+            case 2:
+                return 3
+            case 3:
+                return 4
+            case 4:
+                return 0
             default:
-                return '0'
+                return 0
         }
     }
 
@@ -75,12 +75,14 @@ export function OrderProp({ order }) {
         }
     }
 
-    const debouncedFetchStatus = debounce(fetchStatus, 2000)
+    useEffect(() => {
+        const debouncedFetchStatus = debounce(fetchStatus, 1000)
+        debouncedFetchStatus()
+    }, [status])
 
     const handleClick = () => {
         const nextStatus = getNextStatus(status)
         setStatus(nextStatus)
-        debouncedFetchStatus()
     }
 
     return (

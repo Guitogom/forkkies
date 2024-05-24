@@ -7,7 +7,6 @@ export function ExtraStep({ step, primaryColor, actualSpecial, setActualSpecial 
         const selectedSpecials = selectedOptions.map(id => step.specials.find(special => special.id === id))
         setActualSpecial(selectedSpecials)
     }, [selectedOptions, step.specials, setActualSpecial])
-    console.log(step.specials)
 
     const handleOptionToggle = (option) => {
         setSelectedOptions((prevSelectedOptions) => {
