@@ -1026,6 +1026,7 @@ export async function newOrder(order) {
             throw new Error('Error al insertar el product: ' + error.message);
         }
     }
+    return order_id;
 }
 
 async function getOrdersByBusinessId(businessId, today) {
