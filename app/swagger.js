@@ -24,7 +24,7 @@ const specs = swaggerJsdoc(options);
 console.log('Swagger Docs generated:', specs);
 
 const swaggerDocs = (app) => {
-  app.use('/', swaggerUi.serve, swaggerUi.setup(specs));
+  app.use('/doc', swaggerUi.serve, swaggerUi.setup(specs));
 };
 
 export default swaggerDocs;
