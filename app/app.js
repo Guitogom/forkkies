@@ -695,12 +695,6 @@ app.get('/gettemplate', verificarToken, async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               tag:
- *                 type: string
- *                 description: El tag del negocio al que pertenece la propiedad.
- *               property:
- *                 type: object
- *                 properties:
  *                   name:
  *                     type: string
  *                     description: Nombre de la propiedad.
@@ -908,12 +902,6 @@ app.get('/deleteproductproperty', verificarToken, async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               tag:
- *                 type: string
- *                 description: El tag del negocio al que pertenece el template.
- *               body:
- *                 type: object
- *                 properties:
  *                   category:
  *                     type: object
  *                     properties:
@@ -1143,9 +1131,6 @@ app.get('/getcategory', verificarToken, async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               tag:
- *                 type: string
- *                 description: El tag del negocio al que pertenece la categoría.
  *               category_id:
  *                 type: integer
  *                 description: ID de la categoría a la que se va a modificar o añadir el producto.
