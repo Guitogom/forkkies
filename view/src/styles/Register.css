@@ -94,7 +94,8 @@
     border-radius: 15px;
     font-size: 1.2rem;
     /* background-color: #ff9900; */
-    background-color: var(--primary-color);
+    /* background-color: var(--primary-color); */
+    background: linear-gradient(90deg, #5665c7 0%, #E280FF 100%);
     color: var(--white);
     font-family: var(--secondary-font);
     cursor: pointer;
