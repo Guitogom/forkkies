@@ -8,7 +8,7 @@ dotenv.config();
 
 // Crear el cliente de la base de datos
 const db = createClient({
-    url: "libsql://forkkies-tumse.turso.io",
+    url: "libsql://forkkies-guillem.turso.io",
     authToken: process.env.DB_TOKEN
 });
 
