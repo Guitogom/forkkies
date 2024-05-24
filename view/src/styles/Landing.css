@@ -1,6 +1,6 @@
 .header-landing {
     display: flex;
-    background: linear-gradient(180deg, rgba(241, 241, 241, 0.959) 0%, #ffffff 100%);
+    background: linear-gradient(0deg, rgba(241, 241, 241, 0.959) 0%, #ffffff 100%);
 }
 
 .side-landing {
