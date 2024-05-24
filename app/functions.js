@@ -488,6 +488,72 @@ export async function getProperties(tag, property) {
     return { properties };
 }
 
+export async function addProductProperty(tag, body) {
+    var product_id = body.product_id;
+    var property_id = body.property_id;
+
+    //Obtenemos el id_template de la categoria
+    try {
+        var result = await db.execute({
+            sql: 'SELECT template_id FROM category WHERE id = (SELECT category_id FROM cat_product WHERE product_id = :product_id)',
+            args: { product_id }
+        });
+        var template_id = result.rows[0].template_id;
+    } catch (error) {
+        console.error('1Error en la base de datos:', error.message);
+        throw new Error('1Error en la base de datos: ' + error.message);
+    }
+
+    //Verificamos que el template pertenezca al negocio
+    if (!(await checkTemplateOwnership(tag, template_id))) {
+        throw new Error('Template no encontrado');
+    } else {
+        //Añadimos la propiedad al producto
+        try {
+            await db.execute({
+                sql: 'INSERT INTO product_properties (product_id, properties_id) VALUES (:product_id, :property_id)',
+                args: { product_id, property_id }
+            });
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+    }
+}
+
+export async function deleteProductProperty(tag, body) {
+    var product_id = body.product_id;
+    var property_id = body.property_id;
+
+    //Obtenemos el id_template de la categoria
+    try {
+        var result = await db.execute({
+            sql: 'SELECT template_id FROM category WHERE id = (SELECT category_id FROM cat_product WHERE product_id = :product_id)',
+            args: { product_id }
+        });
+        var template_id = result.rows[0].template_id;
+    } catch (error) {
+        console.error('1Error en la base de datos:', error.message);
+        throw new Error('1Error en la base de datos: ' + error.message);
+    }
+
+    //Verificamos que el template pertenezca al negocio
+    if (!(await checkTemplateOwnership(tag, template_id))) {
+        throw new Error('Template no encontrado');
+    } else {
+        //Eliminamos la propiedad del producto
+        try {
+            await db.execute({
+                sql: 'DELETE FROM product_properties WHERE product_id = :product_id AND properties_id = :property_id',
+                args: { product_id, property_id }
+            });
+        } catch (error) {
+            console.error('Error en la base de datos:', error.message);
+            throw new Error('Error en la base de datos: ' + error.message);
+        }
+    }
+}
+
 //Categories
 export async function newCategory(tag, body) {
     var category = body.category;
