@@ -1,6 +1,7 @@
 import { createClient } from '@libsql/client';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+const { getImagesFromFolder } = require('./imageUtils');
 
 dotenv.config();
 
@@ -552,6 +553,34 @@ export async function deleteProductProperty(tag, body) {
             throw new Error('Error en la base de datos: ' + error.message);
         }
     }
+}
+
+export async function addCollection(tag, collection_id) {
+    var template_id = body.template_id;
+
+    //Verificamos que el template pertenezca al negocio
+    if (!(await checkTemplateOwnership(tag, template_id))) {
+        throw new Error('Template no encontrado');
+    } else {
+        var folderPath = '';
+        switch (collection_id) {
+            case 1:
+                folderPath = './src/allergens';
+                break;
+            default:
+                throw new Error('Collection no encontrada');
+                break;
+        }
+        getImagesFromFolder(folderPath)
+            .then(imagesArray => {
+                console.log(imagesArray);
+            })
+            .catch(err => {
+                console.error('Error reading images folder:', err);
+            });
+    }
+
+
 }
 
 //Categories

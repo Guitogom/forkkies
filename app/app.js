@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
+import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, addCollection, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
 import swaggerDocs from './swagger.js';
 
 const app = express();
@@ -1721,6 +1721,17 @@ app.post('/modifyorderstatus', verificarToken, async (req, res) => {
     } catch (error) {
         console.error('Error al modificar estado de orden:', error.message);
         res.status(500).json({ error: 'Error al modificar estado de orden' });
+    }
+});
+
+app.get('/addcollection', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await addCollection(tag, req.query.id);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al añadir colección:', error.message);
+        res.status(500).json({ error: 'Error al añadir colección' });
     }
 });
 
