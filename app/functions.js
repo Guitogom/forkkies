@@ -564,7 +564,8 @@ export async function addCollection(tag, collection_id) {
     console.log(collection_id);
     var folderPath = '';
     switch (collection_id) {
-        case 1:
+        case "1":
+            console.log('1');
             folderPath = './src/allergens';
             break;
         default:
