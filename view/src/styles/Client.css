@@ -624,6 +624,11 @@
     text-align: center;
 }
 
+.client-payment-name-input:focus {
+    outline: none;
+    box-shadow: inset 0 2px 5px rgb(14, 14, 14);
+}
+
 .client-payment-methods {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
