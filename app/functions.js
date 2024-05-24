@@ -559,31 +559,25 @@ export async function deleteProductProperty(tag, body) {
 }
 
 export async function addCollection(tag, collection_id) {
-    var template_id = body.template_id;
+    //Obtenemos el id del negocio
+    var business_id = await getBusinessId(tag);
 
-    //Verificamos que el template pertenezca al negocio
-    if (!(await checkTemplateOwnership(tag, template_id))) {
-        throw new Error('Template no encontrado');
-    } else {
-        var folderPath = '';
-        switch (collection_id) {
-            case 1:
-                folderPath = './src/allergens';
-                break;
-            default:
-                throw new Error('Collection no encontrada');
-                break;
-        }
-        getImagesFromFolder(folderPath)
-            .then(imagesArray => {
-                console.log(imagesArray);
-            })
-            .catch(err => {
-                console.error('Error reading images folder:', err);
-            });
+    var folderPath = '';
+    switch (collection_id) {
+        case 1:
+            folderPath = './src/allergens';
+            break;
+        default:
+            throw new Error('Collection no encontrada');
+            break;
     }
-
-
+    getImagesFromFolder(folderPath)
+        .then(imagesArray => {
+            console.log(imagesArray);
+        })
+        .catch(err => {
+            console.error('Error reading images folder:', err);
+        });
 }
 
 //Categories
