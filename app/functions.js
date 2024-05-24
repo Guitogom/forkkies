@@ -9,8 +9,7 @@ dotenv.config();
 // Crear el cliente de la base de datos
 const db = createClient({
     url: "libsql://forkkies-guillem.turso.io",
-    // authToken: process.env.DB_TOKEN
-    authToken: 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MTY1NzMzNjYsImlkIjoiODY2NzViNGEtOWM1NC00NjZhLTg3YjUtNTAyYTRkZjk1MGRlIn0._7hPxvrAB9l6pU-Z4wUIhDA3vrm96w104edEuFCZgY6UOyPqVhcmlVtHWDj2-3gBpCzfLbS3_O5vzw9Kip_vCQ'
+    authToken: process.env.DB_TOKEN
 });
 
 //Business
@@ -73,7 +72,7 @@ export async function newBusiness(business) {
         throw new Error('Campos incorrectos: ' + incorrect_field);
     }
     //Se genera un jwt con el tag del negocio
-    var token = jwt.sign({ tag: business.tag }, 'e1808226ed8abe91650ce81564496c478720229483e64f5523e950ea9d7ae6c6');
+    var token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
     return token;
 };
 
@@ -88,7 +87,7 @@ export function verificarToken(req, res, next) {
 
     try {
         // Verificar el token y decodificar su contenido
-        var decoded = jwt.verify(token, 'e1808226ed8abe91650ce81564496c478720229483e64f5523e950ea9d7ae6c6');
+        var decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.tag = decoded.tag;
         // Continuar con la ejecución del siguiente middleware o controlador
         next();
@@ -111,7 +110,7 @@ export async function logBusiness(business) {
             throw new Error('Usuario o contraseña incorrectos');
         }
 
-        let token = jwt.sign({ tag: business.tag }, 'e1808226ed8abe91650ce81564496c478720229483e64f5523e950ea9d7ae6c6');
+        let token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
         return token;
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
