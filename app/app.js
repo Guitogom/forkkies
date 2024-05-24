@@ -1571,8 +1571,9 @@ app.get('/loadbusiness', async (req, res) => {
  *               properties:
  *                 error:
  *                   type: string
- *                   example: Error al insertar el pedido: [detalles del error]
+ *                   example: Error al insertar el pedido: detalles del error
  */
+
 
 
 
