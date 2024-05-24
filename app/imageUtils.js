@@ -1,5 +1,8 @@
+console.log('importando fs');
 import fs from 'fs';
+console.log('importando path');
 import path from 'path';
+console.log('todo importado');
 
 const getImagesFromFolder = (folderPath) => {
   return new Promise((resolve, reject) => {

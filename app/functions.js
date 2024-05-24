@@ -1,6 +1,10 @@
 import { createClient } from '@libsql/client';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+console.log('Importando imageUtils.js');
+import { getImagesFromFolder } from './imageUtils.js';
+console.log('Importado');
+
 
 dotenv.config();
 
