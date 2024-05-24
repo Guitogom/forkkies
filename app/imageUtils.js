@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const getImagesFromFolder = (folderPath) => {
   return new Promise((resolve, reject) => {
@@ -30,4 +30,4 @@ const getImagesFromFolder = (folderPath) => {
   });
 };
 
-module.exports = { getImagesFromFolder };
+export { getImagesFromFolder };
