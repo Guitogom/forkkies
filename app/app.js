@@ -19,6 +19,11 @@ app.use(cors());
 
 swaggerDocs(app);
 
+//Test
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
 /**
  * @swagger
  * tags:
@@ -58,6 +63,7 @@ swaggerDocs(app);
 *                 error:
 *                   type: string
 */
+
 
 //Business
 app.get('/verifytag', async (req, res) => {
