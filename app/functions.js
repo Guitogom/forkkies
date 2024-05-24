@@ -445,10 +445,11 @@ export async function newProperty(tag, property) {
     var business_id = await getBusinessId(tag);
     //Añadimos la propiedad con su nombre y el negocio al que pertenece
     try {
-        await db.execute({
-            sql: 'INSERT INTO properties (name, img, business_id) VALUES (:name, :img ,:business_id)',
+        const result = await db.execute({
+            sql: 'INSERT INTO properties (name, img, business_id) VALUES (:name, :img ,:business_id) RETURNING id',
             args: { name: property.name, img: property.img, business_id }
         });
+        return result.rows[0].id;
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
