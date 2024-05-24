@@ -73,7 +73,7 @@ export async function newBusiness(business) {
         throw new Error('Campos incorrectos: ' + incorrect_field);
     }
     //Se genera un jwt con el tag del negocio
-    var token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
+    var token = jwt.sign({ tag: business.tag }, 'e1808226ed8abe91650ce81564496c478720229483e64f5523e950ea9d7ae6c6');
     return token;
 };
 
@@ -88,7 +88,7 @@ export function verificarToken(req, res, next) {
 
     try {
         // Verificar el token y decodificar su contenido
-        var decoded = jwt.verify(token, process.env.JWT_SECRET);
+        var decoded = jwt.verify(token, 'e1808226ed8abe91650ce81564496c478720229483e64f5523e950ea9d7ae6c6');
         req.tag = decoded.tag;
         // Continuar con la ejecución del siguiente middleware o controlador
         next();
@@ -111,7 +111,7 @@ export async function logBusiness(business) {
             throw new Error('Usuario o contraseña incorrectos');
         }
 
-        let token = jwt.sign({ tag: business.tag }, process.env.JWT_SECRET);
+        let token = jwt.sign({ tag: business.tag }, 'e1808226ed8abe91650ce81564496c478720229483e64f5523e950ea9d7ae6c6');
         return token;
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
