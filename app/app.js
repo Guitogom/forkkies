@@ -222,26 +222,11 @@ app.get('/logbusiness', async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               mensaje:
- *                 type: string
- *                 example: 'Token no proporcionado' | 'Token inválido'
- */
-
-/**
- * @swagger
- * components:
- *   responses:
- *     UnauthorizedError:
- *       description: Acceso no autorizado
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
  *               error:
  *                 type: string
  *                 example: Token de acceso no válido o ausente
-*/
+ */
+
 
 /**
  * @swagger
@@ -1571,7 +1556,7 @@ app.get('/loadbusiness', async (req, res) => {
  *               properties:
  *                 error:
  *                   type: string
- *                   example: Error al insertar el pedido: detalles del error
+ *                   example: Error al añadir el pedido
  */
 
 
@@ -1724,7 +1709,7 @@ app.get('/getorders', verificarToken, async (req, res) => {
  *               properties:
  *                 error:
  *                   type: string
- *                   example: Error al modificar el estado del pedido: [detalles del error]
+ *                   example: Error al modificar el estado del pedido
  */
 
 
