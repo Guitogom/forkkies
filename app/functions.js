@@ -561,7 +561,7 @@ export async function deleteProductProperty(tag, body) {
 export async function addCollection(tag, collection_id) {
     //Obtenemos el id del negocio
     var business_id = await getBusinessId(tag);
-
+    console.log(collection_id);
     var folderPath = '';
     switch (collection_id) {
         case 1:
