@@ -229,6 +229,22 @@ app.get('/logbusiness', async (req, res) => {
 
 /**
  * @swagger
+ * components:
+ *   responses:
+ *     UnauthorizedError:
+ *       description: Acceso no autorizado
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               error:
+ *                 type: string
+ *                 example: Token de acceso no válido o ausente
+*/
+
+/**
+ * @swagger
  * /modifybusiness:
  *   post:
  *     summary: Modifica los detalles de un negocio existente.
