@@ -91,6 +91,40 @@
     position: relative;
 }
 
+.property-add-collection {
+    width: 100%;
+    height: 80px;
+    cursor: pointer;
+}
+
+.property-add-collection button {
+    width: 100%;
+    height: 100%;
+    background-color: #D1D1D1;
+    border-radius: 10px;
+    border: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.property-add-collection button:hover {
+    background-color: var(--tertiary-color);
+    transform: translateY(-1px);
+}
+
+.property-add-collection button p {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    cursor: pointer;
+}
+
 .property img {
     width: 100%;
     height: 100%;

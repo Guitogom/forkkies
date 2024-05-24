@@ -3,9 +3,9 @@
     grid-template-columns: repeat(6, 1fr);
     font-weight: bold;
     color: #000;
-    border-bottom: 1px solid #000;
+    /* border-bottom: 1px solid #000; */
     font-size: 1.5rem;
-    padding: 5px;
+    padding: 20px;
     text-align: center;
 }
 
@@ -134,6 +134,7 @@
         opacity: 1;
     }
 }
+
 .order-prop-open-button {
     display: flex;
     align-items: center;
@@ -185,23 +186,23 @@
 }
 
 .pending-color {
-    background-color: #ED86FE;
+    background: linear-gradient(260deg, #fff 10%, #aaaaaa 100%);
 }
 
 .payed-color {
-    background-color: #A6F19A;
+    background: linear-gradient(260deg, #fff 10%, #9AD7F1 100%);
 }
 
 .ready-color {
-    background-color: #9AD7F1;
+    background: linear-gradient(260deg, #fff 10%, #fdff6d 100%);
 }
 
 .delivered-color {
-    background-color: #BDC2BC;
+    background: linear-gradient(260deg, #fff 10%, #9aeb8d 100%);
 }
 
 .canceled-color {
-    background-color: #FD7373;
+    background: linear-gradient(260deg, #fff 10%, #FD7373 100%);
 }
 
 .order-status-title {

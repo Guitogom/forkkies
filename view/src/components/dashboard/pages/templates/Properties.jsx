@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { PlusSVG } from "../../../../assets/svg/PlusSVG"
+import { PlusSVG } from "../../../../assets/svg/PlusSVG.jsx"
 
 export function Properties() {
     const [properties, setProperties] = useState([])
+    const [hideButton, setHideButton] = useState(false)
 
     const navigate = useNavigate()
 
@@ -78,6 +79,35 @@ export function Properties() {
         }
     }
 
+    const addCollection = () => {
+        setHideButton(true)
+        if (localStorage.getItem('session_token') !== null) {
+            const token = localStorage.getItem('session_token')
+            fetch('https://api.forkkies.live/addcollection?id=1', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        navigate('/error')
+                    }
+                    return response.json()
+                })
+                .then(properties => {
+                    console.log(properties.result.properties)
+                    setProperties(properties.result.properties)
+                })
+                .catch(error => {
+                    console.error('Error:', error.message)
+                    navigate('/error')
+                })
+
+        }
+    }
+
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
@@ -108,7 +138,7 @@ export function Properties() {
         <section className="properties">
             <h2>Properties</h2>
             <div className="properties-container">
-                <div className="propierties-flex">
+                <div className="propierties-flex" style={{ justifyContent: `${properties.length === 0 ? 'center' : 'start'}` }}>
                     {
                         properties.length > 0 ? (properties.map((property, index) => {
                             return (
@@ -119,7 +149,9 @@ export function Properties() {
                                     </div>
                                 </div>
                             )
-                        })) : <p>No properties</p>
+                        })) : <div className="property-add-collection">
+                            <button onClick={addCollection} style={{ display: `${hideButton ? 'show' : 'hidden'}` }}><PlusSVG /><p>Import Allergens</p></button>
+                        </div>
                     }
                 </div>
             </div>

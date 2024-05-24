@@ -29,7 +29,6 @@ export function Orders({ business, orders, setOrders }) {
                     })
                     .then(orders => {
                         setOrders(orders.result.orders)
-                        console.log(orders)
                     })
                     .catch(error => {
                         console.error('Error:', error.message)
@@ -45,8 +44,6 @@ export function Orders({ business, orders, setOrders }) {
 
         // return () => clearInterval(interval)
     }, [])
-
-    console.log(orders)
 
     return (
         <section>
@@ -72,11 +69,11 @@ export function Orders({ business, orders, setOrders }) {
                     <p></p>
                 </div>
                 {orders.length > 0 ? (
-                    orders.map(order => (
+                    orders.slice().reverse().map(order => (
                         <OrderProp key={order.id} order={order} />
                     ))
                 ) : (
-                    <p>No orders to display</p>
+                    <p>...</p>
                 )}
             </div>
         </section>

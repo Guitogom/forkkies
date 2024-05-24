@@ -22,7 +22,7 @@ export function Client() {
     const { tag } = useParams()
     const [loaded, setLoaded] = useState(false)
     const [template, setTemplate] = useState({})
-    const [orderNumber, setOrderNumber] = useState('We are getting your order number...')
+    const [orderNumber, setOrderNumber] = useState('You did not order anything yet.')
 
     const [primaryColor, setPrimaryColor] = useState("#ADD861")
     const [secondaryColor, setSecondaryColor] = useState("#4D4D4D")
@@ -48,7 +48,6 @@ export function Client() {
                 return response.json()
             })
             .then(response => {
-                console.log(response)
                 setTemplate(response.result.business)
                 setPrimaryColor(response.result.business.color1)
                 setSecondaryColor(response.result.business.color2)
@@ -86,7 +85,7 @@ export function Client() {
                     <Route path='/c/:categoryId/sp/:productId/s' element={<ClientStepHandler categories={template.categories} secondaryColor={secondaryColor} themeColor={themeColor} primaryColor={primaryColor} cart={cart} setCart={setCart} />} />
                     <Route path='/order' element={<ClientOrder cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} orderPrice={orderPrice} />} />
                     <Route path='/pay' element={<ClientPayment setOrderNumber={setOrderNumber} cart={cart} setCart={setCart} secondaryColor={secondaryColor} primaryColor={primaryColor} themeColor={themeColor} template={template} orderPrice={orderPrice} />} />
-                    <Route path='/pay/cash' element={<ClientPayCash orderNumber={orderNumber} />} />
+                    <Route path='/pay/cash' element={<ClientPayCash orderNumber={orderNumber} secondaryColor={secondaryColor} themeColor={themeColor} primaryColor={primaryColor} />} />
                     <Route path="*" element={<Navigate to={`/b/${tag}/categories`} />} />
                 </Routes>
                 {window.location.pathname !== '/pay/cash' && <ClientDisplayMenu displayNav={displayNav} setDisplayNav={setDisplayNav} categories={template.categories} primaryColor={primaryColor} themeColor={themeColor} />}

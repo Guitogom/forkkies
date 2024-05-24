@@ -111,7 +111,7 @@ export function OrderProp({ order }) {
             </div>
             {order.products.length > 0 && (
                 <div className="order-prop-details" style={{ height: open ? `${200 * order.products.length}px` : '0' }}>
-                    {order.products.map(product => (
+                    {order.products.map((product) => (
                         <OrderDetailsProp key={product.id} product={product} />
                     ))}
                 </div>
