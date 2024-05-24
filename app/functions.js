@@ -9,7 +9,7 @@ dotenv.config();
 // Crear el cliente de la base de datos
 const db = createClient({
     url: "libsql://forkkies-tumse.turso.io",
-    authToken: "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTIyMjU4NTUsImlkIjoiODk4YmJmM2ItNmZiOC00ZDZkLWJiMTUtZTI2NzI1YTE3MDM4In0.agS5OVV1M0qh-9NQExWT05dynCi-ItEM0EXf5gK5PTU2oLxMCgOxBTSFp16ZE_dPlXIaL8frLLS4o_km8zkDDw"
+    authToken: process.env.DB_TOKEN
 });
 
 //Business
