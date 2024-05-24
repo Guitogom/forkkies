@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
+import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, addCollection, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
 import swaggerDocs from './swagger.js';
 
 const app = express();
@@ -136,7 +136,6 @@ app.get('/verifytag', async (req, res) => {
 app.post('/newbusiness', async (req, res) => {
     try {
         var token = await newBusiness(req.body);
-        console.log('Token generado:', token)
         res.status(200).json({ token: token });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -199,7 +198,6 @@ app.post('/newbusiness', async (req, res) => {
 app.get('/logbusiness', async (req, res) => {
     try {
         var token = await logBusiness(req.query);
-        console.log('Token generado:', token)
         res.status(200).json({ token: token });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -378,7 +376,6 @@ app.get('/getbusiness', verificarToken, (req, res) => {
     const tag = req.tag;
     getBusiness(tag)
         .then((business) => {
-            console.log('Business:', business);
             res.json(business);
         })
         .catch((error) => {
@@ -567,7 +564,6 @@ app.get('/newtemplate', verificarToken, async (req, res) => {
 
 
 app.post('/modifytemplate', verificarToken, async (req, res) => {
-    console.log('req.body:', req.body)
     try {
         var tag = req.tag;
         var result = await modifyTemplate(tag, req.body);
@@ -926,7 +922,6 @@ app.get('/deleteproductproperty', verificarToken, async (req, res) => {
 
 
 app.post('/newcategory', verificarToken, async (req, res) => {
-    console.log('req.body:', req.body)
     try {
         var tag = req.tag;
         var result = await newCategory(tag, req.body);
@@ -1316,7 +1311,6 @@ app.get('/getproduct', verificarToken, async (req, res) => {
     try {
         var tag = req.tag;
         var result = await getProduct(tag, req.query.id);
-        console.log('result:', result);
         res.status(200).json({ result });
     } catch (error) {
         console.error('Error al obtener producto:', error.message);
@@ -1721,6 +1715,18 @@ app.post('/modifyorderstatus', verificarToken, async (req, res) => {
     } catch (error) {
         console.error('Error al modificar estado de orden:', error.message);
         res.status(500).json({ error: 'Error al modificar estado de orden' });
+    }
+});
+
+app.get('/addcollection', verificarToken, async (req, res) => {
+    try {
+        var tag = req.tag;
+        var result = await addCollection(tag, req.query.id);
+        // console.log(result);
+        res.status(200).json({ result });
+    } catch (error) {
+        console.error('Error al añadir colección:', error.message);
+        res.status(500).json({ error: 'Error al añadir colección' });
     }
 });
 

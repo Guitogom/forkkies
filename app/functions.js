@@ -1,6 +1,8 @@
 import { createClient } from '@libsql/client';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { getImagesFromFolder } from './imageUtils.js';
+
 
 dotenv.config();
 
@@ -440,7 +442,6 @@ export async function getTemplate(tag, template_id) {
 
 //Properties
 export async function newProperty(tag, property) {
-    console.log(property);
     //Obtenemos la id del business
     var business_id = await getBusinessId(tag);
     //Añadimos la propiedad con su nombre y el negocio al que pertenece
@@ -453,6 +454,32 @@ export async function newProperty(tag, property) {
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
+    }
+}
+
+export async function addCollection(tag, collection_id) {
+    var folderPath = '';
+    switch (collection_id) {
+        case "1":
+            folderPath = './src/allergens';
+            break;
+        default:
+            throw new Error('Collection no encontrada');
+            break;
+    }
+
+    try {
+        const imagesArray = await getImagesFromFolder(folderPath);
+
+        // Recorremos imagesArray
+        for (var i = 0; i < imagesArray.length; i++) {
+            var property = { img: imagesArray[i].img, name: imagesArray[i].name };
+            await newProperty(tag, property); // Esperamos a que newProperty se complete antes de continuar
+        }
+        return await getProperties(tag);
+    } catch (err) {
+        console.error('Error reading images folder:', err);
+        throw err; // Propaga el error para que pueda ser manejado por el código que llama a addCollection
     }
 }
 
@@ -471,7 +498,7 @@ export async function deleteProperty(tag, property) {
     }
 }
 
-export async function getProperties(tag, property) {
+export async function getProperties(tag) {
     //Obtenemos la id del business
     var business_id = await getBusinessId(tag);
     //Obtenemos las propiedades del negocio
@@ -1000,7 +1027,6 @@ async function fetchSpecialsForStep(step_id) {
 export async function newOrder(order) {
     //Creamos el order
     order.date = new Date();
-    console.log("business_id:" + order.business_id)
     try {
         var result = await db.execute({
             sql: 'INSERT INTO order_table (business_id, total, name, date, status) VALUES (:business_id, :total, :name, :date, 0) RETURNING id',
@@ -1072,7 +1098,6 @@ async function getSpecialsForProduct(specialIds) {
     var specials = [];
     //Recorremos los specialIds
     for (let specialId of specialIds) {
-        console.log("specialId:" + specialId);
         try {
             var result = await db.execute({
                 sql: 'SELECT name, step_id FROM special WHERE id = :specialId',
@@ -1080,8 +1105,6 @@ async function getSpecialsForProduct(specialIds) {
             });
             var name = result.rows[0].name;
             var stepId = result.rows[0].step_id;
-            console.log("name:" + name);
-            console.log("stepId:" + stepId);
         } catch (error) {
             console.error('Error al obtener los specials del producto:', error.message);
             throw new Error('Error al obtener los specials del producto: ' + error.message);
