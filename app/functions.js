@@ -460,7 +460,6 @@ export async function newProperty(tag, property) {
 }
 
 export async function addCollection(tag, collection_id) {
-    //Obtenemos el id del negocio
     console.log(collection_id);
     var folderPath = '';
     switch (collection_id) {
@@ -472,19 +471,22 @@ export async function addCollection(tag, collection_id) {
             throw new Error('Collection no encontrada');
             break;
     }
-    getImagesFromFolder(folderPath)
-        .then(imagesArray => {
-            //Recorremos imagesArray
-            for (var i = 0; i < imagesArray.length; i++) {
-                var property = { img: imagesArray[i].img, name: imagesArray[i].name };
-                newProperty(tag, property);
-            }
-            console.log(imagesArray)
-            return imagesArray;
-        })
-        .catch(err => {
-            console.error('Error reading images folder:', err);
-        });        
+
+    try {
+        const imagesArray = await getImagesFromFolder(folderPath);
+
+        // Recorremos imagesArray
+        for (var i = 0; i < imagesArray.length; i++) {
+            var property = { img: imagesArray[i].img, name: imagesArray[i].name };
+            await newProperty(tag, property); // Esperamos a que newProperty se complete antes de continuar
+        }
+
+        console.log(imagesArray);
+        return imagesArray;
+    } catch (err) {
+        console.error('Error reading images folder:', err);
+        throw err; // Propaga el error para que pueda ser manejado por el código que llama a addCollection
+    }
 }
 
 export async function deleteProperty(tag, property) {
