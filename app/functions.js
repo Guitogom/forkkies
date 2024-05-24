@@ -479,11 +479,12 @@ export async function addCollection(tag, collection_id) {
                 var property = { img: imagesArray[i].img, name: imagesArray[i].name };
                 newProperty(tag, property);
             }
+            console.log(imagesArray)
             return imagesArray;
         })
         .catch(err => {
             console.error('Error reading images folder:', err);
-        });
+        });        
 }
 
 export async function deleteProperty(tag, property) {
