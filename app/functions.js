@@ -1,7 +1,6 @@
 import { createClient } from '@libsql/client';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-const { getImagesFromFolder } = require('./imageUtils');
 
 dotenv.config();
 
