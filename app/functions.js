@@ -476,7 +476,7 @@ export async function addCollection(tag, collection_id) {
             var property = { img: imagesArray[i].img, name: imagesArray[i].name };
             await newProperty(tag, property); // Esperamos a que newProperty se complete antes de continuar
         }
-        return imagesArray;
+        return await getProperties(tag);
     } catch (err) {
         console.error('Error reading images folder:', err);
         throw err; // Propaga el error para que pueda ser manejado por el código que llama a addCollection
@@ -498,7 +498,7 @@ export async function deleteProperty(tag, property) {
     }
 }
 
-export async function getProperties(tag, property) {
+export async function getProperties(tag) {
     //Obtenemos la id del business
     var business_id = await getBusinessId(tag);
     //Obtenemos las propiedades del negocio
