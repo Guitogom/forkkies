@@ -18,14 +18,13 @@
   },
   "homepage": "https://github.com/guitogom/forkkies#readme",
   "dependencies": {
-    "@libsql/client": "^0.6.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "jsonwebtoken": "^9.0.2",
-    "standard": "^17.1.0",
-    "swagger-autogen": "^2.23.7",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "@libsql/client": "0.6.0",
+    "cors": "2.8.5",
+    "dotenv": "16.4.5",
+    "express": "4.19.2",
+    "jsonwebtoken": "9.0.2",
+    "standard": "17.1.0",
+    "swagger-jsdoc": "6.2.8",
+    "swagger-ui-express": "5.0.0"
   }
 }
