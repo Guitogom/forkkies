@@ -1722,7 +1722,7 @@ app.get('/addcollection', verificarToken, async (req, res) => {
     try {
         var tag = req.tag;
         var result = await addCollection(tag, req.query.id);
-        console.log(result);
+        // console.log(result);
         res.status(200).json({ result });
     } catch (error) {
         console.error('Error al añadir colección:', error.message);
