@@ -444,7 +444,6 @@ export async function getTemplate(tag, template_id) {
 
 //Properties
 export async function newProperty(tag, property) {
-    console.log(property);
     //Obtenemos la id del business
     var business_id = await getBusinessId(tag);
     //Añadimos la propiedad con su nombre y el negocio al que pertenece
@@ -458,6 +457,33 @@ export async function newProperty(tag, property) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
     }
+}
+
+export async function addCollection(tag, collection_id) {
+    //Obtenemos el id del negocio
+    console.log(collection_id);
+    var folderPath = '';
+    switch (collection_id) {
+        case "1":
+            console.log('1');
+            folderPath = './src/allergens';
+            break;
+        default:
+            throw new Error('Collection no encontrada');
+            break;
+    }
+    getImagesFromFolder(folderPath)
+        .then(imagesArray => {
+            //Recorremos imagesArray
+            for (var i = 0; i < imagesArray.length; i++) {
+                var property = { img: imagesArray[i].img, name: imagesArray[i].name };
+                newProperty(tag, property);
+            }
+            return imagesArray;
+        })
+        .catch(err => {
+            console.error('Error reading images folder:', err);
+        });
 }
 
 export async function deleteProperty(tag, property) {
@@ -556,29 +582,6 @@ export async function deleteProductProperty(tag, body) {
             throw new Error('Error en la base de datos: ' + error.message);
         }
     }
-}
-
-export async function addCollection(tag, collection_id) {
-    //Obtenemos el id del negocio
-    var business_id = await getBusinessId(tag);
-    console.log(collection_id);
-    var folderPath = '';
-    switch (collection_id) {
-        case "1":
-            console.log('1');
-            folderPath = './src/allergens';
-            break;
-        default:
-            throw new Error('Collection no encontrada');
-            break;
-    }
-    getImagesFromFolder(folderPath)
-        .then(imagesArray => {
-            console.log(imagesArray);
-        })
-        .catch(err => {
-            console.error('Error reading images folder:', err);
-        });
 }
 
 //Categories
