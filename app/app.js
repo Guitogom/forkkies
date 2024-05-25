@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
-import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerDocs from './swagger.js';
 import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, addCollection, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
 
 
@@ -19,25 +18,7 @@ const corsOptions = {
 
 app.use(cors());
 
-
-// Configura la especificación Swagger
-const options = {
-    definition: {
-        openapi: '3.0.0', // Especificación de OpenAPI
-        info: {
-            title: 'API de Ejemplo',
-            version: '1.0.0',
-            description: 'Una API de ejemplo con Swagger y Node.js',
-        },
-    },
-    // Rutas a los archivos que contienen las definiciones Swagger
-    apis: ['./documentation.js'], // Incluye este archivo para documentar los endpoints
-};
-
-const specs = swaggerJsdoc(options);
-console.log("specs:");
-console.dir(specs);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+swaggerDocs(app);
 
 /**
  * @swagger
