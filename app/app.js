@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
 import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, addCollection, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
-import swaggerDocsMiddleware from './swagger.js';
+
 
 const app = express();
 
@@ -17,13 +19,25 @@ const corsOptions = {
 
 app.use(cors());
 
-app.use('/doc', swaggerDocsMiddleware);
 
+// Configurar opciones para Swagger JSDoc
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.0', // Especifica la versión de OpenAPI
+        info: {
+            title: 'API de ejemplo', // Título de tu API
+            version: '1.0.0', // Versión de tu API
+            description: 'Documentación de la API de ejemplo', // Descripción de tu API
+        },
+    },
+    // Rutas a los archivos que contienen los comentarios JSDoc
+    apis: ['./routes/*.js'], // Ruta donde se encuentran tus rutas
+};
 
-//Test
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+
+// Servir la documentación Swagger generada por Swagger JSDoc
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 /**
  * @swagger
