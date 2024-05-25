@@ -65,7 +65,7 @@ export function Landing() {
                     <Link to='/login' className='log-in-landing'>Log In</Link>
                     <h3 className='message-landing'>START NOW FOR FREE</h3>
                     <div className='advise-landing'>
-                        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/V5icOAp9_RA?si=bE_1cpY5JhIYxbH9&amp;controls=0" title="Add" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/_nyx03AinWU?si=AFG-tVjgNyg1rjOJ;controls=0" title="Add" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
                     </div>
                     <div className='actions-landing'>
                         <p className='action-landing action1-landing'>create</p>
