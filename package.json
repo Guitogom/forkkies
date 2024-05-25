@@ -24,7 +24,7 @@
     "express": "4.19.2",
     "jsonwebtoken": "9.0.2",
     "standard": "17.1.0",
-    "swagger-jsdoc": "6.2.8",
-    "swagger-ui-express": "5.0.0"
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   }
 }
