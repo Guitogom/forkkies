@@ -71,6 +71,8 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
         const totalPrice = (product.price + totalPriceChange) * innerCart.quantity
 
         const newItem = {
+            innerId: Math.random().toString(36).substr(2, 9),
+            type: 1,
             category: categoryId,
             product: productId,
             name: product.name,

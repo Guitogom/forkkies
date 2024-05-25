@@ -1,6 +1,7 @@
 import { ClientOrderProduct } from './props/ClientOrderProduct.jsx'
 
 export function ClientOrder({ cart, setCart, secondaryColor, primaryColor, themeColor, orderPrice }) {
+    console.log('ClientOrder.jsx: cart:', cart)
 
     const formatPrice = (price) => {
         return price % 1 === 0 ? `${price}.00` : price.toFixed(2)
@@ -10,17 +11,33 @@ export function ClientOrder({ cart, setCart, secondaryColor, primaryColor, theme
         <section className="client-cart">
             <h2>Your Order</h2>
             {cart.length > 0 ? (
-                cart.map((cartProduct) => (
-                    <ClientOrderProduct
-                        key={cartProduct.product}
-                        cartProduct={cartProduct}
-                        cart={cart}
-                        setCart={setCart}
-                        secondaryColor={secondaryColor}
-                        primaryColor={primaryColor}
-                        themeColor={themeColor}
-                    />
-                ))
+                cart.map((cartProduct) => {
+                    if (cartProduct.type === 1) {
+                        return (
+                            <ClientOrderProduct
+                                key={cartProduct.innerId}
+                                cartProduct={cartProduct}
+                                cart={cart}
+                                setCart={setCart}
+                                secondaryColor={secondaryColor}
+                                primaryColor={primaryColor}
+                                themeColor={themeColor}
+                            />
+                        )
+                    } else {
+                        return (
+                            <ClientOrderProduct
+                                key={cartProduct.product}
+                                cartProduct={cartProduct}
+                                cart={cart}
+                                setCart={setCart}
+                                secondaryColor={secondaryColor}
+                                primaryColor={primaryColor}
+                                themeColor={themeColor}
+                            />
+                        )
+                    }
+                })
             ) : (
                 <p style={{ color: secondaryColor }}>Your cart is empty.</p>
             )}

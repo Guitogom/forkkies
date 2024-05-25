@@ -28,8 +28,13 @@ export function ExtraStep({ step, primaryColor, actualSpecial, setActualSpecial 
                     onClick={() => handleOptionToggle(option)}
                 >
                     <p style={{ color: primaryColor }}>{option.name}</p>
-                    <img src={`data:image/jpeg;base64,${option.img}`} alt={option.name} />
-                    <p>{option.price_changer}</p>
+                    <div className="step-option-image">
+                        <img src={`data:image/jpeg;base64,${option.img}`} alt={option.name} />
+                        <div className='step-option-image-filter'></div>
+                        <div className="step-option-image-price-changer">
+                            <p>{option.price_changer}</p>
+                        </div>
+                    </div>
                 </div>
             ))}
         </div>

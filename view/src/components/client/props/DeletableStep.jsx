@@ -22,13 +22,11 @@ export function DeletableStep({ step, primaryColor, actualSpecial, setActualSpec
     return (
         <div className="client-step">
             {step.specials.map((option) => (
-                <div
-                    key={option.id}
-                    className={`step-option ${selectedOptions.includes(option.id) ? 'option-selected' : ''}`}
-                    onClick={() => handleOptionToggle(option)}
-                >
-                    <p style={{ color: primaryColor }}>{option.name}</p>
-                    <img src={`data:image/jpeg;base64,${option.img}`} alt={option.name} />
+                <div key={option.id} className={`step-option ${selectedOptions.includes(option.id) ? 'delete-selected' : ''}`} onClick={() => handleOptionToggle(option)}>
+                    <div className="step-option-image">
+                        <img src={`data:image/jpeg;base64,${option.img}`} alt={option.name} />
+                        <div className='step-option-image-filter'></div>
+                    </div>
                 </div>
             ))}
         </div>

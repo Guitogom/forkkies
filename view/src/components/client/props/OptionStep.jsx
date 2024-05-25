@@ -18,13 +18,12 @@ export function OptionStep({ step, primaryColor, actualSpecial, setActualSpecial
     return (
         <div className="client-step">
             {step.specials.map((option) => (
-                <div
-                    key={option.id}
-                    className={`step-option ${selectedOption === option.id ? 'option-selected' : ''}`}
-                    onClick={() => handleOptionSelect(option)}
-                >
+                <div key={option.id} className={`step-option ${selectedOption === option.id ? 'option-selected' : ''}`} onClick={() => handleOptionSelect(option)}>
                     <p style={{ color: primaryColor }}>{option.name}</p>
-                    <img src={`data:image/jpeg;base64,${option.img}`} alt={option.name} />
+                    <div className="step-option-image">
+                        <img src={`data:image/jpeg;base64,${option.img}`} alt={option.name} />
+                        <div className='step-option-image-filter'></div>
+                    </div>
                 </div>
             ))}
         </div>

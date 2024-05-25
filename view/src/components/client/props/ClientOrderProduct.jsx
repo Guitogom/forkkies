@@ -8,9 +8,11 @@ export function ClientOrderProduct({ cartProduct, cart, setCart, secondaryColor,
     useEffect(() => {
         const updateCart = () => {
             const newCart = cart.map(product =>
-                product.product === innerCart.product
-                    ? { ...innerCart, quantity: innerCart.quantity > 0 ? innerCart.quantity : 0 }
-                    : product
+                product.type === 1
+                    ? product
+                    : (product.product === innerCart.product
+                        ? { ...innerCart, quantity: innerCart.quantity > 0 ? innerCart.quantity : 0 }
+                        : product)
             ).filter(product => product.quantity > 0)
 
             setCart(newCart)

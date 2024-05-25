@@ -24,6 +24,7 @@
   box-sizing: border-box;
   font-family: var(--primary-font);
   scrollbar-width: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 *::selection {

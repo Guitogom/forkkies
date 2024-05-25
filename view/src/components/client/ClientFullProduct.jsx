@@ -21,6 +21,8 @@ export function ClientFullProduct({ cart, setCart, categories, secondaryColor, p
     useEffect(() => {
         if (product) {
             setInnerCart({
+                innerId: Math.random().toString(36).substr(2, 9),
+                type: 0,
                 category: category.id,
                 product: product.id,
                 name: product.name,
