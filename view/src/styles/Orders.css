@@ -24,13 +24,13 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background-color: var(--forth-color);
     border-radius: 10px;
     padding: 10px;
     font-size: 1.5rem;
     font-weight: bold;
     color: #000;
     font-family: var(--secondary-font);
+    transition: all 0.2s linear;
 }
 
 .order-refresh svg {
