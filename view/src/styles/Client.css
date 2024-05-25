@@ -598,15 +598,6 @@
     z-index: 10;
 }
 
-.step-option.option-selected img {
-    border: 3px solid var(--green);
-}
-
-.step-option.option-selected .step-option-image-filter {
-    animation: fadeOpacity 0.5s forwards;
-    background-color: var(--green);
-}
-
 .step-option.delete-selected img {
     border: 3px solid var(--red);
 }

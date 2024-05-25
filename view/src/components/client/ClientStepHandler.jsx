@@ -115,8 +115,20 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
         setIsFinished(true)
     }
 
+    const css = `
+    .step-option.option-selected img {
+        border: 3px solid ${primaryColor};
+    }
+    
+    .step-option.option-selected .step-option-image-filter {
+        animation: fadeOpacity 0.5s forwards;
+        background-color: ${primaryColor};
+    }
+    `
+
     return (
         <section className='client-step-handler'>
+            <style>{css}</style>
             {stepNumber === steps.length ? (
                 <ClientFinalStep
                     optionSpecials={optionSpecials}
