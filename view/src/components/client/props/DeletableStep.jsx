@@ -23,6 +23,7 @@ export function DeletableStep({ step, primaryColor, actualSpecial, setActualSpec
         <div className="client-step">
             {step.specials.map((option) => (
                 <div key={option.id} className={`step-option ${selectedOptions.includes(option.id) ? 'delete-selected' : ''}`} onClick={() => handleOptionToggle(option)}>
+                    <p style={{ color: primaryColor }}>{option.name}</p>
                     <div className="step-option-image">
                         <img src={`data:image/jpeg;base64,${option.img}`} alt={option.name} />
                         <div className='step-option-image-filter'></div>

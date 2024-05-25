@@ -29,7 +29,7 @@
 .order-prop-details-item {
     height: 200px;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     gap: 5px;
     padding: 10px;
     border-bottom: 1px solid #000;
@@ -78,7 +78,68 @@
     padding: 5px;
     font-size: 1.8rem;
     font-weight: 200;
+    grid-column: span 3;
+}
+
+.order-prop-details-item-specials-options {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    overflow-x: scroll;
+    text-wrap: nowrap;
+}
+
+.order-prop-details-item-specials-deletables {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    overflow-x: scroll;
+    text-wrap: nowrap;
+}
+
+.order-prop-details-item-specials-extras {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    overflow-x: scroll;
+    text-wrap: nowrap;
+}
+
+.order-prop-details-item-prices {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 180px;
+    padding: 5px;
+    font-size: 1.8rem;
+    font-weight: 200;
     grid-column: span 2;
+}
+
+.order-prop-details-item-prices-math {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 100;
+
+}
+
+.order-prop-details-item-prices-total {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 3rem;
+    font-weight: 500;
+
 }
 
 .order-prop p {

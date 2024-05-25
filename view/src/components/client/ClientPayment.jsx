@@ -23,27 +23,29 @@ export function ClientPayment({ cart, setCart, primaryColor, secondaryColor, the
             total: orderPrice,
             name: clientName,
             products: cart.map(item => {
-                let specials = []
+                let options = []
+                let deletables = []
+                let extras = []
 
                 if (item.steps) {
                     if (item.steps.optionSpecials) {
                         for (const step in item.steps.optionSpecials) {
                             item.steps.optionSpecials[step].forEach(special => {
-                                specials.push(special.id)
+                                options.push(special.name)
                             })
                         }
                     }
                     if (item.steps.deletableSpecials) {
                         for (const step in item.steps.deletableSpecials) {
                             item.steps.deletableSpecials[step].forEach(special => {
-                                specials.push(special.id)
+                                deletables.push(special.name)
                             })
                         }
                     }
                     if (item.steps.extraSpecials) {
                         for (const step in item.steps.extraSpecials) {
                             item.steps.extraSpecials[step].forEach(special => {
-                                specials.push(special.id)
+                                extras.push(special.name)
                             })
                         }
                     }
@@ -53,10 +55,14 @@ export function ClientPayment({ cart, setCart, primaryColor, secondaryColor, the
                     id: item.product,
                     unit_price: item.individualPrice,
                     quantity: item.quantity,
-                    specials: specials.length > 0 ? specials.join(',') : ''
+                    options: options.length > 0 ? options.join(',') : '',
+                    deletables: deletables.length > 0 ? deletables.join(',') : '',
+                    extras: extras.length > 0 ? extras.join(',') : ''
                 }
             })
         }
+
+        console.log(requestBody)
 
         fetch('https://api.forkkies.live/neworder', {
             method: 'POST',
