@@ -21,7 +21,11 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
-console.log('Swagger Docs generated:', specs);
+// Agregamos un console.log para verificar las opciones de Swagger
+console.log('Swagger options:', options);
+
+// Agregamos un console.log para verificar las especificaciones generadas por Swagger
+console.log('Swagger Specs:', specs);
 
 const swaggerDocs = (app) => {
   app.use('/doc', swaggerUi.serve, swaggerUi.setup(specs));

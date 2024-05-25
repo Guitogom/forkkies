@@ -1740,5 +1740,3 @@ app.listen(3000, () => {
     console.log('Server is running on https://api.forkkies.live');
 }
 );
-
-export default app;
