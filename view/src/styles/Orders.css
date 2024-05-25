@@ -9,6 +9,54 @@
     text-align: center;
 }
 
+.order-titles p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.order-refresh {
+    width: 250px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--forth-color);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+    font-family: var(--secondary-font);
+}
+
+.order-refresh svg {
+    width: 40px;
+    height: 40px;
+    transition: all 1 ease;
+}
+
+.refreshing {
+    animation: spin 1s ease infinite;
+}
+
+.stopping {
+    animation-play-state: paused;
+    transform: rotate(360deg);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .order-table {
     padding-bottom: 90px;
 }
@@ -272,3 +320,4 @@
     color: #000;
     font-family: var(--secondary-font);
 }
+

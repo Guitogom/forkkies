@@ -1,8 +1,6 @@
 export function OrderDetailsProp({ product }) {
     const imagenDisplay = `data:image/jpeg;base64,${product.img}`
 
-    console.log(product)
-
     const formatPrice = (price) => {
         if (!price) return '0.00'
         price = price.toFixed(2)
