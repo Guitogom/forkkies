@@ -31,7 +31,7 @@ const options = {
         },
     },
     // Rutas a los archivos que contienen las definiciones Swagger
-    apis: ['./app.js'], // Incluye este archivo para documentar los endpoints
+    apis: ['./documentation.js'], // Incluye este archivo para documentar los endpoints
 };
 
 const specs = swaggerJsdoc(options);
