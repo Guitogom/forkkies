@@ -1,6 +1,8 @@
 export function OrderDetailsProp({ product }) {
     const imagenDisplay = `data:image/jpeg;base64,${product.img}`
 
+    console.log(product)
+
     return (
         <div className="order-prop-details-item">
             <div className="order-prop-details-item-image">
@@ -13,6 +15,13 @@ export function OrderDetailsProp({ product }) {
             <div className="order-prop-details-item-specials">
                 <div className="order-prop-details-item-specials-options">
                     <p style={{ color: '#4440E0', fontWeight: 'bold', fontFamily: 'var(--secondary-font)' }}>?</p>
+                    <p>
+                        {
+                            product.options.map((special, index) => (
+                                <span key={index}>{special.name}</span>
+                            ))
+                        }
+                    </p>
                 </div>
                 <div className="order-prop-details-item-specials-deletables">
                     <p style={{ color: '#F24141', fontWeight: 'bold', fontFamily: 'var(--secondary-font)' }}>-</p>
