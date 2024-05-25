@@ -19,6 +19,12 @@ export function ExtraStep({ step, primaryColor, actualSpecial, setActualSpecial 
         })
     }
 
+    const formatPrice = (price) => {
+        if (!price) return '0.00'
+        price = price.toFixed(2)
+        return price
+    }
+
     return (
         <div className="client-step">
             {step.specials.map((option) => (
@@ -32,7 +38,7 @@ export function ExtraStep({ step, primaryColor, actualSpecial, setActualSpecial 
                         <img src={`data:image/jpeg;base64,${option.img}`} alt={option.name} />
                         <div className='step-option-image-filter'></div>
                         <div className="step-option-image-price-changer">
-                            <p>{option.price_changer}</p>
+                            <p>{option.price_changer > 0 ? `+${formatPrice(option.price_changer)}` : formatPrice(option.price_changer)}€</p>
                         </div>
                     </div>
                 </div>
