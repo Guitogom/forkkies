@@ -35,7 +35,7 @@ const options = {
 };
 
 const specs = swaggerJsdoc(options);
-
+console.log("specs:"+specs); // Add this line
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 /**
