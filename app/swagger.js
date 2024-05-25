@@ -1,5 +1,5 @@
+// swagger.js
 import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
 
 const options = {
   definition: {
@@ -16,19 +16,15 @@ const options = {
       },
     ],
   },
-  apis: ['./app.js'], // Aquí especificas dónde están las rutas de tu API
+  apis: ['./app.js'], // Rutas de tu API
 };
 
 const specs = swaggerJsdoc(options);
 
-// Agregamos un console.log para verificar las opciones de Swagger
-console.log('Swagger options:', options);
+// swagger.js (continuación)
+console.log('Swagger Specs:', specs); // Para verificar las especificaciones generadas
 
-// Agregamos un console.log para verificar las especificaciones generadas por Swagger
-console.log('Swagger Specs:', specs);
+// swagger.js (continuación)
+import swaggerUi from 'swagger-ui-express';
 
-const swaggerDocs = (app) => {
-  app.use('/doc', swaggerUi.serve, swaggerUi.setup(specs));
-};
-
-export default swaggerDocs;
+const swaggerDocsMiddleware = swaggerUi.setup(specs);
