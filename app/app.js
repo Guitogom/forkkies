@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerUI = require('swagger-ui-express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, addCollection, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
 
 
@@ -20,24 +20,23 @@ const corsOptions = {
 app.use(cors());
 
 
-// Configurar opciones para Swagger JSDoc
-const swaggerOptions = {
+// Configura la especificación Swagger
+const options = {
     definition: {
-        openapi: '3.0.0', // Especifica la versión de OpenAPI
+        openapi: '3.0.0', // Especificación de OpenAPI
         info: {
-            title: 'API de ejemplo', // Título de tu API
-            version: '1.0.0', // Versión de tu API
-            description: 'Documentación de la API de ejemplo', // Descripción de tu API
+            title: 'API de Ejemplo',
+            version: '1.0.0',
+            description: 'Una API de ejemplo con Swagger y Node.js',
         },
     },
-    // Rutas a los archivos que contienen los comentarios JSDoc
-    apis: ['./routes/*.js'], // Ruta donde se encuentran tus rutas
+    // Rutas a los archivos que contienen las definiciones Swagger
+    apis: ['./app.js'], // Incluye este archivo para documentar los endpoints
 };
 
-const swaggerSpec = swaggerJSDoc(swaggerOptions);
+const specs = swaggerJsdoc(options);
 
-// Servir la documentación Swagger generada por Swagger JSDoc
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 /**
  * @swagger
