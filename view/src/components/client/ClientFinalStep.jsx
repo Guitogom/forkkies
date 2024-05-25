@@ -92,7 +92,7 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
     }
 
     const renderSpecials = (specials, title) => {
-        const allSpecials = Object.values(specials).flat()
+        const allSpecials = Object.values(specials).flatMap(step => step || []);
         if (allSpecials.length > 0) {
             return (
                 <div className='client-full-product-specials'>
@@ -107,6 +107,7 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
         }
         return null
     }
+
 
     const imagenDisplay = `data:image/jpeg;base64,${product.img}`
 

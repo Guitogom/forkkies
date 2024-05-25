@@ -6,6 +6,7 @@ import { OptionStep } from './props/OptionStep.jsx'
 import { DeletableStep } from './props/DeletableStep.jsx'
 import { ExtraStep } from './props/ExtraStep.jsx'
 import { ClientFinalStep } from './ClientFinalStep.jsx'
+import { act } from 'react'
 
 export function ClientStepHandler({ categories, secondaryColor, themeColor, primaryColor, cart, setCart }) {
     const { tag, categoryId, productId } = useParams()
@@ -25,10 +26,18 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
     const [isFinished, setIsFinished] = useState(false);
 
     useEffect(() => {
+        console.log(extraSpecials)
+    }, [extraSpecials])
+
+    useEffect(() => {
+        console.log(actualSpecial.length)
+    }, [actualSpecial])
+
+    useEffect(() => {
         if (steps[stepNumber]) {
             setStepTitle(steps[stepNumber].title)
         } else {
-            setStepTitle('Confirmation')
+            setStepTitle('You are done with the steps!')
         }
     }, [stepNumber, steps])
 
@@ -112,6 +121,33 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
     }
 
     const handleFinish = () => {
+        if (actualSpecial.length > 0) {
+            switch (currentStep.type) {
+                case '1':
+                    setOptionSpecials(prev => {
+                        const updatedSpecials = { ...prev }
+                        updatedSpecials[currentStep.id] = [...(updatedSpecials[currentStep.id] || []), ...actualSpecial]
+                        return updatedSpecials
+                    })
+                    break
+                case '2':
+                    setDeletableSpecials(prev => {
+                        const updatedSpecials = { ...prev }
+                        updatedSpecials[currentStep.id] = [...(updatedSpecials[currentStep.id] || []), ...actualSpecial]
+                        return updatedSpecials
+                    })
+                    break
+                case '3':
+                    setExtraSpecials(prev => {
+                        const updatedSpecials = { ...prev }
+                        updatedSpecials[currentStep.id] = [...(updatedSpecials[currentStep.id] || []), ...actualSpecial]
+                        return updatedSpecials
+                    })
+                    break
+                default:
+                    break
+            }
+        }
         setIsFinished(true)
     }
 
