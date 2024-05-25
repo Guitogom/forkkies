@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, addCollection, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
-import swaggerDocs from './swagger.js';
+import swaggerDocsMiddleware from './swagger.js';
 
 const app = express();
 
@@ -17,7 +17,8 @@ const corsOptions = {
 
 app.use(cors());
 
-swaggerDocs(app);
+app.use('/doc', swaggerDocsMiddleware);
+
 
 //Test
 app.get('/', (req, res) => {
