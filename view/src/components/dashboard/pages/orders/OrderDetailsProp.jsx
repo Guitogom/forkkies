@@ -66,7 +66,7 @@ export function OrderDetailsProp({ product }) {
                             <p className="order-prop-details-item-prices-total">{formatPrice(totalPrice)}</p>
                         </>
                     ) : (
-                        <p>{formatPrice(product.totalPrice)}</p>
+                        <p className="order-prop-details-item-prices-total">{formatPrice(totalPrice)}</p>
                     )
                 }
             </div>
