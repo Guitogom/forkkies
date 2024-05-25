@@ -26,14 +26,6 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
     const [isFinished, setIsFinished] = useState(false);
 
     useEffect(() => {
-        console.log(extraSpecials)
-    }, [extraSpecials])
-
-    useEffect(() => {
-        console.log(actualSpecial.length)
-    }, [actualSpecial])
-
-    useEffect(() => {
         if (steps[stepNumber]) {
             setStepTitle(steps[stepNumber].title)
         } else {

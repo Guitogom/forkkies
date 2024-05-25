@@ -95,8 +95,8 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
         const allSpecials = Object.values(specials).flatMap(step => step || []);
         if (allSpecials.length > 0) {
             return (
-                <div className='client-full-product-specials'>
-                    <h3>{title}</h3>
+                <div className='client-full-product-specials' style={{ borderBottom: `1px solid ${secondaryColor}` }}>
+                    <h3 style={{ color: secondaryColor }}>{title}</h3>
                     <div className='client-full-product-specials-flex'>
                         {allSpecials.map((special, index) => (
                             <img key={index} src={`data:image/jpeg;base64,${special.img}`} alt={special.name} />
@@ -121,9 +121,9 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
                 <p className="client-full-product-description" style={{ color: secondaryColor }}>{product.description || 'Descripción del producto medianamente larga'}</p>
                 <hr className='client-hr' style={{ boxShadow: `0 0 10px ${secondaryColor}`, backgroundColor: `${secondaryColor}` }} />
             </div>
-            {renderSpecials(optionSpecials, "Your prefer:")}
-            {renderSpecials(deletableSpecials, "You don't want:")}
-            {renderSpecials(extraSpecials, "You also want:")}
+            {renderSpecials(optionSpecials, "In this product you prefer:")}
+            {renderSpecials(extraSpecials, "In this product you also want:")}
+            {renderSpecials(deletableSpecials, "In this product you don't want:")}
             <div className="client-full-product-add-to-cart">
                 <div className='client-full-product-quantity-handler'>
                     <button className='client-full-product-add-to-cart-less' style={{ backgroundColor: secondaryColor, color: themeColor }} onClick={lessQuantity}>-</button>
