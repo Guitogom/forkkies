@@ -1,15 +1,26 @@
 -- Eliminar todas las tablas si existen
 DROP TABLE IF EXISTS order_product;
+
 DROP TABLE IF EXISTS order_table;
+
 DROP TABLE IF EXISTS cat_product;
+
 DROP TABLE IF EXISTS category;
+
 DROP TABLE IF EXISTS template;
+
 DROP TABLE IF EXISTS special;
+
 DROP TABLE IF EXISTS step;
+
 DROP TABLE IF EXISTS product_properties;
+
 DROP TABLE IF EXISTS product;
+
 DROP TABLE IF EXISTS properties;
+
 DROP TABLE IF EXISTS users;
+
 DROP TABLE IF EXISTS business;
 
 -- Tabla 'business'
@@ -126,12 +137,14 @@ CREATE TABLE IF NOT EXISTS order_table (
 
 -- Tabla 'order_product'
 CREATE TABLE IF NOT EXISTS order_product (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     order_id INTEGER,
     product_id INTEGER,
     unit_price REAL,
     quantity INTEGER,
-    specials TEXT,
+    options TEXT,
+    deletables TEXT,
+    extras TEXT,
     FOREIGN KEY(order_id) REFERENCES order_table(id),
     FOREIGN KEY(product_id) REFERENCES product(id),
-    PRIMARY KEY(order_id, product_id)
 );

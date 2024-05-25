@@ -1041,11 +1041,11 @@ export async function newOrder(order) {
     //Recorremos los productos
     for (var i = 0; i < order.products.length; i++) {
         var product = order.products[i];
-        //Si el product no tiene id, lo añadimos
+
         try {
             var result = await db.execute({
-                sql: 'INSERT INTO order_product (order_id, product_id, unit_price, quantity, specials) VALUES (:order_id, :product_id, :unit_price, :quantity, :specials)',
-                args: { order_id, product_id: product.id, unit_price: product.unit_price, quantity: product.quantity, specials: product.specials }
+                sql: 'INSERT INTO order_product (order_id, product_id, unit_price, quantity, options, deletables, extras) VALUES (:order_id, :product_id, :unit_price, :quantity, :options, :deletables, :extras)',
+                args: { order_id, product_id: product.id, unit_price: product.unit_price, quantity: product.quantity, options: product.options, deletables: product.deletables, extras: product.extras }
             });
         } catch (error) {
             console.error('Error al insertar el product:', error.message);
@@ -1071,7 +1071,7 @@ async function getOrdersByBusinessId(businessId, today) {
 async function getProductsForOrder(orderId) {
     try {
         const result = await db.execute({
-            sql: 'SELECT product_id, unit_price, quantity, specials FROM order_product WHERE order_id = :orderId',
+            sql: 'SELECT product_id, unit_price, quantity, options, extras, deletables FROM order_product WHERE order_id = :orderId',
             args: { orderId }
         });
         return result.rows;
@@ -1094,38 +1094,6 @@ async function getProductDetails(productId) {
     }
 }
 
-async function getSpecialsForProduct(specialIds) {
-    var specials = [];
-    //Recorremos los specialIds
-    for (let specialId of specialIds) {
-        try {
-            var result = await db.execute({
-                sql: 'SELECT name, step_id FROM special WHERE id = :specialId',
-                args: { specialId }
-            });
-            var name = result.rows[0].name;
-            var stepId = result.rows[0].step_id;
-        } catch (error) {
-            console.error('Error al obtener los specials del producto:', error.message);
-            throw new Error('Error al obtener los specials del producto: ' + error.message);
-        }
-        //Obtenemos el type del step            var name = "";
-        try {
-            var result = await db.execute({
-                sql: 'SELECT type FROM step WHERE id = :stepId',
-                args: { stepId }
-            });
-            var stype = result.rows[0].type;
-        } catch (error) {
-            console.error('Error al obtener los type del step:', error.message);
-            throw new Error('Error al obtener los type del step: ' + error.message);
-        }
-        //Añadimos el special al array
-        specials.push({ name, stype });
-    }
-    return specials;
-}
-
 export async function getOrders(tag) {
     var today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -1141,25 +1109,9 @@ export async function getOrders(tag) {
             var productDetails = await getProductDetails(product.product_id);
             productDetails.unit_price = product.unit_price;
             productDetails.quantity = product.quantity;
-            productDetails.specials = product.specials;
-            productDetails.options = [];
-            productDetails.deletables = [];
-            productDetails.extras = [];
-
-            if (product.specials) {
-                var specialIds = product.specials.split(',');
-                var specials = await getSpecialsForProduct(specialIds);
-
-                for (let special of specials) {
-                    if (special.stype == 1) {
-                        productDetails.options.push(special.name);
-                    } else if (special.stype == 2) {
-                        productDetails.deletables.push(special.name);
-                    } else if (special.stype == 3) {
-                        productDetails.extras.push(special.name);
-                    }
-                }
-            }
+            productDetails.options = product.options;
+            productDetails.deletables = product.deletables;
+            productDetails.extras = product.extras;
             order.products.push(productDetails);
         }
     }
