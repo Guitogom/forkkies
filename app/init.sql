@@ -146,5 +146,5 @@ CREATE TABLE IF NOT EXISTS order_product (
     deletables TEXT,
     extras TEXT,
     FOREIGN KEY(order_id) REFERENCES order_table(id),
-    FOREIGN KEY(product_id) REFERENCES product(id),
+    FOREIGN KEY(product_id) REFERENCES product(id)
 );

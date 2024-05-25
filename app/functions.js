@@ -1109,9 +1109,28 @@ export async function getOrders(tag) {
             var productDetails = await getProductDetails(product.product_id);
             productDetails.unit_price = product.unit_price;
             productDetails.quantity = product.quantity;
-            productDetails.options = product.options;
-            productDetails.deletables = product.deletables;
-            productDetails.extras = product.extras;
+            productDetails.options = [];
+            productDetails.deletables = [];
+            productDetails.extras = [];
+
+            if (product.options) {
+                var options = product.options.split(',');
+                for (let option of options) {
+                    productDetails.options.push(option);
+                }
+            }
+            if (product.deletables) {
+                var deletables = product.deletables.split(',');
+                for (let deletable of deletables) {
+                    productDetails.deletables.push(deletable);
+                }
+            }
+            if (product.extras) {
+                var extras = product.extras.split(',');
+                for (let extra of extras) {
+                    productDetails.extras.push(extra);
+                }
+            }
             order.products.push(productDetails);
         }
     }
