@@ -28,7 +28,7 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
         if (steps[stepNumber]) {
             setStepTitle(steps[stepNumber].title)
         } else {
-            setStepTitle('Comfirmation')
+            setStepTitle('Confirmation')
         }
     }, [stepNumber, steps])
 
@@ -129,7 +129,7 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
     return (
         <section className='client-step-handler'>
             <style>{css}</style>
-            {stepNumber === steps.length ? (
+            {isFinished ? (
                 <ClientFinalStep
                     optionSpecials={optionSpecials}
                     deletableSpecials={deletableSpecials}
@@ -144,7 +144,7 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
             ) : (
                 <>
                     <div className='client-step-progress-bar'>
-                        <div className='client-step-progress-bar-inner' style={{ width: `${(stepNumber) * 100 / steps.length}%`, backgroundColor: `${secondaryColor}` }}></div>
+                        <div className='client-step-progress-bar-inner' style={{ width: `${(stepNumber + 1) * 100 / (steps.length)}%`, backgroundColor: `${secondaryColor}` }}></div>
                     </div>
                     <h3 style={{ color: secondaryColor }}>{stepTitle}</h3>
                     {currentStep && renderStep(currentStep)}
@@ -172,7 +172,7 @@ export function ClientStepHandler({ categories, secondaryColor, themeColor, prim
                                 Back
                             </button>
                         )}
-                        {stepNumber === steps.length ? (
+                        {stepNumber === steps.length - 1 ? (
                             <button onClick={handleFinish} className='step-button step-next-button' style={{ color: themeColor, backgroundColor: primaryColor, borderLeft: `1px solid ${themeColor}` }}>
                                 Finish
                                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
