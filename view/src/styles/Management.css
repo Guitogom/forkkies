@@ -41,6 +41,11 @@
     border-radius: 15px;
     position: relative;
     margin: 20px;
+    cursor: pointer;
+}
+
+.management-inner-tag.animating {
+    animation: tagAnimation 0.5s ease forwards;
 }
 
 .management-inner-tag::before {
@@ -53,26 +58,29 @@
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-}
-
-.management-inner-tag span {
-    transition: all 0.2s ease;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--primary-color);
-    font-size: 0.9rem;
+    box-shadow:inset 3px 3px 1px rgba(0, 0, 0, 0.25);
 }
 
 @keyframes tagAnimation {
     0% {
-        transform: rotate(5deg);
+        transform: rotate(5deg) scale(1);
+        opacity: 1;
+    }
+    25% {
+        transform: rotate(-5deg) scale(1.1);
+        opacity: 0.9;
     }
     50% {
-        transform: rotate(-5deg);
+        transform: rotate(5deg) scale(1.05);
+        opacity: 1;
+    }
+    75% {
+        transform: rotate(-5deg) scale(1);
+        opacity: 0.9;
     }
     100% {
-        transform: rotate(0deg);
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
     }
 }
 

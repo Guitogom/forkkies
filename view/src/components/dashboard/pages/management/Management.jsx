@@ -116,7 +116,7 @@ export function Management({ business, businessName, setBusinessName }) {
         setTagMessage(true)
         setTimeout(() => {
             setTagMessage(false)
-        }, 3000)
+        }, 600)
     }
 
     return (
@@ -125,7 +125,7 @@ export function Management({ business, businessName, setBusinessName }) {
             <div className="management-flex">
                 <div className="management-inner">
                     <h2>My business</h2>
-                    <p className="management-inner-tag" onClick={tagClick}>/{business.tag} <span style={{ opacity: `${tagMessage ? '1' : '0'}` }}>This is your business tag. It is unique and cannot be changed</span></p>
+                    <p className={`management-inner-tag ${tagMessage ? 'animating' : ''}`} onClick={tagClick}>/{business.tag}</p>
                     <div className="management-business-name">
                         <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} />
                         <button onClick={handleChangeName}>Save</button>
