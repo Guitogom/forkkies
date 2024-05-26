@@ -210,10 +210,11 @@ app.get('/logbusiness', async (req, res) => {
  * @swagger
  * components:
  *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
+ *     tokenAuth:
+ *       type: apiKey
+ *       in: header
+ *       name: Authorization
+ *       description: Token de acceso JWT
  *   responses:
  *     UnauthorizedError:
  *       description: Token no proporcionado o inválido
@@ -228,6 +229,7 @@ app.get('/logbusiness', async (req, res) => {
  */
 
 
+
 /**
  * @swagger
  * /modifybusiness:
@@ -235,7 +237,7 @@ app.get('/logbusiness', async (req, res) => {
  *     summary: Modifica los detalles de un negocio existente.
  *     tags: [Business]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -317,7 +319,7 @@ app.post('/modifybusiness', verificarToken, async (req, res) => {
  *     summary: Obtiene la información de un negocio por su tag.
  *     tags: [Business]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     responses:
  *       200:
  *         description: Información del negocio obtenida exitosamente.
@@ -402,7 +404,7 @@ app.get('/getbusiness', verificarToken, (req, res) => {
  *     summary: Crea un nuevo template para un negocio dado su tag.
  *     tags: [Templates]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     responses:
  *       200:
  *         description: Nuevo template creado exitosamente.
@@ -445,7 +447,7 @@ app.get('/newtemplate', verificarToken, async (req, res) => {
  *     summary: Modifica un template existente.
  *     tags: [Templates]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -512,7 +514,7 @@ app.post('/modifytemplate', verificarToken, async (req, res) => {
  *     summary: Obtiene información sobre un template.
  *     tags: [Templates]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     parameters:
  *       - in: query
  *         name: tag
@@ -599,7 +601,7 @@ app.get('/gettemplate', verificarToken, async (req, res) => {
  *     summary: Crea una nueva propiedad para un negocio.
  *     tags: [Properties]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -657,7 +659,7 @@ app.post('/newproperty', verificarToken, async (req, res) => {
  *     summary: Elimina una propiedad de un negocio.
  *     tags: [Properties]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -712,7 +714,7 @@ app.post('/deleteproperty', verificarToken, async (req, res) => {
  *     summary: Obtiene todas las propiedades de un negocio.
  *     tags: [Properties]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     parameters:
  *       - in: query
  *         name: tag
@@ -806,7 +808,7 @@ app.get('/deleteproductproperty', verificarToken, async (req, res) => {
  *     summary: Añade una nueva categoría a un template de negocio.
  *     tags: [Categories]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -870,7 +872,7 @@ app.post('/newcategory', verificarToken, async (req, res) => {
  *     summary: Modifica o elimina una categoría de un template de negocio.
  *     tags: [Categories]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -946,7 +948,7 @@ app.post('/modifycategory', verificarToken, async (req, res) => {
  *     summary: Obtiene información de una categoría y sus productos.
  *     tags: [Categories]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     parameters:
  *       - in: query
  *         name: tag
@@ -1034,7 +1036,7 @@ app.get('/getcategory', verificarToken, async (req, res) => {
  *     summary: Modifica un producto existente o crea uno nuevo en una categoría especificada.
  *     tags: [Products]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -1142,14 +1144,8 @@ app.post('/modifyproduct', verificarToken, async (req, res) => {
  *     summary: Obtiene los detalles de un producto específico.
  *     tags: [Products]
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     parameters:
- *       - in: query
- *         name: tag
- *         required: true
- *         schema:
- *           type: string
- *         description: El tag del negocio al que pertenece el producto.
  *       - in: query
  *         name: product_id
  *         required: true
@@ -1505,7 +1501,7 @@ app.post('/neworder', async (req, res) => {
  *     tags: [Orders]
  *     description: Obtiene los pedidos activos del negocio actual.
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     responses:
  *       200:
  *         description: Pedidos obtenidos exitosamente.
@@ -1597,7 +1593,7 @@ app.get('/getorders', verificarToken, async (req, res) => {
  *     tags: [Orders]  
  *     description: Modifica el estado de un pedido específico asociado a un negocio. El `tag` del negocio se obtiene del token de seguridad.
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     requestBody:
  *       required: true
  *       content:
