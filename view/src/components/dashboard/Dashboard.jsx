@@ -54,6 +54,7 @@ export function Dashboard() {
                 })
                 .then(business => {
                     setBusiness(business)
+                    console.log(business)
                     setBusinessName(business.name)
                     setBusinessLocation(business.location)
                     setBusinessStatus(business.active_template)
