@@ -461,7 +461,7 @@ export async function addCollection(tag, collection_id) {
     var folderPath = '';
     switch (collection_id) {
         case "1":
-            folderPath = './src/allergens';
+            folderPath = 'app/src/allergens';
             break;
         default:
             throw new Error('Collection no encontrada');
