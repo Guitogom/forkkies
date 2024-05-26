@@ -18,7 +18,7 @@ export function ProductPanel({ business }) {
     const [edit, setEdit] = useState(false)
     const [addProperty, setAddProperty] = useState(false)
 
-    const [properties, setProperties] = useState(business.properties || [])
+    const [properties, setProperties] = useState(business.properties)
 
     const [imageError, setImageError] = useState(false)
     const [nameError, setNameError] = useState('')
@@ -32,7 +32,8 @@ export function ProductPanel({ business }) {
         desc: '',
         price: '',
         img: '',
-        steps: []
+        steps: [],
+        properties: []
     })
 
     const [lastPrice, setLastPrice] = useState(0)
@@ -239,7 +240,7 @@ export function ProductPanel({ business }) {
             return
         }
 
-        const propertyIds = product.properties.map(property => property.id) || []
+        const propertyIds = product.properties.map(property => property.id)
 
         const token = localStorage.getItem('session_token')
         setLoading2(false)
@@ -273,6 +274,7 @@ export function ProductPanel({ business }) {
 
 
     const addPropertyToProduct = (id) => {
+
         const propertyExists = product.properties.some(property => property.id === id)
         if (!propertyExists) {
             const property = properties.find(property => property.id === id)
@@ -361,15 +363,16 @@ export function ProductPanel({ business }) {
                         <p className="mistake-error">{nameError}</p>
                         <div className="product-propierties">
                             {
-                                product.properties.length > 0 ? (product.properties.map((property, index) => {
-                                    return (
-                                        <div className="property" key={index}>
-                                            <img src={`data:image/png;base64,${property.img}`} alt={property.name} />
-                                        </div>
-                                    )
-                                })) : <div></div>
+                                (product.properties && product.properties.length > 0) ?
+                                    product.properties.map((property, index) => {
+                                        return (
+                                            <div className="property" key={index}>
+                                                <img src={`data:image/png;base64,${property.img}`} alt={property.name} />
+                                            </div>
+                                        )
+                                    }) : <div></div>
                             }
-                            <svg className='product-properties-add' onClick={toggleAddPropertyMenu} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+                            <svg className='product-properties-add' style={{ display: `${properties.length > 0 ? 'show' : 'none'}` }} onClick={toggleAddPropertyMenu} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
                         </div>
                     </div>
                 </div>
