@@ -21,6 +21,7 @@ export function ClientPayment({ cart, setCart, primaryColor, secondaryColor, the
         const requestBody = {
             business_id: template.id,
             total: orderPrice,
+            date: new Date().toISOString(),
             name: clientName,
             products: cart.map(item => {
                 let options = []

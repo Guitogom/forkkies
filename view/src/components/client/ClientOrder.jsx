@@ -1,7 +1,7 @@
 import { ClientOrderProduct } from './props/ClientOrderProduct.jsx'
 
 export function ClientOrder({ cart, setCart, secondaryColor, primaryColor, themeColor, orderPrice }) {
-    console.log('ClientOrder.jsx: cart:', cart)
+    console.log(cart)
 
     const formatPrice = (price) => {
         return price % 1 === 0 ? `${price}.00` : price.toFixed(2)
