@@ -233,12 +233,21 @@ export async function getBusiness(tag) {
             }
         );
 
-        return result.rows[0];
+        var business = result.rows[0];
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
     }
 
+    //Obtenemos todos los templates con getallTemplates
+    var templates = await getallTemplates(tag);
+
+    //Obtenemos todas las propiedades con getProperties
+    var properties = await getProperties(tag);
+
+    //Añadimos las propiedades y los templates al negocio
+    business.templates = templates.templates;
+    business.properties = properties.properties;
 }
 
 async function getBusinessId(tag) {
