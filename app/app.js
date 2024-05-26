@@ -740,7 +740,7 @@ app.post('/deleteproperty', verificarToken, async (req, res) => {
  *     tags: [Properties]
  *     description: Añade una propiedad específica a un producto identificado por su ID.
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     parameters:
  *       - in: query
  *         name: product_id
@@ -797,7 +797,7 @@ app.get('/addproductproperty', verificarToken, async (req, res) => {
  *     tags: [Properties]
  *     description: Elimina una propiedad específica de un producto identificado por su ID.
  *     security:
- *       - bearerAuth: []
+ *       - tokenAuth: []
  *     parameters:
  *       - in: query
  *         name: product_id
