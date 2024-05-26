@@ -233,12 +233,22 @@ export async function getBusiness(tag) {
             }
         );
 
-        return result.rows[0];
+        var business = result.rows[0];
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
     }
 
+    //Obtenemos todos los templates con getallTemplates
+    var templates = await getallTemplates(tag);
+
+    //Obtenemos todas las propiedades con getProperties
+    var properties = await getProperties(tag);
+
+    //Añadimos las propiedades y los templates al negocio
+    business.templates = templates.templates;
+    business.properties = properties.properties;
+    return business;
 }
 
 async function getBusinessId(tag) {
@@ -290,18 +300,20 @@ export async function newTemplate(tag) {
     var id = await getBusinessId(tag);
 
     try {
-        await db.execute(
+        const result = await db.execute(
             {
-                sql: 'INSERT INTO template (business_id, name) VALUES (:id, "Unnamed template")',
+                sql: 'INSERT INTO template (business_id, name) VALUES (:id, "Unnamed template") RETURNING id',
                 args: { id }
             }
         );
+
+        return result.rows[0].id;
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
     }
-    return true;
 }
+
 
 async function checkTemplateOwnership(tag, template_id) {
     var business_id = await getBusinessId(tag);
@@ -907,6 +919,33 @@ export async function getProduct(tag, product_id) {
             throw new Error('2Error en la base de datos: ' + error.message);
         }
 
+        //Obtenemos las propiedades del producto
+        try {
+            var result = await db.execute({
+                sql: 'SELECT properties_id FROM product_properties WHERE product_id = :product_id',
+                args: { product_id }
+            });
+            var properties_id = result.rows;
+        } catch (error) {
+            console.error('3Error en la base de datos:', error.message);
+            throw new Error('3Error en la base de datos: ' + error.message);
+        }
+
+        //Obtenemos el nombre y la img de las propiedades y las añadimos al producto
+        product.properties = [];
+        for (var i = 0; i < properties_id.length; i++) {
+            try {
+                var result = await db.execute({
+                    sql: 'SELECT id, name, img FROM properties WHERE id = :properties_id',
+                    args: properties_id[i]
+                });
+                product.properties.push(result.rows[0]);
+            } catch (error) {
+                console.error('4Error en la base de datos:', error.message);
+                throw new Error('4Error en la base de datos: ' + error.message);
+            }
+        }
+
         //Obtenemos los steps del producto
         try {
             var result = await db.execute({
@@ -1026,7 +1065,7 @@ async function fetchSpecialsForStep(step_id) {
 //Orders
 export async function newOrder(order) {
     //Creamos el order
-    if(!order.date) order.date = new Date();
+    if (!order.date) order.date = new Date();
     try {
         var result = await db.execute({
             sql: 'INSERT INTO order_table (business_id, total, name, date, status) VALUES (:business_id, :total, :name, :date, 0) RETURNING id',
