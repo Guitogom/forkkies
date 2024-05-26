@@ -1,7 +1,7 @@
 import '../../../../styles/Products.css'
 import { PlusSVG } from '../../../../assets/svg/PlusSVG'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Loading } from '../../Loading.jsx'
 import { StepDisplay } from './StepDisplay.jsx'
 import { DeleteSVG } from '../../../../assets/svg/DeleteSVG.jsx'
@@ -9,17 +9,22 @@ import { SpecialDisplay } from './SpecialDisplay.jsx'
 import { LoadingWithText } from '../../LoadingWithText.jsx'
 import cameraImage from '/src/assets/media/camera.webp'
 
-export function ProductPanel() {
+export function ProductPanel({ business }) {
     const [loaded, setLoaded] = useState(false)
     const [loading2, setLoading2] = useState(true)
     const { id } = useParams()
     const { c_id } = useParams()
     const { p_id } = useParams()
     const [edit, setEdit] = useState(false)
+    const [addProperty, setAddProperty] = useState(false)
+
+    const [properties, setProperties] = useState(business.properties)
 
     const [imageError, setImageError] = useState(false)
     const [nameError, setNameError] = useState('')
     const [priceError, setPriceError] = useState('')
+
+    const navigate = useNavigate()
 
     const [product, setProduct] = useState({
         id: '',
@@ -90,7 +95,6 @@ export function ProductPanel() {
         setProduct({ ...product, desc: value });
     }
 
-    // Cambiar
     const handleProductPriceChange = (value) => {
         setPriceError('')
 
@@ -177,6 +181,10 @@ export function ProductPanel() {
         }
     }
 
+    const toggleAddPropertyMenu = () => {
+        setAddProperty(!addProperty);
+    }
+
     const handleEditStepChange = (fieldName, value) => {
         const updatedSteps = [...product.steps]
         const index = updatedSteps.findIndex((step) => step === editStep)
@@ -231,6 +239,8 @@ export function ProductPanel() {
             return
         }
 
+        const propertyIds = product.properties.map(property => property.id)
+
         const token = localStorage.getItem('session_token')
         setLoading2(false)
         fetch(`https://api.forkkies.live/modifyproduct`, {
@@ -239,7 +249,7 @@ export function ProductPanel() {
                 'Authorization': `${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ category_id: c_id, product: product })
+            body: JSON.stringify({ category_id: c_id, product: { ...product, properties: propertyIds } })
         })
             .then(response => {
                 if (!response.ok) {
@@ -256,13 +266,29 @@ export function ProductPanel() {
             })
     }
 
+    const deletePropertyFromProduct = (id) => {
+        let updatedProperties = product.properties.filter(property => property.id !== id)
+        setProduct({ ...product, properties: updatedProperties })
+    }
 
+
+    const addPropertyToProduct = (id) => {
+        const propertyExists = product.properties.some(property => property.id === id)
+        if (!propertyExists) {
+            const property = properties.find(property => property.id === id)
+            if (property) {
+                let updatedProperties = [...product.properties, property]
+                setProduct({ ...product, properties: updatedProperties })
+            }
+        }
+    }
 
     if (!loading2) return <LoadingWithText />
     if (!loaded) return <Loading />
 
     return (
         <div className='product-parent'>
+
             <div className="edit-step" style={{ top: edit ? '0%' : '-100%' }}>
                 <div className="edit-step-inner">
                     <div className="edit-step-upper">
@@ -290,6 +316,35 @@ export function ProductPanel() {
                 </div>
             </div>
 
+            <div className="edit-properties" style={{ top: addProperty ? '0%' : '-100%' }}>
+                <div className="edit-properties-inner">
+                    <div className="edit-properties-upper">
+                        <p>Add Properties</p>
+                        <div className="properties-close" onClick={toggleAddPropertyMenu}>
+                            <PlusSVG />
+                        </div>
+                    </div>
+                    <div className="edit-properties-lower">
+                        {properties.length > 0 ? (
+                            properties.map((property) => (
+                                <div className={`property-add-image ${product.properties.some(p => p.id === property.id) ? 'added' : ''}`} key={property.id} onClick={() => {
+                                    if (product.properties.some(p => p.id === property.id)) {
+                                        deletePropertyFromProduct(property.id);
+                                    } else {
+                                        addPropertyToProduct(property.id);
+                                    }
+                                }}>
+                                    <img src={`data:image/png;base64,${property.img}`} alt={property.id} />
+                                </div>
+
+                            ))
+                        ) : (
+                            <div className='empty-steps'></div>
+                        )}
+                    </div>
+                </div>
+            </div>
+
             <div className="up-product-column">
                 <button className='product-delete' onClick={handleDeleteProduct}><DeleteSVG /> Delete</button>
                 <button className='product-close' onClick={() => window.location.href = `/dashboard/t/${id}/${c_id}/`}><PlusSVG /></button>
@@ -305,7 +360,16 @@ export function ProductPanel() {
                         <input type="text" name='name' placeholder='Product Name' value={product.name} onChange={(e) => handleProductNameChange(e.target.value)} className={`product-name-input ${nameError ? 'wrong' : ''}`} />
                         <p className="mistake-error">{nameError}</p>
                         <div className="product-propierties">
-                            <PlusSVG />
+                            {
+                                product.properties.length > 0 ? (product.properties.map((property, index) => {
+                                    return (
+                                        <div className="property" key={index}>
+                                            <img src={`data:image/png;base64,${property.img}`} alt={property.name} />
+                                        </div>
+                                    )
+                                })) : <div></div>
+                            }
+                            <svg className='product-properties-add' onClick={toggleAddPropertyMenu} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
                         </div>
                     </div>
                 </div>

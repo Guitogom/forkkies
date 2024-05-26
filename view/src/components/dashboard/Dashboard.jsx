@@ -90,7 +90,7 @@ export function Dashboard() {
                     <Route path="/t/:id" element={<Template business={business} setBusiness={setBusiness} setTemplates={setTemplates} templates={templates} />} />
                     <Route path="/t/:id/cp/:c_id" element={<CategoryPanel business={business} setBusiness={setBusiness} />} />
                     <Route path="/t/:id/:c_id" element={<Category />} />
-                    <Route path="/t/:id/:c_id/pp/:p_id" element={<ProductPanel />} />
+                    <Route path="/t/:id/:c_id/pp/:p_id" element={<ProductPanel business={business} />} />
                     <Route path="/" element={<Home business={business} setBusiness={setBusiness} />} />
                     <Route path="/orders" element={<Orders orders={orders} setOrders={setOrders} />} />
                     <Route path="/analytics" element={<Analytics business={business} setBusiness={setBusiness} />} />

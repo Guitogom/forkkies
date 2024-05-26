@@ -3,6 +3,7 @@
     justify-content: center;
     flex-wrap: wrap;
     overflow-y: scroll;
+    background: linear-gradient(180deg, rgba(241, 241, 241, 0.959) 0%, #ffffff 100%);
 }
 
 .up-product-column {
@@ -71,17 +72,60 @@
 }
 
 .product-propierties {
+    width: 90%;
+    height: 100px;
+    margin: 0px 10px;
+    padding: 10px 5px;
     display: flex;
     flex-wrap: wrap;
+    gap: 5px;
+    justify-content: start;
+    align-items: start;
+    overflow-y: scroll;
 }
 
-.product-propierties svg {
+.property {
     width: 40px;
-    opacity: 0.8;
+    height: 40px;
+    position: relative;
 }
 
-.product-propierties svg:hover {
-    opacity: 1;
+.property img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+}
+
+.delete-property {
+    width: 20px;
+    height: 20px;
+    background-color: var(--red);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+
+.delete-property:hover {
+    transform: scale(1.1);
+}
+
+.product-properties-add {
+    width: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: scale(1);
+}
+
+.product-properties-add:hover {
+    transform: scale(1.1);
 }
 
 .right-product-column {
@@ -577,4 +621,88 @@
     75% {
         transform: translateX(5px);
     }
+}
+
+.edit-properties {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(228, 228, 228, 0.336);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.edit-properties-inner {
+    width: 80%;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.edit-properties-upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10px;
+}
+
+.edit-properties-upper p {
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: var(--secondary-font);
+    width: 50%;
+    text-wrap: nowrap;
+    overflow: hidden;
+    cursor: default;
+}
+
+.edit-properties-upper svg {
+    width: 40px;
+    cursor: pointer;
+    transform: rotate(45deg);
+}
+
+.properties-close svg {
+    width: 40px;
+    cursor: pointer;
+    transform: rotate(45deg);
+    transition: all 0.3s linear;
+}
+
+.edit-properties-lower {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: #C3C3C3;
+    padding: 20px 30px;
+    border-radius: 10px;
+}
+
+.property-add-image {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.property-add-image:hover {
+    filter: drop-shadow(1px 1px 4px var(--tertiary-color));
+    transform: scale(1.1);
+}
+
+.property-add-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.property-add-image.added {
+    background-color: var(--forth-color);
 }

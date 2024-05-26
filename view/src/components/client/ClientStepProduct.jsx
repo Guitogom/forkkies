@@ -87,6 +87,17 @@ export function ClientStepProduct({ cart, setCart, categories, secondaryColor, p
             <div className="client-full-product-info" >
                 <img src={imagenDisplay} alt={`${product.name} Image`} className='client-full-product-image' style={{ filter: `drop-shadow(0px 0px 8px ${secondaryColor})` }} />
                 <h2 className="client-full-product-name" style={{ color: secondaryColor }}>{product.name}</h2>
+                <div className="client-full-product-properties">
+                    {
+                        product.properties.length > 0 ? (product.properties.map((property, index) => {
+                            return (
+                                <div className="property" key={index}>
+                                    <img src={`data:image/png;base64,${property.img}`} alt={property.name} />
+                                </div>
+                            )
+                        })) : <div></div>
+                    }
+                </div>
                 <p className="client-full-product-price" style={{ color: secondaryColor }}>{formatPrice(product.price)}€</p>
                 <p className="client-full-product-description" style={{ color: secondaryColor }}>{product.description || 'Descripción del producto medianamente larga'}</p>
                 <hr className='client-hr' style={{ boxShadow: `0 0 10px ${secondaryColor}`, backgroundColor: `${secondaryColor}` }} />
