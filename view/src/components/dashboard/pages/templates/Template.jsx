@@ -3,20 +3,25 @@ import '../../../../styles/Categories.css'
 import { PlusSVG } from "../../../../assets/svg/PlusSVG.jsx"
 import { CategoryDisplay } from "./CategoryDisplay.jsx"
 import { useEffect, useState } from "react"
-import { useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { Loading } from '../../Loading.jsx'
 
-export function Template() {
+export function Template({ business, setBusiness, setTemplates, templates }) {
     const [loaded, setLoaded] = useState(false)
-    const [template, setTemplate] = useState([])
+    const [template, setTemplate] = useState(business.templates)
     const [categories, setCategories] = useState([])
-    const [status, setStatus] = useState(null)
+    const [status, setStatus] = useState(business.active_template === null ? false : true)
     const [changeNameDisplay, setChangeNameDisplay] = useState('none')
     const [templateName, setTemplateName] = useState('...')
     const [nameError, setNameError] = useState('')
     const buttonText = status ? "Set Offline" : "Set Online"
     const { id } = useParams()
+
+    useEffect(() => {
+        buttonText === status ? "Set Offline" : "Set Online"
+    }, [status])
+
+    const navigate = useNavigate()
 
     const handleStatus = () => {
         setStatus(!status)
@@ -32,19 +37,23 @@ export function Template() {
             })
                 .then(response => {
                     if (!response.ok) {
-                        window.location.href = '/error'
+                        navigate('/error')
                     }
-                    buttonText === status ? "Set Offline" : "Set Online"
+                    if (status) {
+                        setBusiness({ ...business, active_template: null })
+                    } else {
+                        setBusiness({ ...business, active_template: id })
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error.message)
-                    window.location.href = '/error'
+                    navigate('/error')
                 })
         }
     }
 
     const handleCreateCategory = () => {
-        window.location.href = `/dashboard/t/${id}/cp/new`
+        navigate(`/dashboard/t/${id}/cp/new`)
     }
 
     const changeTemplateName = () => {
@@ -59,9 +68,6 @@ export function Template() {
         setChangeNameDisplay('none')
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                window.location.href = '/error'
-            }, 8000)
             fetch(`https://api.forkkies.live/modifytemplate`, {
                 method: 'POST',
                 headers: {
@@ -71,15 +77,13 @@ export function Template() {
                 body: JSON.stringify({ id: id, name: templateName })
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
-                        window.location.href = '/error'
+                        navigate('/error')
                     }
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
                     console.error('Error:', error.message)
-                    window.location.href = '/error'
+                    navigate('/error')
                 })
         }
     }
@@ -87,9 +91,10 @@ export function Template() {
     const handleTemplateDelete = () => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                window.location.href = '/error'
-            }, 8000)
+            let newTemplates = business.templates.filter(template => template.id !== id)
+            setTemplates(newTemplates)
+            setBusiness({ ...business, templates: newTemplates })
+
             fetch(`https://api.forkkies.live/modifytemplate`, {
                 method: 'POST',
                 headers: {
@@ -99,16 +104,14 @@ export function Template() {
                 body: JSON.stringify({ id: id, delete: true })
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
-                        window.location.href = '/error'
+                        navigate('/error')
                     }
-                    window.location.href = '/dashboard/templates'
+                    navigate('/dashboard/templates')
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
                     console.error('Error:', error.message)
-                    window.location.href = '/error'
+                    navigate('/error')
                 })
         }
     }
@@ -116,9 +119,6 @@ export function Template() {
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
-            const timeout = setTimeout(() => {
-                window.location.href = '/error'
-            }, 6000)
             fetch(`https://api.forkkies.live/gettemplate?id=${id}`, {
                 method: 'GET',
                 headers: {
@@ -127,9 +127,8 @@ export function Template() {
                 },
             })
                 .then(response => {
-                    clearTimeout(timeout)
                     if (!response.ok) {
-                        window.location.href = '/error'
+                        navigate('/error')
                     }
                     return response.json()
                 })
@@ -141,9 +140,8 @@ export function Template() {
                     setLoaded(true)
                 })
                 .catch(error => {
-                    clearTimeout(timeout)
                     console.error('Error:', error.message)
-                    window.location.href = '/error'
+                    navigate('/error')
                 })
         }
     }, [])

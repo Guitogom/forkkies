@@ -73,7 +73,6 @@
 .product-propierties {
     display: flex;
     flex-wrap: wrap;
-    opacity: 0;
 }
 
 .product-propierties svg {

@@ -19,7 +19,9 @@ import { ProductPanel } from "./pages/templates/ProductPanel.jsx"
 export function Dashboard() {
     const [loaded, setLoaded] = useState(false)
     const [business, setBusiness] = useState({})
+    const [templates, setTemplates] = useState([])
     const [orders, setOrders] = useState([])
+
 
     const navigate = useNavigate()
 
@@ -32,6 +34,10 @@ export function Dashboard() {
     const [businessName, setBusinessName] = useState(business.name)
     const [businessLocation, setBusinessLocation] = useState(business.location)
     const [businessStatus, setBusinessStatus] = useState(business.active_template)
+
+    useEffect(() => {
+        setBusinessStatus(business.active_template)
+    }, [business.active_template])
 
     useEffect(() => {
         if (localStorage.getItem('session_token') !== null) {
@@ -57,6 +63,7 @@ export function Dashboard() {
                     setBusinessName(business.name)
                     setBusinessLocation(business.location)
                     setBusinessStatus(business.active_template)
+                    setTemplates(business.templates)
                     setLoaded(true)
                 })
                 .catch(error => {
@@ -78,8 +85,8 @@ export function Dashboard() {
             <section className="screen">
                 <Routes>
                     <Route path="/management" element={<Management business={business} setBusiness={setBusiness} businessName={businessName} setBusinessName={setBusinessName} />} />
-                    <Route path="/templates" element={<Templates business={business} setBusiness={setBusiness} />} />
-                    <Route path="/t/:id" element={<Template business={business} setBusiness={setBusiness} />} />
+                    <Route path="/templates" element={<Templates business={business} setBusiness={setBusiness} setTemplates={setTemplates} templates={templates} businessStatus={businessStatus} />} />
+                    <Route path="/t/:id" element={<Template business={business} setBusiness={setBusiness} setTemplates={setTemplates} templates={templates} />} />
                     <Route path="/t/:id/cp/:c_id" element={<CategoryPanel business={business} setBusiness={setBusiness} />} />
                     <Route path="/t/:id/:c_id" element={<Category />} />
                     <Route path="/t/:id/:c_id/pp/:p_id" element={<ProductPanel />} />

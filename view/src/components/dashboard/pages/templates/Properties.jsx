@@ -2,8 +2,8 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { PlusSVG } from "../../../../assets/svg/PlusSVG.jsx"
 
-export function Properties() {
-    const [properties, setProperties] = useState([])
+export function Properties({ business, setBusiness }) {
+    const [properties, setProperties] = useState(business.properties)
     const [hideButton, setHideButton] = useState(false)
 
     const navigate = useNavigate()
@@ -108,30 +108,8 @@ export function Properties() {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('session_token') !== null) {
-            const token = localStorage.getItem('session_token')
-            fetch('https://api.forkkies.live/getproperties', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `${token}`,
-                    'Content-Type': 'application/json'
-                },
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        navigate('/error')
-                    }
-                    return response.json()
-                })
-                .then(properties => {
-                    setProperties(properties.result.properties)
-                })
-                .catch(error => {
-                    console.error('Error:', error.message)
-                    navigate('/error')
-                })
-        }
-    }, [])
+        setBusiness({ ...business, properties: properties })
+    }, [properties])
 
     return (
         <section className="properties">

@@ -231,8 +231,6 @@ export function ProductPanel() {
             return
         }
 
-        console.log('Producto: ', product)
-
         const token = localStorage.getItem('session_token')
         setLoading2(false)
         fetch(`https://api.forkkies.live/modifyproduct`, {
