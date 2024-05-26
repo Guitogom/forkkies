@@ -22,7 +22,6 @@ function App() {
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/b/:tag/*" element={<Client />} />
           <Route path="/terms" element={<div><h1>Componente de terminos, si ves esto es que aun no esta implementado.</h1></div>} />
-          <Route path="/text" element={<LoadingWithText />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </main>
