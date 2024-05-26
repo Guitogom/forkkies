@@ -6,7 +6,7 @@ import { OrderDetailsProp } from "./OrderDetailsProp.jsx"
 import debounce from 'just-debounce-it'
 
 export function OrderProp({ order }) {
-    const date = new Date(order.date).toLocaleString()
+    const date = order.date
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
     const [status, setStatus] = useState(order.status)

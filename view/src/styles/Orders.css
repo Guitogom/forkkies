@@ -206,14 +206,13 @@
 }
 
 .order-prop-status-button {
-    width: 90%;
-    height: 80px;
+    padding: 10px 30px;
     margin: auto;
     background-color: black;
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-family: var(--secondary-font);
     font-weight: bold;
     cursor: pointer;
