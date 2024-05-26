@@ -6,13 +6,11 @@ import { OrderDetailsProp } from "./OrderDetailsProp.jsx"
 import debounce from 'just-debounce-it'
 
 export function OrderProp({ order }) {
-    var newdate = new Date(1716724333068)
-    var date = newdate.toUTCString()
-    // const newdate = new Date(order.date)
-    // const hours = newdate.getUTCHours()
-    // const minutes = newdate.getUTCMinutes()
-    // const seconds = newdate.getUTCSeconds()
-    // const date = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+    const newdate = new Date(Math.floor(order.date))
+    const hours = newdate.getUTCHours()
+    const minutes = newdate.getUTCMinutes()
+    const seconds = newdate.getUTCSeconds()
+    const date = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
     const [status, setStatus] = useState(order.status)
