@@ -361,6 +361,36 @@ app.post('/modifybusiness', verificarToken, async (req, res) => {
  *                 active_template:
  *                   type: string
  *                   description: Template activo del negocio.
+ *                 templates:
+ *                   type: array
+ *                   description: Lista de templates del negocio.
+ *                  items:
+ *                    type: object
+ *                    properties:
+ *                     id:
+ *                      type: integer
+ *                     description: ID del template.
+ *                    name:
+ *                     type: string
+ *                    description: Nombre del template.
+ *                   business_id:
+ *                    type: integer
+ *                  description: ID del negocio al que pertenece el template.
+ *                properties:
+ *                 type: array
+ *                description: Lista de propiedades del negocio.
+ *              items:
+ *              type: object
+ *             properties:
+ *             id:
+ *             type: integer
+ *            description: ID de la propiedad.
+ *          name:
+ *          type: string
+ *        description: Nombre de la propiedad.
+ *      img:
+ *     type: string
+ *   description: URL de la imagen asociada a la propiedad.
  *       401:
  *         $ref: '#/components/responses/UnauthorizedError'
  *       500:
