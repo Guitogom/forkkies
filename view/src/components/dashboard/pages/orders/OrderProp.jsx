@@ -6,7 +6,7 @@ import { OrderDetailsProp } from "./OrderDetailsProp.jsx"
 import debounce from 'just-debounce-it'
 
 export function OrderProp({ order }) {
-    const date = new Date(order.date)
+    const date = new Date(1716724333068.0)
     // const newdate = new Date(order.date)
     // const hours = newdate.getUTCHours()
     // const minutes = newdate.getUTCMinutes()
