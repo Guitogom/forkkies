@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Title } from "../../Title"
 import '../../../../styles/Management.css'
 
@@ -7,6 +8,8 @@ export function Management({ business, businessName, setBusinessName }) {
     const [secondary, setSecondary] = useState(business.color2)
     const [action, setAction] = useState(business.color3)
     const [theme, setTheme] = useState(business.color4)
+
+    const navigate = useNavigate()
 
     const token = localStorage.getItem('session_token');
 
@@ -68,15 +71,11 @@ export function Management({ business, businessName, setBusinessName }) {
             })
     }
 
-    const handleChangeName = async (e) => {
-        const newName = e.target.value
+    const [newName, setNewName] = useState(businessName)
+
+    const handleChangeName = () => {
         setBusinessName(newName)
-
-        const debouncedUpdateName = setTimeout(() => {
-            updateName(newName)
-        }, 2000)
-
-        return () => clearTimeout(debouncedUpdateName)
+        updateName(newName)
     }
 
     const updateName = (newName) => {
@@ -108,7 +107,16 @@ export function Management({ business, businessName, setBusinessName }) {
 
     const handleLogOut = () => {
         localStorage.removeItem('session_token')
-        window.location.href = '/'
+        navigate('/')
+    }
+
+    const [tagMessage, setTagMessage] = useState(false)
+
+    const tagClick = () => {
+        setTagMessage(true)
+        setTimeout(() => {
+            setTagMessage(false)
+        }, 3000)
     }
 
     return (
@@ -117,10 +125,11 @@ export function Management({ business, businessName, setBusinessName }) {
             <div className="management-flex">
                 <div className="management-inner">
                     <h2>My business</h2>
-                    <p>Manage your business</p>
-                    <h3>Name</h3>
-                    <p>/{business.tag}</p>
-                    <input type="text" value={businessName} onChange={handleChangeName} />
+                    <p className="management-inner-tag" onClick={tagClick}>/{business.tag} <span style={{ opacity: `${tagMessage ? '1' : '0'}` }}>This is your business tag. It is unique and cannot be changed</span></p>
+                    <div className="management-business-name">
+                        <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} />
+                        <button onClick={handleChangeName}>Save</button>
+                    </div>
                     <h3>Style</h3>
                     <p>Change your business colors by tapping on them</p>
                     <div className="management-colors">
@@ -141,18 +150,16 @@ export function Management({ business, businessName, setBusinessName }) {
                             <input type="color" name="change-theme-color" id="change-theme-color" value={theme} onChange={(e) => setTheme(e.target.value)} />
                         </div>
                     </div>
-                    <h3>Payment</h3>
-                    <h3>Business</h3>
                     <button onClick={handleLogOut} className="management-log-out-button">Log out <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 7.63636L14 4.5C14 4.22386 13.7761 4 13.5 4L4.5 4C4.22386 4 4 4.22386 4 4.5L4 19.5C4 19.7761 4.22386 20 4.5 20L13.5 20C13.7761 20 14 19.7761 14 19.5L14 16.3636" stroke="red" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M10 12L21 12M21 12L18.0004 8.5M21 12L18 15.5" stroke="red" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg></button>
                 </div>
                 <div className="management-inner">
-                    <h2>Credentials</h2>
+                    {/* <h2>Credentials</h2>
                     <p>Manage your credentials</p>
                     <h3>Business account</h3>
                     <label htmlFor="new-password">Introduce New Password: </label>
                     <input type="password" id="new-password" />
                     <label htmlFor="repeat-new-password">Repeat New Password: </label>
-                    <input type="password" id="repeat-new-password" />
+                    <input type="password" id="repeat-new-password" /> */}
                 </div>
             </div>
         </section>

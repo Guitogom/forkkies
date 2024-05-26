@@ -6,20 +6,6 @@
     gap: 1rem;
 }
 
-.management-flex input {
-    width: 300px;
-    height: 40px;
-    padding: 10px;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-    border-radius: 5px;
-    background-color: transparent;
-    font-family: var(--secondary-font);
-
-}
-
 .management-inner {
     width: 45%;
     display: flex;
@@ -33,10 +19,101 @@
 }
 
 .management-inner h2 {
-    font-size: 2rem;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 2.5rem;
     font-weight: 700;
     color: var(--secondary-color);
     font-family: var(--primary-font);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    margin: 10px 0px;
+    padding: 10px;
+    background-color: var(--forth-color);
+}
+
+.management-inner-tag {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: white;
+    font-family: var(--secondary-font);
+    background-color: var(--primary-color);
+    padding: 10px 20px 10px 40px;
+    border-radius: 15px;
+    position: relative;
+    margin: 20px;
+}
+
+.management-inner-tag::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.management-inner-tag span {
+    transition: all 0.2s ease;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+@keyframes tagAnimation {
+    0% {
+        transform: rotate(5deg);
+    }
+    50% {
+        transform: rotate(-5deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.management-business-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+}
+
+.management-business-name input {
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    background-color: transparent;
+    font-family: var(--secondary-font);
+}
+
+.management-business-name button {
+    width: 100px;
+    height: 40px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--forth-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    font-family: var(--secondary-font);
+    transition: all 0.2s ease-in-out;
+}
+
+.management-business-name button:hover {
+    background-color: var(--secondary-color);
 }
 
 .management-inner h3 {
@@ -44,13 +121,6 @@
     font-weight: 700;
     color: var(--secondary-color);
     margin: 10px 0px;
-}
-
-.management-inner p {
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--secondary-color);
-    margin-bottom: 15px;
 }
 
 .management-colors {
