@@ -18,7 +18,7 @@ export function ProductPanel({ business }) {
     const [edit, setEdit] = useState(false)
     const [addProperty, setAddProperty] = useState(false)
 
-    const [properties, setProperties] = useState(business.properties)
+    const [properties, setProperties] = useState(business.properties || [])
 
     const [imageError, setImageError] = useState(false)
     const [nameError, setNameError] = useState('')
@@ -239,7 +239,7 @@ export function ProductPanel({ business }) {
             return
         }
 
-        const propertyIds = product.properties.map(property => property.id)
+        const propertyIds = product.properties.map(property => property.id) || []
 
         const token = localStorage.getItem('session_token')
         setLoading2(false)
