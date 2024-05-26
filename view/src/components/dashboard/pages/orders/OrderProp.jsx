@@ -38,22 +38,22 @@ export function OrderProp({ order }) {
         }
     }
 
-    const getStatusAction = (status) => {
-        switch (status) {
-            case 0:
-                return "payed"
-            case 1:
-                return "ready"
-            case 2:
-                return "deliver"
-            case 3:
-                return "cancel"
-            case 4:
-                return "unacncel"
-            default:
-                return "Do not touch"
-        }
-    }
+    // const getStatusAction = (status) => {
+    //     switch (status) {
+    //         case 0:
+    //             return "payed"
+    //         case 1:
+    //             return "ready"
+    //         case 2:
+    //             return "deliver"
+    //         case 3:
+    //             return "cancel"
+    //         case 4:
+    //             return "unacncel"
+    //         default:
+    //             return "Do not touch"
+    //     }
+    // }
 
     const getNextStatus = (currentStatus) => {
         switch (currentStatus) {
@@ -115,7 +115,7 @@ export function OrderProp({ order }) {
                 <p>{date}</p>
                 <p>{order.name}</p>
                 <p>{formatPrice(order.total)}€</p>
-                <button onClick={handleClick} className="order-prop-status-button">{getStatusAction(status)}<NextArrowSVG /></button>
+                <button onClick={handleClick} className="order-prop-status-button">{getStatusText(status)}<NextArrowSVG /></button>
                 <button onClick={() => setOpen(!open)} className="order-prop-open-button"><PlaySVG rotation={open ? '90deg' : '0deg'} /></button>
             </div>
             {order.products.length > 0 && (
