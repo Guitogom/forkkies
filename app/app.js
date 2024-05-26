@@ -1189,7 +1189,7 @@ app.post('/modifyproduct', verificarToken, async (req, res) => {
  *       - tokenAuth: []
  *     parameters:
  *       - in: query
- *         name: product_id
+ *         name: id
  *         required: true
  *         schema:
  *           type: integer
