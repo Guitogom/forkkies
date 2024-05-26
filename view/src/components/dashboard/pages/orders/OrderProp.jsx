@@ -12,7 +12,7 @@ export function OrderProp({ order }) {
     const adjustedHours = (hours + 2) % 24
     const formattedHours = adjustedHours.toString().padStart(2, '0')
     const formattedMinutes = minutes.toString().padStart(2, '0')
-    const date = ${formattedHours}: ${formattedMinutes}
+    const date = `${formattedHours}: ${formattedMinutes}`
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
     const [status, setStatus] = useState(order.status)
