@@ -302,13 +302,12 @@ export async function newTemplate(tag) {
     try {
         const result = await db.execute(
             {
-                sql: 'INSERT INTO template (business_id, name) VALUES (:id, "Unnamed template")',
+                sql: 'INSERT INTO template (business_id, name) VALUES (:id, "Unnamed template") RETURNING id',
                 args: { id }
             }
         );
 
-        // Devolver el id de la plantilla creada
-        return result.insertId;
+        return result.rows[0].id;
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
