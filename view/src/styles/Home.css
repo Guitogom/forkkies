@@ -82,6 +82,7 @@
 .right-home .uppertext {
     color: var(--secondary-color);
     font-size: 2rem;
+    text-align: center;
 }
 
 .right-home img {
@@ -93,7 +94,7 @@
     width: 50%;
     text-align: center;
     border-radius: 15px;
-    padding: 5px 0px;
+    padding: 10px 5px;
     font-size: 1.7rem;
     color: var(--white);
     background-color: var(--black);
