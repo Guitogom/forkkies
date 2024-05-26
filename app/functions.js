@@ -248,6 +248,7 @@ export async function getBusiness(tag) {
     //Añadimos las propiedades y los templates al negocio
     business.templates = templates.templates;
     business.properties = properties.properties;
+    return business;
 }
 
 async function getBusinessId(tag) {
