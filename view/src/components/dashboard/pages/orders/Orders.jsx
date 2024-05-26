@@ -68,7 +68,7 @@ export function Orders({ business, orders, setOrders }) {
             <div className="order-table">
                 <div className="order-titles">
                     <p>ID</p>
-                    <p>Date</p>
+                    <p>Time</p>
                     <p>Name</p>
                     <p>Total Price</p>
                     <p>Status</p>
