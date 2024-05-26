@@ -9,7 +9,9 @@ export function ClientOrderProduct({ cartProduct, cart, setCart, secondaryColor,
         const updateCart = () => {
             const newCart = cart.map(product =>
                 product.type === 1
-                    ? product
+                    ? (product.innerId === innerCart.innerId
+                        ? { ...innerCart, quantity: innerCart.quantity > 0 ? innerCart.quantity : 0 }
+                        : product)
                     : (product.product === innerCart.product
                         ? { ...innerCart, quantity: innerCart.quantity > 0 ? innerCart.quantity : 0 }
                         : product)

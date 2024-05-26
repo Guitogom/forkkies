@@ -15,13 +15,14 @@ export function ClientPayment({ cart, setCart, primaryColor, secondaryColor, the
     }, [])
 
     const payCash = () => {
-        if (fetching) return
-        setFetching(true)
+        if (fetching) retu
+
+        const date = new Date().toISOString()
 
         const requestBody = {
             business_id: template.id,
             total: orderPrice,
-            date: new Date().toISOString(),
+            date: date,
             name: clientName,
             products: cart.map(item => {
                 let options = []
