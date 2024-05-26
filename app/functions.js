@@ -762,12 +762,12 @@ export async function modifyProduct(tag, body) {
             }
             //Recorremos las propiedades
             for (var i = 0; i < properties.length; i++) {
-                var property = properties[i];
+                var properties_id = properties[i];
                 //Si la propiedad no tiene id, la añadimos
                 try {
                     await db.execute({
                         sql: 'INSERT INTO product_properties (product_id, properties_id) VALUES (:product_id, :properties_id)',
-                        args: { product_id, properties_id: property.id }
+                        args: { product_id, properties_id }
                     });
                 } catch (error) {
                     console.error('Error al insertar la propiedad:', error.message);
@@ -854,12 +854,12 @@ export async function modifyProduct(tag, body) {
                         }
                         //Recorremos las propiedades
                         for (var i = 0; i < properties.length; i++) {
-                            var property = properties[i];
+                            var properties_id = properties[i];
                             //Si la propiedad no tiene id, la añadimos
                             try {
                                 await db.execute({
                                     sql: 'INSERT INTO product_properties (product_id, properties_id) VALUES (:product_id, :properties_id)',
-                                    args: { product_id, properties_id: property.id }
+                                    args: { product_id, properties_id}
                                 });
                             } catch (error) {
                                 console.error('5Error en la base de datos:', error.message);

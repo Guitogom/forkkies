@@ -1110,6 +1110,11 @@ app.get('/getcategory', verificarToken, async (req, res) => {
  *                   delete:
  *                     type: boolean
  *                     description: Indica si se debe eliminar el producto (true/false).
+ *                   properties:
+ *                     type: array
+ *                     items:
+ *                      type: integer
+ *                      description: Lista de IDs de propiedades asociadas al producto.
  *                   steps:
  *                     type: array
  *                     items:
