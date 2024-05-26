@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import swaggerDocs from './swagger.js';
-import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, getallTemplates, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, addCollection, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
+import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, addCollection, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
 
 
 const app = express();
@@ -397,83 +397,12 @@ app.get('/getbusiness', verificarToken, (req, res) => {
 
 /**
  * @swagger
- * /getalltemplates:
- *   get:
- *     summary: Obtiene todos los templates de un negocio por su tag.
- *     tags: [Templates]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: tag
- *         schema:
- *           type: string
- *         required: true
- *         description: El tag del negocio.
- *     responses:
- *       200:
- *         description: Templates obtenidos exitosamente.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 templates:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       id:
- *                         type: integer
- *                         description: ID del template.
- *                       name:
- *                         type: string
- *                         description: Nombre del template.
- *                       content:
- *                         type: string
- *                         description: Contenido del template.
- *                 active_template:
- *                   type: string
- *                   description: Nombre del template activo.
- *       401:
- *         $ref: '#/components/responses/UnauthorizedError'
- *       500:
- *         description: Error en la base de datos.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   description: Mensaje de error.
- */
-
-
-app.get('/getalltemplates', verificarToken, async (req, res) => {
-    try {
-        var tag = req.tag;
-        var { templates, active_template } = await getallTemplates(tag);
-        res.status(200).json({ templates, active_template });
-    } catch (error) {
-        console.error('Error al obtener templates:', error.message);
-        res.status(500).json({ error: 'Error al obtener templates' });
-    }
-});
-
-/**
- * @swagger
  * /newtemplate:
  *   get:
  *     summary: Crea un nuevo template para un negocio dado su tag.
  *     tags: [Templates]
- *     parameters:
- *       - in: query
- *         name: tag
- *         schema:
- *           type: string
- *         required: true
- *         description: El tag del negocio para el cual se creará el nuevo template.
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Nuevo template creado exitosamente.
