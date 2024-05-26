@@ -7,10 +7,10 @@ import debounce from 'just-debounce-it'
 
 export function OrderProp({ order }) {
     const date = new Date(order.date)
-    const hours = newdate.getUTCHours()
-    const minutes = newdate.getUTCMinutes()
-    const seconds = newdate.getUTCSeconds()
-    const uwu = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+    // const hours = newdate.getUTCHours()
+    // const minutes = newdate.getUTCMinutes()
+    // const seconds = newdate.getUTCSeconds()
+    // const date = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
     const navigate = useNavigate()
     const [open, setOpen] = useState(false)
     const [status, setStatus] = useState(order.status)
