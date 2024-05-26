@@ -2,6 +2,7 @@ import { Title } from "../Title"
 import '../../../styles/Home.css'
 import businessQR from '../../../assets/media/example_qr.png'
 import { Link } from 'react-router-dom'
+import {QRCode} from 'react-qrcode-logo'
 
 import { ManagementSVG } from '../../../assets/svg/ManagementSVG'
 import { ProductsSVG } from '../../../assets/svg/ProductsSVG'
@@ -22,7 +23,7 @@ export function Home({ business, setBusiness }) {
                 </aside>
                 <aside className="right-home">
                     <p className="uppertext">Here is your preview</p>
-                    <img src={businessQR} alt="QR Code" />
+                    <QRCode value={business.name} />
                     <p className="undertext">Scan to preview</p>
                     {/* <button>Download</button> */}
                 </aside>
