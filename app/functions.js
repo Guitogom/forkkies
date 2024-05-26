@@ -300,7 +300,6 @@ export async function newTemplate(tag) {
     var id = await getBusinessId(tag);
 
     try {
-        // Insertar la nueva plantilla
         const result = await db.execute(
             {
                 sql: 'INSERT INTO template (business_id, name) VALUES (:id, "Unnamed template")',
@@ -308,22 +307,13 @@ export async function newTemplate(tag) {
             }
         );
 
-        // Obtener los datos de la plantilla recién creada
-        const templateResult = await db.execute(
-            {
-                sql: 'SELECT * FROM template WHERE id = :templateId',
-                args: { templateId: result.insertId }
-            }
-        );
-
-        // Devolver la plantilla entera
-        return templateResult[0]; // Se asume que templateResult es un array con un solo elemento
+        // Devolver el id de la plantilla creada
+        return result.insertId;
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
     }
 }
-
 
 
 async function checkTemplateOwnership(tag, template_id) {
@@ -1076,7 +1066,7 @@ async function fetchSpecialsForStep(step_id) {
 //Orders
 export async function newOrder(order) {
     //Creamos el order
-    if(!order.date) order.date = new Date();
+    if (!order.date) order.date = new Date();
     try {
         var result = await db.execute({
             sql: 'INSERT INTO order_table (business_id, total, name, date, status) VALUES (:business_id, :total, :name, :date, 0) RETURNING id',
