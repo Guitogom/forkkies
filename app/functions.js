@@ -721,6 +721,7 @@ export async function modifyProduct(tag, body) {
     var category_id = body.category_id;
     var product = body.product;
     var steps = product.steps;
+    var properties = product.properties;
 
     //Obtenemos el id_template de la categoria
     try {
@@ -759,6 +760,21 @@ export async function modifyProduct(tag, body) {
                 console.error('Error al insertar el producto en la categoría:', error.message);
                 throw new Error('Error al insertar el producto en la categoría: ' + error.message);
             }
+            //Recorremos las propiedades
+            for (var i = 0; i < properties.length; i++) {
+                var properties_id = properties[i];
+                //Si la propiedad no tiene id, la añadimos
+                try {
+                    await db.execute({
+                        sql: 'INSERT INTO product_properties (product_id, properties_id) VALUES (:product_id, :properties_id)',
+                        args: { product_id, properties_id }
+                    });
+                } catch (error) {
+                    console.error('Error al insertar la propiedad:', error.message);
+                    throw new Error('Error al insertar la propiedad: ' + error.message);
+                }
+            }
+
 
             //Recorremos los steps
             for (var i = 0; i < steps.length; i++) {
@@ -824,6 +840,31 @@ export async function modifyProduct(tag, body) {
                         } catch (error) {
                             console.error('3Error en la base de datos:', error.message);
                             throw new Error('Error en la base de datos: ' + error.message);
+                        }
+
+                        //Eliminamos properties que estén en el producto
+                        try {
+                            await db.execute({
+                                sql: 'DELETE FROM product_properties WHERE product_id = :product_id',
+                                args: { product_id }
+                            });
+                        } catch (error) {
+                            console.error('4Error en la base de datos:', error.message);
+                            throw new Error('4Error en la base de datos: ' + error.message);
+                        }
+                        //Recorremos las propiedades
+                        for (var i = 0; i < properties.length; i++) {
+                            var properties_id = properties[i];
+                            //Si la propiedad no tiene id, la añadimos
+                            try {
+                                await db.execute({
+                                    sql: 'INSERT INTO product_properties (product_id, properties_id) VALUES (:product_id, :properties_id)',
+                                    args: { product_id, properties_id}
+                                });
+                            } catch (error) {
+                                console.error('5Error en la base de datos:', error.message);
+                                throw new Error('5Error en la base de datos: ' + error.message);
+                            }
                         }
 
                         //Eliminamos specials que tengan un step que esté en el producto
@@ -993,6 +1034,7 @@ export async function getAllBusiness(tag) {
             const products = await fetchProductsForCategory(category.id);
             for (const product of products) {
                 product.steps = await fetchStepsForProduct(product.id);
+                product.properties = await fetchPropertiesForProduct(product.id);
                 for (const step of product.steps) {
                     step.specials = await fetchSpecialsForStep(step.id);
                 }
@@ -1039,6 +1081,15 @@ async function fetchProductsForCategory(category_id) {
     const result = await db.execute({
         sql: 'SELECT id, name, desc, img, price FROM product WHERE id IN (SELECT product_id FROM cat_product WHERE category_id = :category_id) AND name != "deleted"',
         args: { category_id }
+    });
+
+    return result.rows;
+}
+
+async function fetchPropertiesForProduct(product_id) {
+    const result = await db.execute({
+        sql: 'SELECT * FROM properties WHERE id IN (SELECT properties_id FROM product_properties WHERE product_id = :product_id)',
+        args: { product_id }
     });
 
     return result.rows;
