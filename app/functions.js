@@ -907,6 +907,33 @@ export async function getProduct(tag, product_id) {
             throw new Error('2Error en la base de datos: ' + error.message);
         }
 
+        //Obtenemos las propiedades del producto
+        try {
+            var result = await db.execute({
+                sql: 'SELECT properties_id FROM product_properties WHERE product_id = :product_id',
+                args: { product_id }
+            });
+            var properties_id = result.rows;
+        } catch (error) {
+            console.error('3Error en la base de datos:', error.message);
+            throw new Error('3Error en la base de datos: ' + error.message);
+        }
+
+        //Obtenemos el nombre y la img de las propiedades y las añadimos al producto
+        product.properties = [];
+        for (var i = 0; i < properties_id.length; i++) {
+            try {
+                var result = await db.execute({
+                    sql: 'SELECT id, name, img FROM properties WHERE id = :properties_id',
+                    args: properties_id[i]
+                });
+                product.properties.push(result.rows[0]);
+            } catch (error) {
+                console.error('4Error en la base de datos:', error.message);
+                throw new Error('4Error en la base de datos: ' + error.message);
+            }
+        }
+
         //Obtenemos los steps del producto
         try {
             var result = await db.execute({
