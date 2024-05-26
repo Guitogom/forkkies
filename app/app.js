@@ -774,7 +774,7 @@ app.post('/deleteproperty', verificarToken, async (req, res) => {
  *               properties:
  *                 error:
  *                   type: string
- *                   example: Error en la base de datos: detalles del error
+ *                   example: Error en la base de datos
  */
 
 
@@ -831,7 +831,7 @@ app.get('/addproductproperty', verificarToken, async (req, res) => {
  *               properties:
  *                 error:
  *                   type: string
- *                   example: Error en la base de datos: detalles del error
+ *                   example: Error en la base de datos
  */
 
 
