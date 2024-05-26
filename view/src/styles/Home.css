@@ -90,6 +90,15 @@
     aspect-ratio: 1/1;
 }
 
+.qr-download{
+    cursor: pointer;
+    transition: all 0.2s linear;
+}
+
+.qr-download:hover{
+    transform: scale(1.1);
+}
+
 .right-home .undertext {
     width: 50%;
     text-align: center;

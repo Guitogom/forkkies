@@ -21,7 +21,7 @@ export function Home({ business, setBusiness, primaryColor }) {
         const url = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = url;
-        link.download = `${business.tag}Qr.png`;
+        link.download = `${business.tag}_qr.png`;
         link.click();
     }
 
@@ -38,7 +38,7 @@ export function Home({ business, setBusiness, primaryColor }) {
                 </aside>
                 <aside className="right-home">
                     <p className="uppertext">Click the QR to download</p>
-                    <div ref={canvasRef} onClick={handleDownload}>
+                    <div className='qr-download' ref={canvasRef} onClick={handleDownload}>
                         <QRCode value={`https://forkkies.live/b/${business.tag}`} ecLevel="H" size='250' logoWidth='100' logoHeight='100' logoOpacity='0.5' qrStyle="dots" eyeRadius={10} bgColor="transparent" />
                     </div>
                     <p className="undertext">Scan to preview</p>

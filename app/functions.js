@@ -1026,7 +1026,7 @@ async function fetchSpecialsForStep(step_id) {
 //Orders
 export async function newOrder(order) {
     //Creamos el order
-    order.date = new Date();
+    if(!order.date) order.date = new Date();
     try {
         var result = await db.execute({
             sql: 'INSERT INTO order_table (business_id, total, name, date, status) VALUES (:business_id, :total, :name, :date, 0) RETURNING id',
