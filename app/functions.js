@@ -993,6 +993,7 @@ export async function getAllBusiness(tag) {
             const products = await fetchProductsForCategory(category.id);
             for (const product of products) {
                 product.steps = await fetchStepsForProduct(product.id);
+                product.properties = await fetchPropertiesForProduct(product.id);
                 for (const step of product.steps) {
                     step.specials = await fetchSpecialsForStep(step.id);
                 }
@@ -1039,6 +1040,15 @@ async function fetchProductsForCategory(category_id) {
     const result = await db.execute({
         sql: 'SELECT id, name, desc, img, price FROM product WHERE id IN (SELECT product_id FROM cat_product WHERE category_id = :category_id) AND name != "deleted"',
         args: { category_id }
+    });
+
+    return result.rows;
+}
+
+async function fetchPropertiesForProduct(product_id) {
+    const result = await db.execute({
+        sql: 'SELECT * FROM properties WHERE id IN (SELECT properties_id FROM product_properties WHERE product_id = :product_id)',
+        args: { product_id }
     });
 
     return result.rows;

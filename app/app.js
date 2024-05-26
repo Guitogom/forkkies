@@ -548,12 +548,6 @@ app.post('/modifytemplate', verificarToken, async (req, res) => {
  *       - tokenAuth: []
  *     parameters:
  *       - in: query
- *         name: tag
- *         schema:
- *           type: string
- *         required: true
- *         description: El tag del negocio al que pertenece el template.
- *       - in: query
  *         name: id
  *         schema:
  *           type: string
@@ -740,45 +734,39 @@ app.post('/deleteproperty', verificarToken, async (req, res) => {
 
 /**
  * @swagger
- * /getproperties:
+ * /addproductproperty:
  *   get:
- *     summary: Obtiene todas las propiedades de un negocio.
+ *     summary: Añadir propiedad a producto.
  *     tags: [Properties]
+ *     description: Añade una propiedad específica a un producto identificado por su ID.
  *     security:
- *       - tokenAuth: []
+ *       - bearerAuth: []
  *     parameters:
  *       - in: query
- *         name: tag
+ *         name: product_id
  *         schema:
- *           type: string
+ *           type: integer
  *         required: true
- *         description: El tag del negocio del cual se quieren obtener las propiedades.
+ *         description: ID del producto al que se agregará la propiedad.
+ *       - in: query
+ *         name: property_id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID de la propiedad que se agregará al producto.
  *     responses:
  *       200:
- *         description: Propiedades obtenidas exitosamente.
+ *         description: Propiedad añadida correctamente al producto.
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 properties:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       id:
- *                         type: integer
- *                         description: ID de la propiedad.
- *                       name:
- *                         type: string
- *                         description: Nombre de la propiedad.
- *                       img:
- *                         type: string
- *                         description: URL de la imagen asociada a la propiedad.
- *       401:
- *         $ref: '#/components/responses/UnauthorizedError'
+ *                 result:
+ *                   type: string
+ *                   example: Propiedad añadida correctamente al producto.
  *       500:
- *         description: Error en la base de datos.
+ *         description: Error al añadir propiedad al producto.
  *         content:
  *           application/json:
  *             schema:
@@ -786,20 +774,9 @@ app.post('/deleteproperty', verificarToken, async (req, res) => {
  *               properties:
  *                 error:
  *                   type: string
- *                   description: Mensaje de error.
+ *                   example: Error en la base de datos: detalles del error
  */
 
-
-app.get('/getproperties', verificarToken, async (req, res) => {
-    try {
-        var tag = req.tag;
-        var result = await getProperties(tag);
-        res.status(200).json({ result });
-    } catch (error) {
-        console.error('Error al obtener propiedades:', error.message);
-        res.status(500).json({ error: 'Error al obtener propiedades' });
-    }
-});
 
 app.get('/addproductproperty', verificarToken, async (req, res) => {
     try {
@@ -811,6 +788,52 @@ app.get('/addproductproperty', verificarToken, async (req, res) => {
         res.status(500).json({ error: 'Error al añadir propiedad a producto' });
     }
 })
+
+/**
+ * @swagger
+ * /deleteproductproperty:
+ *   get:
+ *     summary: Eliminar propiedad de producto.
+ *     tags: [Properties]
+ *     description: Elimina una propiedad específica de un producto identificado por su ID.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: product_id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID del producto del que se eliminará la propiedad.
+ *       - in: query
+ *         name: property_id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID de la propiedad que se eliminará del producto.
+ *     responses:
+ *       200:
+ *         description: Propiedad eliminada correctamente del producto.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: string
+ *                   example: Propiedad eliminada correctamente del producto.
+ *       500:
+ *         description: Error al eliminar propiedad del producto.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Error en la base de datos: detalles del error
+ */
+
 
 app.get('/deleteproductproperty', verificarToken, async (req, res) => {
     try {
@@ -911,12 +934,6 @@ app.post('/newcategory', verificarToken, async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               tag:
- *                 type: string
- *                 description: El tag del negocio al que pertenece el template.
- *               body:
- *                 type: object
- *                 properties:
  *                   category:
  *                     type: object
  *                     properties:
@@ -981,12 +998,6 @@ app.post('/modifycategory', verificarToken, async (req, res) => {
  *     security:
  *       - tokenAuth: []
  *     parameters:
- *       - in: query
- *         name: tag
- *         required: true
- *         schema:
- *           type: string
- *         description: El tag del negocio al que pertenece la categoría.
  *       - in: query
  *         name: category_id
  *         required: true
