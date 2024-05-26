@@ -1,0 +1,16 @@
+.analytics {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pending {
+    color: var(--red);
+    font-size: 14rem;
+    font-weight: 900;
+    opacity: 0.3;
+    transform: rotate(-12deg);
+    text-align: center;
+  }

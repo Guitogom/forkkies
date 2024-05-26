@@ -1,10 +1,13 @@
-import { Title } from "../../Title"
+import { Title } from "../../Title.jsx"
+import "../../../../styles/Analytics.css"
 
 export function Analytics() {
     return (
         <section>
             <Title title="Analytics" text="Analytics" />
-            <p className="pending">PENDING</p>
+            <div className="analytics">
+                <p className="pending">PENDING</p>
+            </div>
         </section>
     )
 }

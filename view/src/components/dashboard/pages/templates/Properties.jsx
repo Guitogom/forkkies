@@ -97,7 +97,6 @@ export function Properties() {
                     return response.json()
                 })
                 .then(properties => {
-                    console.log(properties.result.properties)
                     setProperties(properties.result.properties)
                 })
                 .catch(error => {
@@ -150,7 +149,7 @@ export function Properties() {
                                 </div>
                             )
                         })) : <div className="property-add-collection">
-                            <button onClick={addCollection} style={{ display: `${hideButton ? 'show' : 'hidden'}` }}><PlusSVG /><p>Import Allergens</p></button>
+                            <button onClick={addCollection} style={{ opacity: `${hideButton ? '0' : '1'}` }}><PlusSVG /><p>Import Allergens</p></button>
                         </div>
                     }
                 </div>

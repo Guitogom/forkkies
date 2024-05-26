@@ -32,18 +32,6 @@
   color: var(--tertiary-color);
 }
 
-.pending {
-  position: absolute;
-  top: 24%;
-  left: 24%;
-  color: var(--red);
-  font-size: 14rem;
-  font-weight: 900;
-  opacity: 0.3;
-  transform: rotate(-12deg);
-  text-align: center;
-}
-
 .loading {
   position: relative;
   width: 100%;
