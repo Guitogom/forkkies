@@ -25,15 +25,15 @@ export function OrderProp({ order }) {
     const getStatusText = (status) => {
         switch (status) {
             case 0:
-                return "pending"
-            case 1:
                 return "payed"
-            case 2:
+            case 1:
                 return "ready"
+            case 2:
+                return "deliver"
             case 3:
-                return "delivered"
+                return "cancel"
             case 4:
-                return "canceled"
+                return "uncancel"
             default:
                 return "Do not touch"
         }
