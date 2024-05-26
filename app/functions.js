@@ -300,18 +300,31 @@ export async function newTemplate(tag) {
     var id = await getBusinessId(tag);
 
     try {
-        await db.execute(
+        // Insertar la nueva plantilla
+        const result = await db.execute(
             {
                 sql: 'INSERT INTO template (business_id, name) VALUES (:id, "Unnamed template")',
                 args: { id }
             }
         );
+
+        // Obtener los datos de la plantilla recién creada
+        const templateResult = await db.execute(
+            {
+                sql: 'SELECT * FROM template WHERE id = :templateId',
+                args: { templateId: result.insertId }
+            }
+        );
+
+        // Devolver la plantilla entera
+        return templateResult[0]; // Se asume que templateResult es un array con un solo elemento
     } catch (error) {
         console.error('Error en la base de datos:', error.message);
         throw new Error('Error en la base de datos: ' + error.message);
     }
-    return true;
 }
+
+
 
 async function checkTemplateOwnership(tag, template_id) {
     var business_id = await getBusinessId(tag);
