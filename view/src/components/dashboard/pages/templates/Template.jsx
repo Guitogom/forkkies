@@ -68,6 +68,7 @@ export function Template({ business, setBusiness, setTemplates, templates }) {
         setChangeNameDisplay('none')
         if (localStorage.getItem('session_token') !== null) {
             const token = localStorage.getItem('session_token')
+            setBusiness({ ...business, templates: business.templates.map(template => template.id === id ? { ...template, name: templateName } : template) })
             fetch(`https://api.forkkies.live/modifytemplate`, {
                 method: 'POST',
                 headers: {
