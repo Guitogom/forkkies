@@ -22,6 +22,10 @@ export function Templates({ business, setBusiness, setTemplates, templates, busi
         }
     }
 
+    useEffect(() => {
+        setTemplates(business.templates)
+    }, [business])
+
     const addTemplate = () => {
         const token = localStorage.getItem('session_token')
         fetch('https://api.forkkies.live/newtemplate', {
