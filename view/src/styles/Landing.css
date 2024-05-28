@@ -110,6 +110,7 @@
     0% {
         background-position: 200% 50%;
     }
+
     100% {
         background-position: 0% 50%;
     }
@@ -355,4 +356,69 @@
     margin-left: 20px;
     align-self: center;
     justify-self: start;
+}
+
+@media (max-width: 900px) {
+    .side-landing {
+        display: none;
+    }
+
+    .center-landing {
+        width: 90%;
+    }
+
+    .title-landing {
+        font-size: 6rem;
+    }
+
+    .subtitle-landing {
+        font-size: 2rem;
+    }
+
+    .get-started-landing {
+        font-size: 1.5rem;
+    }
+
+    .login-message-landing {
+        font-size: 0.9rem;
+    }
+
+    .arrow-landing {
+        height: 80px;
+    }
+
+    .log-in-landing {
+        font-size: 1.2rem;
+    }
+
+    .message-landing {
+        margin: 50px;
+        font-size: 3rem;
+    }
+
+    .actions-landing {
+        margin: 100px;
+    }
+
+    .action-landing {
+        font-size: 4rem;
+    }
+
+    .features-landing h2 {
+        font-size: 4rem;
+    }
+
+    .features-landing-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    .feature-landing img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .feature-landing p {
+        font-size: 1.5rem;
+    }
 }

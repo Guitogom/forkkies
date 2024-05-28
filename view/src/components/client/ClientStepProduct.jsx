@@ -99,7 +99,7 @@ export function ClientStepProduct({ cart, setCart, categories, secondaryColor, p
                     }
                 </div>
                 <p className="client-full-product-price" style={{ color: secondaryColor }}>{formatPrice(product.price)}€</p>
-                <p className="client-full-product-description" style={{ color: secondaryColor }}>{product.description || 'Descripción del producto medianamente larga'}</p>
+                <p className="client-full-product-description" style={{ color: secondaryColor }}>{product.desc || ''}</p>
                 <hr className='client-hr' style={{ boxShadow: `0 0 10px ${secondaryColor}`, backgroundColor: `${secondaryColor}` }} />
             </div>
             <div className="client-full-product-add-to-cart">

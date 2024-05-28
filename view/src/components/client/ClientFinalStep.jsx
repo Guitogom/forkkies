@@ -128,7 +128,7 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
                 </div>
                 <p style={{ color: secondaryColor }}>Original Price:</p>
                 <p className="client-full-product-price" style={{ color: secondaryColor }}>{formatPrice(product.price)}€</p>
-                <p className="client-full-product-description" style={{ color: secondaryColor }}>{product.description || 'Descripción del producto medianamente larga'}</p>
+                <p className="client-full-product-description" style={{ color: secondaryColor }}>{product.desc || ''}</p>
                 <hr className='client-hr' style={{ boxShadow: `0 0 10px ${secondaryColor}`, backgroundColor: `${secondaryColor}` }} />
             </div>
             {renderSpecials(optionSpecials, "In this product you prefer:")}

@@ -17,6 +17,8 @@ import i11 from '/src/assets/media/c_img/i11.jpeg';
 import i12 from '/src/assets/media/c_img/i12.jpeg';
 import i13 from '/src/assets/media/c_img/i13.jpeg';
 import i14 from '/src/assets/media/c_img/i14.jpeg';
+import i15 from '/src/assets/media/c_img/i15.jpeg';
+import i16 from '/src/assets/media/c_img/i16.jpeg';
 import tick from '/src/assets/media/tick.svg';
 
 export function Landing() {
@@ -31,30 +33,30 @@ export function Landing() {
             <div className="header-landing">
                 <div className='side-landing left-side-landing'>
                     <div className='scroll-landing'>
-                        <div className="box-landing"><img src={i2} alt='' /></div>
+                        <div className="box-landing"><img src={i13} alt='' /></div>
                         <div className="box-landing"><img src={i6} alt='' /></div>
                         <div className="box-landing-four">
                             <div className="box-landing-cube"><img src={i1} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i1} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i11} alt="" /></div>
                             <div className="box-landing-cube"><img src={i14} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i1} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i15} alt="" /></div>
                         </div>
                         <div className="box-landing"><img src={i5} alt='' /></div>
                         <div className="box-landing"><img src={i3} alt='' /></div>
-                        <div className="box-landing"><img src={i4} alt='' /></div>
+                        <div className="box-landing"><img src={i8} alt='' /></div>
                     </div>
                     <div className='scroll-landing'>
-                        <div className="box-landing"><img src={i2} alt='' /></div>
+                        <div className="box-landing"><img src={i13} alt='' /></div>
                         <div className="box-landing"><img src={i6} alt='' /></div>
                         <div className="box-landing-four">
                             <div className="box-landing-cube"><img src={i1} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i1} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i11} alt="" /></div>
                             <div className="box-landing-cube"><img src={i14} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i1} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i15} alt="" /></div>
                         </div>
                         <div className="box-landing"><img src={i5} alt='' /></div>
                         <div className="box-landing"><img src={i3} alt='' /></div>
-                        <div className="box-landing"><img src={i4} alt='' /></div>
+                        <div className="box-landing"><img src={i8} alt='' /></div>
                     </div>
                 </div>
                 <section className='center-landing'>
@@ -77,10 +79,10 @@ export function Landing() {
                 <div className='side-landing right-side-landing'>
                     <div className='scroll-landing'>
                         <div className="box-landing"><img src={i10} alt='' /></div>
-                        <div className="box-landing"><img src={i8} alt='' /></div>
+                        <div className="box-landing"><img src={i4} alt='' /></div>
                         <div className="box-landing-four">
-                            <div className="box-landing-cube"><img src={i14} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i2} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i16} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i12} alt="" /></div>
                             <div className="box-landing-cube"><img src={i13} alt="" /></div>
                             <div className="box-landing-cube"><img src={i9} alt="" /></div>
                         </div>
@@ -90,12 +92,12 @@ export function Landing() {
                     </div>
                     <div className='scroll-landing'>
                         <div className="box-landing"><img src={i10} alt='' /></div>
-                        <div className="box-landing"><img src={i8} alt='' /></div>
+                        <div className="box-landing"><img src={i4} alt='' /></div>
                         <div className="box-landing-four">
-                            <div className="box-landing-cube"><img src={i14} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i16} alt="" /></div>
                             <div className="box-landing-cube"><img src={i12} alt="" /></div>
                             <div className="box-landing-cube"><img src={i13} alt="" /></div>
-                            <div className="box-landing-cube"><img src={i3} alt="" /></div>
+                            <div className="box-landing-cube"><img src={i9} alt="" /></div>
                         </div>
                         <div className="box-landing"><img src={i1} alt='' /></div>
                         <div className="box-landing"><img src={i7} alt='' /></div>
