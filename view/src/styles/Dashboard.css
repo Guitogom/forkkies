@@ -4,7 +4,6 @@
 
 @media (max-width: 768px) {
     .screen {
-        width: 90%;
-        padding-bottom: 40px;
+        padding-bottom: 200px;
     }
 }
