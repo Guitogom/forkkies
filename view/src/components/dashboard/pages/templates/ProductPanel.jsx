@@ -16,6 +16,7 @@ export function ProductPanel({ business }) {
     const { c_id } = useParams()
     const { p_id } = useParams()
     const [edit, setEdit] = useState(false)
+    const [actualStepId, setActualStepId] = useState(0)
     const [addProperty, setAddProperty] = useState(false)
 
     const [properties, setProperties] = useState(business.properties)
@@ -127,9 +128,15 @@ export function ProductPanel({ business }) {
         setProduct({ ...product, steps: updatedSteps })
     }
 
+    const handleStepDelete = (stepIndex) => {
+        const updatedSteps = [...product.steps];
+        updatedSteps.splice(stepIndex, 1);
+        setProduct({ ...product, steps: updatedSteps });
+    }
+
     const addStepItem = () => {
         const updatedSteps = [...product.steps]
-        const index = updatedSteps.findIndex((step) => step === editStep)
+        const index = updatedSteps.findIndex((step) => step.id === actualStepId)
         if (index !== -1) {
             updatedSteps[index].specials.push({
                 id: `item_${Date.now()}`,
@@ -139,12 +146,6 @@ export function ProductPanel({ business }) {
             })
             setProduct({ ...product, steps: updatedSteps })
         }
-    }
-
-    const handleStepDelete = (stepIndex) => {
-        const updatedSteps = [...product.steps]
-        updatedSteps.splice(stepIndex, 1)
-        setProduct({ ...product, steps: updatedSteps })
     }
 
     const handleSpecialDelete = (stepId, specialId) => {
@@ -169,7 +170,6 @@ export function ProductPanel({ business }) {
         }
     }
 
-
     const [editStep, setEditStep] = useState({})
 
     const handleEdit = async (step) => {
@@ -179,6 +179,7 @@ export function ProductPanel({ business }) {
         } else {
             await setEditStep(step)
             setEdit(true)
+            setActualStepId(step.id)
         }
     }
 
@@ -192,6 +193,7 @@ export function ProductPanel({ business }) {
         if (index !== -1) {
             updatedSteps[index][fieldName] = value
             setProduct({ ...product, steps: updatedSteps })
+
         }
     }
 
