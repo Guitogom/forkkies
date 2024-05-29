@@ -123,14 +123,17 @@ export function Management({ business, businessName, setBusinessName }) {
         <section>
             <Title title="Management" text="Management" />
             <div className="management-flex">
-                <div className="management-inner">
+                <div className="management-bubble">
                     <h2>My Business</h2>
                     <p className={`management-inner-tag ${tagMessage ? 'animating' : ''}`} onClick={tagClick}>/{business.tag}</p>
                     <div className="management-business-name">
                         <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} />
                         <button onClick={handleChangeName}>Save</button>
                     </div>
-                    <p>Change your business colors by tapping on them</p>
+                    <button onClick={handleLogOut} className="management-log-out-button">Log out <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 7.63636L14 4.5C14 4.22386 13.7761 4 13.5 4L4.5 4C4.22386 4 4 4.22386 4 4.5L4 19.5C4 19.7761 4.22386 20 4.5 20L13.5 20C13.7761 20 14 19.7761 14 19.5L14 16.3636" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M10 12L21 12M21 12L18.0004 8.5M21 12L18 15.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg></button>
+                </div>
+                <div className="management-bubble">
+                    <h2>Theme</h2>
                     <div className="management-colors">
                         <div style={{ backgroundColor: primary }}>
                             <label htmlFor="change-primary-color">Primary Color</label>
@@ -149,18 +152,24 @@ export function Management({ business, businessName, setBusinessName }) {
                             <input type="color" name="change-theme-color" id="change-theme-color" value={theme} onChange={(e) => setTheme(e.target.value)} />
                         </div>
                     </div>
-                    <button onClick={handleLogOut} className="management-log-out-button">Log out <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 7.63636L14 4.5C14 4.22386 13.7761 4 13.5 4L4.5 4C4.22386 4 4 4.22386 4 4.5L4 19.5C4 19.7761 4.22386 20 4.5 20L13.5 20C13.7761 20 14 19.7761 14 19.5L14 16.3636" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M10 12L21 12M21 12L18.0004 8.5M21 12L18 15.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg></button>
                 </div>
-                <div className="management-inner">
-                    {/* <h2>Credentials</h2>
+                <div className="management-bubble">
+                    <h2>Credentials</h2>
                     <p>Manage your credentials</p>
-                    <h3>Business account</h3>
                     <label htmlFor="new-password">Introduce New Password: </label>
                     <input type="password" id="new-password" />
                     <label htmlFor="repeat-new-password">Repeat New Password: </label>
-                    <input type="password" id="repeat-new-password" /> */}
+                    <input type="password" id="repeat-new-password" />
+                </div>
+                <div className="management-bubble">
+                    <h2>Special access</h2>
+                    <p>Coming soon...</p>
+                </div>
+                <div className="management-bubble">
+                    <h2>Income</h2>
+                    <p>Coming soon...</p>
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
