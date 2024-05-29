@@ -352,7 +352,10 @@
     font-size: 2rem;
     font-weight: 900;
     font-family: var(--primary-font);
-    color: #3C3C3C;
+    /* color: #3C3C3C; */
+    background: linear-gradient(90deg, var(--secondary-color) 0%, rgb(119, 119, 119) 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-left: 20px;
     align-self: center;
     justify-self: start;
