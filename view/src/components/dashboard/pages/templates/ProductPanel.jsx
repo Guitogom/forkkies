@@ -135,18 +135,33 @@ export function ProductPanel({ business }) {
     }
 
     const addStepItem = () => {
-        const updatedSteps = [...product.steps]
-        const index = updatedSteps.findIndex((step) => step.id === actualStepId)
+        const updatedSteps = [...product.steps];
+        const index = updatedSteps.findIndex((step) => step.id === actualStepId);
         if (index !== -1) {
             updatedSteps[index].specials.push({
                 id: `item_${Date.now()}`,
                 name: 'New Item',
                 price_changer: '',
                 img: ''
-            })
-            setProduct({ ...product, steps: updatedSteps })
+            });
+            setProduct({ ...product, steps: updatedSteps });
+
+            // Verificar si el paso actual es el paso que se está editando
+            if (editStep && editStep.id === actualStepId) {
+                const updatedEditStep = {
+                    ...editStep,
+                    specials: [...editStep.specials, {
+                        id: `item_${Date.now()}`,
+                        name: 'New Item',
+                        price_changer: '',
+                        img: ''
+                    }]
+                };
+                setEditStep(updatedEditStep);
+            }
         }
-    }
+    };
+
 
     const handleSpecialDelete = (stepId, specialId) => {
         const updatedSteps = product.steps.map(step => {
