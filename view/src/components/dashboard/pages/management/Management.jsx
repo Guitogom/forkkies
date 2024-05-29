@@ -9,6 +9,9 @@ export function Management({ business, businessName, setBusinessName }) {
     const [action, setAction] = useState(business.color3)
     const [theme, setTheme] = useState(business.color4)
 
+    const [passwordVerified, setPasswordVerified] = useState(false)
+    const [loadingFetch, setLoadingFetch] = useState(false)
+
     const navigate = useNavigate()
 
     const token = localStorage.getItem('session_token');
@@ -110,6 +113,14 @@ export function Management({ business, businessName, setBusinessName }) {
         navigate('/')
     }
 
+    const handleVerifyPassword = () => {
+        setLoadingFetch(true)
+        setTimeout(() => {
+            setPasswordVerified(true)
+            setLoadingFetch(false)
+        }, 2000)
+    }
+
     const [tagMessage, setTagMessage] = useState(false)
 
     const tagClick = () => {
@@ -127,9 +138,10 @@ export function Management({ business, businessName, setBusinessName }) {
                     <h2>My Business</h2>
                     <div className="management-bubble-inner my-business">
                         <p className={`management-inner-tag ${tagMessage ? 'animating' : ''}`} onClick={tagClick}>/{business.tag}</p>
+                        <label htmlFor="changeName">Business Name</label>
                         <div className="management-business-name">
-                            <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} />
-                            <button onClick={handleChangeName}>Save</button>
+                            <input type="text" value={newName} id="changeName" onChange={(e) => setNewName(e.target.value)} />
+                            <button onClick={handleChangeName}>Change</button>
                         </div>
                         <button onClick={handleLogOut} className="management-log-out-button">Log out <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 7.63636L14 4.5C14 4.22386 13.7761 4 13.5 4L4.5 4C4.22386 4 4 4.22386 4 4.5L4 19.5C4 19.7761 4.22386 20 4.5 20L13.5 20C13.7761 20 14 19.7761 14 19.5L14 16.3636" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M10 12L21 12M21 12L18.0004 8.5M21 12L18 15.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg></button>
                     </div>
@@ -160,13 +172,27 @@ export function Management({ business, businessName, setBusinessName }) {
                 </div>
                 <div className="management-bubble">
                     <h2>Credentials</h2>
-                    <div className="management-bubble-inner">
-                        <p>Manage your credentials</p>
-                        <label htmlFor="new-password">Introduce New Password: </label>
-                        <input type="password" id="new-password" />
-                        <label htmlFor="repeat-new-password">Repeat New Password: </label>
-                        <input type="password" id="repeat-new-password" />
-                    </div>
+                    <div className="management-bubble-inner credentials">
+                        <div className="old-password-verification" style={{ opacity: `${passwordVerified ? '0' : '1'}`, zIndex: `${passwordVerified ? '0' : '4'}` }}>
+                            <label htmlFor="old-password" className="management-credentials-label">Introduce Current Password:</label>
+                            <input type="password" id="old-password" className="management-credentials-input" />
+                            <button className={`management-credentials-button ${loadingFetch ? 'loading' : ''}`} onClick={handleVerifyPassword}>
+                                {loadingFetch ? (
+                                    <div className="loading-dots">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                ) : 'Verify'}
+                            </button>
+                        </div>
+                        <div className="new-password-input" style={{ opacity: `${passwordVerified ? '1' : '0'}`, zIndex: `${passwordVerified ? '4' : '0'}` }}>
+                            <label htmlFor="new-password" className="management-credentials-label">Introduce New Password:</label>
+                            <input type="password" id="new-password" className="management-credentials-input" />
+                            <label htmlFor="repeat-new-password" className="management-credentials-label">Repeat New Password:</label>
+                            <input type="password" id="repeat-new-password" className="management-credentials-input" />
+                            <button>Change Password</button>
+                        </div></div>
                 </div>
                 <div className="management-bubble">
                     <h2>Special access</h2>

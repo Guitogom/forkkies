@@ -20,6 +20,37 @@
 .management-bubble-inner.my-business {
     display: flex;
     flex-direction: column;
+    gap: 4%;
+    height: 100%;
+}
+
+.management-bubble-inner.my-business label {
+    width: 30%;
+    border-bottom: var(--primary-color) 2px solid;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    font-family: var(--secondary-font);
+}
+
+.management-bubble-inner.credentials {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.old-password-verification {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 3%;
+    width: 94%;
+    transition: all 0.4s ease-in-out;
+}
+
+.new-password-input {
+    width: 100%;
+    transition: all 0.4s ease-in-out;
 }
 
 .management-flex h2 {
@@ -28,7 +59,7 @@
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--secondary-color);
-    font-family: var(--primary-font);
+    font-family: var(--secondary-font);
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     padding: 10px;
     background-color: var(--tertiary-color);
@@ -102,7 +133,6 @@
 .management-business-name {
     display: flex;
     align-items: center;
-    gap: 2px;
     margin: 0;
     padding: 0;
 }
@@ -114,10 +144,11 @@
     font-size: 1rem;
     font-weight: 700;
     color: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-    border-radius: 5px;
-    background-color: transparent;
+    border: none;
+    border-radius: 5px 0px 0px 5px;
+    background-color: white;
     font-family: var(--secondary-font);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .management-business-name button {
@@ -126,12 +157,13 @@
     font-size: 1rem;
     font-weight: 700;
     color: var(--forth-color);
-    border: 1px solid var(--primary-color);
-    border-radius: 5px;
+    border: none;
+    border-radius: 0px 5px 5px 0px;
     background-color: var(--primary-color);
     cursor: pointer;
     font-family: var(--secondary-font);
     transition: all 0.2s ease-in-out;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .management-business-name button:hover {
@@ -216,9 +248,9 @@
     width: 198px;
     height: 48px;
     font-size: 22px;
-    color: white;
+    color: var(--red);
     border: 0;
-    background-color: var(--red);
+    background-color: transparent;
     border-radius: 10px;
     border: 2px solid var(--red);
     transition: all 0.2s ease;
@@ -229,13 +261,13 @@
 }
 
 .management-log-out-button:hover {
-    background-color: transparent;
-    color: var(--red);
+    background-color: var(--red);
+    color: white;
     border: 2px solid var(--red);
 }
 
 .management-log-out-button:active {
-    box-shadow: inset 0px 2px 4px black;
+    box-shadow: inset 0px 2px 4px var(--secondary-color);
 }
 
 .management-log-out-button svg {
@@ -244,16 +276,119 @@
 }
 
 .management-log-out-button svg path {
-    stroke: white;
+    stroke: var(--red);
 }
 
 .management-log-out-button:hover svg path {
-    stroke: var(--red);
+    stroke: white;
 }
 
 .management-log-out-button:hover svg {
     transform: translateX(4px);
 }
+
+.management-credentials-label {
+    display: block;
+    margin: 10px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    font-family: var(--secondary-font);
+}
+
+.management-credentials-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    font-family: var(--secondary-font);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    margin-bottom: 20px;
+}
+
+.old-password-verification button,
+.new-password-input button {
+    width: 100%;
+    height: 42px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--forth-color);
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    font-family: var(--secondary-font);
+    transition: all 0.2s ease-in-out;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.old-password-verification button:hover,
+.new-password-input button:hover {
+    background-color: var(--secondary-color);
+}
+
+.management-credentials-button {
+    width: 100px;
+    height: 42px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--forth-color);
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    font-family: var(--secondary-font);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.management-credentials-button.loading {
+    pointer-events: none;
+}
+
+.loading-dots {
+    display: flex;
+    gap: 10px;
+}
+
+.loading-dots div {
+    width: 10px;
+    height: 10px;
+    background-color: var(--forth-color);
+    border-radius: 50%;
+    animation: loadingDots 1s infinite;
+}
+
+.loading-dots div:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loading-dots div:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots div:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes loadingDots {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.5);
+    }
+}
+
 
 .coming-soon {
     display: flex;
@@ -275,5 +410,9 @@
 
     .management-bubble {
         width: 100%;
+    }
+
+    .management-bubble-inner.my-business {
+        gap: 0;
     }
 }
