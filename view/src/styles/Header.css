@@ -15,8 +15,9 @@
 .business-name {
     font-size: 40px;
     font-weight: bold;
+    text-wrap: nowrap;
     width: 90%;
-    overflow: hidden;
+    overflow-x: scroll;
 }
 
 .flex {

@@ -132,8 +132,8 @@ export function ClientFinalStep({ optionSpecials, deletableSpecials, extraSpecia
                 <hr className='client-hr' style={{ boxShadow: `0 0 10px ${secondaryColor}`, backgroundColor: `${secondaryColor}` }} />
             </div>
             {renderSpecials(optionSpecials, "In this product you prefer:")}
-            {renderSpecials(extraSpecials, "In this product you also want:")}
             {renderSpecials(deletableSpecials, "In this product you don't want:")}
+            {renderSpecials(extraSpecials, "As an extra you want:")}
             <div className="client-full-product-add-to-cart">
                 <div className='client-full-product-quantity-handler'>
                     <button className='client-full-product-add-to-cart-less' style={{ backgroundColor: secondaryColor, color: themeColor }} onClick={lessQuantity}>-</button>

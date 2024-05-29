@@ -118,7 +118,7 @@ export function ProductPanel({ business }) {
 
     const addNewStep = () => {
         const updatedSteps = [...product.steps]
-        const newStepId = `step_${Date.now()}`;
+        const newStepId = `step_${Date.now()}`
         updatedSteps.push({
             id: newStepId,
             title: 'New Step',
@@ -129,24 +129,23 @@ export function ProductPanel({ business }) {
     }
 
     const handleStepDelete = (stepIndex) => {
-        const updatedSteps = [...product.steps];
-        updatedSteps.splice(stepIndex, 1);
-        setProduct({ ...product, steps: updatedSteps });
+        const updatedSteps = [...product.steps]
+        updatedSteps.splice(stepIndex, 1)
+        setProduct({ ...product, steps: updatedSteps })
     }
 
     const addStepItem = () => {
-        const updatedSteps = [...product.steps];
-        const index = updatedSteps.findIndex((step) => step.id === actualStepId);
+        const updatedSteps = [...product.steps]
+        const index = updatedSteps.findIndex((step) => step.id === actualStepId)
         if (index !== -1) {
             updatedSteps[index].specials.push({
                 id: `item_${Date.now()}`,
                 name: 'New Item',
                 price_changer: '',
                 img: ''
-            });
-            setProduct({ ...product, steps: updatedSteps });
+            })
+            setProduct({ ...product, steps: updatedSteps })
 
-            // Verificar si el paso actual es el paso que se está editando
             if (editStep && editStep.id === actualStepId) {
                 const updatedEditStep = {
                     ...editStep,
@@ -156,11 +155,11 @@ export function ProductPanel({ business }) {
                         price_changer: '',
                         img: ''
                     }]
-                };
-                setEditStep(updatedEditStep);
+                }
+                setEditStep(updatedEditStep)
             }
         }
-    };
+    }
 
 
     const handleSpecialDelete = (stepId, specialId) => {
