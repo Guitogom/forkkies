@@ -13,7 +13,7 @@ const corsOptions = {
     optionsSuccessStatus: 200
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 swaggerDocs(app);
 

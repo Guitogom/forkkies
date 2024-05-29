@@ -9,7 +9,7 @@ import { Management } from './pages/management/Management.jsx'
 import { Templates } from './pages/templates/Templates.jsx'
 import { Home } from './pages/Home.jsx'
 import { Orders } from './pages/orders/Orders.jsx'
-import { Analytics } from './pages/analytics/Analytics.jsx'
+//import { Analytics } from './pages/analytics/Analytics.jsx'
 import { Loading } from './Loading.jsx'
 import { Template } from "./pages/templates/Template.jsx"
 import { CategoryPanel } from "./pages/templates/CategoryPanel.jsx"
@@ -93,7 +93,7 @@ export function Dashboard() {
                     <Route path="/t/:id/:c_id/pp/:p_id" element={<ProductPanel business={business} />} />
                     <Route path="/" element={<Home business={business} setBusiness={setBusiness} />} />
                     <Route path="/orders" element={<Orders orders={orders} setOrders={setOrders} />} />
-                    <Route path="/analytics" element={<Analytics business={business} setBusiness={setBusiness} />} />
+                    {/* <Route path="/analytics" element={<Analytics business={business} setBusiness={setBusiness} />} /> */}
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </section>
