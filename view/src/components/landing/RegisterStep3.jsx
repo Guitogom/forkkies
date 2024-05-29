@@ -14,7 +14,7 @@ export function RegisterStep3() {
     return (
         <div className="register-form">
             <h2>Thank you!</h2>
-            <Link to='/dashboard' className='register-button'>Begin</Link>
+            <Link to='/dashboard' className='register-button'>Start</Link>
         </div>
     )
 }

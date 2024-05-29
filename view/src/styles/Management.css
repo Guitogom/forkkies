@@ -309,6 +309,10 @@
     margin-bottom: 20px;
 }
 
+.management-credentials-input:focus {
+    outline: none;
+}
+
 .old-password-verification button,
 .new-password-input button {
     width: 100%;

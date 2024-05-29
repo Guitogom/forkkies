@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+import sha256 from 'crypto-js/sha256'
 import { Title } from "../../Title"
 import '../../../../styles/Management.css'
 
@@ -9,8 +10,14 @@ export function Management({ business, businessName, setBusinessName }) {
     const [action, setAction] = useState(business.color3)
     const [theme, setTheme] = useState(business.color4)
 
+    const { tag } = useParams()
+
     const [passwordVerified, setPasswordVerified] = useState(false)
     const [loadingFetch, setLoadingFetch] = useState(false)
+    const [currentPassword, setCurrentPassword] = useState('')
+    const [newPassword, setNewPassword] = useState('')
+    const [repeatNewPassword, setRepeatNewPassword] = useState('')
+    const [passwordError, setPasswordError] = useState('')
 
     const navigate = useNavigate()
 
@@ -66,9 +73,6 @@ export function Management({ business, businessName, setBusinessName }) {
                 }
                 return response.json()
             })
-            .then(response => {
-                console.log(response)
-            })
             .catch(error => {
                 console.error('Error:', error.message)
             })
@@ -100,9 +104,6 @@ export function Management({ business, businessName, setBusinessName }) {
                 }
                 return response.json()
             })
-            .then(response => {
-                console.log(response)
-            })
             .catch(error => {
                 console.error('Error:', error.message)
             })
@@ -113,12 +114,98 @@ export function Management({ business, businessName, setBusinessName }) {
         navigate('/')
     }
 
-    const handleVerifyPassword = () => {
+    const handleWriteCurrentPassword = (e) => {
+        setPasswordError('')
+        setCurrentPassword(e.target.value)
+    }
+
+    const handleWriteNewPassword = (e) => {
+        setPasswordError('')
+        setNewPassword(e.target.value)
+    }
+
+    const handleRepeatNewPassword = (e) => {
+        setPasswordError('')
+        setRepeatNewPassword(e.target.value)
+    }
+
+    const handleVerifyPassword = async () => {
         setLoadingFetch(true)
-        setTimeout(() => {
-            setPasswordVerified(true)
-            setLoadingFetch(false)
-        }, 2000)
+        try {
+            const hashedPassword = sha256(currentPassword).toString()
+            const response = await fetch(`https://api.forkkies.live/logbusiness?tag=${business.tag}&password=${hashedPassword}`)
+            if (response.ok) {
+                const data = await response.json()
+                console.log(data)
+                setLoadingFetch(false)
+                setPasswordVerified(true)
+            } else {
+                setLoadingFetch(false)
+                setPasswordError('Wrong password')
+                console.error('Error:', response.statusText)
+            }
+        } catch (error) {
+            console.error('Error:', error.message)
+        }
+    }
+
+    const changePassword = () => {
+        setPasswordError('')
+        let hasError = false
+
+        if (newPassword !== repeatNewPassword) {
+            setPasswordError("Passwords don't match")
+            hasError = true
+        }
+
+        if (newPassword === '') {
+            setPasswordError("Password can't be empty")
+            hasError = true
+        }
+
+        if (repeatNewPassword === '') {
+            setPasswordError("Repeat password can't be empty")
+            hasError = true
+        }
+
+        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(newPassword)) {
+            setPasswordError("Password must have 8 digits, one number and one letter")
+            hasError = true
+        }
+
+        if (hasError) return
+
+        changePasswordFetch()
+    }
+
+    const changePasswordFetch = async () => {
+        const hashedPassword = sha256(newPassword).toString()
+        const body = {
+            password: hashedPassword
+        }
+
+        fetch('https://api.forkkies.live/modifybusiness', {
+            method: 'POST',
+            headers: {
+                'Authorization': `${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Error:', response.statusText)
+                } else {
+                    setPasswordVerified(false)
+                    setNewPassword('')
+                    setRepeatNewPassword('')
+                    setCurrentPassword('')
+                }
+                return response.json()
+            })
+            .catch(error => {
+                console.error('Error:', error.message)
+            })
     }
 
     const [tagMessage, setTagMessage] = useState(false)
@@ -175,7 +262,7 @@ export function Management({ business, businessName, setBusinessName }) {
                     <div className="management-bubble-inner credentials">
                         <div className="old-password-verification" style={{ opacity: `${passwordVerified ? '0' : '1'}`, zIndex: `${passwordVerified ? '0' : '4'}` }}>
                             <label htmlFor="old-password" className="management-credentials-label">Introduce Current Password:</label>
-                            <input type="password" id="old-password" className="management-credentials-input" />
+                            <input type="password" id="old-password" className={`management-credentials-input ${passwordError !== '' ? 'wrong' : ''}`} onChange={handleWriteCurrentPassword} />
                             <button className={`management-credentials-button ${loadingFetch ? 'loading' : ''}`} onClick={handleVerifyPassword}>
                                 {loadingFetch ? (
                                     <div className="loading-dots">
@@ -188,10 +275,11 @@ export function Management({ business, businessName, setBusinessName }) {
                         </div>
                         <div className="new-password-input" style={{ opacity: `${passwordVerified ? '1' : '0'}`, zIndex: `${passwordVerified ? '4' : '0'}` }}>
                             <label htmlFor="new-password" className="management-credentials-label">Introduce New Password:</label>
-                            <input type="password" id="new-password" className="management-credentials-input" />
+                            <p className='register-password-text'>Password must have 8 digits, one number and one letter</p>
+                            <input type="password" id="new-password" className={`management-credentials-input ${passwordError !== '' ? 'wrong' : ''}`} onChange={handleWriteNewPassword} />
                             <label htmlFor="repeat-new-password" className="management-credentials-label">Repeat New Password:</label>
-                            <input type="password" id="repeat-new-password" className="management-credentials-input" />
-                            <button>Change Password</button>
+                            <input type="password" id="repeat-new-password" className={`management-credentials-input ${passwordError !== '' ? 'wrong' : ''}`} onChange={handleRepeatNewPassword} />
+                            <button onClick={changePassword}>Change Password</button>
                         </div></div>
                 </div>
                 <div className="management-bubble">
