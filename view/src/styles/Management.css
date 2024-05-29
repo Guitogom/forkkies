@@ -4,6 +4,7 @@
     align-items: start;
     flex-wrap: wrap;
     gap: 1rem;
+    padding: 20px;
 }
 
 .management-inner {
@@ -59,7 +60,7 @@
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    box-shadow:inset 3px 3px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 3px 3px 1px rgba(0, 0, 0, 0.25);
 }
 
 @keyframes tagAnimation {
@@ -67,18 +68,22 @@
         transform: rotate(5deg) scale(1);
         opacity: 1;
     }
+
     25% {
         transform: rotate(-5deg) scale(1.1);
         opacity: 0.9;
     }
+
     50% {
         transform: rotate(5deg) scale(1.05);
         opacity: 1;
     }
+
     75% {
         transform: rotate(-5deg) scale(1);
         opacity: 0.9;
     }
+
     100% {
         transform: rotate(0deg) scale(1);
         opacity: 1;
@@ -215,6 +220,7 @@
     transition: all 0.2s ease;
     cursor: pointer;
     font-weight: 700;
+    margin-top: 20px;
     font-family: var(--secondary-font);
 }
 

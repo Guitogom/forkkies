@@ -51,6 +51,11 @@ export function RegisterStep1({ setCurrentStep, setDivHeight, divHeight, setBusi
             hasError = true
         }
 
+        if (tagProvisional.includes(' ')) {
+            setTagMistake("Tag can't contain spaces")
+            hasError = true
+        }
+
         if (phoneNumber.trim() === '') {
             setPhoneMistake("Business phone number can't be empty")
             hasError = true

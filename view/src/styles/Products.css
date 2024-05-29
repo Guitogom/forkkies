@@ -706,3 +706,84 @@
 .property-add-image.added {
     background-color: var(--forth-color);
 }
+
+@media (max-width: 768px) {
+    .product-parent {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .up-product-column,
+    .down-product-column {
+        padding: 20px;
+        height: auto;
+    }
+
+    .left-product-column,
+    .right-product-column {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .left-product-column,
+    .right-product-column,
+    .steps-list {
+        overflow-y: auto;
+    }
+
+    .steps-panel {
+        height: auto;
+    }
+
+    .edit-step-inner,
+    .edit-properties-inner {
+        width: 90%;
+        padding: 10px;
+    }
+
+    .edit-step-upper,
+    .edit-properties-upper,
+    .edit-step-lower,
+    .edit-properties-lower {
+        padding: 10px;
+    }
+
+    .special-title-input,
+    .special-name-input,
+    .special-price-input,
+    .product-name-input,
+    .product-desc-input,
+    .product-price-input {
+        font-size: 1rem;
+        padding: 8px;
+    }
+
+    .special-item,
+    .special-item-add {
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+    }
+
+    .steps-add svg,
+    .steps-add {
+        width: auto;
+        height: 50px;
+    }
+
+    .product-name,
+    .product-price,
+    .step-title {
+        font-size: 1rem;
+    }
+
+    .step-select,
+    .step-options {
+        font-size: 0.9rem;
+    }
+
+    .step-options {
+        gap: 10px;
+    }
+}

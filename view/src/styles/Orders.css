@@ -52,6 +52,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -320,3 +321,89 @@
     font-family: var(--secondary-font);
 }
 
+@media (max-width: 768px) {
+    .order-table {
+        height: fit-content;
+    }
+
+    .order-titles {
+        display: none;
+    }
+
+    .order-refresh {
+        width: 100%;
+        padding: 5px;
+        font-size: 1rem;
+    }
+
+    .order-refresh svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .order-prop {
+        grid-template-columns: 1fr;
+        padding: 5px;
+    }
+
+    .order-prop-details-item {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 5px;
+    }
+
+    .order-prop-details-item-image img {
+        width: 100%;
+        height: auto;
+    }
+
+    .order-prop-details-item-info,
+    .order-prop-details-item-specials,
+    .order-prop-details-item-prices {
+        grid-column: span 1;
+        font-size: 1.2rem;
+        height: auto;
+        padding: 5px;
+    }
+
+    .order-prop-details-item-info p,
+    .order-prop-details-item-specials-options,
+    .order-prop-details-item-specials-deletables,
+    .order-prop-details-item-specials-extras {
+        overflow-x: auto;
+    }
+
+    .order-prop-details-item-prices-math,
+    .order-prop-details-item-prices-total {
+        font-size: 1rem;
+    }
+
+    .order-prop-status-button {
+        padding: 10px 20px;
+        font-size: 1.2rem;
+    }
+
+    .order-prop-status-button svg {
+        width: 30px;
+        height: 30px;
+        right: 20px;
+        top: 10px;
+    }
+
+    .order-prop-open-button svg {
+        width: 50px;
+    }
+
+    .order-colors {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3px;
+    }
+
+    .order-colors svg {
+        display: none;
+    }
+
+    .order-status-title {
+        font-size: 1rem;
+    }
+}

@@ -130,7 +130,6 @@ export function Management({ business, businessName, setBusinessName }) {
                         <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} />
                         <button onClick={handleChangeName}>Save</button>
                     </div>
-                    <h3>Business Customization</h3>
                     <p>Change your business colors by tapping on them</p>
                     <div className="management-colors">
                         <div style={{ backgroundColor: primary }}>
