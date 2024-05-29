@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { getImagesFromFolder } from './imageUtils.js';
 
-
 dotenv.config();
 
 // Crear el cliente de la base de datos

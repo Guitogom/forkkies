@@ -3,20 +3,17 @@ import cors from 'cors';
 import swaggerDocs from './swagger.js';
 import { verifyTag, newBusiness, modifyBusiness, verificarToken, getBusiness, logBusiness, newTemplate, modifyTemplate, getTemplate, newProperty, deleteProperty, getProperties, addProductProperty, deleteProductProperty, addCollection, newCategory, modifyCategory, getCategory, modifyProduct, getProduct, getAllBusiness, newOrder, getOrders, modifyOrderStatus } from './functions.js';
 
-
 const app = express();
 
-// Middleware para analizar los cuerpos de las solicitudes JSON con límite de tamaño
 app.use(express.json({ limit: '200mb' }));
 
-// Middleware para analizar los cuerpos de las solicitudes URL codificadas con límite de tamaño
 app.use(express.urlencoded({ extended: true, limit: '200mb' }));
 const corsOptions = {
     origin: ['https://forkkies.live', 'https://www.forkkies.live'],
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+    optionsSuccessStatus: 200 
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 swaggerDocs(app);
 
