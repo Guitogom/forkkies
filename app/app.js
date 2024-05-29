@@ -10,7 +10,7 @@ app.use(express.json({ limit: '200mb' }));
 app.use(express.urlencoded({ extended: true, limit: '200mb' }));
 const corsOptions = {
     origin: ['https://forkkies.live', 'https://www.forkkies.live'],
-    optionsSuccessStatus: 200 
+    optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
