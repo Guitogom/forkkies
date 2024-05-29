@@ -65,7 +65,7 @@ export function Landing() {
                     <Link to='/register' className='get-started-landing'>Get Started <BackArrow /></Link>
                     <div className='login-message-landing'>You already have an account?<img className='arrow-landing' src={arrow} alt="Arrow" /></div>
                     <Link to='/login' className='log-in-landing'>Log In</Link>
-                    <h3 className='message-landing'>START NOW FOR FREE</h3>
+                    <h3 className='message-landing neon-blink'>START NOW FOR FREE</h3>
                     <div className='advise-landing'>
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/_nyx03AinWU?si=AFG-tVjgNyg1rjOJ;controls=0" title="Add" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
                     </div>

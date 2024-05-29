@@ -368,8 +368,7 @@
     }
 
     .title-landing {
-        width: 100%;
-        font-size: auto;
+        font-size: 4rem;
     }
 
     .subtitle-landing {
@@ -403,6 +402,22 @@
 
     .action-landing {
         font-size: 4rem;
+    }
+
+    .action1-landing {
+        transform: translatex(0);
+    }
+
+    .action2-landing {
+        transform: translatex(0);
+    }
+
+    .action3-landing {
+        transform: translatex(0);
+    }
+
+    .action4-landing {
+        transform: translatex(0);
     }
 
     .features-landing h2 {
