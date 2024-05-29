@@ -22,11 +22,9 @@ export function Templates({ business, setBusiness, setTemplates, templates, busi
         }
     }
 
-    // useEffect(() => {
-    //     setTemplates(business.templates)
-    //     console.log(business.templates)
-    //     console.log(templates)
-    // }, [business])
+    useEffect(() => {
+        setTemplates(business.templates)
+    }, [business])
 
     const addTemplate = () => {
         const token = localStorage.getItem('session_token')
