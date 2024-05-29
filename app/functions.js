@@ -38,6 +38,7 @@ export async function verifyTag(tag) {
 
 export async function newBusiness(business) {
     var incorrect_field = [];
+    business.tag = business.tag.trim();
     if (await verifyTag(business.tag)) {
         incorrect_field.push("tag");
     }
@@ -47,10 +48,10 @@ export async function newBusiness(business) {
     if (!business.location) {
         incorrect_field.push("location");
     }
-    if (!business.tel) {
+    if (!business.tel || !/^\d{6,10}$/.test(business.tel)) {
         incorrect_field.push("tel");
     }
-    if (!business.password) {
+    if (!business.password || !isSHA256(business.password)) {
         incorrect_field.push("password");
     }
 
@@ -858,7 +859,7 @@ export async function modifyProduct(tag, body) {
                             try {
                                 await db.execute({
                                     sql: 'INSERT INTO product_properties (product_id, properties_id) VALUES (:product_id, :properties_id)',
-                                    args: { product_id, properties_id}
+                                    args: { product_id, properties_id }
                                 });
                             } catch (error) {
                                 console.error('5Error en la base de datos:', error.message);
