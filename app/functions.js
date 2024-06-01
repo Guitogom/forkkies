@@ -51,7 +51,7 @@ export async function newBusiness(business) {
     if (!business.tel || !/^\d{6,10}$/.test(business.tel)) {
         incorrect_field.push("tel");
     }
-    if (!business.password || !isSHA256(business.password)) {
+    if (!business.password) {
         incorrect_field.push("password");
     }
 
